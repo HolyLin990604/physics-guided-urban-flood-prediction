@@ -2,6 +2,25 @@
 
 A research prototype for physics-guided urban flood process prediction based on a U-Net + TCN framework.
 
+## Method Diagram
+
+```mermaid
+flowchart LR
+    A[Past flood sequence] --> B[U-Net encoder]
+    C[Past rainfall sequence] --> D[Temporal conditioning]
+    E[Future rainfall sequence] --> D
+    F[Static maps<br/>DEM / impervious / manhole] --> B
+
+    B --> G[TCN temporal module]
+    D --> G
+    G --> H[Decoder]
+    H --> I[Predicted future flood depth field]
+
+    I --> J[Data loss]
+    I --> K[Non-negativity loss]
+    I --> L[Wet/dry consistency loss]
+```
+
 ## Overview
 
 This repository implements a spatiotemporal urban flood forecasting prototype using the UrbanFlood24 Lite dataset.  
@@ -143,6 +162,19 @@ Under the same 20-epoch setting, the current validated results are:
 | Phase 1  |   0.0541 |  0.0185 |          0.6167 |                0.9915 |
 
 These results indicate that lightweight output-space physics guidance can improve both flood depth prediction accuracy and wet-region boundary recovery without degrading rollout stability.
+## Qualitative Examples
+
+### Spatial Comparison
+
+![Spatial comparison](assets/images/comparison_epoch19_step11_unified.png)
+
+A qualitative comparison at the final forecast step shows that the Phase 1 model recovers the main inundation belt and local wet regions more completely than the baseline, while also yielding a smaller absolute error range.
+
+### Region-Averaged Process Comparison
+
+![Region-averaged process comparison](assets/images/comparison_timeseries_epoch19_regionavg.png)
+
+For the representative event, both models capture the overall recession trend of region-averaged water depth, while the Phase 1 model remains closer to the target in the early-to-middle forecast steps.
 
 ## Current Limitations
 
