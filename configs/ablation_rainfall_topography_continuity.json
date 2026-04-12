@@ -1,0 +1,77 @@
+{
+  "dataset": {
+    "dataset_config_path": "C:\\Users\\39053\\Documents\\New project\\configs\\urbanflood24_lite_adapter.json",
+    "train_split": "train",
+    "val_fraction": 0.25
+  },
+  "model": {
+    "flood_channels": 1,
+    "static_channels": 3,
+    "rainfall_channels": 1,
+    "out_channels": 1,
+    "base_channels": 16,
+    "encoder_levels": 3,
+    "temporal_hidden_channels": 128,
+    "temporal_layers": 4,
+    "temporal_kernel_size": 3,
+    "dropout": 0.1,
+    "skip_fusion_mode": "last_step"
+  },
+  "optimization": {
+    "epochs": 20,
+    "batch_size": 2,
+    "eval_batch_size": 2,
+    "lr": 0.0003,
+    "weight_decay": 0.0001,
+    "loss": "smooth_l1",
+    "grad_clip_norm": 1.0
+  },
+  "metrics": {
+    "wet_threshold": 0.05
+  },
+  "runtime": {
+    "seed": 42,
+    "device": "cuda",
+    "num_workers": 0,
+    "use_amp": true
+  },
+  "output": {
+    "root": "C:\\Users\\39053\\Documents\\New project\\runs\\ablation_rain_topo_cont",
+    "selection_metric": "rmse",
+    "max_visualization_batches": 1,
+    "timeseries": {
+      "mode": "region_average",
+      "batch_index": 0,
+      "row_range": [32, 96],
+      "col_range": [32, 96]
+    }
+  },
+  "physics_losses": {
+    "non_negativity": {
+      "enabled": false,
+      "weight": 0.0
+    },
+    "wet_dry_consistency": {
+      "enabled": false,
+      "weight": 0.0,
+      "threshold": 0.05,
+      "temperature": 0.02
+    },
+    "rainfall_depth_consistency": {
+      "enabled": true,
+      "weight": 0.03,
+      "eps": 1e-06
+    },
+    "topography_regularization": {
+      "enabled": true,
+      "weight": 0.02,
+      "dem_channel": 0,
+      "eps": 1e-06
+    },
+    "continuity_inspired": {
+      "enabled": true,
+      "weight": 0.02,
+      "eps": 1e-06
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "dataset_root": "E:\\BaiduNetdiskDownload\\urbanflood24_lite_release\\urbanflood24_lite",
+  "split": "train",
+  "input_steps": 12,
+  "pred_steps": 12,
+  "stride": 6,
+  "alignment_mode": "mass_preserving",
+  "debug": false,
+  "cache_arrays": false,
+  "include_partial_windows": false,
+  "return_numpy": true,
+  "locations": null,
+  "events": null
+}
