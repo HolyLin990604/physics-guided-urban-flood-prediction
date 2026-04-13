@@ -133,18 +133,24 @@ pip install -r requirements.txt
 
 Train the baseline model:
 
-```bash
 python scripts/train_model.py --config configs/train_baseline.json
-```
 
 Train the Phase 1 model:
 
-```bash
 python scripts/train_model.py --config configs/train_stage2b_phase1.json
-```
+
+Train the strict loss-only Phase 2 milestone:
+
+python scripts/train_model.py --config configs/train_phase2_loss_only.json
+
+Run the debug loss-only config:
+
+python scripts/train_model.py --config configs/train_phase2_loss_only_debug.json
+
+The new Phase 2 configs reuse `configs/urbanflood24_lite_adapter.json` for dataset location.
+This milestone does not rewrite existing local dataset-path configs, so update that adapter config locally if your dataset lives somewhere else.
 
 ## Evaluation and Visualization
-
 Example scripts:
 
 ```bash

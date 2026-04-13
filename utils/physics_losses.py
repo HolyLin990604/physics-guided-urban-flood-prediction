@@ -1,14 +1,38 @@
 from __future__ import annotations
 
-from typing import Dict, Tuple
+from dataclasses import dataclass
+from typing import Callable, Dict, Iterable, Tuple
 
 import torch
 import torch.nn.functional as F
 
 
+LossFn = Callable[[torch.Tensor, torch.Tensor, Dict[str, torch.Tensor], Dict], torch.Tensor]
+
+
+@dataclass(frozen=True)
+class PhysicsLossTerm:
+    name: str
+    loss_fn: LossFn
+
+    def compute(
+        self,
+        prediction: torch.Tensor,
+        target: torch.Tensor,
+        batch: Dict[str, torch.Tensor],
+        config: Dict,
+    ) -> torch.Tensor:
+        value = self.loss_fn(prediction, target, batch, config)
+        if value.ndim != 0:
+            raise ValueError(f"Physics loss '{self.name}' must return a scalar tensor, got shape {tuple(value.shape)}.")
+        if not torch.isfinite(value):
+            raise ValueError(f"Physics loss '{self.name}' produced a non-finite value: {float(value.detach().item())}.")
+        return value
+
+
 class PhysicsLossController:
     """
-    Optional physics-inspired loss terms for Stage 2B.
+    Optional physics-inspired loss terms.
 
     Scientific note:
     These terms are guidance and surrogate constraints, not a full hydrodynamic closure.
@@ -16,8 +40,11 @@ class PhysicsLossController:
     regularization or physically motivated guidance rather than full physics enforcement.
     """
 
+    _TERMS: Tuple[PhysicsLossTerm, ...] = ()
+
     def __init__(self, config: Dict | None = None) -> None:
         self.config = config or {}
+        self.terms = self._build_term_registry()
 
     def compute(
         self,
@@ -29,63 +56,74 @@ class PhysicsLossController:
         total = torch.zeros((), device=device, dtype=prediction.dtype)
         metrics: Dict[str, float] = {}
 
-        total, metrics = self._apply_term(
-            name="non_negativity",
-            total=total,
-            metrics=metrics,
-            loss_fn=lambda cfg: self._non_negativity_loss(prediction),
-        )
-        total, metrics = self._apply_term(
-            name="wet_dry_consistency",
-            total=total,
-            metrics=metrics,
-            loss_fn=lambda cfg: self._wet_dry_consistency_loss(prediction, target, cfg),
-        )
-        total, metrics = self._apply_term(
-            name="rainfall_depth_consistency",
-            total=total,
-            metrics=metrics,
-            loss_fn=lambda cfg: self._rainfall_depth_consistency_loss(prediction, batch["future_rainfall"], cfg),
-        )
-        total, metrics = self._apply_term(
-            name="topography_regularization",
-            total=total,
-            metrics=metrics,
-            loss_fn=lambda cfg: self._topography_regularization(prediction, batch["static_maps"], cfg),
-        )
-        total, metrics = self._apply_term(
-            name="continuity_inspired",
-            total=total,
-            metrics=metrics,
-            loss_fn=lambda cfg: self._continuity_inspired_loss(prediction, batch["future_rainfall"], cfg),
-        )
+        for term in self.terms:
+            total, metrics = self._apply_term(
+                term=term,
+                prediction=prediction,
+                target=target,
+                batch=batch,
+                total=total,
+                metrics=metrics,
+            )
 
         metrics["physics_total"] = float(total.detach().item())
         return total, metrics
 
-    def _apply_term(self, *, name: str, total: torch.Tensor, metrics: Dict[str, float], loss_fn):
-        cfg = self.config.get(name, {})
+    @classmethod
+    def term_names(cls) -> Tuple[str, ...]:
+        return tuple(term.name for term in cls._build_term_registry())
+
+    @classmethod
+    def _build_term_registry(cls) -> Tuple[PhysicsLossTerm, ...]:
+        if cls._TERMS:
+            return cls._TERMS
+        cls._TERMS = (
+            PhysicsLossTerm("non_negativity", cls._non_negativity_loss),
+            PhysicsLossTerm("wet_dry_consistency", cls._wet_dry_consistency_loss),
+            PhysicsLossTerm("rainfall_depth_consistency", cls._rainfall_depth_consistency_loss),
+            PhysicsLossTerm("topography_regularization", cls._topography_regularization),
+            PhysicsLossTerm("continuity_inspired", cls._continuity_inspired_loss),
+        )
+        return cls._TERMS
+
+    def _apply_term(
+        self,
+        *,
+        term: PhysicsLossTerm,
+        prediction: torch.Tensor,
+        target: torch.Tensor,
+        batch: Dict[str, torch.Tensor],
+        total: torch.Tensor,
+        metrics: Dict[str, float],
+    ) -> Tuple[torch.Tensor, Dict[str, float]]:
+        cfg = self.config.get(term.name, {})
         enabled = bool(cfg.get("enabled", False))
         weight = float(cfg.get("weight", 0.0))
         if not enabled or weight <= 0.0:
-            metrics[name] = 0.0
-            metrics[f"{name}_weighted"] = 0.0
+            metrics[term.name] = 0.0
+            metrics[f"{term.name}_weighted"] = 0.0
             return total, metrics
 
-        value = loss_fn(cfg)
+        value = term.compute(prediction, target, batch, cfg)
         weighted = value * weight
-        metrics[name] = float(value.detach().item())
-        metrics[f"{name}_weighted"] = float(weighted.detach().item())
+        metrics[term.name] = float(value.detach().item())
+        metrics[f"{term.name}_weighted"] = float(weighted.detach().item())
         return total + weighted, metrics
 
     @staticmethod
-    def _non_negativity_loss(prediction: torch.Tensor) -> torch.Tensor:
+    def _non_negativity_loss(
+        prediction: torch.Tensor,
+        _target: torch.Tensor,
+        _batch: Dict[str, torch.Tensor],
+        _cfg: Dict,
+    ) -> torch.Tensor:
         return torch.relu(-prediction).mean()
 
     @staticmethod
     def _wet_dry_consistency_loss(
         prediction: torch.Tensor,
         target: torch.Tensor,
+        _batch: Dict[str, torch.Tensor],
         cfg: Dict,
     ) -> torch.Tensor:
         threshold = float(cfg.get("threshold", 0.05))
@@ -97,31 +135,56 @@ class PhysicsLossController:
     @staticmethod
     def _rainfall_depth_consistency_loss(
         prediction: torch.Tensor,
-        future_rainfall: torch.Tensor,
+        _target: torch.Tensor,
+        batch: Dict[str, torch.Tensor],
         cfg: Dict,
     ) -> torch.Tensor:
         """
-        Guidance, not constraint:
-        compares normalized cumulative rainfall with normalized cumulative positive storage change.
-        This is intentionally unit-agnostic because rainfall and flood depth are not directly
-        converted through a trusted hydrodynamic mapping in this baseline.
+        Stronger guidance, not a hard constraint:
+        matches the normalized temporal response of positive predicted storage change
+        to normalized future rainfall forcing while remaining robust to event magnitude.
         """
 
+        future_rainfall = batch["future_rainfall"]
         eps = float(cfg.get("eps", 1e-6))
+        normalization = str(cfg.get("normalization", "cumulative_l1")).lower()
+        detach_scale = bool(cfg.get("detach_scale", False))
+        smooth_positive_beta = float(cfg.get("smooth_positive_beta", 8.0))
+        use_cumulative = bool(cfg.get("use_cumulative", True))
+
         rain = future_rainfall.squeeze(-1).clamp_min(0.0)
         storage = prediction.clamp_min(0.0).mean(dim=(2, 3, 4))
-        storage_delta = torch.cat([storage[:, :1], torch.relu(storage[:, 1:] - storage[:, :-1])], dim=1)
+        storage_increments = torch.cat([storage[:, :1], storage[:, 1:] - storage[:, :-1]], dim=1)
 
-        rain_cum = torch.cumsum(rain, dim=1)
-        storage_cum = torch.cumsum(storage_delta, dim=1)
-        rain_norm = rain_cum / (rain_cum[:, -1:].clamp_min(eps))
-        storage_norm = storage_cum / (storage_cum[:, -1:].clamp_min(eps))
-        return F.l1_loss(storage_norm, rain_norm)
+        if smooth_positive_beta > 0.0:
+            response = F.softplus(storage_increments * smooth_positive_beta) / smooth_positive_beta
+        else:
+            response = torch.relu(storage_increments)
+
+        if normalization == "cumulative_l1":
+            rain_reference = torch.cumsum(rain, dim=1) if use_cumulative else rain
+            response_reference = torch.cumsum(response, dim=1) if use_cumulative else response
+            rain_norm = rain_reference / rain_reference.abs().sum(dim=1, keepdim=True).clamp_min(eps)
+            response_norm = response_reference / response_reference.abs().sum(dim=1, keepdim=True).clamp_min(eps)
+            return F.l1_loss(response_norm, rain_norm)
+
+        if normalization == "per_sample_scale":
+            scale = response.sum(dim=1, keepdim=True) / rain.sum(dim=1, keepdim=True).clamp_min(eps)
+            if detach_scale:
+                scale = scale.detach()
+            scaled_rain = scale * rain
+            return F.smooth_l1_loss(response, scaled_rain, beta=float(cfg.get("beta", 0.05)))
+
+        raise ValueError(
+            "Unsupported rainfall_depth_consistency normalization "
+            f"'{normalization}'. Expected 'cumulative_l1' or 'per_sample_scale'."
+        )
 
     @staticmethod
     def _topography_regularization(
         prediction: torch.Tensor,
-        static_maps: torch.Tensor,
+        _target: torch.Tensor,
+        batch: Dict[str, torch.Tensor],
         cfg: Dict,
     ) -> torch.Tensor:
         """
@@ -130,6 +193,7 @@ class PhysicsLossController:
         neighbors, but does not model momentum or drainage explicitly.
         """
 
+        static_maps = batch["static_maps"]
         dem_channel = int(cfg.get("dem_channel", 0))
         eps = float(cfg.get("eps", 1e-6))
         dem = static_maps[:, dem_channel]
@@ -150,7 +214,8 @@ class PhysicsLossController:
     @staticmethod
     def _continuity_inspired_loss(
         prediction: torch.Tensor,
-        future_rainfall: torch.Tensor,
+        _target: torch.Tensor,
+        batch: Dict[str, torch.Tensor],
         cfg: Dict,
     ) -> torch.Tensor:
         """
@@ -160,6 +225,7 @@ class PhysicsLossController:
         balance because lateral fluxes, infiltration, and drainage are not explicitly modeled.
         """
 
+        future_rainfall = batch["future_rainfall"]
         eps = float(cfg.get("eps", 1e-6))
         rain = future_rainfall.squeeze(-1).clamp_min(0.0)
         storage = prediction.clamp_min(0.0).mean(dim=(2, 3, 4))
@@ -168,3 +234,7 @@ class PhysicsLossController:
 
         scale = (positive_increments.sum(dim=1, keepdim=True) / rain.sum(dim=1, keepdim=True).clamp_min(eps)).detach()
         return F.mse_loss(positive_increments, scale * rain)
+
+
+def list_physics_losses() -> Iterable[str]:
+    return PhysicsLossController.term_names()
