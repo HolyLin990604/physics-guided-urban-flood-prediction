@@ -182,15 +182,15 @@ These results indicate that lightweight output-space physics guidance can improv
 
 ### Spatial Comparison
 
-![Spatial comparison](assets/images/comparison_epoch19_step11_unified.png)
+![Spatial comparison](assets/images/comparison_phase2a_epoch19_step11_unified.png)
 
-A qualitative comparison at the final forecast step shows that the Phase 1 model recovers the main inundation belt and local wet regions more completely than the baseline, while also yielding a smaller absolute error range.
+A qualitative comparison at the selected forecast step shows that the Phase 2A model recovers the main inundation belt and local wet regions more completely than the re-run Phase 1 reference, while also reducing the spatial error extent in several flooded patches.
 
 ### Region-Averaged Process Comparison
 
-![Region-averaged process comparison](assets/images/comparison_timeseries_epoch19_regionavg.png)
+![Region-averaged process comparison](assets/images/comparison_phase2a_timeseries_epoch19_regionavg.png)
 
-For the representative event, both models capture the overall recession trend of region-averaged water depth, while the Phase 1 model remains closer to the target in the early-to-middle forecast steps.
+For the representative event, both models capture the overall recession trend of region-averaged water depth, while Phase 2A remains closer to the target during the middle-to-late forecast stages and yields a lower overall process error than the re-run Phase 1 reference.
 
 ## Current Limitations
 
