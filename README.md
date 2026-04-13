@@ -147,6 +147,10 @@ Run the debug loss-only config:
 
 python scripts/train_model.py --config configs/train_phase2_loss_only_debug.json
 
+Rainfall-consistency weight sweep example:
+
+python scripts/train_model.py --config configs/train_phase2_loss_only_w010.json
+
 The new Phase 2 configs reuse `configs/urbanflood24_lite_adapter.json` for dataset location.
 This milestone does not rewrite existing local dataset-path configs, so update that adapter config locally if your dataset lives somewhere else.
 
@@ -192,6 +196,30 @@ Current limitations include:
  More repeated experiments with different random seeds are still needed
  More external baselines can be added
  More advanced physics terms have not yet shown stable gains
+
+## Phase 2A Loss-Only Tuning Note
+
+Phase 2A keeps the backbone unchanged (U-Net + TCN) and extends the Phase 1 loss design with a refined `rainfall_depth_consistency` term.
+
+In the current single-seed 20-epoch tuning runs, the rainfall-consistency weight shows a clear sensitivity:
+
+| Setting | Best epoch | Val RMSE | Val MAE | Val wet/dry IoU | Val rollout stability |
+| -------- | ---------: | -------: | ------: | --------------: | --------------------: |
+| Phase 1 rerun | 19 | 0.06155 | 0.02118 | 0.59050 | 0.99175 |
+| Phase 2A, weight = 0.03 | 19 | 0.06822 | 0.02288 | 0.55547 | 0.99116 |
+| Phase 2A, weight = 0.05 | 19 | 0.05928 | 0.02048 | 0.60766 | 0.99189 |
+| Phase 2A, weight = 0.10 | 19 | 0.06526 | 0.02221 | 0.56406 | 0.99142 |
+| Rainfall-only ablation | 19 | 0.06730 | 0.02217 | 0.45620 | 0.99149 |
+
+These runs suggest that the refined rainfall-depth consistency term is useful, but not monotonic with respect to weight.
+A small weight (0.03) is too weak, while a larger weight (0.10) degrades performance.
+Under the current single-seed setup, `weight = 0.05` is the best tested setting and outperforms the re-run Phase 1 reference.
+
+At this stage, the current recommended Phase 2A configuration is:
+
+- `configs/train_phase2_loss_only.json` as the main Phase 2A config
+- `configs/train_phase2_loss_only_debug.json` for quick debug and sanity checks
+- `configs/train_phase2_loss_only_w010.json` as a higher-weight comparison config
 
 ## Future Work
 
