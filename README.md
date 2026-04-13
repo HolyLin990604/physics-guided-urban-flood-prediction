@@ -19,6 +19,8 @@ flowchart LR
     I --> J[Data loss]
     I --> K[Non-negativity loss]
     I --> L[Wet/dry consistency loss]
+    I --> M[Rainfall-depth consistency loss]
+    E --> M
 ```
 
 ## Overview
@@ -35,11 +37,13 @@ These physics-guided losses are imposed on the predicted future flood depth fiel
 
 ## Current Mainline
 
-The current stable mainline is:
+The current stable reference path is:
 
 Phase 1 = Baseline + non-negativity loss + wet/dry consistency loss
 
-In our current experiments, Phase 1 consistently outperforms the pure baseline under the same 20-epoch setting.
+Phase 1 remains the stable reference baseline for this repository.
+
+In the latest single-seed 20-epoch loss-only tuning runs, Phase 2A with refined `rainfall_depth_consistency` and `weight = 0.05` is the current best tested candidate configuration, while Phase 1 remains the default reference setting until multi-seed validation is completed.
 
 ## Dataset
 
@@ -164,7 +168,9 @@ python compare_timeseries.py
 
 ## Current Results
 
-Under the same 20-epoch setting, the current validated results are:
+The table below reports the previously validated mainline results under the earlier repository reference setting.
+
+The Phase 2A section later in this README reports the latest single-seed 20-epoch tuning comparison under the current loss-only code path.
 
 | Model    | Val RMSE | Val MAE | Val wet/dry IoU | Val rollout stability |
 | -------- | -------: | ------: | --------------: | --------------------: |
