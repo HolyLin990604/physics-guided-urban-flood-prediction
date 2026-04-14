@@ -43,7 +43,8 @@ Phase 1 = Baseline + non-negativity loss + wet/dry consistency loss
 
 Phase 1 remains the stable reference baseline for this repository.
 
-In the latest single-seed 20-epoch loss-only tuning runs, Phase 2A with refined `rainfall_depth_consistency` and `weight = 0.05` is the current best tested candidate configuration, while Phase 1 remains the default reference setting until multi-seed validation is completed.
+In the current loss-only study, Phase 2A with refined `rainfall_depth_consistency` and `weight = 0.05` is the best validated candidate under the present three-seed check, while Phase 1 remains the stable reference baseline for comparison.
+
 
 ## Dataset
 
@@ -199,7 +200,7 @@ This repository is a research prototype, not a production-ready engineering syst
 Current limitations include:
 
  Results are currently validated on UrbanFlood24 Lite
- More repeated experiments with different random seeds are still needed
+ Initial three-seed validation has been completed, but larger-scale statistical validation across more seeds and settings is still needed.
  More external baselines can be added
  More advanced physics terms have not yet shown stable gains
 
@@ -247,7 +248,7 @@ Across the three tested seeds, Phase 2A with `weight = 0.05` consistently improv
 Planned extensions include:
 
  Test-set evaluation
- Multi-seed experiments
+ Larger-scale statistical validation across more seeds and settings
  Stronger baselines
  More advanced hydrodynamic knowledge embedding
  Cross-scenario generalization analysis
