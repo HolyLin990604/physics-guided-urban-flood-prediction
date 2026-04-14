@@ -8,6 +8,50 @@ from torch import nn
 from models.blocks import SpatialDecoder, SpatialEncoder, TemporalConvNet, assert_rank, assert_same_spatial
 
 
+class RainfallConditionedTemporalGate(nn.Module):
+    """
+    Lightweight per-step conditioning for future temporal features.
+
+    The gate maps future rainfall to a channel-wise residual scaling term and applies it
+    to the repeated temporal context before the future TCN. The last layer is zero-
+    initialized so the enabled module starts from near-identity behavior.
+    """
+
+    def __init__(
+        self,
+        *,
+        rainfall_channels: int,
+        feature_channels: int,
+        hidden_channels: int,
+    ) -> None:
+        super().__init__()
+        self.gate_mlp = nn.Sequential(
+            nn.Linear(rainfall_channels, hidden_channels),
+            nn.SiLU(inplace=True),
+            nn.Linear(hidden_channels, feature_channels),
+        )
+        final_linear = self.gate_mlp[-1]
+        if not isinstance(final_linear, nn.Linear):
+            raise TypeError("Expected final layer of rainfall gate MLP to be nn.Linear.")
+        nn.init.zeros_(final_linear.weight)
+        nn.init.zeros_(final_linear.bias)
+
+    def forward(self, temporal_context: torch.Tensor, future_rainfall: torch.Tensor) -> torch.Tensor:
+        assert_rank("temporal_context", temporal_context, 4)
+        assert_rank("future_rainfall", future_rainfall, 3)
+
+        batch_size, channels, _, _ = temporal_context.shape
+        rain_batch, future_steps, rain_channels = future_rainfall.shape
+        if rain_batch != batch_size:
+            raise ValueError(
+                f"future_rainfall batch size {rain_batch} does not match temporal_context batch size {batch_size}."
+            )
+
+        gate = self.gate_mlp(future_rainfall.reshape(batch_size * future_steps, rain_channels))
+        gate = torch.tanh(gate).view(batch_size, future_steps, channels, 1, 1)
+        return temporal_context.unsqueeze(1) * (1.0 + gate)
+
+
 class UNetTCNForecaster(nn.Module):
     """
     Baseline spatiotemporal flood forecaster.
@@ -37,6 +81,7 @@ class UNetTCNForecaster(nn.Module):
         temporal_kernel_size: int = 3,
         dropout: float = 0.1,
         skip_fusion_mode: str = "temporal_mean",
+        rainfall_conditioning: dict | None = None,
     ) -> None:
         super().__init__()
         self.flood_channels = flood_channels
@@ -77,6 +122,19 @@ class UNetTCNForecaster(nn.Module):
             out_channels=out_channels,
         )
         self._validate_skip_fusion_mode()
+        self.rainfall_conditioning = self._normalize_rainfall_conditioning(
+            rainfall_conditioning=rainfall_conditioning,
+            bottleneck_channels=bottleneck_channels,
+            temporal_hidden_channels=temporal_hidden_channels,
+        )
+        if self.rainfall_conditioning["enabled"]:
+            self.temporal_rainfall_gate = RainfallConditionedTemporalGate(
+                rainfall_channels=rainfall_channels,
+                feature_channels=bottleneck_channels,
+                hidden_channels=self.rainfall_conditioning["hidden_channels"],
+            )
+        else:
+            self.temporal_rainfall_gate = None
         if self.skip_fusion_mode == "learned_weighted":
             self.skip_fusion_layers = nn.ModuleList(
                 [nn.Linear(channels, 1) for channels in self.encoder.skip_channels]
@@ -98,6 +156,29 @@ class UNetTCNForecaster(nn.Module):
             nn.SiLU(inplace=True),
             nn.Linear(out_channels, out_channels),
         )
+
+    @staticmethod
+    def _normalize_rainfall_conditioning(
+        *,
+        rainfall_conditioning: dict | None,
+        bottleneck_channels: int,
+        temporal_hidden_channels: int,
+    ) -> dict:
+        config = dict(rainfall_conditioning or {})
+        normalized = {
+            "enabled": bool(config.get("enabled", False)),
+            "mode": config.get("mode", "temporal_gate"),
+            "hidden_channels": int(config.get("hidden_channels", max(bottleneck_channels // 2, 16))),
+        }
+        if normalized["mode"] != "temporal_gate":
+            raise ValueError(
+                f"Unsupported rainfall_conditioning mode '{normalized['mode']}'. Expected 'temporal_gate'."
+            )
+        if normalized["hidden_channels"] <= 0:
+            raise ValueError("rainfall_conditioning.hidden_channels must be > 0.")
+        if normalized["hidden_channels"] > max(temporal_hidden_channels, bottleneck_channels) * 4:
+            raise ValueError("rainfall_conditioning.hidden_channels is unexpectedly large.")
+        return normalized
 
     def forward(
         self,
@@ -179,6 +260,11 @@ class UNetTCNForecaster(nn.Module):
         future_steps: int,
     ) -> torch.Tensor:
         batch_size, channels, bottleneck_h, bottleneck_w = temporal_context.shape
+        if self.temporal_rainfall_gate is None:
+            conditioned_context = temporal_context.unsqueeze(1).expand(-1, future_steps, -1, -1, -1)
+        else:
+            conditioned_context = self.temporal_rainfall_gate(temporal_context, future_rainfall)
+
         rainfall_embed = self.future_rainfall_embed(
             future_rainfall.reshape(batch_size * future_steps, self.rainfall_channels)
         )
@@ -194,7 +280,7 @@ class UNetTCNForecaster(nn.Module):
         step_embed = self.future_step_embed(step_positions.reshape(future_steps, 1))
         step_embed = step_embed.view(1, future_steps, channels, 1, 1)
 
-        future_seed = temporal_context.unsqueeze(1) + rainfall_embed + step_embed
+        future_seed = conditioned_context + rainfall_embed + step_embed
         future_seed = future_seed.permute(0, 3, 4, 2, 1).reshape(batch_size * bottleneck_h * bottleneck_w, channels, future_steps)
         refined = self.future_temporal_tcn(future_seed)
         return refined.view(batch_size, bottleneck_h, bottleneck_w, channels, future_steps).permute(0, 4, 3, 1, 2).contiguous()

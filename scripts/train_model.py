@@ -85,6 +85,7 @@ def build_model(model_cfg: Dict) -> UNetTCNForecaster:
         temporal_kernel_size=model_cfg["temporal_kernel_size"],
         dropout=model_cfg["dropout"],
         skip_fusion_mode=model_cfg.get("skip_fusion_mode", "temporal_mean"),
+        rainfall_conditioning=model_cfg.get("rainfall_conditioning"),
     )
 
 

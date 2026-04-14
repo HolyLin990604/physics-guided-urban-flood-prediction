@@ -264,6 +264,30 @@ Planned extensions include:
  More advanced hydrodynamic knowledge embedding
  Cross-scenario generalization analysis
 
+## Phase 2B Milestone 1
+
+Phase 2B Milestone 1 keeps the Phase 2A loss system unchanged and adds one optional architecture-level module: a rainfall-conditioned temporal gate.
+
+Enable it in the `model` section with:
+
+```json
+"rainfall_conditioning": {
+  "enabled": true,
+  "mode": "temporal_gate",
+  "hidden_channels": 64
+}
+```
+
+Use `configs/train_phase2b_temporal_gate.json` for the normal run and `configs/train_phase2b_temporal_gate_debug.json` for a quick debug run.
+
+When this section is omitted or `enabled` is `false`, the model follows the existing baseline and Phase 2A path with no behavior change.
+
+Minimal sanity check:
+
+```bash
+python scripts/sanity_check_phase2b_temporal_gate.py --base-config configs/train_phase2_loss_only_debug.json
+```
+
 ## License
 
 MIT License.
