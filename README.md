@@ -243,6 +243,17 @@ To verify that the Phase 2A gain is not limited to a single random seed, we furt
 
 Across the three tested seeds, Phase 2A with `weight = 0.05` consistently improves validation RMSE, MAE, and wet/dry IoU over the corresponding Phase 1 reference. Rollout stability does not show a strong and fully consistent gain across all seeds, but it also does not degrade systematically. At the current stage, these results support Phase 2A (`weight = 0.05`) as a stronger accuracy-oriented loss-only candidate, while additional seeds are still desirable before making a stronger statistical claim.
 
+### Three-Seed Statistical Summary
+
+Using the best epoch from each run, we further summarize the three-seed results with mean ± sample standard deviation.
+
+| Model | Val RMSE | Val MAE | Val wet/dry IoU | Val rollout stability |
+| ---- | -------: | ------: | --------------: | --------------------: |
+| Phase 1 (3 seeds) | 0.05803 ± 0.00411 | 0.02220 ± 0.00140 | 0.64778 ± 0.05011 | 0.99272 ± 0.00100 |
+| Phase 2A (w = 0.05, 3 seeds) | 0.05629 ± 0.00383 | 0.02161 ± 0.00139 | 0.65956 ± 0.04501 | 0.99270 ± 0.00079 |
+
+On average across the current three tested seeds, Phase 2A (`weight = 0.05`) improves validation RMSE, MAE, and wet/dry IoU relative to the corresponding Phase 1 reference. Rollout stability remains essentially unchanged at this stage. These results further support Phase 2A (`weight = 0.05`) as the current stronger loss-only candidate.
+
 ## Future Work
 
 Planned extensions include:
