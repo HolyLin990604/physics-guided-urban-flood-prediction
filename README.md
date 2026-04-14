@@ -229,7 +229,7 @@ At this stage, the current recommended Phase 2A configuration is:
 
 ## Preliminary Multi-Seed Check
 
-To verify that the Phase 2A gain is not limited to a single random seed, we further compared the Phase 1 reference and the Phase 2A (`rainfall_depth_consistency`, `weight = 0.05`) configuration under two seeds.
+To verify that the Phase 2A gain is not limited to a single random seed, we further compared the Phase 1 reference and the Phase 2A (`rainfall_depth_consistency`, `weight = 0.05`) configuration under three seeds.
 
 | Seed | Model | Best epoch | Val RMSE | Val MAE | Val wet/dry IoU | Val rollout stability |
 | ---- | ----- | ---------: | -------: | ------: | --------------: | --------------------: |
@@ -237,8 +237,10 @@ To verify that the Phase 2A gain is not limited to a single random seed, we furt
 | 42   | Phase 2A (w = 0.05) | 19 | 0.05928 | 0.02048 | 0.60766 | 0.99189 |
 | 123  | Phase 1 | 19 | 0.05903 | 0.02380 | 0.68349 | 0.99375 |
 | 123  | Phase 2A (w = 0.05) | 19 | 0.05761 | 0.02317 | 0.68787 | 0.99347 |
+| 202  | Phase 1 | 20 | 0.05352 | 0.02163 | 0.66935 | 0.99267 |
+| 202  | Phase 2A (w = 0.05) | 20 | 0.05198 | 0.02119 | 0.68314 | 0.99275 |
 
-Across the two tested seeds, Phase 2A with `weight = 0.05` consistently improves validation RMSE, MAE, and wet/dry IoU over the corresponding Phase 1 reference. However, rollout stability does not show a consistent gain. At the current stage, these results support Phase 2A (`weight = 0.05`) as a stronger accuracy-oriented loss-only candidate, while more seeds are still needed before making a stronger statistical claim.
+Across the three tested seeds, Phase 2A with `weight = 0.05` consistently improves validation RMSE, MAE, and wet/dry IoU over the corresponding Phase 1 reference. Rollout stability does not show a strong and fully consistent gain across all seeds, but it also does not degrade systematically. At the current stage, these results support Phase 2A (`weight = 0.05`) as a stronger accuracy-oriented loss-only candidate, while additional seeds are still desirable before making a stronger statistical claim.
 
 ## Future Work
 
