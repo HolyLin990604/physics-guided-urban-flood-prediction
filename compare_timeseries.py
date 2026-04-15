@@ -4,9 +4,9 @@ from pathlib import Path
 
 r0, r1, c0, c1 = 40, 88, 40, 88
 
-baseline_path = Path(r"runs\baseline_20epoch\visualizations\epoch_019\val_batch_0000\forecast_maps.npz")
-phase1_path = Path(r"runs\stage2b_phase1_20epoch\visualizations\epoch_019\val_batch_0000\forecast_maps.npz")
-out_path = Path(r"runs\comparison_timeseries_epoch19_regionavg.png")
+baseline_path = Path(r"runs\phase2_loss_only_40e_seed202\evaluation_test\test_batch_0000\forecast_maps.npz")
+phase1_path = Path(r"runs\phase2b_temporal_gate_h16_40e_seed202\evaluation_test\test_batch_0000\forecast_maps.npz")
+out_path = Path(r"runs\comparison_timeseries_seed202_test_batch0000.png")
 
 b = np.load(baseline_path)
 p = np.load(phase1_path)
@@ -19,11 +19,11 @@ steps = np.arange(1, len(target) + 1)
 
 plt.figure(figsize=(8, 5))
 plt.plot(steps, target, marker="o", label="Target")
-plt.plot(steps, baseline, marker="s", label="Baseline")
-plt.plot(steps, phase1, marker="^", label="Phase 1")
+plt.plot(steps, baseline, marker="s", label="Phase 2A")
+plt.plot(steps, phase1, marker="^",label="Phase 2B h16")
 plt.xlabel("Forecast step")
 plt.ylabel("Region-averaged water depth")
-plt.title("Region-averaged process comparison")
+plt.title("Region-averaged process comparison: Phase 2A vs Phase 2B h16 (seed202, test batch 0000)")
 plt.legend()
 plt.grid(True, alpha=0.3)
 plt.tight_layout()

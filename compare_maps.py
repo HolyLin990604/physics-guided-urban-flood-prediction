@@ -5,9 +5,9 @@ from pathlib import Path
 # 固定比较对象：同一样本、同一步
 step = 11
 
-baseline_path = Path(r"runs\baseline_20epoch\visualizations\epoch_019\val_batch_0000\forecast_maps.npz")
-phase1_path = Path(r"runs\stage2b_phase1_20epoch\visualizations\epoch_019\val_batch_0000\forecast_maps.npz")
-out_path = Path(r"runs\comparison_epoch19_step11_unified.png")
+baseline_path = Path(r"runs\phase2_loss_only_40e_seed42\evaluation_test\test_batch_0000\forecast_maps.npz")
+phase1_path = Path(r"runs\phase2b_temporal_gate_h16_40e_seed42\evaluation_test\test_batch_0000\forecast_maps.npz")
+out_path = Path(r"runs\comparison_maps_seed42_test_batch0000.png")
 
 b = np.load(baseline_path)
 p = np.load(phase1_path)
@@ -31,7 +31,7 @@ fig, axes = plt.subplots(1, 5, figsize=(20, 4))
 for ax, img, title in zip(
     axes[:3],
     [target, baseline_pred, phase1_pred],
-    ["Target", "Baseline", "Phase 1"]
+    ["Target", "Phase 2A", "Phase 2B h16"]
 ):
     im = ax.imshow(img, cmap="viridis", vmin=main_vmin, vmax=main_vmax)
     ax.set_title(title)
@@ -42,14 +42,14 @@ for ax, img, title in zip(
 for ax, img, title in zip(
     axes[3:],
     [baseline_err, phase1_err],
-    ["Baseline Error", "Phase 1 Error"]
+    ["Phase 2A Error", "Phase 2B h16 Error"]
 ):
     im = ax.imshow(img, cmap="viridis", vmin=err_vmin, vmax=err_vmax)
     ax.set_title(title)
     ax.axis("off")
     plt.colorbar(im, ax=ax, fraction=0.046, pad=0.04)
 
-plt.suptitle(f"Spatial comparison at forecast step {step}")
+plt.suptitle(f"Spatial comparison: Phase 2A vs Phase 2B h16 (seed42, test batch 0000, step {step})")
 plt.tight_layout()
 plt.savefig(out_path, dpi=300, bbox_inches="tight")
 print(f"Saved to: {out_path}")
