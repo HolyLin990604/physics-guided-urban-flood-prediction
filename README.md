@@ -136,8 +136,8 @@ README.md
 Example setup:
 
 ```bash
-conda create -n <env_name> python=3.8 -y
-conda activate <env_name>
+conda create -n your_env_name python=3.8 -y
+conda activate your_env_name
 pip install -r requirements.txt
 ```
 
@@ -180,27 +180,36 @@ Generated figures are organized under:
 
 `docs/figures/phase2_qualitative/`
 
+## Current Project Status
 
+The repository has now completed the formal Phase 2 comparison stage.
 
-## Current Results
+Completed items include:
 
-The table below reports the previously validated mainline results under the earlier repository reference setting.
+- 40-epoch multi-seed validation
+- 40-epoch multi-seed test-set evaluation
+- paired qualitative comparison for representative cases
 
-The Phase 2A section later in this README reports the latest single-seed 20-epoch tuning comparison under the current loss-only code path.
+The current project conclusion is:
 
-| Model    | Val RMSE | Val MAE | Val wet/dry IoU | Val rollout stability |
-| -------- | -------: | ------: | --------------: | --------------------: |
-| Baseline |   0.0774 |  0.0236 |          0.4281 |                0.9919 |
-| Phase 1  |   0.0541 |  0.0185 |          0.6167 |                0.9915 |
+- **Primary candidate: Phase 2A (40 epochs)**
+- **Strong alternative: Phase 2B h16 (40 epochs)**
 
-These results indicate that lightweight output-space physics guidance can improve both flood depth prediction accuracy and wet-region boundary recovery without degrading rollout stability.
-## Qualitative Examples
+At this stage, the project is no longer in unconstrained exploratory tuning. The current focus is on experiment organization, documentation cleanup, and next-stage method design.
 
-### Spatial Comparison
+## Representative Qualitative Findings
 
-![Spatial comparison](assets/images/comparison_phase2a_epoch19_step11_unified.png)
+Two representative test cases are currently used for paired qualitative comparison:
 
-A qualitative comparison at the selected forecast step shows that the Phase 2A model recovers the main inundation belt and local wet regions more completely than the re-run Phase 1 reference, while also reducing the spatial error extent in several flooded patches.
+- **seed42**: representative case favoring **Phase 2B h16**
+- **seed202**: representative case favoring **Phase 2A**
+
+Current qualitative observations are consistent with the broader experiment summary:
+
+- **Phase 2B h16** shows genuinely stronger behavior on some cases
+- **Phase 2A** remains the more stable overall choice across seeds
+- spatial reconstruction tends to support the overall test conclusion more clearly than single-case process curves
+
 
 ### Region-Averaged Process Comparison
 
@@ -208,66 +217,6 @@ A qualitative comparison at the selected forecast step shows that the Phase 2A m
 
 For the representative event, both models capture the overall recession trend of region-averaged water depth, while Phase 2A remains closer to the target during the middle-to-late forecast stages and yields a lower overall process error than the re-run Phase 1 reference.
 
-## Current Limitations
-
-This repository is a research prototype, not a production-ready engineering system.
-
-Current limitations include:
-
- Results are currently validated on UrbanFlood24 Lite
- Initial three-seed validation has been completed, but larger-scale statistical validation across more seeds and settings is still needed.
- More external baselines can be added
- More advanced physics terms have not yet shown stable gains
-
-## Phase 2A Loss-Only Tuning Note
-
-Phase 2A keeps the backbone unchanged (U-Net + TCN) and extends the Phase 1 loss design with a refined `rainfall_depth_consistency` term.
-
-In the current single-seed 20-epoch tuning runs, the rainfall-consistency weight shows a clear sensitivity:
-
-| Setting | Best epoch | Val RMSE | Val MAE | Val wet/dry IoU | Val rollout stability |
-| -------- | ---------: | -------: | ------: | --------------: | --------------------: |
-| Phase 1 rerun | 19 | 0.06155 | 0.02118 | 0.59050 | 0.99175 |
-| Phase 2A, weight = 0.03 | 19 | 0.06822 | 0.02288 | 0.55547 | 0.99116 |
-| Phase 2A, weight = 0.05 | 19 | 0.05928 | 0.02048 | 0.60766 | 0.99189 |
-| Phase 2A, weight = 0.10 | 19 | 0.06526 | 0.02221 | 0.56406 | 0.99142 |
-| Rainfall-only ablation | 19 | 0.06730 | 0.02217 | 0.45620 | 0.99149 |
-
-These runs suggest that the refined rainfall-depth consistency term is useful, but not monotonic with respect to weight.
-A small weight (0.03) is too weak, while a larger weight (0.10) degrades performance.
-Under the current single-seed setup, `weight = 0.05` is the best tested setting and outperforms the re-run Phase 1 reference.
-
-At this stage, the current recommended Phase 2A configuration is:
-
-- `configs/train_phase2_loss_only.json` as the main Phase 2A config
-- `configs/train_phase2_loss_only_debug.json` for quick debug and sanity checks
-- `configs/train_phase2_loss_only_w010.json` as a higher-weight comparison config
-
-## Preliminary Multi-Seed Check
-
-To verify that the Phase 2A gain is not limited to a single random seed, we further compared the Phase 1 reference and the Phase 2A (`rainfall_depth_consistency`, `weight = 0.05`) configuration under three seeds.
-
-| Seed | Model | Best epoch | Val RMSE | Val MAE | Val wet/dry IoU | Val rollout stability |
-| ---- | ----- | ---------: | -------: | ------: | --------------: | --------------------: |
-| 42   | Phase 1 | 19 | 0.06155 | 0.02118 | 0.59050 | 0.99175 |
-| 42   | Phase 2A (w = 0.05) | 19 | 0.05928 | 0.02048 | 0.60766 | 0.99189 |
-| 123  | Phase 1 | 19 | 0.05903 | 0.02380 | 0.68349 | 0.99375 |
-| 123  | Phase 2A (w = 0.05) | 19 | 0.05761 | 0.02317 | 0.68787 | 0.99347 |
-| 202  | Phase 1 | 20 | 0.05352 | 0.02163 | 0.66935 | 0.99267 |
-| 202  | Phase 2A (w = 0.05) | 20 | 0.05198 | 0.02119 | 0.68314 | 0.99275 |
-
-Across the three tested seeds, Phase 2A with `weight = 0.05` consistently improves validation RMSE, MAE, and wet/dry IoU over the corresponding Phase 1 reference. Rollout stability does not show a strong and fully consistent gain across all seeds, but it also does not degrade systematically. At the current stage, these results support Phase 2A (`weight = 0.05`) as a stronger accuracy-oriented loss-only candidate, while additional seeds are still desirable before making a stronger statistical claim.
-
-### Three-Seed Statistical Summary
-
-Using the best epoch from each run, we further summarize the three-seed results with mean ± sample standard deviation.
-
-| Model | Val RMSE | Val MAE | Val wet/dry IoU | Val rollout stability |
-| ---- | -------: | ------: | --------------: | --------------------: |
-| Phase 1 (3 seeds) | 0.05803 ± 0.00411 | 0.02220 ± 0.00140 | 0.64778 ± 0.05011 | 0.99272 ± 0.00100 |
-| Phase 2A (w = 0.05, 3 seeds) | 0.05629 ± 0.00383 | 0.02161 ± 0.00139 | 0.65956 ± 0.04501 | 0.99270 ± 0.00079 |
-
-On average across the current three tested seeds, Phase 2A (`weight = 0.05`) improves validation RMSE, MAE, and wet/dry IoU relative to the corresponding Phase 1 reference. Rollout stability remains essentially unchanged at this stage. These results further support Phase 2A (`weight = 0.05`) as the current stronger loss-only candidate.
 
 ## Future Work
 
