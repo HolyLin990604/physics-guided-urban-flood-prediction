@@ -55,81 +55,74 @@ For the latest Phase 2 experiment summaries, see:
 
 ## Dataset
 
-This project uses the UrbanFlood24 Lite dataset.
+This project uses the **UrbanFlood24 Lite** dataset.
 
 Expected dataset directory:
 
 ```text
 data/
-└─ urbanflood24_lite/
-   ├─ train/
-   └─ test/
+  urbanflood24_lite/
+    train/
+    test/
 ```
 
-The dataset contains:
+The dataset includes:
 
- Dynamic flood depth sequences (`flood.npy`)
- Rainfall forcing sequences (`rainfall.npy`)
- Static geospatial factors:
+- dynamic flood depth sequences: `flood.npy`
+- rainfall forcing sequences: `rainfall.npy`
+- static geospatial factors:
+  - `absolute_DEM.npy`
+  - `impervious.npy`
+  - `manhole.npy`
 
-   `absolute_DEM.npy`
-   `impervious.npy`
-   `manhole.npy`
 
 ## Task Definition
 
-The task is multi-step flood process prediction.
+This project studies **multi-step flood process prediction**.
 
-Inputs:
+### Inputs
 
-Past flood sequence
-Past rainfall sequence
-Future rainfall sequence
-Static maps
+- past flood sequence
+- past rainfall sequence
+- future rainfall sequence
+- static maps
 
-Output:
+### Output
 
-Future flood depth sequence
+- future flood depth sequence
 
 In the current setup, the model uses:
 
- `input_steps = 12`
- `pred_steps = 12`
+- `input_steps = 12`
+- `pred_steps = 12`
+
 
 ## Method
 
-### Baseline
+### Backbone
 
- Backbone: U-Net + TCN
- Pure data-driven flood process prediction
+The forecasting backbone is based on a U-Net + TCN style spatiotemporal model.
 
-### Phase 1 Physics Guidance
+### Physics-guided strategy
 
-The Phase 1 model keeps the same backbone as the baseline, but adds two physics-guided loss terms on the predicted future flood depth field:
+This repository mainly explores two directions:
 
-`L_total = L_data + λ1  L_nonneg + λ2  L_wd`
+- Phase 2A: loss-only physics-guided refinement
+- Phase 2B h16: Phase 2A losses plus a lightweight rainfall-conditioned temporal gate
 
-where:
+### Phase 2A
 
- `L_data` = data fidelity loss
- `L_nonneg` = non-negativity loss
- `L_wd` = wet/dry consistency loss
+Phase 2A keeps the backbone architecture unchanged and refines the loss design with physics-guided constraints, including:
 
-These constraints are applied at the output layer, rather than inside the encoder, decoder, or temporal module.
+- non-negativity related behavior
+- wet/dry consistency related behavior
+- rainfall-depth consistency refinement
 
-## Repository Structure
+### Phase 2B h16
 
-```text
-configs/
-datasets/
-models/
-scripts/
-trainers/
-utils/
-compare_maps.py
-compare_timeseries.py
-README.md
-```
+Phase 2B h16 keeps the Phase 2A loss system and adds one optional architecture-level module:
+
+- rainfall-conditioned temporal gate
 
 ## Environment
 
@@ -143,28 +136,32 @@ pip install -r requirements.txt
 
 ## Training
 
-Train the baseline model:
+The current main training entry is:
 
-python scripts/train_model.py --config configs/train_baseline.json
+```bash
+python scripts/train_model.py --config <config_path>
+```
 
-Train the Phase 1 model:
+### Example: Phase 2A (40 epochs, seed42)
 
-python scripts/train_model.py --config configs/train_stage2b_phase1.json
+```bash
+python scripts/train_model.py --config configs/train_phase2_loss_only_40e_seed42.json
+```
 
-Train the strict loss-only Phase 2 milestone:
+### Example: Phase 2B h16 (40 epochs, seed42)
 
-python scripts/train_model.py --config configs/train_phase2_loss_only.json
+```bash
+python scripts/train_model.py --config configs/train_phase2b_temporal_gate_h16_40e_seed42.json
+```
 
-Run the debug loss-only config:
+### Example: debug run
 
-python scripts/train_model.py --config configs/train_phase2_loss_only_debug.json
+```bash
+python scripts/train_model.py --config configs/train_phase2b_temporal_gate_debug.json
+```
 
-Rainfall-consistency weight sweep example:
+Additional experiment settings are provided under `configs/`.
 
-python scripts/train_model.py --config configs/train_phase2_loss_only_w010.json
-
-The new Phase 2 configs reuse `configs/urbanflood24_lite_adapter.json` for dataset location.
-This milestone does not rewrite existing local dataset-path configs, so update that adapter config locally if your dataset lives somewhere else.
 
 ## Evaluation and Visualization
 
@@ -174,11 +171,13 @@ Current paired qualitative comparison scripts:
 python compare_maps.py
 python compare_timeseries.py
 ```
-These scripts are currently used for Phase 2A vs Phase 2B h16 paired qualitative comparison on representative cases such as seed42 and seed202.
+
+These scripts are currently used for **Phase 2A vs Phase 2B h16** paired qualitative comparison on representative cases such as **seed42** and **seed202**.
 
 Generated figures are organized under:
 
-`docs/figures/phase2_qualitative/`
+- `docs/figures/phase2_qualitative/`
+
 
 ## Current Project Status
 
@@ -209,13 +208,6 @@ Current qualitative observations are consistent with the broader experiment summ
 - **Phase 2B h16** shows genuinely stronger behavior on some cases
 - **Phase 2A** remains the more stable overall choice across seeds
 - spatial reconstruction tends to support the overall test conclusion more clearly than single-case process curves
-
-
-### Region-Averaged Process Comparison
-
-![Region-averaged process comparison](assets/images/comparison_phase2a_timeseries_epoch19_regionavg.png)
-
-For the representative event, both models capture the overall recession trend of region-averaged water depth, while Phase 2A remains closer to the target during the middle-to-late forecast stages and yields a lower overall process error than the re-run Phase 1 reference.
 
 
 ## Future Work
