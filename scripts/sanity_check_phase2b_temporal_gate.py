@@ -53,6 +53,19 @@ def main() -> None:
     }
     residual_identity_config = json.loads(json.dumps(residual_config))
     residual_identity_config["model"]["rainfall_conditioning"]["residual_alpha"] = 0.0
+    partial_config = json.loads(json.dumps(base_config))
+    partial_config.setdefault("model", {})
+    partial_config["model"]["rainfall_conditioning"] = {
+        "enabled": True,
+        "mode": "temporal_gate_residual_partial",
+        "hidden_channels": 64,
+        "residual_alpha": 0.10,
+        "conditioned_fraction": 0.50,
+    }
+    partial_identity_config = json.loads(json.dumps(partial_config))
+    partial_identity_config["model"]["rainfall_conditioning"]["residual_alpha"] = 0.0
+    partial_zero_fraction_config = json.loads(json.dumps(partial_config))
+    partial_zero_fraction_config["model"]["rainfall_conditioning"]["conditioned_fraction"] = 0.0
 
     torch.manual_seed(7)
     legacy_model = build_model(base_config["model"]).eval()
@@ -62,8 +75,17 @@ def main() -> None:
     residual_model = build_model(residual_config["model"]).eval()
     torch.manual_seed(7)
     residual_identity_model = build_model(residual_identity_config["model"]).eval()
+    torch.manual_seed(7)
+    partial_model = build_model(partial_config["model"]).eval()
+    torch.manual_seed(7)
+    partial_identity_model = build_model(partial_identity_config["model"]).eval()
+    torch.manual_seed(7)
+    partial_zero_fraction_model = build_model(partial_zero_fraction_config["model"]).eval()
     residual_model.load_state_dict(disabled_model.state_dict(), strict=False)
     residual_identity_model.load_state_dict(disabled_model.state_dict(), strict=False)
+    partial_model.load_state_dict(disabled_model.state_dict(), strict=False)
+    partial_identity_model.load_state_dict(disabled_model.state_dict(), strict=False)
+    partial_zero_fraction_model.load_state_dict(disabled_model.state_dict(), strict=False)
 
     legacy_keys = list(legacy_model.state_dict().keys())
     disabled_keys = list(disabled_model.state_dict().keys())
@@ -76,6 +98,19 @@ def main() -> None:
     with torch.no_grad():
         final_linear.weight.fill_(0.5)
         final_linear.bias.fill_(0.25)
+    partial_final_linear = partial_identity_model.temporal_rainfall_gate.gate_mlp[-1]
+    if not isinstance(partial_final_linear, nn.Linear):
+        raise TypeError("Expected rainfall gate final layer to be nn.Linear.")
+    with torch.no_grad():
+        partial_final_linear.weight.fill_(0.5)
+        partial_final_linear.bias.fill_(0.25)
+
+    partial_zero_fraction_final_linear = partial_zero_fraction_model.temporal_rainfall_gate.gate_mlp[-1]
+    if not isinstance(partial_zero_fraction_final_linear, nn.Linear):
+        raise TypeError("Expected rainfall gate final layer to be nn.Linear.")
+    with torch.no_grad():
+        partial_zero_fraction_final_linear.weight.fill_(0.5)
+        partial_zero_fraction_final_linear.bias.fill_(0.25)
 
     with torch.no_grad():
         _, _, batch = make_synthetic_batch(
@@ -109,9 +144,30 @@ def main() -> None:
             batch["future_rainfall"],
             batch["static_maps"],
         )
+        partial_output = partial_model(
+            batch["past_flood"],
+            batch["past_rainfall"],
+            batch["future_rainfall"],
+            batch["static_maps"],
+        )
+        partial_identity_output = partial_identity_model(
+            batch["past_flood"],
+            batch["past_rainfall"],
+            batch["future_rainfall"],
+            batch["static_maps"],
+        )
+        partial_zero_fraction_output = partial_zero_fraction_model(
+            batch["past_flood"],
+            batch["past_rainfall"],
+            batch["future_rainfall"],
+            batch["static_maps"],
+        )
 
     max_abs_diff = float((legacy_output - disabled_output).abs().max().item())
     residual_identity_diff = float((disabled_output - residual_identity_output).abs().max().item())
+    partial_identity_diff = float((disabled_output - partial_identity_output).abs().max().item())
+    partial_zero_fraction_diff = float((disabled_output - partial_zero_fraction_output).abs().max().item())
+    partial_mask_channels = int(partial_model.temporal_rainfall_gate.conditioned_mask.sum().item())
     payload = {
         "base_config": str(args.base_config),
         "parameter_structure_matches": True,
@@ -121,6 +177,13 @@ def main() -> None:
         "residual_mode_finite": bool(torch.isfinite(residual_output).all().item()),
         "residual_alpha_zero_max_abs_diff": residual_identity_diff,
         "residual_alpha_zero_is_identity": residual_identity_diff == 0.0,
+        "partial_mode_output_shape": list(partial_output.shape),
+        "partial_mode_finite": bool(torch.isfinite(partial_output).all().item()),
+        "partial_conditioned_channels": partial_mask_channels,
+        "partial_residual_alpha_zero_max_abs_diff": partial_identity_diff,
+        "partial_residual_alpha_zero_is_identity": partial_identity_diff == 0.0,
+        "partial_fraction_zero_max_abs_diff": partial_zero_fraction_diff,
+        "partial_fraction_zero_is_identity": partial_zero_fraction_diff == 0.0,
     }
     print(json.dumps(payload, indent=2))
 

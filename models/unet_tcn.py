@@ -24,9 +24,15 @@ class RainfallConditionedTemporalGate(nn.Module):
         feature_channels: int,
         hidden_channels: int,
         residual_alpha: float | None = None,
+        conditioned_fraction: float = 1.0,
     ) -> None:
         super().__init__()
         self.residual_alpha = residual_alpha
+        conditioned_channels = int(feature_channels * conditioned_fraction)
+        conditioned_mask = torch.zeros(feature_channels, dtype=torch.float32)
+        if conditioned_channels > 0:
+            conditioned_mask[-conditioned_channels:] = 1.0
+        self.register_buffer("conditioned_mask", conditioned_mask.view(1, 1, feature_channels, 1, 1))
         self.gate_mlp = nn.Sequential(
             nn.Linear(rainfall_channels, hidden_channels),
             nn.SiLU(inplace=True),
@@ -53,6 +59,7 @@ class RainfallConditionedTemporalGate(nn.Module):
         gate = torch.tanh(gate).view(batch_size, future_steps, channels, 1, 1)
         if self.residual_alpha is not None:
             gate = gate * self.residual_alpha
+        gate = gate * self.conditioned_mask.to(device=gate.device, dtype=gate.dtype)
         return temporal_context.unsqueeze(1) * (1.0 + gate)
 
 
@@ -137,6 +144,7 @@ class UNetTCNForecaster(nn.Module):
                 feature_channels=bottleneck_channels,
                 hidden_channels=self.rainfall_conditioning["hidden_channels"],
                 residual_alpha=self.rainfall_conditioning["residual_alpha"],
+                conditioned_fraction=self.rainfall_conditioning["conditioned_fraction"],
             )
         else:
             self.temporal_rainfall_gate = None
@@ -176,8 +184,9 @@ class UNetTCNForecaster(nn.Module):
             "mode": mode,
             "hidden_channels": int(config.get("hidden_channels", max(bottleneck_channels // 2, 16))),
             "residual_alpha": None,
+            "conditioned_fraction": 1.0,
         }
-        allowed_modes = {"temporal_gate", "temporal_gate_residual"}
+        allowed_modes = {"temporal_gate", "temporal_gate_residual", "temporal_gate_residual_partial"}
         if normalized["mode"] not in allowed_modes:
             raise ValueError(
                 f"Unsupported rainfall_conditioning mode '{normalized['mode']}'. "
@@ -195,6 +204,23 @@ class UNetTCNForecaster(nn.Module):
             normalized["residual_alpha"] = float(config["residual_alpha"])
             if not 0.0 <= normalized["residual_alpha"] <= 1.0:
                 raise ValueError("rainfall_conditioning.residual_alpha must be in [0, 1].")
+        if normalized["mode"] == "temporal_gate_residual_partial":
+            if "residual_alpha" not in config:
+                raise ValueError(
+                    "rainfall_conditioning.residual_alpha must be set explicitly for "
+                    "'temporal_gate_residual_partial'."
+                )
+            if "conditioned_fraction" not in config:
+                raise ValueError(
+                    "rainfall_conditioning.conditioned_fraction must be set explicitly for "
+                    "'temporal_gate_residual_partial'."
+                )
+            normalized["residual_alpha"] = float(config["residual_alpha"])
+            if not 0.0 <= normalized["residual_alpha"] <= 1.0:
+                raise ValueError("rainfall_conditioning.residual_alpha must be in [0, 1].")
+            normalized["conditioned_fraction"] = float(config["conditioned_fraction"])
+            if not 0.0 <= normalized["conditioned_fraction"] <= 1.0:
+                raise ValueError("rainfall_conditioning.conditioned_fraction must be in [0, 1].")
         return normalized
 
     def forward(
