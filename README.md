@@ -37,13 +37,20 @@ These physics-guided losses are imposed on the predicted future flood depth fiel
 
 ## Current Mainline
 
-The current stable reference path is:
+The current Phase 2 conclusion is:
 
-Phase 1 = Baseline + non-negativity loss + wet/dry consistency loss
+- Primary candidate: Phase 2A (40 epochs)
+- Strong alternative: Phase 2B h16 (40 epochs, rainfall-conditioned temporal gate)
 
-Phase 1 remains the stable reference baseline for this repository.
+This conclusion is based on completed 40-epoch multi-seed validation, test-set evaluation, and paired qualitative comparison.
 
-In the current loss-only study, Phase 2A with refined `rainfall_depth_consistency` and `weight = 0.05` is the best validated candidate under the present three-seed check, while Phase 1 remains the stable reference baseline for comparison.
+## Phase 2 Documentation
+
+For the latest Phase 2 experiment summaries, see:
+
+- `docs/phase2_40e_multiseed_summary.md`
+- `docs/phase2_40e_multiseed_test_summary.md`
+- `docs/phase2_qualitative_comparison_notes.md`
 
 
 ## Dataset
@@ -126,11 +133,11 @@ README.md
 
 ## Environment
 
-Recommended environment:
+Example setup:
 
 ```bash
-conda create -n flood python=3.8 -y
-conda activate flood
+conda create -n <env_name> python=3.8 -y
+conda activate <env_name>
 pip install -r requirements.txt
 ```
 
@@ -160,12 +167,20 @@ The new Phase 2 configs reuse `configs/urbanflood24_lite_adapter.json` for datas
 This milestone does not rewrite existing local dataset-path configs, so update that adapter config locally if your dataset lives somewhere else.
 
 ## Evaluation and Visualization
-Example scripts:
+
+Current paired qualitative comparison scripts:
 
 ```bash
 python compare_maps.py
 python compare_timeseries.py
 ```
+These scripts are currently used for Phase 2A vs Phase 2B h16 paired qualitative comparison on representative cases such as seed42 and seed202.
+
+Generated figures are organized under:
+
+`docs/figures/phase2_qualitative/`
+
+
 
 ## Current Results
 
@@ -256,13 +271,13 @@ On average across the current three tested seeds, Phase 2A (`weight = 0.05`) imp
 
 ## Future Work
 
-Planned extensions include:
+Possible next directions include:
 
- Test-set evaluation
- Larger-scale statistical validation across more seeds and settings
- Stronger baselines
- More advanced hydrodynamic knowledge embedding
- Cross-scenario generalization analysis
+- further refinement of the Phase 2B temporal-gating design
+- larger-scale validation across more seeds and settings
+- stronger baselines
+- more advanced hydrodynamic knowledge embedding
+- cross-scenario generalization analysis
 
 ## Phase 2B Milestone 1
 
