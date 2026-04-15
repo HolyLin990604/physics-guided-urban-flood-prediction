@@ -42,6 +42,16 @@ The goal is to complement the multi-seed validation/test summary with direct vis
 
 \## Case 1: seed42
 
+### Figures
+
+**Spatial comparison**
+
+![Seed42 spatial comparison](figures/phase2_qualitative/comparison_maps_seed42_test_batch0000.png)
+
+**Region-averaged process comparison**
+
+![Seed42 timeseries comparison](figures/phase2_qualitative/comparison_timeseries_seed42_test_batch0000.png)
+
 
 
 \### Overall interpretation
@@ -123,6 +133,16 @@ This is therefore a representative case showing that the rainfall-conditioned te
 
 
 \## Case 2: seed202
+
+### Figures
+
+**Spatial comparison**
+
+![Seed202 spatial comparison](figures/phase2_qualitative/comparison_maps_seed202_test_batch0000.png)
+
+**Region-averaged process comparison**
+
+![Seed202 timeseries comparison](figures/phase2_qualitative/comparison_timeseries_seed202_test_batch0000.png)
 
 
 
