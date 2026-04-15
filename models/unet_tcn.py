@@ -23,8 +23,10 @@ class RainfallConditionedTemporalGate(nn.Module):
         rainfall_channels: int,
         feature_channels: int,
         hidden_channels: int,
+        residual_alpha: float | None = None,
     ) -> None:
         super().__init__()
+        self.residual_alpha = residual_alpha
         self.gate_mlp = nn.Sequential(
             nn.Linear(rainfall_channels, hidden_channels),
             nn.SiLU(inplace=True),
@@ -49,6 +51,8 @@ class RainfallConditionedTemporalGate(nn.Module):
 
         gate = self.gate_mlp(future_rainfall.reshape(batch_size * future_steps, rain_channels))
         gate = torch.tanh(gate).view(batch_size, future_steps, channels, 1, 1)
+        if self.residual_alpha is not None:
+            gate = gate * self.residual_alpha
         return temporal_context.unsqueeze(1) * (1.0 + gate)
 
 
@@ -132,6 +136,7 @@ class UNetTCNForecaster(nn.Module):
                 rainfall_channels=rainfall_channels,
                 feature_channels=bottleneck_channels,
                 hidden_channels=self.rainfall_conditioning["hidden_channels"],
+                residual_alpha=self.rainfall_conditioning["residual_alpha"],
             )
         else:
             self.temporal_rainfall_gate = None
@@ -165,19 +170,31 @@ class UNetTCNForecaster(nn.Module):
         temporal_hidden_channels: int,
     ) -> dict:
         config = dict(rainfall_conditioning or {})
+        mode = config.get("mode", "temporal_gate")
         normalized = {
             "enabled": bool(config.get("enabled", False)),
-            "mode": config.get("mode", "temporal_gate"),
+            "mode": mode,
             "hidden_channels": int(config.get("hidden_channels", max(bottleneck_channels // 2, 16))),
+            "residual_alpha": None,
         }
-        if normalized["mode"] != "temporal_gate":
+        allowed_modes = {"temporal_gate", "temporal_gate_residual"}
+        if normalized["mode"] not in allowed_modes:
             raise ValueError(
-                f"Unsupported rainfall_conditioning mode '{normalized['mode']}'. Expected 'temporal_gate'."
+                f"Unsupported rainfall_conditioning mode '{normalized['mode']}'. "
+                f"Expected one of {sorted(allowed_modes)}."
             )
         if normalized["hidden_channels"] <= 0:
             raise ValueError("rainfall_conditioning.hidden_channels must be > 0.")
         if normalized["hidden_channels"] > max(temporal_hidden_channels, bottleneck_channels) * 4:
             raise ValueError("rainfall_conditioning.hidden_channels is unexpectedly large.")
+        if normalized["mode"] == "temporal_gate_residual":
+            if "residual_alpha" not in config:
+                raise ValueError(
+                    "rainfall_conditioning.residual_alpha must be set explicitly for 'temporal_gate_residual'."
+                )
+            normalized["residual_alpha"] = float(config["residual_alpha"])
+            if not 0.0 <= normalized["residual_alpha"] <= 1.0:
+                raise ValueError("rainfall_conditioning.residual_alpha must be in [0, 1].")
         return normalized
 
     def forward(
