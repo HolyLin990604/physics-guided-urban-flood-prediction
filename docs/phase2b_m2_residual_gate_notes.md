@@ -104,23 +104,35 @@ The first tested version was:
 
 
 
-\## Current Result
+## Current Result
 
+### seed202
 
+Test result for `temporal_gate_residual (h16, alpha=0.10)`:
 
-\### seed202
+- RMSE = 0.04248711751087716
+- MAE = 0.01679978622613769
+- wet/dry IoU = 0.7754691996072468
+- rollout stability = 0.9906553751543948
 
+Interpretation:
 
+- did not improve over the previous Phase 2B h16 baseline
+- remained clearly worse than Phase 2A on the test set
 
-The residual gate version did not improve over the previous Phase 2B h16 baseline on the test set, and remained clearly worse than Phase 2A.
+### seed42
 
+Test result for `temporal_gate_residual (h16, alpha=0.10)`:
 
+- RMSE = 0.037440244598608265
+- MAE = 0.015006645533599351
+- wet/dry IoU = 0.8165401565401178
+- rollout stability = 0.991424908763484
 
-\### seed42
+Interpretation:
 
-
-
-The residual gate version did not preserve the original Phase 2B h16 advantage on the test set.
+- did not preserve the original Phase 2B h16 advantage on the test set
+- therefore did not justify promotion of the residual gate variant
 
 
 
