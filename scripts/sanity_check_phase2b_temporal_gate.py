@@ -88,6 +88,20 @@ def main() -> None:
     }
     response_split_identity_config = json.loads(json.dumps(response_split_config))
     response_split_identity_config["model"]["rainfall_conditioning"]["residual_alpha"] = 0.0
+    protected_response_split_config = json.loads(json.dumps(base_config))
+    protected_response_split_config.setdefault("model", {})
+    protected_response_split_config["model"]["rainfall_conditioning"] = {
+        "enabled": True,
+        "mode": "temporal_gate_residual_response_split_protected",
+        "hidden_channels": 64,
+        "residual_alpha": 0.10,
+        "conditioned_fraction": 0.50,
+        "active_fraction_within_response": 0.50,
+    }
+    protected_response_split_identity_config = json.loads(json.dumps(protected_response_split_config))
+    protected_response_split_identity_config["model"]["rainfall_conditioning"]["residual_alpha"] = 0.0
+    protected_response_split_full_active_config = json.loads(json.dumps(protected_response_split_config))
+    protected_response_split_full_active_config["model"]["rainfall_conditioning"]["active_fraction_within_response"] = 1.0
 
     torch.manual_seed(7)
     legacy_model = build_model(base_config["model"]).eval()
@@ -111,6 +125,12 @@ def main() -> None:
     response_split_model = build_model(response_split_config["model"]).eval()
     torch.manual_seed(7)
     response_split_identity_model = build_model(response_split_identity_config["model"]).eval()
+    torch.manual_seed(7)
+    protected_response_split_model = build_model(protected_response_split_config["model"]).eval()
+    torch.manual_seed(7)
+    protected_response_split_identity_model = build_model(protected_response_split_identity_config["model"]).eval()
+    torch.manual_seed(7)
+    protected_response_split_full_active_model = build_model(protected_response_split_full_active_config["model"]).eval()
     residual_model.load_state_dict(disabled_model.state_dict(), strict=False)
     residual_identity_model.load_state_dict(disabled_model.state_dict(), strict=False)
     partial_model.load_state_dict(disabled_model.state_dict(), strict=False)
@@ -120,6 +140,9 @@ def main() -> None:
     learned_selective_identity_model.load_state_dict(disabled_model.state_dict(), strict=False)
     response_split_model.load_state_dict(disabled_model.state_dict(), strict=False)
     response_split_identity_model.load_state_dict(disabled_model.state_dict(), strict=False)
+    protected_response_split_model.load_state_dict(disabled_model.state_dict(), strict=False)
+    protected_response_split_identity_model.load_state_dict(disabled_model.state_dict(), strict=False)
+    protected_response_split_full_active_model.load_state_dict(disabled_model.state_dict(), strict=False)
 
     legacy_keys = list(legacy_model.state_dict().keys())
     disabled_keys = list(disabled_model.state_dict().keys())
@@ -181,6 +204,28 @@ def main() -> None:
     with torch.no_grad():
         response_split_identity_final_linear.weight.fill_(0.5)
         response_split_identity_final_linear.bias.fill_(0.25)
+    protected_response_split_final_linear = protected_response_split_model.temporal_rainfall_gate.gate_mlp[-1]
+    if not isinstance(protected_response_split_final_linear, nn.Linear):
+        raise TypeError("Expected rainfall gate final layer to be nn.Linear.")
+    with torch.no_grad():
+        protected_response_split_final_linear.weight.fill_(0.5)
+        protected_response_split_final_linear.bias.fill_(0.25)
+    protected_response_split_identity_final_linear = (
+        protected_response_split_identity_model.temporal_rainfall_gate.gate_mlp[-1]
+    )
+    if not isinstance(protected_response_split_identity_final_linear, nn.Linear):
+        raise TypeError("Expected rainfall gate final layer to be nn.Linear.")
+    with torch.no_grad():
+        protected_response_split_identity_final_linear.weight.fill_(0.5)
+        protected_response_split_identity_final_linear.bias.fill_(0.25)
+    protected_response_split_full_active_final_linear = (
+        protected_response_split_full_active_model.temporal_rainfall_gate.gate_mlp[-1]
+    )
+    if not isinstance(protected_response_split_full_active_final_linear, nn.Linear):
+        raise TypeError("Expected rainfall gate final layer to be nn.Linear.")
+    with torch.no_grad():
+        protected_response_split_full_active_final_linear.weight.fill_(0.5)
+        protected_response_split_full_active_final_linear.bias.fill_(0.25)
 
     with torch.no_grad():
         _, _, batch = make_synthetic_batch(
@@ -256,6 +301,24 @@ def main() -> None:
             batch["future_rainfall"],
             batch["static_maps"],
         )
+        protected_response_split_output = protected_response_split_model(
+            batch["past_flood"],
+            batch["past_rainfall"],
+            batch["future_rainfall"],
+            batch["static_maps"],
+        )
+        protected_response_split_identity_output = protected_response_split_identity_model(
+            batch["past_flood"],
+            batch["past_rainfall"],
+            batch["future_rainfall"],
+            batch["static_maps"],
+        )
+        protected_response_split_full_active_output = protected_response_split_full_active_model(
+            batch["past_flood"],
+            batch["past_rainfall"],
+            batch["future_rainfall"],
+            batch["static_maps"],
+        )
 
     max_abs_diff = float((legacy_output - disabled_output).abs().max().item())
     residual_identity_diff = float((disabled_output - residual_identity_output).abs().max().item())
@@ -265,9 +328,23 @@ def main() -> None:
     learned_selective_init_diff = float((partial_output - learned_selective_output).abs().max().item())
     response_split_identity_diff = float((disabled_output - response_split_identity_output).abs().max().item())
     response_split_init_diff = float((partial_output - response_split_output).abs().max().item())
+    protected_response_split_identity_diff = float(
+        (disabled_output - protected_response_split_identity_output).abs().max().item()
+    )
+    protected_response_split_phase32_equivalence_diff = float(
+        (response_split_output - protected_response_split_full_active_output).abs().max().item()
+    )
     partial_mask_channels = int(partial_model.temporal_rainfall_gate.conditioned_mask.sum().item())
     response_split_channels = response_split_model.temporal_rainfall_gate.conditioned_channels
     response_split_memory_channels = response_split_model.temporal_rainfall_gate.memory_channels
+    protected_response_split_channels = protected_response_split_model.temporal_rainfall_gate.conditioned_channels
+    protected_response_split_memory_channels = protected_response_split_model.temporal_rainfall_gate.memory_channels
+    protected_response_split_anchor_channels = (
+        protected_response_split_model.temporal_rainfall_gate.anchor_response_channels
+    )
+    protected_response_split_active_channels = (
+        protected_response_split_model.temporal_rainfall_gate.active_response_channels
+    )
     learned_selective_selector = learned_selective_model.temporal_rainfall_gate._get_selector(
         device=learned_selective_model.temporal_rainfall_gate.conditioned_mask.device,
         dtype=learned_selective_model.temporal_rainfall_gate.conditioned_mask.dtype,
@@ -304,6 +381,17 @@ def main() -> None:
         "response_split_residual_alpha_zero_max_abs_diff": response_split_identity_diff,
         "response_split_residual_alpha_zero_is_identity": response_split_identity_diff == 0.0,
         "response_split_init_max_abs_diff_vs_partial": response_split_init_diff,
+        "protected_response_split_mode_output_shape": list(protected_response_split_output.shape),
+        "protected_response_split_mode_finite": bool(torch.isfinite(protected_response_split_output).all().item()),
+        "protected_response_split_response_channels": protected_response_split_channels,
+        "protected_response_split_memory_channels": protected_response_split_memory_channels,
+        "protected_response_split_anchor_response_channels": protected_response_split_anchor_channels,
+        "protected_response_split_active_response_channels": protected_response_split_active_channels,
+        "protected_response_split_residual_alpha_zero_max_abs_diff": protected_response_split_identity_diff,
+        "protected_response_split_residual_alpha_zero_is_identity": protected_response_split_identity_diff == 0.0,
+        "protected_response_split_full_active_max_abs_diff_vs_phase32": (
+            protected_response_split_phase32_equivalence_diff
+        ),
     }
     print(json.dumps(payload, indent=2))
 
