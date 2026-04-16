@@ -74,29 +74,30 @@ The following figure shows the region-averaged flood-depth time-series compariso
 
 ## Research Roadmap
 
-### Phase 1
-Baseline + output-space physics-guided losses:
-- non-negativity loss
-- wet/dry consistency loss
+```mermaid
+flowchart TD
+    A[Phase 1<br/>Baseline + output-space physics losses] --> B[Phase 2<br/>Rainfall-conditioning exploration]
+    B --> C[Phase 3<br/>Structured refinement exploration]
 
-### Phase 2
-Rainfall-conditioning architecture exploration:
-- residual gate variants
-- partial gate variants
-- multi-seed validation
-- identification of current best-balanced direction: **M3 f025**
+    A --> A1[non-negativity loss<br/>wet/dry consistency loss]
+    B --> B1[M2 residual gate<br/>M3 partial gate<br/>multi-seed validation]
+    C --> C1[3.1 learned selective<br/>3.2 response split<br/>3.3 protected response split]
 
-### Phase 3
-Structured rainfall-conditioning exploration:
-- Phase 3.1: learned selective modulation
-- Phase 3.2: response split
-- Phase 3.3: protected response split
+    B1 --> D[Current best-balanced architecture<br/>M3 f025]
+    C1 --> E[Best structured refinement<br/>Phase 3.3 af025]
 
-Final Phase 3 conclusion:
-- free learned channel selection is not the main answer
-- structured memory/response separation is meaningful
-- protected and conservative response modulation is the strongest structured refinement direction
-- but M3 f025 remains the current global best-balanced architecture
+    D --> F[Project conclusion]
+    E --> F
+
+    F[Current conclusion:<br/>M3 f025 remains overall best-balanced;<br/>Phase 3.3 af025 is strongest structured refinement]
+
+### Summary
+
+- Phase 1 established the output-space physics-guided baseline.
+- Phase 2 identified **M3 f025** as the current best-balanced architecture.
+- Phase 3 explored more structured modulation designs and identified **Phase 3.3 af025** as the strongest structured refinement.
+- The overall best-balanced architecture still remains **M3 f025**.
+
 
 ## Branch Guide
 
