@@ -58,18 +58,42 @@ flowchart LR
 
 ## Qualitative Examples
 
-### Spatial Inundation Comparison
+### Baseline vs Phase 1
 
-The following figure shows a representative unified spatial comparison of target, prediction, and error patterns for the flood depth field.
+#### Spatial Inundation Comparison
 
-![Spatial inundation comparison](assets/images/comparison_epoch19_step11_unified.png)
+![Baseline vs Phase 1 spatial comparison](assets/images/comparison_epoch19_step11_unified.png)
 
-### Region-Averaged Process Comparison
+#### Region-Averaged Process Comparison
 
-The following figure shows the region-averaged flood-depth time-series comparison for a representative forecast case.
+![Baseline vs Phase 1 process comparison](assets/images/comparison_timeseries_epoch19_regionavg.png)
 
-![Region-averaged process comparison](assets/images/comparison_timeseries_epoch19_regionavg.png)
+### Phase 2A vs Phase 2B h16 on Difficult Case (`seed202`)
 
+#### Spatial Inundation Comparison
+
+![Phase 2A vs Phase 2B h16 seed202 spatial comparison](assets/images/comparison_maps_seed202_test_batch0000.png)
+
+#### Region-Averaged Process Comparison
+
+![Phase 2A vs Phase 2B h16 seed202 process comparison](assets/images/comparison_timeseries_seed202_test_batch0000.png)
+
+## More Qualitative Figures
+
+<details>
+<summary>Expand additional favorable-case comparisons</summary>
+
+### Phase 2A vs Phase 2B h16 on Favorable Case (`seed42`)
+
+#### Spatial Inundation Comparison
+
+![Phase 2A vs Phase 2B h16 seed42 spatial comparison](assets/images/comparison_maps_seed42_test_batch0000.png)
+
+#### Region-Averaged Process Comparison
+
+![Phase 2A vs Phase 2B h16 seed42 process comparison](assets/images/comparison_timeseries_seed42_test_batch0000.png)
+
+</details>
 
 
 ## Research Roadmap
