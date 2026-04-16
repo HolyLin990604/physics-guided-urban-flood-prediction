@@ -25,9 +25,11 @@ class RainfallConditionedTemporalGate(nn.Module):
         hidden_channels: int,
         residual_alpha: float | None = None,
         conditioned_fraction: float = 1.0,
+        learned_selective: bool = False,
     ) -> None:
         super().__init__()
         self.residual_alpha = residual_alpha
+        self.learned_selective = learned_selective
         conditioned_channels = int(feature_channels * conditioned_fraction)
         conditioned_mask = torch.zeros(feature_channels, dtype=torch.float32)
         if conditioned_channels > 0:
@@ -43,6 +45,27 @@ class RainfallConditionedTemporalGate(nn.Module):
             raise TypeError("Expected final layer of rainfall gate MLP to be nn.Linear.")
         nn.init.zeros_(final_linear.weight)
         nn.init.zeros_(final_linear.bias)
+        if self.learned_selective:
+            selector_prior_logits = torch.full((feature_channels,), -8.0, dtype=torch.float32)
+            if conditioned_channels > 0:
+                selector_prior_logits[-conditioned_channels:] = 8.0
+            self.register_buffer(
+                "selector_prior_logits",
+                selector_prior_logits.view(1, 1, feature_channels, 1, 1),
+            )
+            self.selector_logits = nn.Parameter(torch.zeros(1, 1, feature_channels, 1, 1))
+        else:
+            self.register_buffer("selector_prior_logits", torch.zeros(1, 1, feature_channels, 1, 1))
+            self.selector_logits = None
+
+    def _get_selector(self, *, device: torch.device, dtype: torch.dtype) -> torch.Tensor:
+        if self.selector_logits is None:
+            return self.conditioned_mask.to(device=device, dtype=dtype)
+        selector_logits = self.selector_prior_logits.to(device=device, dtype=dtype) + self.selector_logits.to(
+            device=device,
+            dtype=dtype,
+        )
+        return torch.sigmoid(selector_logits)
 
     def forward(self, temporal_context: torch.Tensor, future_rainfall: torch.Tensor) -> torch.Tensor:
         assert_rank("temporal_context", temporal_context, 4)
@@ -59,7 +82,7 @@ class RainfallConditionedTemporalGate(nn.Module):
         gate = torch.tanh(gate).view(batch_size, future_steps, channels, 1, 1)
         if self.residual_alpha is not None:
             gate = gate * self.residual_alpha
-        gate = gate * self.conditioned_mask.to(device=gate.device, dtype=gate.dtype)
+        gate = gate * self._get_selector(device=gate.device, dtype=gate.dtype)
         return temporal_context.unsqueeze(1) * (1.0 + gate)
 
 
@@ -145,6 +168,7 @@ class UNetTCNForecaster(nn.Module):
                 hidden_channels=self.rainfall_conditioning["hidden_channels"],
                 residual_alpha=self.rainfall_conditioning["residual_alpha"],
                 conditioned_fraction=self.rainfall_conditioning["conditioned_fraction"],
+                learned_selective=self.rainfall_conditioning["mode"] == "temporal_gate_residual_learned_selective",
             )
         else:
             self.temporal_rainfall_gate = None
@@ -186,7 +210,12 @@ class UNetTCNForecaster(nn.Module):
             "residual_alpha": None,
             "conditioned_fraction": 1.0,
         }
-        allowed_modes = {"temporal_gate", "temporal_gate_residual", "temporal_gate_residual_partial"}
+        allowed_modes = {
+            "temporal_gate",
+            "temporal_gate_residual",
+            "temporal_gate_residual_partial",
+            "temporal_gate_residual_learned_selective",
+        }
         if normalized["mode"] not in allowed_modes:
             raise ValueError(
                 f"Unsupported rainfall_conditioning mode '{normalized['mode']}'. "
@@ -204,16 +233,19 @@ class UNetTCNForecaster(nn.Module):
             normalized["residual_alpha"] = float(config["residual_alpha"])
             if not 0.0 <= normalized["residual_alpha"] <= 1.0:
                 raise ValueError("rainfall_conditioning.residual_alpha must be in [0, 1].")
-        if normalized["mode"] == "temporal_gate_residual_partial":
+        if normalized["mode"] in {
+            "temporal_gate_residual_partial",
+            "temporal_gate_residual_learned_selective",
+        }:
             if "residual_alpha" not in config:
                 raise ValueError(
                     "rainfall_conditioning.residual_alpha must be set explicitly for "
-                    "'temporal_gate_residual_partial'."
+                    f"'{normalized['mode']}'."
                 )
             if "conditioned_fraction" not in config:
                 raise ValueError(
                     "rainfall_conditioning.conditioned_fraction must be set explicitly for "
-                    "'temporal_gate_residual_partial'."
+                    f"'{normalized['mode']}'."
                 )
             normalized["residual_alpha"] = float(config["residual_alpha"])
             if not 0.0 <= normalized["residual_alpha"] <= 1.0:
