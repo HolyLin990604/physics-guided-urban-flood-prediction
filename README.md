@@ -89,7 +89,8 @@ flowchart TD
     D --> F[Project conclusion]
     E --> F
 
-    F[Current conclusion:<br/>M3 f025 remains overall best-balanced;<br/>Phase 3.3 af025 is strongest structured refinement]
+    F[Current conclusion:<br/>M3 f025 remains overall best-balanced<br/>Phase 3.3 af025 is strongest structured refinement]
+```
 
 ### Summary
 
@@ -97,7 +98,6 @@ flowchart TD
 - Phase 2 identified **M3 f025** as the current best-balanced architecture.
 - Phase 3 explored more structured modulation designs and identified **Phase 3.3 af025** as the strongest structured refinement.
 - The overall best-balanced architecture still remains **M3 f025**.
-
 
 ## Branch Guide
 
