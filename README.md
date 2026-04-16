@@ -1,45 +1,92 @@
 # Physics-Guided Urban Flood Process Prediction
 
-A research prototype for physics-guided urban flood process prediction based on a U-Net + TCN framework.
+A research prototype for physics-guided urban flood process prediction based on a U-Net + TCN framework, with staged exploration of physics-guided losses and structured rainfall-conditioning architectures.
 
-## Method Diagram
+## Current Project Status
 
-```mermaid
-flowchart LR
-    A[Past flood sequence] --> B[U-Net encoder]
-    C[Past rainfall sequence] --> D[Temporal conditioning]
-    E[Future rainfall sequence] --> D
-    F[Static maps<br/>DEM / impervious / manhole] --> B
+### Current best-balanced architecture
 
-    B --> G[TCN temporal module]
-    D --> G
-    G --> H[Decoder]
-    H --> I[Predicted future flood depth field]
+The current best-balanced architecture is:
 
-    I --> J[Data loss]
-    I --> K[Non-negativity loss]
-    I --> L[Wet/dry consistency loss]
-```
+`temporal_gate_residual_partial`  
+`hidden_channels = 16`  
+`residual_alpha = 0.10`  
+`conditioned_fraction = 0.25`
 
-## Overview
+This corresponds to the current **M3 f025** direction.
 
-This repository implements a spatiotemporal urban flood forecasting prototype using the UrbanFlood24 Lite dataset.  
-The baseline model is built on a U-Net + TCN architecture for multi-step flood process prediction.
+### Current best structured refinement direction
 
-On top of the baseline, a Phase 1 physics-guided model is implemented by adding two output-space regularization terms:
+The strongest structured refinement discovered so far is:
 
-- Non-negativity loss
-- Wet/dry consistency loss
+`temporal_gate_residual_response_split_protected`  
+`hidden_channels = 16`  
+`residual_alpha = 0.10`  
+`conditioned_fraction = 0.25`  
+`active_fraction_within_response = 0.25`
 
-These physics-guided losses are imposed on the predicted future flood depth field at the output layer, while the backbone architecture remains unchanged.
+This is the final best Phase 3 variant, but it does **not yet surpass** M3 f025 as the overall best-balanced architecture.
 
-## Current Mainline
+## Research Roadmap
 
-The current stable mainline is:
+### Phase 1
+Baseline + output-space physics-guided losses:
+- non-negativity loss
+- wet/dry consistency loss
 
-Phase 1 = Baseline + non-negativity loss + wet/dry consistency loss
+### Phase 2
+Rainfall-conditioning architecture exploration:
+- residual gate variants
+- partial gate variants
+- multi-seed validation
+- identification of current best-balanced direction: **M3 f025**
 
-In our current experiments, Phase 1 consistently outperforms the pure baseline under the same 20-epoch setting.
+### Phase 3
+Structured rainfall-conditioning exploration:
+- Phase 3.1: learned selective modulation
+- Phase 3.2: response split
+- Phase 3.3: protected response split
+
+Final Phase 3 conclusion:
+- free learned channel selection is not the main answer
+- structured memory/response separation is meaningful
+- protected and conservative response modulation is the strongest structured refinement direction
+- but M3 f025 remains the current global best-balanced architecture
+
+## Branch Guide
+
+The repository uses branch-based stage archives.
+
+### Main branches
+
+- `main`  
+  Stable presentation branch for the current project summary and entry point.
+
+- `phase2b-m3-partial-gate`  
+  Archive of the M3 partial-gate exploration and Phase 2 best-balanced direction.
+
+- `phase3-structured-selective-modulation`  
+  Archive of Phase 3.1 learned-selective exploration.
+
+- `phase3-2-structured-response-split`  
+  Archive of Phase 3.2 response-split exploration.
+
+- `phase3-3-protected-response-split`  
+  Archive of final Phase 3 protected response-split exploration and Phase 3 summary.
+
+## Repository Structure
+
+```text
+configs/
+datasets/
+docs/
+models/
+scripts/
+trainers/
+utils/
+compare_maps.py
+compare_timeseries.py
+README.md
 
 ## Dataset
 
@@ -56,94 +103,68 @@ data/
 
 The dataset contains:
 
- Dynamic flood depth sequences (`flood.npy`)
- Rainfall forcing sequences (`rainfall.npy`)
- Static geospatial factors:
-
-   `absolute_DEM.npy`
-   `impervious.npy`
-   `manhole.npy`
+- dynamic flood depth sequences
+- rainfall forcing sequences
+- static geospatial factors:
+  - `absolute_DEM.npy`
+  - `impervious.npy`
+  - `manhole.npy`
 
 ## Task Definition
 
 The task is multi-step flood process prediction.
 
-Inputs:
+### Inputs
 
-Past flood sequence
-Past rainfall sequence
-Future rainfall sequence
-Static maps
+- past flood sequence
+- past rainfall sequence
+- future rainfall sequence
+- static maps
 
-Output:
+### Output
 
-Future flood depth sequence
+- future flood depth sequence
 
-In the current setup, the model uses:
+Current setup:
 
- `input_steps = 12`
- `pred_steps = 12`
+`input_steps = 12`  
+`pred_steps = 12`
 
-## Method
+## Model Backbone
 
-### Baseline
+The common forecasting backbone is based on:
 
- Backbone: U-Net + TCN
- Pure data-driven flood process prediction
-
-### Phase 1 Physics Guidance
-
-The Phase 1 model keeps the same backbone as the baseline, but adds two physics-guided loss terms on the predicted future flood depth field:
-
-`L_total = L_data + λ1  L_nonneg + λ2  L_wd`
-
-where:
-
- `L_data` = data fidelity loss
- `L_nonneg` = non-negativity loss
- `L_wd` = wet/dry consistency loss
-
-These constraints are applied at the output layer, rather than inside the encoder, decoder, or temporal module.
-
-## Repository Structure
-
-```text
-configs/
-datasets/
-models/
-scripts/
-trainers/
-utils/
-compare_maps.py
-compare_timeseries.py
-README.md
-```
+- U-Net spatial encoder-decoder
+- TCN temporal module
+- rainfall-conditioned temporal modulation variants
 
 ## Environment
 
 Recommended environment:
 
 ```bash
-conda create -n flood python=3.8 -y
-conda activate flood
+conda create -n urnn python=3.10 -y
+conda activate urnn
 pip install -r requirements.txt
 ```
 
 ## Training
 
-Train the baseline model:
+Example:
 
 ```bash
-python scripts/train_model.py --config configs/train_baseline.json
+python scripts/train_model.py --config <your_config>.json
 ```
 
-Train the Phase 1 model:
+## Evaluation
+
+Example:
 
 ```bash
-python scripts/train_model.py --config configs/train_stage2b_phase1.json
+python scripts/evaluate_model.py --config <your_config>.json
 ```
 
-## Evaluation and Visualization
+## Visualization
 
 Example scripts:
 
@@ -152,53 +173,26 @@ python compare_maps.py
 python compare_timeseries.py
 ```
 
-## Current Results
+## Key Project-Level Conclusions
 
-Under the same 20-epoch setting, the current validated results are:
+1. Lightweight output-space physics guidance improves over the pure baseline.
+2. Residual partial rainfall gating is currently the best-balanced architecture direction.
+3. Structured response-split ideas are meaningful, especially for difficult cases.
+4. Protected response split is the strongest structured refinement discovered so far.
+5. However, no Phase 3 structured variant has yet fully surpassed M3 f025 as the overall best-balanced solution.
 
-| Model    | Val RMSE | Val MAE | Val wet/dry IoU | Val rollout stability |
-| -------- | -------: | ------: | --------------: | --------------------: |
-| Baseline |   0.0774 |  0.0236 |          0.4281 |                0.9919 |
-| Phase 1  |   0.0541 |  0.0185 |          0.6167 |                0.9915 |
+## Documentation
 
-These results indicate that lightweight output-space physics guidance can improve both flood depth prediction accuracy and wet-region boundary recovery without degrading rollout stability.
-## Qualitative Examples
+Detailed experimental notes are stored in `docs/`, including:
 
-### Spatial Comparison
-
-![Spatial comparison](assets/images/comparison_epoch19_step11_unified.png)
-
-A qualitative comparison at the final forecast step shows that the Phase 1 model recovers the main inundation belt and local wet regions more completely than the baseline, while also yielding a smaller absolute error range.
-
-### Region-Averaged Process Comparison
-
-![Region-averaged process comparison](assets/images/comparison_timeseries_epoch19_regionavg.png)
-
-For the representative event, both models capture the overall recession trend of region-averaged water depth, while the Phase 1 model remains closer to the target in the early-to-middle forecast steps.
-
-## Current Limitations
-
-This repository is a research prototype, not a production-ready engineering system.
-
-Current limitations include:
-
- Results are currently validated on UrbanFlood24 Lite
- More repeated experiments with different random seeds are still needed
- More external baselines can be added
- More advanced physics terms have not yet shown stable gains
-
-## Future Work
-
-Planned extensions include:
-
- Test-set evaluation
- Multi-seed experiments
- Stronger baselines
- More advanced hydrodynamic knowledge embedding
- Cross-scenario generalization analysis
+- Phase 2 multi-seed summaries
+- Phase 2 qualitative comparison notes
+- M2 and M3 archive notes
+- Phase 3.1 notes
+- Phase 3.2 notes
+- Phase 3.3 notes
+- overall `phase3_summary.md`
 
 ## License
 
-MIT License.
-
-
+MIT
