@@ -27,6 +27,35 @@ The strongest structured refinement discovered so far is:
 
 This is the final best Phase 3 variant, but it does **not yet surpass** M3 f025 as the overall best-balanced architecture.
 
+## Quick Results Snapshot
+
+| Variant | Seed202 RMSE | Seed202 MAE | Seed202 IoU | Seed42 RMSE | Seed42 MAE | Seed42 IoU | Role |
+|---|---:|---:|---:|---:|---:|---:|---|
+| M3 f025 | 0.040568 | 0.016056 | 0.795732 | 0.035211 | 0.013695 | 0.830558 | Current best-balanced |
+| Phase 3.3 af025 | 0.039514 | 0.015807 | 0.801322 | 0.038861 | 0.014598 | 0.800325 | Best structured refinement |
+
+Interpretation:
+
+- M3 f025 remains the overall best-balanced architecture.
+- Phase 3.3 af025 is the strongest structured refinement discovered so far.
+- Phase 3.3 af025 improves over M3 on the difficult case (`seed202`), but still does not surpass M3 on the favorable case (`seed42`).
+
+## Stage Evolution
+
+```mermaid
+flowchart LR
+    A[Phase 2<br/>M3 f025] --> B[Phase 3.1<br/>Learned selective]
+    B --> C[Phase 3.2<br/>Response split]
+    C --> D[Phase 3.3<br/>Protected response split]
+    D --> E[Final Phase 3 best<br/>af025]
+
+    A --> A1[Best-balanced mainline]
+    B --> B1[Freer selector<br/>not enough]
+    C --> C1[Strong difficult-case gain<br/>too aggressive]
+    D --> D1[More conservative<br/>better balance]
+    E --> E1[Best Phase 3 variant<br/>but still below M3 overall]
+```
+
 ## Research Roadmap
 
 ### Phase 1
