@@ -145,6 +145,21 @@ Interpretation:
 - `f050` weakens the strong-case advantage too much
 - `f025` is the more balanced choice across seeds
 
+### seed123
+
+#### f025
+
+- RMSE = 0.0348767723496023
+- MAE = 0.014442356401368192
+- wet/dry IoU = 0.8356670078478361
+- rollout stability = 0.9905538778556021
+
+Interpretation:
+
+- `f025` also performs strongly on a third seed
+- this result supports that the M3 partial-gate direction is not limited to only `seed42` and `seed202`
+- the three-seed picture is now broadly consistent: `f025` is the best-balanced M3 setting
+
 ## Current Conclusion
 
 M3 is substantially more successful than M2.
@@ -159,11 +174,12 @@ The key conclusion is:
 `residual_alpha = 0.10`  
 `conditioned_fraction = 0.25`
 
-Additional interpretation:
+Updated interpretation after the third-seed check:
 
 - `conditioned_fraction = 0.50` helps slightly on the `seed202` risk case
 - but it hurts the `seed42` favorable case
-- therefore `f025` is currently preferred as the best-balanced M3 setting
+- `conditioned_fraction = 0.25` remains the most balanced option across seeds
+- `f025` is now supported by three seeds: `42`, `202`, and `123`
 
 ## Position Relative to Current Mainline
 
@@ -174,4 +190,4 @@ At the current stage:
 
 M3 does not yet replace the primary candidate.
 
-However, M3 `f025` is the first new Phase 2B direction that behaves reasonably on both the risk case and the favorable case, and is therefore worth preserving as the current best next-step architecture direction.
+However, M3 `f025` is now the first new Phase 2B direction with initial support from three seeds, and is therefore worth preserving as the current best next-step architecture direction.
