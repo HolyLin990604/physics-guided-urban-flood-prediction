@@ -26,11 +26,15 @@ class RainfallConditionedTemporalGate(nn.Module):
         residual_alpha: float | None = None,
         conditioned_fraction: float = 1.0,
         learned_selective: bool = False,
+        response_split: bool = False,
     ) -> None:
         super().__init__()
         self.residual_alpha = residual_alpha
         self.learned_selective = learned_selective
+        self.response_split = response_split
         conditioned_channels = int(feature_channels * conditioned_fraction)
+        self.conditioned_channels = conditioned_channels
+        self.memory_channels = feature_channels - conditioned_channels
         conditioned_mask = torch.zeros(feature_channels, dtype=torch.float32)
         if conditioned_channels > 0:
             conditioned_mask[-conditioned_channels:] = 1.0
@@ -38,7 +42,7 @@ class RainfallConditionedTemporalGate(nn.Module):
         self.gate_mlp = nn.Sequential(
             nn.Linear(rainfall_channels, hidden_channels),
             nn.SiLU(inplace=True),
-            nn.Linear(hidden_channels, feature_channels),
+            nn.Linear(hidden_channels, conditioned_channels if response_split else feature_channels),
         )
         final_linear = self.gate_mlp[-1]
         if not isinstance(final_linear, nn.Linear):
@@ -79,6 +83,22 @@ class RainfallConditionedTemporalGate(nn.Module):
             )
 
         gate = self.gate_mlp(future_rainfall.reshape(batch_size * future_steps, rain_channels))
+        if self.response_split:
+            if self.conditioned_channels == 0:
+                return temporal_context.unsqueeze(1).expand(-1, future_steps, -1, -1, -1)
+
+            gate = torch.tanh(gate).view(batch_size, future_steps, self.conditioned_channels, 1, 1)
+            if self.residual_alpha is not None:
+                gate = gate * self.residual_alpha
+
+            memory_context = temporal_context[:, : self.memory_channels]
+            response_context = temporal_context[:, self.memory_channels :]
+            conditioned_response = response_context.unsqueeze(1) * (1.0 + gate)
+            if self.memory_channels == 0:
+                return conditioned_response
+            preserved_memory = memory_context.unsqueeze(1).expand(-1, future_steps, -1, -1, -1)
+            return torch.cat([preserved_memory, conditioned_response], dim=2)
+
         gate = torch.tanh(gate).view(batch_size, future_steps, channels, 1, 1)
         if self.residual_alpha is not None:
             gate = gate * self.residual_alpha
@@ -169,6 +189,7 @@ class UNetTCNForecaster(nn.Module):
                 residual_alpha=self.rainfall_conditioning["residual_alpha"],
                 conditioned_fraction=self.rainfall_conditioning["conditioned_fraction"],
                 learned_selective=self.rainfall_conditioning["mode"] == "temporal_gate_residual_learned_selective",
+                response_split=self.rainfall_conditioning["mode"] == "temporal_gate_residual_response_split",
             )
         else:
             self.temporal_rainfall_gate = None
@@ -215,6 +236,7 @@ class UNetTCNForecaster(nn.Module):
             "temporal_gate_residual",
             "temporal_gate_residual_partial",
             "temporal_gate_residual_learned_selective",
+            "temporal_gate_residual_response_split",
         }
         if normalized["mode"] not in allowed_modes:
             raise ValueError(
@@ -236,6 +258,7 @@ class UNetTCNForecaster(nn.Module):
         if normalized["mode"] in {
             "temporal_gate_residual_partial",
             "temporal_gate_residual_learned_selective",
+            "temporal_gate_residual_response_split",
         }:
             if "residual_alpha" not in config:
                 raise ValueError(
