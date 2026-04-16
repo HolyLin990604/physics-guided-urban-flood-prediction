@@ -56,6 +56,22 @@ flowchart LR
     E --> E1[Best Phase 3 variant<br/>but still below M3 overall]
 ```
 
+## Qualitative Examples
+
+### Spatial Inundation Comparison
+
+The following figure shows a representative unified spatial comparison of target, prediction, and error patterns for the flood depth field.
+
+![Spatial inundation comparison](assets/images/comparison_epoch19_step11_unified.png)
+
+### Region-Averaged Process Comparison
+
+The following figure shows the region-averaged flood-depth time-series comparison for a representative forecast case.
+
+![Region-averaged process comparison](assets/images/comparison_timeseries_epoch19_regionavg.png)
+
+
+
 ## Research Roadmap
 
 ### Phase 1
