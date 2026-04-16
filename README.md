@@ -1,84 +1,200 @@
+> [!NOTE]
+> This is an archived experiment branch for **Phase 3.2 response split**.
+>
+> - Latest project overview and current homepage README are maintained on `main`.
+> - Branch-specific notes for this stage:
+>   - `docs/phase3_2_response_split_notes.md`
+> - Current project-level conclusion:
+>   - **M3 f025** remains the current best-balanced architecture.
+>   - **Phase 3.2 response split** was an important structured step, but it remained too aggressive to replace M3 overall.
+
+
 # Physics-Guided Urban Flood Process Prediction
 
-A research prototype for physics-guided urban flood process prediction based on a U-Net + TCN framework.
+A research prototype for physics-guided urban flood process prediction based on a U-Net + TCN framework, with staged exploration of physics-guided losses and structured rainfall-conditioning architectures.
 
-## Method Diagram
+## Current Project Status
+
+### Current best-balanced architecture
+
+The current best-balanced architecture is:
+
+`temporal_gate_residual_partial`  
+`hidden_channels = 16`  
+`residual_alpha = 0.10`  
+`conditioned_fraction = 0.25`
+
+This corresponds to the current **M3 f025** direction.
+
+### Current best structured refinement direction
+
+The strongest structured refinement discovered so far is:
+
+`temporal_gate_residual_response_split_protected`  
+`hidden_channels = 16`  
+`residual_alpha = 0.10`  
+`conditioned_fraction = 0.25`  
+`active_fraction_within_response = 0.25`
+
+This is the final best Phase 3 variant, but it does **not yet surpass** M3 f025 as the overall best-balanced architecture.
+
+## Quick Results Snapshot
+
+| Variant | Seed202 RMSE | Seed202 MAE | Seed202 IoU | Seed42 RMSE | Seed42 MAE | Seed42 IoU | Role |
+|---|---:|---:|---:|---:|---:|---:|---|
+| M3 f025 | 0.040568 | 0.016056 | 0.795732 | 0.035211 | 0.013695 | 0.830558 | Current best-balanced |
+| Phase 3.3 af025 | 0.039514 | 0.015807 | 0.801322 | 0.038861 | 0.014598 | 0.800325 | Best structured refinement |
+
+Interpretation:
+
+- M3 f025 remains the overall best-balanced architecture.
+- Phase 3.3 af025 is the strongest structured refinement discovered so far.
+- Phase 3.3 af025 improves over M3 on the difficult case (`seed202`), but still does not surpass M3 on the favorable case (`seed42`).
+
+## Stage Evolution
 
 ```mermaid
 flowchart LR
-    A[Past flood sequence] --> B[U-Net encoder]
-    C[Past rainfall sequence] --> D[Temporal conditioning]
-    E[Future rainfall sequence] --> D
-    F[Static maps<br/>DEM / impervious / manhole] --> B
+    A[Phase 2<br/>M3 f025] --> B[Phase 3.1<br/>Learned selective]
+    B --> C[Phase 3.2<br/>Response split]
+    C --> D[Phase 3.3<br/>Protected response split]
+    D --> E[Final Phase 3 best<br/>af025]
 
-    B --> G[TCN temporal module]
-    D --> G
-    G --> H[Decoder]
-    H --> I[Predicted future flood depth field]
-
-    I --> J[Data loss]
-    I --> K[Non-negativity loss]
-    I --> L[Wet/dry consistency loss]
-    I --> M[Rainfall-depth consistency loss]
-    E --> M
+    A --> A1[Best-balanced mainline]
+    B --> B1[Freer selector<br/>not enough]
+    C --> C1[Strong difficult-case gain<br/>too aggressive]
+    D --> D1[More conservative<br/>better balance]
+    E --> E1[Best Phase 3 variant<br/>but still below M3 overall]
 ```
 
-## Overview
+## Qualitative Examples
 
-This repository implements a spatiotemporal urban flood forecasting prototype using the UrbanFlood24 Lite dataset.  
-The baseline model is built on a U-Net + TCN architecture for multi-step flood process prediction.
+### Baseline vs Phase 1
 
-On top of the baseline, a Phase 1 physics-guided model is implemented by adding two output-space regularization terms:
+#### Spatial Inundation Comparison
 
-- Non-negativity loss
-- Wet/dry consistency loss
+![Baseline vs Phase 1 spatial comparison](assets/images/comparison_epoch19_step11_unified.png)
 
-These physics-guided losses are imposed on the predicted future flood depth field at the output layer, while the backbone architecture remains unchanged.
+#### Region-Averaged Process Comparison
 
-## Current Mainline
+![Baseline vs Phase 1 process comparison](assets/images/comparison_timeseries_epoch19_regionavg.png)
 
-The current Phase 2 conclusion is:
+### Phase 2A vs Phase 2B h16 on Difficult Case (`seed202`)
 
-- Primary candidate: Phase 2A (40 epochs)
-- Strong alternative: Phase 2B h16 (40 epochs, rainfall-conditioned temporal gate)
+#### Spatial Inundation Comparison
 
-This conclusion is based on completed 40-epoch multi-seed validation, test-set evaluation, and paired qualitative comparison.
+![Phase 2A vs Phase 2B h16 seed202 spatial comparison](assets/images/comparison_maps_seed202_test_batch0000.png)
 
-## Phase 2 Documentation
+#### Region-Averaged Process Comparison
 
-For the latest Phase 2 experiment summaries, see:
+![Phase 2A vs Phase 2B h16 seed202 process comparison](assets/images/comparison_timeseries_seed202_test_batch0000.png)
 
-- `docs/phase2_40e_multiseed_summary.md`
-- `docs/phase2_40e_multiseed_test_summary.md`
-- `docs/phase2_qualitative_comparison_notes.md`
+## More Qualitative Figures
 
+<details>
+<summary>Expand additional favorable-case comparisons</summary>
+
+### Phase 2A vs Phase 2B h16 on Favorable Case (`seed42`)
+
+#### Spatial Inundation Comparison
+
+![Phase 2A vs Phase 2B h16 seed42 spatial comparison](assets/images/comparison_maps_seed42_test_batch0000.png)
+
+#### Region-Averaged Process Comparison
+
+![Phase 2A vs Phase 2B h16 seed42 process comparison](assets/images/comparison_timeseries_seed42_test_batch0000.png)
+
+</details>
+
+
+## Research Roadmap
+
+```mermaid
+flowchart TD
+    A[Phase 1<br/>Baseline + output-space physics losses] --> B[Phase 2<br/>Rainfall-conditioning exploration]
+    B --> C[Phase 3<br/>Structured refinement exploration]
+
+    A --> A1[non-negativity loss<br/>wet/dry consistency loss]
+    B --> B1[M2 residual gate<br/>M3 partial gate<br/>multi-seed validation]
+    C --> C1[3.1 learned selective<br/>3.2 response split<br/>3.3 protected response split]
+
+    B1 --> D[Current best-balanced architecture<br/>M3 f025]
+    C1 --> E[Best structured refinement<br/>Phase 3.3 af025]
+
+    D --> F[Project conclusion]
+    E --> F
+
+    F[Current conclusion:<br/>M3 f025 remains overall best-balanced<br/>Phase 3.3 af025 is strongest structured refinement]
+```
+
+### Summary
+
+- Phase 1 established the output-space physics-guided baseline.
+- Phase 2 identified **M3 f025** as the current best-balanced architecture.
+- Phase 3 explored more structured modulation designs and identified **Phase 3.3 af025** as the strongest structured refinement.
+- The overall best-balanced architecture still remains **M3 f025**.
+
+## Branch Guide
+
+The repository uses branch-based stage archives.
+
+### Main branches
+
+- `main`  
+  Stable presentation branch for the current project summary and entry point.
+
+- `phase2b-m3-partial-gate`  
+  Archive of the M3 partial-gate exploration and Phase 2 best-balanced direction.
+
+- `phase3-structured-selective-modulation`  
+  Archive of Phase 3.1 learned-selective exploration.
+
+- `phase3-2-structured-response-split`  
+  Archive of Phase 3.2 response-split exploration.
+
+- `phase3-3-protected-response-split`  
+  Archive of final Phase 3 protected response-split exploration and Phase 3 summary.
+
+## Repository Structure
+
+```text
+configs/
+datasets/
+docs/
+models/
+scripts/
+trainers/
+utils/
+compare_maps.py
+compare_timeseries.py
+README.md
+```
 
 ## Dataset
 
-This project uses the **UrbanFlood24 Lite** dataset.
+This project uses the UrbanFlood24 Lite dataset.
 
 Expected dataset directory:
 
 ```text
 data/
-  urbanflood24_lite/
-    train/
-    test/
+└─ urbanflood24_lite/
+   ├─ train/
+   └─ test/
 ```
 
-The dataset includes:
+The dataset contains:
 
-- dynamic flood depth sequences: `flood.npy`
-- rainfall forcing sequences: `rainfall.npy`
+- dynamic flood depth sequences
+- rainfall forcing sequences
 - static geospatial factors:
   - `absolute_DEM.npy`
   - `impervious.npy`
   - `manhole.npy`
 
-
 ## Task Definition
 
-This project studies **multi-step flood process prediction**.
+The task is multi-step flood process prediction.
 
 ### Inputs
 
@@ -91,161 +207,74 @@ This project studies **multi-step flood process prediction**.
 
 - future flood depth sequence
 
-In the current setup, the model uses:
+Current setup:
 
-- `input_steps = 12`
-- `pred_steps = 12`
+`input_steps = 12`  
+`pred_steps = 12`
 
+## Model Backbone
 
-## Method
+The common forecasting backbone is based on:
 
-### Backbone
-
-The forecasting backbone is based on a U-Net + TCN style spatiotemporal model.
-
-### Physics-guided strategy
-
-This repository mainly explores two directions:
-
-- Phase 2A: loss-only physics-guided refinement
-- Phase 2B h16: Phase 2A losses plus a lightweight rainfall-conditioned temporal gate
-
-### Phase 2A
-
-Phase 2A keeps the backbone architecture unchanged and refines the loss design with physics-guided constraints, including:
-
-- non-negativity related behavior
-- wet/dry consistency related behavior
-- rainfall-depth consistency refinement
-
-### Phase 2B h16
-
-Phase 2B h16 keeps the Phase 2A loss system and adds one optional architecture-level module:
-
-- rainfall-conditioned temporal gate
+- U-Net spatial encoder-decoder
+- TCN temporal module
+- rainfall-conditioned temporal modulation variants
 
 ## Environment
 
-Example setup:
+Recommended environment:
 
 ```bash
-conda create -n your_env_name python=3.8 -y
-conda activate your_env_name
+conda create -n urnn python=3.10 -y
+conda activate urnn
 pip install -r requirements.txt
 ```
 
 ## Training
 
-The current main training entry is:
+Example:
 
 ```bash
-python scripts/train_model.py --config <config_path>
+python scripts/train_model.py --config <your_config>.json
 ```
 
-### Example: Phase 2A (40 epochs, seed42)
+## Evaluation
+
+Example:
 
 ```bash
-python scripts/train_model.py --config configs/train_phase2_loss_only_40e_seed42.json
+python scripts/evaluate_model.py --config <your_config>.json
 ```
 
-### Example: Phase 2B h16 (40 epochs, seed42)
+## Visualization
 
-```bash
-python scripts/train_model.py --config configs/train_phase2b_temporal_gate_h16_40e_seed42.json
-```
-
-### Example: debug run
-
-```bash
-python scripts/train_model.py --config configs/train_phase2b_temporal_gate_debug.json
-```
-
-Additional experiment settings are provided under `configs/`.
-
-
-## Evaluation and Visualization
-
-Current paired qualitative comparison scripts:
+Example scripts:
 
 ```bash
 python compare_maps.py
 python compare_timeseries.py
 ```
 
-These scripts are currently used for **Phase 2A vs Phase 2B h16** paired qualitative comparison on representative cases such as **seed42** and **seed202**.
+## Key Project-Level Conclusions
 
-Generated figures are organized under:
+1. Lightweight output-space physics guidance improves over the pure baseline.
+2. Residual partial rainfall gating is currently the best-balanced architecture direction.
+3. Structured response-split ideas are meaningful, especially for difficult cases.
+4. Protected response split is the strongest structured refinement discovered so far.
+5. However, no Phase 3 structured variant has yet fully surpassed M3 f025 as the overall best-balanced solution.
 
-- `docs/figures/phase2_qualitative/`
+## Documentation
 
+Detailed experimental notes are stored in `docs/`, including:
 
-## Current Project Status
-
-The repository has now completed the formal Phase 2 comparison stage.
-
-Completed items include:
-
-- 40-epoch multi-seed validation
-- 40-epoch multi-seed test-set evaluation
-- paired qualitative comparison for representative cases
-
-The current project conclusion is:
-
-- **Primary candidate: Phase 2A (40 epochs)**
-- **Strong alternative: Phase 2B h16 (40 epochs)**
-
-At this stage, the project is no longer in unconstrained exploratory tuning. The current focus is on experiment organization, documentation cleanup, and next-stage method design.
-
-## Representative Qualitative Findings
-
-Two representative test cases are currently used for paired qualitative comparison:
-
-- **seed42**: representative case favoring **Phase 2B h16**
-- **seed202**: representative case favoring **Phase 2A**
-
-Current qualitative observations are consistent with the broader experiment summary:
-
-- **Phase 2B h16** shows genuinely stronger behavior on some cases
-- **Phase 2A** remains the more stable overall choice across seeds
-- spatial reconstruction tends to support the overall test conclusion more clearly than single-case process curves
-
-
-## Future Work
-
-Possible next directions include:
-
-- further refinement of the Phase 2B temporal-gating design
-- larger-scale validation across more seeds and settings
-- stronger baselines
-- more advanced hydrodynamic knowledge embedding
-- cross-scenario generalization analysis
-
-## Phase 2B Milestone 1
-
-Phase 2B Milestone 1 keeps the Phase 2A loss system unchanged and adds one optional architecture-level module: a rainfall-conditioned temporal gate.
-
-Enable it in the `model` section with:
-
-```json
-"rainfall_conditioning": {
-  "enabled": true,
-  "mode": "temporal_gate",
-  "hidden_channels": 64
-}
-```
-
-Use `configs/train_phase2b_temporal_gate.json` for the normal run and `configs/train_phase2b_temporal_gate_debug.json` for a quick debug run.
-
-When this section is omitted or `enabled` is `false`, the model follows the existing baseline and Phase 2A path with no behavior change.
-
-Minimal sanity check:
-
-```bash
-python scripts/sanity_check_phase2b_temporal_gate.py --base-config configs/train_phase2_loss_only_debug.json
-```
+- Phase 2 multi-seed summaries
+- Phase 2 qualitative comparison notes
+- M2 and M3 archive notes
+- Phase 3.1 notes
+- Phase 3.2 notes
+- Phase 3.3 notes
+- overall `phase3_summary.md`
 
 ## License
 
-MIT License.
-
-
+MIT
