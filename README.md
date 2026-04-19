@@ -63,6 +63,22 @@ For the full Phase 4 comparison note, see:
 
 ![M3 vs Phase 3.3 af025 seed42 maps](assets/images/final/m3_vs_phase33_af025_seed42_maps.png)
 
+## Phase 4 Final Comparison
+
+Phase 4 completed the final contender comparison between:
+
+- **M3 f025**
+- **Phase 3.3 af025**
+
+Final project-level conclusion:
+
+- **M3 f025 remains the current overall best-balanced architecture**
+- **Phase 3.3 af025 is the strongest structured refinement discovered so far**
+
+For the complete final comparison, see:
+
+- `docs/phase4_final_comparison.md`
+
 ## Stage Evolution
 
 ```mermaid
