@@ -40,6 +40,30 @@ Interpretation:
 - Phase 3.3 af025 is the strongest structured refinement discovered so far.
 - Phase 3.3 af025 improves over M3 on the difficult case (`seed202`), but still does not surpass M3 on the favorable case (`seed42`).
 
+## Final Contender Comparison
+
+Phase 4 consolidates the final direct comparison between the two strongest project-level contenders:
+
+- **M3 f025** — current best-balanced mainline
+- **Phase 3.3 af025** — strongest structured refinement
+
+Key takeaway:
+- **seed202** is the difficult case, where Phase 3.3 af025 performs better overall.
+- **seed42** is the favorable case, where M3 f025 remains stronger.
+- At the project level, **M3 f025 remains the current best-balanced architecture**, while **Phase 3.3 af025 remains the strongest structured refinement discovered so far**.
+
+For the full Phase 4 comparison note, see:
+- [`docs/phase4_final_comparison.md`](docs/phase4_final_comparison.md)
+
+### Final spatial comparison on difficult case (`seed202`)
+
+![M3 vs Phase 3.3 af025 seed202 maps](assets/images/final/m3_vs_phase33_af025_seed202_maps.png)
+
+### Final spatial comparison on favorable case (`seed42`)
+
+![M3 vs Phase 3.3 af025 seed42 maps](assets/images/final/m3_vs_phase33_af025_seed42_maps.png)
+
+
 ## Stage Evolution
 
 ```mermaid
@@ -263,6 +287,7 @@ Detailed experimental notes are stored in `docs/`, including:
 - Phase 3.2 notes
 - Phase 3.3 notes
 - overall `phase3_summary.md`
+- `phase4_final_comparison.md` — final direct comparison between M3 f025 and Phase 3.3 af025
 
 ## License
 
