@@ -150,6 +150,8 @@ flowchart TD
 - Phase 1 established the output-space physics-guided baseline.
 - Phase 2 identified **M3 f025** as the current best-balanced architecture.
 - Phase 3 explored more structured modulation designs and identified **Phase 3.3 af025** as the strongest structured refinement.
+- Phase 4 completed the final contender comparison between **M3 f025** and **Phase 3.3 af025**.
+- Phase 5 consolidated the final conclusions, documentation, and mainline presentation.
 - The overall best-balanced architecture still remains **M3 f025**.
 
 ## Branch Guide
@@ -276,10 +278,14 @@ python compare_timeseries.py
 ## Key Project-Level Conclusions
 
 1. Lightweight output-space physics guidance improves over the pure baseline.
-2. Residual partial rainfall gating is currently the best-balanced architecture direction.
+2. Residual partial rainfall gating (**M3 f025**) is currently the overall best-balanced architecture direction.
 3. Structured response-split ideas are meaningful, especially for difficult cases.
-4. Protected response split is the strongest structured refinement discovered so far.
-5. However, no Phase 3 structured variant has yet fully surpassed M3 f025 as the overall best-balanced solution.
+4. Protected response split (**Phase 3.3 af025**) is the strongest structured refinement discovered so far.
+5. Phase 4 completed the final contender comparison between **M3 f025** and **Phase 3.3 af025**.
+6. Phase 5 completed the consolidation of the mainline README, documentation index, and project status materials.
+7. The current mainline project conclusion remains:
+   - **M3 f025** = current overall best-balanced architecture
+   - **Phase 3.3 af025** = strongest structured refinement
 
 ## Documentation
 
