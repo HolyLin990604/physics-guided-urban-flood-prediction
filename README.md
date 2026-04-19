@@ -29,10 +29,10 @@ This is the final best Phase 3 variant, but it does **not yet surpass** M3 f025 
 
 ## Quick Results Snapshot
 
-| Variant | Seed202 RMSE | Seed202 MAE | Seed202 IoU | Seed42 RMSE | Seed42 MAE | Seed42 IoU | Role |
-|---|---:|---:|---:|---:|---:|---:|---|
-| M3 f025 | 0.040568 | 0.016056 | 0.795732 | 0.035211 | 0.013695 | 0.830558 | Current best-balanced |
-| Phase 3.3 af025 | 0.039514 | 0.015807 | 0.801322 | 0.038861 | 0.014598 | 0.800325 | Best structured refinement |
+| Variant | Seed202 RMSE | Seed202 MAE | Seed202 IoU | Seed202 Stability | Seed42 RMSE | Seed42 MAE | Seed42 IoU | Seed42 Stability |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| M3 f025 | 0.040568 | 0.016056 | 0.795732 | 0.990637 | 0.035211 | 0.013695 | 0.830558 | 0.991363 |
+| Phase 3.3 af025 | 0.039514 | 0.015807 | 0.801322 | 0.991308 | 0.038861 | 0.014598 | 0.800325 | 0.991591 |
 
 Interpretation:
 
@@ -62,6 +62,14 @@ For the full Phase 4 comparison note, see:
 ### Final spatial comparison on favorable case (`seed42`)
 
 ![M3 vs Phase 3.3 af025 seed42 maps](assets/images/final/m3_vs_phase33_af025_seed42_maps.png)
+
+### Final process comparison on difficult case (`seed202`)
+
+![M3 vs Phase 3.3 af025 seed202 timeseries](assets/images/final/m3_vs_phase33_af025_seed202_timeseries.png)
+
+### Final process comparison on favorable case (`seed42`)
+
+![M3 vs Phase 3.3 af025 seed42 timeseries](assets/images/final/m3_vs_phase33_af025_seed42_timeseries.png)
 
 
 ## Stage Evolution
@@ -288,6 +296,7 @@ Detailed experimental notes are stored in `docs/`, including:
 - Phase 3.3 notes
 - overall `phase3_summary.md`
 - `phase4_final_comparison.md` — final direct comparison between M3 f025 and Phase 3.3 af025
+- `phase4_final_comparison_plan.md` — Phase 4 consolidation plan and deliverables
 
 ## License
 
