@@ -63,21 +63,6 @@ For the full Phase 4 comparison note, see:
 
 ![M3 vs Phase 3.3 af025 seed42 maps](assets/images/final/m3_vs_phase33_af025_seed42_maps.png)
 
-## Phase 4 Final Comparison
-
-Phase 4 completed the final contender comparison between:
-
-- **M3 f025**
-- **Phase 3.3 af025**
-
-Final project-level conclusion:
-
-- **M3 f025 remains the current overall best-balanced architecture**
-- **Phase 3.3 af025 is the strongest structured refinement discovered so far**
-
-For the complete final comparison, see:
-
-- `docs/phase4_final_comparison.md`
 
 ## Stage Evolution
 
@@ -86,13 +71,15 @@ flowchart LR
     A[Phase 2<br/>M3 f025] --> B[Phase 3.1<br/>Learned selective]
     B --> C[Phase 3.2<br/>Response split]
     C --> D[Phase 3.3<br/>Protected response split]
-    D --> E[Final Phase 3 best<br/>af025]
+    D --> E[Phase 4<br/>Final contender comparison]
+    E --> F[Phase 5<br/>Mainline consolidation]
 
     A --> A1[Best-balanced mainline]
     B --> B1[Freer selector<br/>not enough]
     C --> C1[Strong difficult-case gain<br/>too aggressive]
     D --> D1[More conservative<br/>better balance]
-    E --> E1[Best Phase 3 variant<br/>but still below M3 overall]
+    E --> E1[M3 vs Phase 3.3 af025<br/>final comparison]
+    F --> F1[Final mainline status<br/>documents + README consolidated]
 ```
 
 ## Qualitative Examples
@@ -141,18 +128,21 @@ flowchart LR
 flowchart TD
     A[Phase 1<br/>Baseline + output-space physics losses] --> B[Phase 2<br/>Rainfall-conditioning exploration]
     B --> C[Phase 3<br/>Structured refinement exploration]
+    C --> D[Phase 4<br/>Final contender comparison]
+    D --> E[Phase 5<br/>Mainline consolidation]
 
     A --> A1[non-negativity loss<br/>wet/dry consistency loss]
     B --> B1[M2 residual gate<br/>M3 partial gate<br/>multi-seed validation]
     C --> C1[3.1 learned selective<br/>3.2 response split<br/>3.3 protected response split]
+    D --> D1[M3 f025 vs Phase 3.3 af025<br/>final evidence pack]
+    E --> E1[README sync<br/>experiment index<br/>project status]
 
-    B1 --> D[Current best-balanced architecture<br/>M3 f025]
-    C1 --> E[Best structured refinement<br/>Phase 3.3 af025]
+    B1 --> F[Current best-balanced architecture<br/>M3 f025]
+    C1 --> G[Strongest structured refinement<br/>Phase 3.3 af025]
+    D1 --> H[Project-level conclusion confirmed]
+    E1 --> H
 
-    D --> F[Project conclusion]
-    E --> F
-
-    F[Current conclusion:<br/>M3 f025 remains overall best-balanced<br/>Phase 3.3 af025 is strongest structured refinement]
+    H[Current conclusion:<br/>M3 f025 remains overall best-balanced<br/>Phase 3.3 af025 is strongest structured refinement]
 ```
 
 ### Summary
