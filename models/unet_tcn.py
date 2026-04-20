@@ -29,12 +29,16 @@ class RainfallConditionedTemporalGate(nn.Module):
         response_split: bool = False,
         protected_response_split: bool = False,
         active_fraction_within_response: float = 1.0,
+        adaptive_alpha_enabled: bool = False,
+        adaptive_alpha_range: float = 0.25,
     ) -> None:
         super().__init__()
         self.residual_alpha = residual_alpha
         self.learned_selective = learned_selective
         self.response_split = response_split
         self.protected_response_split = protected_response_split
+        self.adaptive_alpha_enabled = adaptive_alpha_enabled and protected_response_split
+        self.adaptive_alpha_range = adaptive_alpha_range
         conditioned_channels = int(feature_channels * conditioned_fraction)
         self.conditioned_channels = conditioned_channels
         self.memory_channels = feature_channels - conditioned_channels
@@ -61,6 +65,20 @@ class RainfallConditionedTemporalGate(nn.Module):
             raise TypeError("Expected final layer of rainfall gate MLP to be nn.Linear.")
         nn.init.zeros_(final_linear.weight)
         nn.init.zeros_(final_linear.bias)
+        if self.adaptive_alpha_enabled:
+            adaptive_hidden_channels = max(min(hidden_channels // 2, 16), 4)
+            self.adaptive_alpha_mlp = nn.Sequential(
+                nn.Linear(rainfall_channels, adaptive_hidden_channels),
+                nn.SiLU(inplace=True),
+                nn.Linear(adaptive_hidden_channels, 1),
+            )
+            adaptive_final_linear = self.adaptive_alpha_mlp[-1]
+            if not isinstance(adaptive_final_linear, nn.Linear):
+                raise TypeError("Expected final layer of adaptive alpha MLP to be nn.Linear.")
+            nn.init.zeros_(adaptive_final_linear.weight)
+            nn.init.zeros_(adaptive_final_linear.bias)
+        else:
+            self.adaptive_alpha_mlp = None
         if self.learned_selective:
             selector_prior_logits = torch.full((feature_channels,), -8.0, dtype=torch.float32)
             if conditioned_channels > 0:
@@ -83,6 +101,20 @@ class RainfallConditionedTemporalGate(nn.Module):
         )
         return torch.sigmoid(selector_logits)
 
+    def _get_adaptive_alpha_scale(
+        self,
+        future_rainfall: torch.Tensor,
+        *,
+        batch_size: int,
+        future_steps: int,
+        rain_channels: int,
+    ) -> torch.Tensor:
+        if self.adaptive_alpha_mlp is None:
+            return future_rainfall.new_ones(batch_size, future_steps, 1, 1, 1)
+        adaptive_alpha = self.adaptive_alpha_mlp(future_rainfall.reshape(batch_size * future_steps, rain_channels))
+        adaptive_alpha = adaptive_alpha.view(batch_size, future_steps, 1, 1, 1)
+        return 1.0 + self.adaptive_alpha_range * torch.tanh(adaptive_alpha)
+
     def forward(self, temporal_context: torch.Tensor, future_rainfall: torch.Tensor) -> torch.Tensor:
         assert_rank("temporal_context", temporal_context, 4)
         assert_rank("future_rainfall", future_rainfall, 3)
@@ -102,6 +134,14 @@ class RainfallConditionedTemporalGate(nn.Module):
             gate = torch.tanh(gate).view(batch_size, future_steps, self.active_response_channels, 1, 1)
             if self.residual_alpha is not None:
                 gate = gate * self.residual_alpha
+            if self.protected_response_split and self.adaptive_alpha_enabled:
+                adaptive_scale = self._get_adaptive_alpha_scale(
+                    future_rainfall,
+                    batch_size=batch_size,
+                    future_steps=future_steps,
+                    rain_channels=rain_channels,
+                )
+                gate = gate * adaptive_scale
 
             memory_context = temporal_context[:, : self.memory_channels]
             response_context = temporal_context[:, self.memory_channels :]
@@ -212,6 +252,8 @@ class UNetTCNForecaster(nn.Module):
                     self.rainfall_conditioning["mode"] == "temporal_gate_residual_response_split_protected"
                 ),
                 active_fraction_within_response=self.rainfall_conditioning["active_fraction_within_response"],
+                adaptive_alpha_enabled=self.rainfall_conditioning["adaptive_alpha_enabled"],
+                adaptive_alpha_range=self.rainfall_conditioning["adaptive_alpha_range"],
             )
         else:
             self.temporal_rainfall_gate = None
@@ -253,6 +295,8 @@ class UNetTCNForecaster(nn.Module):
             "residual_alpha": None,
             "conditioned_fraction": 1.0,
             "active_fraction_within_response": 1.0,
+            "adaptive_alpha_enabled": bool(config.get("adaptive_alpha_enabled", False)),
+            "adaptive_alpha_range": float(config.get("adaptive_alpha_range", 0.25)),
         }
         allowed_modes = {
             "temporal_gate",
@@ -310,6 +354,8 @@ class UNetTCNForecaster(nn.Module):
             normalized["active_fraction_within_response"] = float(config["active_fraction_within_response"])
             if not 0.0 <= normalized["active_fraction_within_response"] <= 1.0:
                 raise ValueError("rainfall_conditioning.active_fraction_within_response must be in [0, 1].")
+            if not 0.0 <= normalized["adaptive_alpha_range"] <= 0.5:
+                raise ValueError("rainfall_conditioning.adaptive_alpha_range must be in [0, 0.5].")
         return normalized
 
     def forward(
