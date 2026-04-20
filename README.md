@@ -64,6 +64,8 @@ Phase 7 tested a more conservative adaptive follow-up with `adaptive_alpha_range
 
 For the current staged experiment record, see:
 
+- `docs/project_status.md`
+- `docs/experiment_index.md`
 - `docs/phase3_summary.md`
 - `docs/phase3_3_protected_response_split_notes.md`
 - `docs/phase6_problem_definition.md`
