@@ -68,8 +68,6 @@ For the current staged experiment record, see:
 - `docs/experiment_index.md`
 - `docs/phase3_summary.md`
 - `docs/phase3_3_protected_response_split_notes.md`
-- `docs/phase6_problem_definition.md`
-- `docs/phase6_code_insertion_notes.md`
 - `docs/phase6_pilot_a_results.md`
 - `docs/phase7_adapt010_results.md`
 
