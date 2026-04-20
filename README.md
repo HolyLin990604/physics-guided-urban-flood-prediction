@@ -37,20 +37,36 @@ These physics-guided losses are imposed on the predicted future flood depth fiel
 
 ## Current Mainline
 
-The current Phase 2 conclusion is:
+The current overall best-balanced architecture is:
 
-- Primary candidate: Phase 2A (40 epochs)
-- Strong alternative: Phase 2B h16 (40 epochs, rainfall-conditioned temporal gate)
+- `temporal_gate_residual_partial`
+- `hidden_channels = 16`
+- `residual_alpha = 0.10`
+- `conditioned_fraction = 0.25`
 
-This conclusion is based on completed 40-epoch multi-seed validation, test-set evaluation, and paired qualitative comparison.
+This configuration is the current M3 `f025` mainline reference.
 
-## Phase 2 Documentation
+The strongest structured refinement discovered so far is:
 
-For the latest Phase 2 experiment summaries, see:
+- `temporal_gate_residual_response_split_protected`
+- `hidden_channels = 16`
+- `residual_alpha = 0.10`
+- `conditioned_fraction = 0.25`
+- `active_fraction_within_response = 0.25`
 
-- `docs/phase2_40e_multiseed_summary.md`
-- `docs/phase2_40e_multiseed_test_summary.md`
-- `docs/phase2_qualitative_comparison_notes.md`
+This configuration is the Phase 3.3 `af025` reference.
+
+Phase 6 Pilot A added an optional bounded adaptive scalar on top of the protected response-split path. The mechanism was technically stable, but the `adapt025` setting did not beat the static Phase 3.3 `af025` control in final validation, so it is currently treated as a documented negative/neutral result rather than a new mainline.
+
+## Documentation
+
+For the current staged experiment record, see:
+
+- `docs/phase3_summary.md`
+- `docs/phase3_3_protected_response_split_notes.md`
+- `docs/phase6_problem_definition.md`
+- `docs/phase6_code_insertion_notes.md`
+- `docs/phase6_pilot_a_results.md`
 
 
 ## Dataset
@@ -105,24 +121,22 @@ The forecasting backbone is based on a U-Net + TCN style spatiotemporal model.
 
 ### Physics-guided strategy
 
-This repository mainly explores two directions:
+This repository currently has:
 
-- Phase 2A: loss-only physics-guided refinement
-- Phase 2B h16: Phase 2A losses plus a lightweight rainfall-conditioned temporal gate
+- a stable baseline built on U-Net + TCN
+- stable physics guidance from non-negativity loss and wet/dry consistency loss
+- optional architecture-level rainfall conditioning modules used for staged research experiments
 
-### Phase 2A
+### Stable baseline
 
-Phase 2A keeps the backbone architecture unchanged and refines the loss design with physics-guided constraints, including:
+The stable baseline path keeps the backbone unchanged and preserves the two stable physics-guided losses:
 
-- non-negativity related behavior
-- wet/dry consistency related behavior
-- rainfall-depth consistency refinement
+- non-negativity loss
+- wet/dry consistency loss
 
-### Phase 2B h16
+### Optional rainfall conditioning
 
-Phase 2B h16 keeps the Phase 2A loss system and adds one optional architecture-level module:
-
-- rainfall-conditioned temporal gate
+Architecture-level rainfall conditioning remains optional and config-driven. Existing training scripts and configs remain usable when the `rainfall_conditioning` block is omitted or disabled.
 
 ## Environment
 
@@ -142,16 +156,28 @@ The current main training entry is:
 python scripts/train_model.py --config <config_path>
 ```
 
-### Example: Phase 2A (40 epochs, seed42)
+### Example: stable loss-guided baseline (40 epochs, seed42)
 
 ```bash
 python scripts/train_model.py --config configs/train_phase2_loss_only_40e_seed42.json
 ```
 
-### Example: Phase 2B h16 (40 epochs, seed42)
+### Example: M3 mainline reference (40 epochs, seed42)
 
 ```bash
 python scripts/train_model.py --config configs/train_phase2b_temporal_gate_h16_40e_seed42.json
+```
+
+### Example: Phase 3.3 protected response-split control (40 epochs, seed42)
+
+```bash
+python scripts/train_model.py --config configs/train_phase3_3_temporal_gate_residual_response_split_protected_h16_a010_f025_af025_40e_seed42.json
+```
+
+### Example: Phase 6 Pilot A adaptive scalar variant (5 epochs, seed42)
+
+```bash
+python scripts/train_model.py --config configs/train_phase6_pilot_a_temporal_gate_residual_response_split_protected_h16_a010_f025_af025_adapt025_5e_seed42.json
 ```
 
 ### Example: debug run
@@ -172,7 +198,7 @@ python compare_maps.py
 python compare_timeseries.py
 ```
 
-These scripts are currently used for **Phase 2A vs Phase 2B h16** paired qualitative comparison on representative cases such as **seed42** and **seed202**.
+These scripts are currently used for paired qualitative comparison on representative cases such as `seed42` and `seed202`.
 
 Generated figures are organized under:
 
@@ -181,68 +207,52 @@ Generated figures are organized under:
 
 ## Current Project Status
 
-The repository has now completed the formal Phase 2 comparison stage.
+The repository has completed the main Phase 2 and Phase 3 architecture comparison cycle.
 
-Completed items include:
+Current project-level conclusions:
 
-- 40-epoch multi-seed validation
-- 40-epoch multi-seed test-set evaluation
-- paired qualitative comparison for representative cases
+- **M3 `f025` remains the overall best-balanced mainline**
+- **Phase 3.3 `af025` remains the strongest structured refinement**
+- **Phase 6 Pilot A `adapt025` is stable but not experimentally superior**
 
-The current project conclusion is:
+At this stage, the project focus is targeted, hypothesis-driven refinement rather than broad exploratory tuning.
 
-- **Primary candidate: Phase 2A (40 epochs)**
-- **Strong alternative: Phase 2B h16 (40 epochs)**
+## Representative Case Framing
 
-At this stage, the project is no longer in unconstrained exploratory tuning. The current focus is on experiment organization, documentation cleanup, and next-stage method design.
+Two representative cases continue to be useful for targeted comparison:
 
-## Representative Qualitative Findings
+- `seed42`: favorable-case reference where stronger structured refinement must avoid unnecessary damage
+- `seed202`: difficult-case reference where stronger structured refinement can show useful gains
 
-Two representative test cases are currently used for paired qualitative comparison:
-
-- **seed42**: representative case favoring **Phase 2B h16**
-- **seed202**: representative case favoring **Phase 2A**
-
-Current qualitative observations are consistent with the broader experiment summary:
-
-- **Phase 2B h16** shows genuinely stronger behavior on some cases
-- **Phase 2A** remains the more stable overall choice across seeds
-- spatial reconstruction tends to support the overall test conclusion more clearly than single-case process curves
+This framing motivated the Phase 6 Pilot A test of whether adaptive modulation strength could improve difficult-case behavior while remaining conservative on favorable cases.
 
 
-## Future Work
+## Adaptive Pilot Switch
 
-Possible next directions include:
-
-- further refinement of the Phase 2B temporal-gating design
-- larger-scale validation across more seeds and settings
-- stronger baselines
-- more advanced hydrodynamic knowledge embedding
-- cross-scenario generalization analysis
-
-## Phase 2B Milestone 1
-
-Phase 2B Milestone 1 keeps the Phase 2A loss system unchanged and adds one optional architecture-level module: a rainfall-conditioned temporal gate.
-
-Enable it in the `model` section with:
+Phase 6 Pilot A keeps the protected response-split path and adds an optional bounded adaptive scalar:
 
 ```json
 "rainfall_conditioning": {
   "enabled": true,
-  "mode": "temporal_gate",
-  "hidden_channels": 64
+  "mode": "temporal_gate_residual_response_split_protected",
+  "hidden_channels": 16,
+  "residual_alpha": 0.10,
+  "conditioned_fraction": 0.25,
+  "active_fraction_within_response": 0.25,
+  "adaptive_alpha_enabled": true,
+  "adaptive_alpha_range": 0.25
 }
 ```
 
-Use `configs/train_phase2b_temporal_gate.json` for the normal run and `configs/train_phase2b_temporal_gate_debug.json` for a quick debug run.
+When `adaptive_alpha_enabled` is omitted or set to `false`, the model falls back to the static protected response-split behavior. This keeps the Phase 6 addition optional and backward compatible with existing configs.
 
-When this section is omitted or `enabled` is `false`, the model follows the existing baseline and Phase 2A path with no behavior change.
+## Future Work
 
-Minimal sanity check:
+The next justified follow-up is a more conservative adaptive-strength check rather than a broader sweep:
 
-```bash
-python scripts/sanity_check_phase2b_temporal_gate.py --base-config configs/train_phase2_loss_only_debug.json
-```
+- reduce `adaptive_alpha_range`
+- re-check difficult-case behavior against the static Phase 3.3 `af025` control
+- only expand further if the smaller adaptive range shows a clearer final-stage benefit
 
 ## License
 
