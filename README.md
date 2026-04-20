@@ -58,6 +58,8 @@ This configuration is the Phase 3.3 `af025` reference.
 
 Phase 6 Pilot A added an optional bounded adaptive scalar on top of the protected response-split path. The mechanism was technically stable, but the `adapt025` setting did not beat the static Phase 3.3 `af025` control in final validation, so it is currently treated as a documented negative/neutral result rather than a new mainline.
 
+Phase 7 tested a more conservative adaptive follow-up with `adaptive_alpha_range = 0.10`. This `adapt010` variant passed the decisive difficult-case `seed202 / 40e` check and also passed the favorable-case `seed42 / 5e` guardrail check, so it is now treated as the current adaptive candidate.
+
 ## Documentation
 
 For the current staged experiment record, see:
@@ -67,6 +69,7 @@ For the current staged experiment record, see:
 - `docs/phase6_problem_definition.md`
 - `docs/phase6_code_insertion_notes.md`
 - `docs/phase6_pilot_a_results.md`
+- `docs/phase7_adapt010_results.md`
 
 
 ## Dataset
@@ -214,6 +217,7 @@ Current project-level conclusions:
 - **M3 `f025` remains the overall best-balanced mainline**
 - **Phase 3.3 `af025` remains the strongest structured refinement**
 - **Phase 6 Pilot A `adapt025` is stable but not experimentally superior**
+- **Phase 7 `adapt010` is now the current adaptive candidate**
 
 At this stage, the project focus is targeted, hypothesis-driven refinement rather than broad exploratory tuning.
 
@@ -224,7 +228,7 @@ Two representative cases continue to be useful for targeted comparison:
 - `seed42`: favorable-case reference where stronger structured refinement must avoid unnecessary damage
 - `seed202`: difficult-case reference where stronger structured refinement can show useful gains
 
-This framing motivated the Phase 6 Pilot A test of whether adaptive modulation strength could improve difficult-case behavior while remaining conservative on favorable cases.
+This framing motivated the Phase 6 Pilot A test and the Phase 7 conservative `adapt010` follow-up.
 
 
 ## Adaptive Pilot Switch
@@ -248,11 +252,11 @@ When `adaptive_alpha_enabled` is omitted or set to `false`, the model falls back
 
 ## Future Work
 
-The next justified follow-up is a more conservative adaptive-strength check rather than a broader sweep:
+The next justified follow-up should start from the current `adapt010` candidate rather than returning to the broader `adapt025` setting:
 
-- reduce `adaptive_alpha_range`
-- re-check difficult-case behavior against the static Phase 3.3 `af025` control
-- only expand further if the smaller adaptive range shows a clearer final-stage benefit
+- preserve the conservative adaptive-strength setting as the active direction
+- keep further checks tightly scoped and hypothesis-driven
+- avoid broad sweeps unless the next targeted comparison justifies expansion
 
 ## License
 
