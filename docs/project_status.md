@@ -1,220 +1,44 @@
-\# Project Status
+# Project Status
 
+## Current Conclusion
 
+The repository should currently be interpreted as follows:
 
-\## Current Stage
+- `M3 f025` remains the overall best-balanced mainline reference
+- Phase 3.3 `af025` remains the strongest static structured refinement
+- Phase 6 `adapt025` is closed as a negative/neutral result
+- Phase 7 `adapt010` is now the current adaptive candidate
 
+## Meaning Of Each Reference
 
+### Mainline reference
 
-The project has completed:
+`M3 f025` remains the default project reference because it still provides the strongest overall balance across robustness, stability, and project-level confidence.
 
+### Strongest static structured refinement
 
+Phase 3.3 `af025` remains the strongest static structured refinement discovered so far. It is still the correct static control when evaluating whether adaptive follow-ups add value.
 
-\- Phase 1: baseline + output-space physics-guided losses
+### Closed adaptive result
 
-\- Phase 2: rainfall-conditioning architecture exploration
+Phase 6 `adapt025` established that the adaptive scalar mechanism is technically stable and trainable, but it did not remain superior to the static Phase 3.3 `af025` control after full training. It should therefore be treated as a documented negative/neutral result rather than an active candidate.
 
-\- Phase 3: structured refinement exploration
+### Current adaptive candidate
 
-\- Phase 4: final contender comparison
+Phase 7 `adapt010` is the current adaptive candidate. It improved the decisive difficult-case `seed202 / 40e` result over both the static `af025` control and the earlier Phase 6 `adapt025` run, and it also passed the favorable-case `seed42 / 5e` guardrail check.
 
+## Practical Reading Guide
 
+When reading the repository:
 
-The project is currently in:
+- use `M3 f025` as the overall project mainline reference
+- use Phase 3.3 `af025` as the static structured refinement reference
+- treat Phase 6 `adapt025` as archived evidence that a larger adaptive range was too aggressive
+- treat Phase 7 `adapt010` as the active adaptive direction for future targeted follow-up work
 
+## Key Documents
 
-
-\- \*\*Phase 5: Mainline Consolidation and Release Prep\*\*
-
-
-
-\## Current Mainline Conclusion
-
-
-
-\### Current best-balanced architecture
-
-
-
-\- `temporal\_gate\_residual\_partial`
-
-\- `hidden\_channels = 16`
-
-\- `residual\_alpha = 0.10`
-
-\- `conditioned\_fraction = 0.25`
-
-
-
-This is the current \*\*M3 f025\*\* mainline.
-
-
-
-\### Strongest structured refinement
-
-
-
-\- `temporal\_gate\_residual\_response\_split\_protected`
-
-\- `hidden\_channels = 16`
-
-\- `residual\_alpha = 0.10`
-
-\- `conditioned\_fraction = 0.25`
-
-\- `active\_fraction\_within\_response = 0.25`
-
-
-
-This is the current \*\*Phase 3.3 af025\*\* structured refinement winner.
-
-
-
-\## Final Contender Comparison Outcome
-
-
-
-The final contender comparison between:
-
-
-
-\- \*\*M3 f025\*\*
-
-\- \*\*Phase 3.3 af025\*\*
-
-
-
-supports the following conclusion:
-
-
-
-\- \*\*M3 f025 remains the current overall best-balanced architecture\*\*
-
-\- \*\*Phase 3.3 af025 is the strongest structured refinement discovered so far\*\*
-
-
-
-Interpretation:
-
-
-
-\- Phase 3.3 af025 performs better on the difficult case (`seed202`)
-
-\- M3 f025 remains stronger on the favorable case (`seed42`)
-
-\- therefore, Phase 3.3 af025 does not yet replace M3 as the project mainline
-
-
-
-\## Repository Status
-
-
-
-\### Main branch
-
-
-
-`main` is now intended to serve as:
-
-
-
-\- the stable project homepage
-
-\- the current project summary
-
-\- the main entry point for external readers
-
-
-
-\### Archive branches
-
-
-
-Important archive branches include:
-
-
-
-\- `phase2b-m3-partial-gate`
-
-\- `phase3-structured-selective-modulation`
-
-\- `phase3-2-structured-response-split`
-
-\- `phase3-3-protected-response-split`
-
-\- `phase4-final-comparison`
-
-
-
-These branches preserve stage-specific experimental history.
-
-
-
-\## Current Documentation Status
-
-
-
-Main documentation now includes:
-
-
-
-\- `docs/experiment\_index.md`
-
-\- `docs/phase3\_summary.md`
-
-\- `docs/phase4\_final\_comparison.md`
-
-\- `docs/project\_status.md`
-
-\- `docs/phase5\_consolidation\_plan.md`
-
-
-
-\## Remaining Consolidation Tasks
-
-
-
-The following tasks still remain in Phase 5:
-
-
-
-1\. sync a concise Phase 4 final-comparison conclusion back into `main` README
-
-2\. check whether final comparison figures should be lightly referenced from `main`
-
-3\. review minor repository cleanup items
-
-4\. decide what to do with the untracked file:
-
-&#x20;  - `configs/train\_phase2b\_temporal\_gate\_h16.json`
-
-
-
-\## Next Recommended Direction
-
-
-
-No immediate new architecture exploration is recommended.
-
-
-
-The correct short-term priority is:
-
-
-
-\- finalize mainline consolidation
-
-\- stabilize repository presentation
-
-\- preserve current conclusions cleanly
-
-
-
-After that, a future research stage can be opened around a more focused question, such as:
-
-
-
-\- how to combine the favorable-case stability of M3 with the difficult-case advantage of Phase 3.3
-
-\- or how to conditionally activate stronger structured modulation only when needed
-
+- `docs/phase3_summary.md`
+- `docs/phase3_3_protected_response_split_notes.md`
+- `docs/phase6_pilot_a_results.md`
+- `docs/phase7_adapt010_results.md`

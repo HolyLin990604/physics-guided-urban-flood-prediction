@@ -1,220 +1,103 @@
 # Physics-Guided Urban Flood Process Prediction
 
-A research prototype for physics-guided urban flood process prediction based on a U-Net + TCN framework, with staged exploration of physics-guided losses and structured rainfall-conditioning architectures.
+A research prototype for physics-guided urban flood process prediction based on a U-Net + TCN framework.
 
-## Current Project Status
-
-### Current best-balanced architecture
-
-The current best-balanced architecture is:
-
-`temporal_gate_residual_partial`  
-`hidden_channels = 16`  
-`residual_alpha = 0.10`  
-`conditioned_fraction = 0.25`
-
-This corresponds to the current **M3 f025** direction.
-
-### Current best structured refinement direction
-
-The strongest structured refinement discovered so far is:
-
-`temporal_gate_residual_response_split_protected`  
-`hidden_channels = 16`  
-`residual_alpha = 0.10`  
-`conditioned_fraction = 0.25`  
-`active_fraction_within_response = 0.25`
-
-This is the final best Phase 3 variant, but it does **not yet surpass** M3 f025 as the overall best-balanced architecture.
-
-## Quick Results Snapshot
-
-| Variant | Seed202 RMSE | Seed202 MAE | Seed202 IoU | Seed42 RMSE | Seed42 MAE | Seed42 IoU | Role |
-|---|---:|---:|---:|---:|---:|---:|---|
-| M3 f025 | 0.040568 | 0.016056 | 0.795732 | 0.035211 | 0.013695 | 0.830558 | Current best-balanced |
-| Phase 3.3 af025 | 0.039514 | 0.015807 | 0.801322 | 0.038861 | 0.014598 | 0.800325 | Best structured refinement |
-
-Interpretation:
-
-- M3 f025 remains the overall best-balanced architecture.
-- Phase 3.3 af025 is the strongest structured refinement discovered so far.
-- Phase 3.3 af025 improves over M3 on the difficult case (`seed202`), but still does not surpass M3 on the favorable case (`seed42`).
-
-## Phase 4 Final Comparison
-
-Phase 4 completed the final contender comparison between the two strongest project-level directions:
-
-- **M3 f025** — current best-balanced mainline
-- **Phase 3.3 af025** — strongest structured refinement
-
-Key takeaway:
-- **seed202** is the difficult case, where Phase 3.3 af025 performs better overall.
-- **seed42** is the favorable case, where M3 f025 remains stronger.
-- At the project level, **M3 f025 remains the current best-balanced architecture**, while **Phase 3.3 af025 remains the strongest structured refinement discovered so far**.
-
-For the full Phase 4 comparison note, see:
-- [`docs/phase4_final_comparison.md`](docs/phase4_final_comparison.md)
-
-### Final spatial comparison on difficult case (`seed202`)
-
-![M3 vs Phase 3.3 af025 seed202 maps](assets/images/final/m3_vs_phase33_af025_seed202_maps.png)
-
-### Final spatial comparison on favorable case (`seed42`)
-
-![M3 vs Phase 3.3 af025 seed42 maps](assets/images/final/m3_vs_phase33_af025_seed42_maps.png)
-
-
-## Stage Evolution
+## Method Diagram
 
 ```mermaid
 flowchart LR
-    A[Phase 2<br/>M3 f025] --> B[Phase 3.1<br/>Learned selective]
-    B --> C[Phase 3.2<br/>Response split]
-    C --> D[Phase 3.3<br/>Protected response split]
-    D --> E[Phase 4<br/>Final contender comparison]
-    E --> F[Phase 5<br/>Mainline consolidation]
+    A[Past flood sequence] --> B[U-Net encoder]
+    C[Past rainfall sequence] --> D[Temporal conditioning]
+    E[Future rainfall sequence] --> D
+    F[Static maps<br/>DEM / impervious / manhole] --> B
 
-    A --> A1[Best-balanced mainline]
-    B --> B1[Freer selector<br/>not enough]
-    C --> C1[Strong difficult-case gain<br/>too aggressive]
-    D --> D1[More conservative<br/>better balance]
-    E --> E1[M3 vs Phase 3.3 af025<br/>final comparison]
-    F --> F1[Final mainline status<br/>documents + README consolidated]
+    B --> G[TCN temporal module]
+    D --> G
+    G --> H[Decoder]
+    H --> I[Predicted future flood depth field]
+
+    I --> J[Data loss]
+    I --> K[Non-negativity loss]
+    I --> L[Wet/dry consistency loss]
+    I --> M[Rainfall-depth consistency loss]
+    E --> M
 ```
 
-## Qualitative Examples
+## Overview
 
-### Baseline vs Phase 1
+This repository implements a spatiotemporal urban flood forecasting prototype using the UrbanFlood24 Lite dataset.  
+The baseline model is built on a U-Net + TCN architecture for multi-step flood process prediction.
 
-#### Spatial Inundation Comparison
+On top of the baseline, a Phase 1 physics-guided model is implemented by adding two output-space regularization terms:
 
-![Baseline vs Phase 1 spatial comparison](assets/images/comparison_epoch19_step11_unified.png)
+- Non-negativity loss
+- Wet/dry consistency loss
 
-#### Region-Averaged Process Comparison
+These physics-guided losses are imposed on the predicted future flood depth field at the output layer, while the backbone architecture remains unchanged.
 
-![Baseline vs Phase 1 process comparison](assets/images/comparison_timeseries_epoch19_regionavg.png)
+## Current Mainline
 
-### Phase 2A vs Phase 2B h16 on Difficult Case (`seed202`)
+The current overall best-balanced architecture is:
 
-#### Spatial Inundation Comparison
+- `temporal_gate_residual_partial`
+- `hidden_channels = 16`
+- `residual_alpha = 0.10`
+- `conditioned_fraction = 0.25`
 
-![Phase 2A vs Phase 2B h16 seed202 spatial comparison](assets/images/comparison_maps_seed202_test_batch0000.png)
+This configuration is the current M3 `f025` mainline reference.
 
-#### Region-Averaged Process Comparison
+The strongest structured refinement discovered so far is:
 
-![Phase 2A vs Phase 2B h16 seed202 process comparison](assets/images/comparison_timeseries_seed202_test_batch0000.png)
+- `temporal_gate_residual_response_split_protected`
+- `hidden_channels = 16`
+- `residual_alpha = 0.10`
+- `conditioned_fraction = 0.25`
+- `active_fraction_within_response = 0.25`
 
-## More Qualitative Figures
+This configuration is the Phase 3.3 `af025` reference.
 
-<details>
-<summary>Expand additional favorable-case comparisons</summary>
+Phase 6 Pilot A added an optional bounded adaptive scalar on top of the protected response-split path. The mechanism was technically stable, but the `adapt025` setting did not beat the static Phase 3.3 `af025` control in final validation, so it is currently treated as a documented negative/neutral result rather than a new mainline.
 
-### Phase 2A vs Phase 2B h16 on Favorable Case (`seed42`)
+Phase 7 tested a more conservative adaptive follow-up with `adaptive_alpha_range = 0.10`. This `adapt010` variant passed the decisive difficult-case `seed202 / 40e` check and also passed the favorable-case `seed42 / 5e` guardrail check, so it is now treated as the current adaptive candidate.
 
-#### Spatial Inundation Comparison
+## Documentation
 
-![Phase 2A vs Phase 2B h16 seed42 spatial comparison](assets/images/comparison_maps_seed42_test_batch0000.png)
+For the current staged experiment record, see:
 
-#### Region-Averaged Process Comparison
+- `docs/project_status.md`
+- `docs/experiment_index.md`
+- `docs/phase3_summary.md`
+- `docs/phase3_3_protected_response_split_notes.md`
+- `docs/phase6_pilot_a_results.md`
+- `docs/phase7_adapt010_results.md`
 
-![Phase 2A vs Phase 2B h16 seed42 process comparison](assets/images/comparison_timeseries_seed42_test_batch0000.png)
-
-</details>
-
-
-## Research Roadmap
-
-```mermaid
-flowchart TD
-    A[Phase 1<br/>Baseline + output-space physics losses] --> B[Phase 2<br/>Rainfall-conditioning exploration]
-    B --> C[Phase 3<br/>Structured refinement exploration]
-    C --> D[Phase 4<br/>Final contender comparison]
-    D --> E[Phase 5<br/>Mainline consolidation]
-
-    A --> A1[non-negativity loss<br/>wet/dry consistency loss]
-    B --> B1[M2 residual gate<br/>M3 partial gate<br/>multi-seed validation]
-    C --> C1[3.1 learned selective<br/>3.2 response split<br/>3.3 protected response split]
-    D --> D1[M3 f025 vs Phase 3.3 af025<br/>final evidence pack]
-    E --> E1[README sync<br/>experiment index<br/>project status]
-
-    B1 --> F[Current best-balanced architecture<br/>M3 f025]
-    C1 --> G[Strongest structured refinement<br/>Phase 3.3 af025]
-    D1 --> H[Project-level conclusion confirmed]
-    E1 --> H
-
-    H[Current conclusion:<br/>M3 f025 remains overall best-balanced<br/>Phase 3.3 af025 is strongest structured refinement]
-```
-
-### Summary
-
-- Phase 1 established the output-space physics-guided baseline.
-- Phase 2 identified **M3 f025** as the current best-balanced architecture.
-- Phase 3 explored more structured modulation designs and identified **Phase 3.3 af025** as the strongest structured refinement.
-- Phase 4 completed the final contender comparison between **M3 f025** and **Phase 3.3 af025**.
-- Phase 5 consolidated the final conclusions, documentation, and mainline presentation.
-- The overall best-balanced architecture still remains **M3 f025**.
-
-## Branch Guide
-
-The repository uses branch-based stage archives.
-
-### Main branches
-
-- `main`  
-  Stable presentation branch for the current project summary and entry point.
-
-- `phase2b-m3-partial-gate`  
-  Archive of the M3 partial-gate exploration and Phase 2 best-balanced direction.
-
-- `phase3-structured-selective-modulation`  
-  Archive of Phase 3.1 learned-selective exploration.
-
-- `phase3-2-structured-response-split`  
-  Archive of Phase 3.2 response-split exploration.
-
-- `phase3-3-protected-response-split`  
-  Archive of final Phase 3 protected response-split exploration and Phase 3 summary.
-
-## Repository Structure
-
-```text
-configs/
-datasets/
-docs/
-models/
-scripts/
-trainers/
-utils/
-compare_maps.py
-compare_timeseries.py
-README.md
-```
 
 ## Dataset
 
-This project uses the UrbanFlood24 Lite dataset.
+This project uses the **UrbanFlood24 Lite** dataset.
 
 Expected dataset directory:
 
 ```text
 data/
-└─ urbanflood24_lite/
-   ├─ train/
-   └─ test/
+  urbanflood24_lite/
+    train/
+    test/
 ```
 
-The dataset contains:
+The dataset includes:
 
-- dynamic flood depth sequences
-- rainfall forcing sequences
+- dynamic flood depth sequences: `flood.npy`
+- rainfall forcing sequences: `rainfall.npy`
 - static geospatial factors:
   - `absolute_DEM.npy`
   - `impervious.npy`
   - `manhole.npy`
 
+
 ## Task Definition
 
-The task is multi-step flood process prediction.
+This project studies **multi-step flood process prediction**.
 
 ### Inputs
 
@@ -227,79 +110,156 @@ The task is multi-step flood process prediction.
 
 - future flood depth sequence
 
-Current setup:
+In the current setup, the model uses:
 
-`input_steps = 12`  
-`pred_steps = 12`
+- `input_steps = 12`
+- `pred_steps = 12`
 
-## Model Backbone
 
-The common forecasting backbone is based on:
+## Method
 
-- U-Net spatial encoder-decoder
-- TCN temporal module
-- rainfall-conditioned temporal modulation variants
+### Backbone
+
+The forecasting backbone is based on a U-Net + TCN style spatiotemporal model.
+
+### Physics-guided strategy
+
+This repository currently has:
+
+- a stable baseline built on U-Net + TCN
+- stable physics guidance from non-negativity loss and wet/dry consistency loss
+- optional architecture-level rainfall conditioning modules used for staged research experiments
+
+### Stable baseline
+
+The stable baseline path keeps the backbone unchanged and preserves the two stable physics-guided losses:
+
+- non-negativity loss
+- wet/dry consistency loss
+
+### Optional rainfall conditioning
+
+Architecture-level rainfall conditioning remains optional and config-driven. Existing training scripts and configs remain usable when the `rainfall_conditioning` block is omitted or disabled.
 
 ## Environment
 
-Recommended environment:
+Example setup:
 
 ```bash
-conda create -n urnn python=3.10 -y
-conda activate urnn
+conda create -n your_env_name python=3.8 -y
+conda activate your_env_name
 pip install -r requirements.txt
 ```
 
 ## Training
 
-Example:
+The current main training entry is:
 
 ```bash
-python scripts/train_model.py --config <your_config>.json
+python scripts/train_model.py --config <config_path>
 ```
 
-## Evaluation
-
-Example:
+### Example: stable loss-guided baseline (40 epochs, seed42)
 
 ```bash
-python scripts/evaluate_model.py --config <your_config>.json
+python scripts/train_model.py --config configs/train_phase2_loss_only_40e_seed42.json
 ```
 
-## Visualization
+### Example: M3 mainline reference (40 epochs, seed42)
 
-Example scripts:
+```bash
+python scripts/train_model.py --config configs/train_phase2b_temporal_gate_h16_40e_seed42.json
+```
+
+### Example: Phase 3.3 protected response-split control (40 epochs, seed42)
+
+```bash
+python scripts/train_model.py --config configs/train_phase3_3_temporal_gate_residual_response_split_protected_h16_a010_f025_af025_40e_seed42.json
+```
+
+### Example: Phase 6 Pilot A adaptive scalar variant (5 epochs, seed42)
+
+```bash
+python scripts/train_model.py --config configs/train_phase6_pilot_a_temporal_gate_residual_response_split_protected_h16_a010_f025_af025_adapt025_5e_seed42.json
+```
+
+### Example: debug run
+
+```bash
+python scripts/train_model.py --config configs/train_phase2b_temporal_gate_debug.json
+```
+
+Additional experiment settings are provided under `configs/`.
+
+
+## Evaluation and Visualization
+
+Current paired qualitative comparison scripts:
 
 ```bash
 python compare_maps.py
 python compare_timeseries.py
 ```
 
-## Key Project-Level Conclusions
+These scripts are currently used for paired qualitative comparison on representative cases such as `seed42` and `seed202`.
 
-1. Lightweight output-space physics guidance improves over the pure baseline.
-2. Residual partial rainfall gating (**M3 f025**) is currently the overall best-balanced architecture direction.
-3. Structured response-split ideas are meaningful, especially for difficult cases.
-4. Protected response split (**Phase 3.3 af025**) is the strongest structured refinement discovered so far.
-5. Phase 4 completed the final contender comparison between **M3 f025** and **Phase 3.3 af025**.
-6. Phase 5 completed the consolidation of the mainline README, documentation index, and project status materials.
-7. The current mainline project conclusion remains:
-   - **M3 f025** = current overall best-balanced architecture
-   - **Phase 3.3 af025** = strongest structured refinement
+Generated figures are organized under:
 
-## Documentation
+- `docs/figures/phase2_qualitative/`
 
-Detailed experimental notes are stored in `docs/`, including:
 
-- Phase 2 multi-seed summaries
-- Phase 2 qualitative comparison notes
-- M2 and M3 archive notes
-- Phase 3.1 notes
-- Phase 3.2 notes
-- Phase 3.3 notes
-- overall `phase3_summary.md`
-- `phase4_final_comparison.md` — final direct comparison between M3 f025 and Phase 3.3 af025
+## Current Project Status
+
+The repository has completed the main Phase 2 and Phase 3 architecture comparison cycle.
+
+Current project-level conclusions:
+
+- **M3 `f025` remains the overall best-balanced mainline**
+- **Phase 3.3 `af025` remains the strongest structured refinement**
+- **Phase 6 Pilot A `adapt025` is stable but not experimentally superior**
+- **Phase 7 `adapt010` is now the current adaptive candidate**
+
+At this stage, the project focus is targeted, hypothesis-driven refinement rather than broad exploratory tuning.
+
+## Representative Case Framing
+
+Two representative cases continue to be useful for targeted comparison:
+
+- `seed42`: favorable-case reference where stronger structured refinement must avoid unnecessary damage
+- `seed202`: difficult-case reference where stronger structured refinement can show useful gains
+
+This framing motivated the Phase 6 Pilot A test and the Phase 7 conservative `adapt010` follow-up.
+
+
+## Adaptive Pilot Switch
+
+Phase 6 Pilot A keeps the protected response-split path and adds an optional bounded adaptive scalar:
+
+```json
+"rainfall_conditioning": {
+  "enabled": true,
+  "mode": "temporal_gate_residual_response_split_protected",
+  "hidden_channels": 16,
+  "residual_alpha": 0.10,
+  "conditioned_fraction": 0.25,
+  "active_fraction_within_response": 0.25,
+  "adaptive_alpha_enabled": true,
+  "adaptive_alpha_range": 0.25
+}
+```
+
+When `adaptive_alpha_enabled` is omitted or set to `false`, the model falls back to the static protected response-split behavior. This keeps the Phase 6 addition optional and backward compatible with existing configs.
+
+## Future Work
+
+The next justified follow-up should start from the current `adapt010` candidate rather than returning to the broader `adapt025` setting:
+
+- preserve the conservative adaptive-strength setting as the active direction
+- keep further checks tightly scoped and hypothesis-driven
+- avoid broad sweeps unless the next targeted comparison justifies expansion
 
 ## License
 
-MIT
+MIT License.
+
+
