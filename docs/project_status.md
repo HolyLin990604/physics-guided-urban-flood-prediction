@@ -7,7 +7,7 @@ The repository should currently be interpreted as follows:
 - `M3 f025` remains the overall best-balanced mainline reference
 - Phase 3.3 `af025` remains the strongest static structured refinement
 - Phase 6 `adapt025` is closed as a negative/neutral result
-- Phase 7 `adapt010` remains the current adaptive candidate, now supported by Phase 8 Batch 1 validation evidence
+- Phase 7/8 `adapt010` remains the current adaptive candidate, now supported by Phase 8 Batch 2 trade-off positioning evidence
 
 ## Meaning Of Each Reference
 
@@ -32,7 +32,13 @@ Phase 8 Batch 1 strengthened that position:
 - `seed123 / 40e` provided supportive repeatability evidence, although with a mixed wet/dry IoU signal
 - `seed42 / 40e` provided a strong full favorable-case guardrail pass
 
-This means `adapt010` now has meaningful early validation evidence and should remain the active adaptive direction, while validation stays narrow.
+Phase 8 Batch 2 then consolidated the existing evidence without new experiments:
+
+- `adapt010` showed consistent RMSE, MAE, and loss gains across the three required full `40e` comparisons
+- wet/dry IoU remained mixed because `seed123` gave back IoU
+- no favorable-case guardrail failure was observed
+
+This means `adapt010` remains the active adaptive direction. Batch 2 evidence does not justify a broader sweep.
 
 ## Practical Reading Guide
 
@@ -41,7 +47,7 @@ When reading the repository:
 - use `M3 f025` as the overall project mainline reference
 - use Phase 3.3 `af025` as the static structured refinement reference
 - treat Phase 6 `adapt025` as archived evidence that a larger adaptive range was too aggressive
-- treat Phase 7 `adapt010` as the active adaptive direction for future targeted follow-up work
+- treat Phase 7/8 `adapt010` as the active adaptive direction for focused follow-up work
 
 ## Key Documents
 
@@ -50,3 +56,4 @@ When reading the repository:
 - `docs/phase6_pilot_a_results.md`
 - `docs/phase7_adapt010_results.md`
 - `docs/phase8_batch1_results.md`
+- `docs/phase8_batch2_results.md`

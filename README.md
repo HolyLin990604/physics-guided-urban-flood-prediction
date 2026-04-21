@@ -32,7 +32,7 @@ flowchart LR
     C --> D[Phase 3.3<br/>Protected response split]
     D --> E[Phase 6<br/>Adaptive pilot adapt025]
     E --> F[Phase 7<br/>Conservative adaptive adapt010]
-    F --> G[Phase 8 Batch 1<br/>Candidate validation]
+    F --> G[Phase 8 Batch 2<br/>Trade-off positioning]
 
     A --> A1[Best-balanced mainline]
     B --> B1[Freer selector<br/>not enough]
@@ -40,7 +40,7 @@ flowchart LR
     D --> D1[Strongest static structured refinement]
     E --> E1[Technically stable<br/>but not ultimately superior]
     F --> F1[Active adaptive candidate]
-    G --> G1[Initial validation evidence established]
+    G --> G1[RMSE/MAE gains positioned<br/>mixed IoU noted]
 ```
 
 
@@ -87,7 +87,9 @@ Phase 8 Batch 1 then provided the first narrow validation pass for that candidat
 - `seed123 / 40e` provided supportive repeatability evidence with a mixed wet/dry IoU signal
 - `seed42 / 40e` provided a strong full favorable-case guardrail pass
 
-This means `adapt010` remains the active adaptive candidate and now has meaningful early validation evidence.
+Phase 8 Batch 2 completed the trade-off positioning step using existing full `40e` evidence. `adapt010` showed consistent RMSE, MAE, and loss gains across the three required comparisons, with mixed wet/dry IoU because of `seed123` and no favorable-case guardrail failure.
+
+This means `adapt010` remains the active adaptive candidate. Batch 2 evidence does not justify a new experiment or broader sweep.
 
 
 ## Historical Qualitative Examples
@@ -143,8 +145,8 @@ flowchart TD
 
     A1[Phase 2-5<br/>- M3 f025 remains overall best-balanced mainline<br/>- Phase 3.3 af025 remains strongest static structured refinement] --> A
     B1[Phase 6-7<br/>- adapt025 closed as negative/neutral<br/>- adapt010 promoted as active adaptive candidate] --> B
-    C1[Phase 8 Batch 1<br/>- seed202 / 40e decisive difficult-case support<br/>- seed123 / 40e supportive repeatability<br/>- seed42 / 40e strong full favorable-case guardrail pass] --> C
-    D1[Future focus<br/>- continue narrow validation if needed<br/>- strengthen credibility / stability evidence<br/>- avoid premature broad sweep] --> D
+    C1[Phase 8 Batch 2<br/>- consistent RMSE/MAE/loss gains<br/>- mixed IoU due to seed123<br/>- no favorable-case guardrail failure] --> C
+    D1[Future focus<br/>- keep adapt010 focused<br/>- avoid broader sweep without new evidence] --> D
 ```
 
 
@@ -159,6 +161,7 @@ For the current staged experiment record, see:
 - `docs/phase6_pilot_a_results.md`
 - `docs/phase7_adapt010_results.md`
 - `docs/phase8_batch1_results.md`
+- `docs/phase8_batch2_results.md`
 
 
 ## Dataset
@@ -296,7 +299,7 @@ python compare_maps.py
 python compare_timeseries.py
 ```
 
-These scripts are used for paired qualitative comparison on representative cases such as `seed42`, `seed202`, and `seed123`, while Phase 8 Batch 1 provides the current initial validation evidence for the active adaptive candidate.
+These scripts are used for paired qualitative comparison on representative cases such as `seed42`, `seed202`, and `seed123`, while Phase 8 Batch 2 provides the current trade-off positioning evidence for the active adaptive candidate.
 
 Generated figures are organized under:
 
@@ -305,16 +308,16 @@ Generated figures are organized under:
 
 ## Current Project Status
 
-The repository has completed the main Phase 2-3 architecture comparison cycle, closed the Phase 6 `adapt025` pilot as negative/neutral, promoted Phase 7 `adapt010` as the active adaptive candidate, and added initial Phase 8 Batch 1 validation evidence.
+The repository has completed the main Phase 2-3 architecture comparison cycle, closed the Phase 6 `adapt025` pilot as negative/neutral, promoted Phase 7 `adapt010` as the active adaptive candidate, and completed Phase 8 Batch 2 trade-off positioning.
 
 Current project-level conclusions:
 
 - **M3 `f025` remains the overall best-balanced mainline**
 - **Phase 3.3 `af025` remains the strongest static structured refinement**
 - **Phase 6 Pilot A `adapt025` is closed as a negative/neutral result**
-- **Phase 7 `adapt010` remains the current adaptive candidate, now supported by Phase 8 Batch 1 evidence**
+- **Phase 7/8 `adapt010` remains the current adaptive candidate, with consistent RMSE/MAE/loss gains, mixed IoU due to `seed123`, and no favorable-case guardrail failure in Phase 8 Batch 2**
 
-At this stage, the project focus is targeted, hypothesis-driven refinement rather than broad exploratory tuning.
+At this stage, the project focus remains targeted, hypothesis-driven refinement. Batch 2 evidence does not justify a broader sweep.
 
 ## Representative Case Framing
 
@@ -367,7 +370,7 @@ The next justified follow-up should start from the current `adapt010` candidate 
 
 - preserve the conservative adaptive-strength setting as the active direction
 - keep further checks tightly scoped and hypothesis-driven
-- avoid broad sweeps unless the next targeted comparison justifies expansion
+- avoid broad sweeps unless new evidence justifies expansion
 
 ## License
 
