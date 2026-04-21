@@ -90,7 +90,9 @@ Phase 8 Batch 1 then provided the first narrow validation pass for that candidat
 This means `adapt010` remains the active adaptive candidate and now has meaningful early validation evidence.
 
 
-## Qualitative Examples
+## Historical Qualitative Examples
+
+The figures below are earlier-stage qualitative comparisons retained for visual reference. They are not the only current evidence for the project state; the current adaptive-candidate evidence is summarized above in the Phase 8 Batch 1 results for `adapt010`.
 
 ### Baseline vs Phase 1
 
@@ -270,6 +272,12 @@ python scripts/train_model.py --config configs/train_phase3_3_temporal_gate_resi
 python scripts/train_model.py --config configs/train_phase6_pilot_a_temporal_gate_residual_response_split_protected_h16_a010_f025_af025_adapt025_5e_seed42.json
 ```
 
+### Example: Phase 8 adaptive candidate validation (40 epochs, seed42)
+
+```bash
+python scripts/train_model.py --config configs/train_phase8_validation_temporal_gate_residual_response_split_protected_h16_a010_f025_af025_adapt010_40e_seed42.json
+```
+
 ### Example: debug run
 
 ```bash
@@ -281,14 +289,14 @@ Additional experiment settings are provided under `configs/`.
 
 ## Evaluation and Visualization
 
-Current paired qualitative comparison scripts:
+Current evaluation combines staged validation metrics with paired qualitative checks. The comparison scripts remain useful for inspecting representative cases and historical visual outputs:
 
 ```bash
 python compare_maps.py
 python compare_timeseries.py
 ```
 
-These scripts are currently used for paired qualitative comparison on representative cases such as `seed42` and `seed202`.
+These scripts are used for paired qualitative comparison on representative cases such as `seed42`, `seed202`, and `seed123`, while Phase 8 Batch 1 provides the current initial validation evidence for the active adaptive candidate.
 
 Generated figures are organized under:
 
@@ -297,30 +305,31 @@ Generated figures are organized under:
 
 ## Current Project Status
 
-The repository has completed the main Phase 2 and Phase 3 architecture comparison cycle.
+The repository has completed the main Phase 2-3 architecture comparison cycle, closed the Phase 6 `adapt025` pilot as negative/neutral, promoted Phase 7 `adapt010` as the active adaptive candidate, and added initial Phase 8 Batch 1 validation evidence.
 
 Current project-level conclusions:
 
 - **M3 `f025` remains the overall best-balanced mainline**
-- **Phase 3.3 `af025` remains the strongest structured refinement**
-- **Phase 6 Pilot A `adapt025` is stable but not experimentally superior**
+- **Phase 3.3 `af025` remains the strongest static structured refinement**
+- **Phase 6 Pilot A `adapt025` is closed as a negative/neutral result**
 - **Phase 7 `adapt010` remains the current adaptive candidate, now supported by Phase 8 Batch 1 evidence**
 
 At this stage, the project focus is targeted, hypothesis-driven refinement rather than broad exploratory tuning.
 
 ## Representative Case Framing
 
-Two representative cases continue to be useful for targeted comparison:
+Three representative cases continue to be useful for targeted comparison:
 
 - `seed42`: favorable-case reference where stronger structured refinement must avoid unnecessary damage
 - `seed202`: difficult-case reference where stronger structured refinement can show useful gains
+- `seed123`: repeatability reference for checking whether candidate behavior generalizes beyond the two anchor cases
 
 This framing motivated the Phase 6 Pilot A test and the Phase 7 conservative `adapt010` follow-up.
 
 
-## Adaptive Pilot Switch
+## Adaptive Candidate Switch
 
-Phase 6 Pilot A keeps the protected response-split path and adds an optional bounded adaptive scalar:
+Phase 6 Pilot A kept the protected response-split path and added an optional bounded adaptive scalar. The earlier `adapt025` setting was technically stable, but it is now closed as a negative/neutral result:
 
 ```json
 "rainfall_conditioning": {
@@ -335,7 +344,22 @@ Phase 6 Pilot A keeps the protected response-split path and adds an optional bou
 }
 ```
 
-When `adaptive_alpha_enabled` is omitted or set to `false`, the model falls back to the static protected response-split behavior. This keeps the Phase 6 addition optional and backward compatible with existing configs.
+The current active adaptive candidate is the more conservative Phase 7/Phase 8 `adapt010` setting:
+
+```json
+"rainfall_conditioning": {
+  "enabled": true,
+  "mode": "temporal_gate_residual_response_split_protected",
+  "hidden_channels": 16,
+  "residual_alpha": 0.10,
+  "conditioned_fraction": 0.25,
+  "active_fraction_within_response": 0.25,
+  "adaptive_alpha_enabled": true,
+  "adaptive_alpha_range": 0.10
+}
+```
+
+When `adaptive_alpha_enabled` is omitted or set to `false`, the model falls back to the static protected response-split behavior. This keeps the adaptive addition optional and backward compatible with existing configs while preserving Phase 3.3 `af025` as the strongest static structured refinement.
 
 ## Future Work
 
