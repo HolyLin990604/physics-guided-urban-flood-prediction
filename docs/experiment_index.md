@@ -18,6 +18,12 @@
 - Status: active adaptive candidate established
 - Takeaway: the conservative `adapt010` follow-up improved the decisive difficult-case `seed202 / 40e` result and also passed the favorable-case `seed42 / 5e` guardrail check
 
+## Phase 8 Batch 1
+
+- `docs/phase8_batch1_results.md`
+- Status: early validation support established
+- Takeaway: `adapt010` remained favorable across a narrow Phase 8 Batch 1 check, with decisive difficult-case support, supportive repeatability evidence, and a strong full favorable-case guardrail pass
+
 ## Interpretation Order
 
 For current repository interpretation, read the experiment trail in this order:
@@ -25,4 +31,5 @@ For current repository interpretation, read the experiment trail in this order:
 1. `docs/phase3_summary.md`
 2. `docs/phase6_pilot_a_results.md`
 3. `docs/phase7_adapt010_results.md`
-4. `docs/project_status.md`
+4. `docs/phase8_batch1_results.md`
+5. `docs/project_status.md`

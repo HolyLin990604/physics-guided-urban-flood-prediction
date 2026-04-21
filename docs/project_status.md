@@ -7,7 +7,7 @@ The repository should currently be interpreted as follows:
 - `M3 f025` remains the overall best-balanced mainline reference
 - Phase 3.3 `af025` remains the strongest static structured refinement
 - Phase 6 `adapt025` is closed as a negative/neutral result
-- Phase 7 `adapt010` is now the current adaptive candidate
+- Phase 7 `adapt010` remains the current adaptive candidate, now supported by Phase 8 Batch 1 validation evidence
 
 ## Meaning Of Each Reference
 
@@ -27,6 +27,13 @@ Phase 6 `adapt025` established that the adaptive scalar mechanism is technically
 
 Phase 7 `adapt010` is the current adaptive candidate. It improved the decisive difficult-case `seed202 / 40e` result over both the static `af025` control and the earlier Phase 6 `adapt025` run, and it also passed the favorable-case `seed42 / 5e` guardrail check.
 
+Phase 8 Batch 1 strengthened that position:
+
+- `seed123 / 40e` provided supportive repeatability evidence, although with a mixed wet/dry IoU signal
+- `seed42 / 40e` provided a strong full favorable-case guardrail pass
+
+This means `adapt010` now has meaningful early validation evidence and should remain the active adaptive direction, while validation stays narrow.
+
 ## Practical Reading Guide
 
 When reading the repository:
@@ -42,3 +49,4 @@ When reading the repository:
 - `docs/phase3_3_protected_response_split_notes.md`
 - `docs/phase6_pilot_a_results.md`
 - `docs/phase7_adapt010_results.md`
+- `docs/phase8_batch1_results.md`
