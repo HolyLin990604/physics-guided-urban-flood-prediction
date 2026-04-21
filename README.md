@@ -60,6 +60,14 @@ Phase 6 Pilot A added an optional bounded adaptive scalar on top of the protecte
 
 Phase 7 tested a more conservative adaptive follow-up with `adaptive_alpha_range = 0.10`. This `adapt010` variant passed the decisive difficult-case `seed202 / 40e` check and also passed the favorable-case `seed42 / 5e` guardrail check, so it is now treated as the current adaptive candidate.
 
+Phase 8 Batch 1 then provided the first narrow validation pass for that candidate:
+
+- `seed202 / 40e` remains the decisive difficult-case support result
+- `seed123 / 40e` provided supportive repeatability evidence with a mixed wet/dry IoU signal
+- `seed42 / 40e` provided a strong full favorable-case guardrail pass
+
+This means `adapt010` remains the active adaptive candidate and now has meaningful early validation evidence.
+
 ## Documentation
 
 For the current staged experiment record, see:
@@ -70,6 +78,7 @@ For the current staged experiment record, see:
 - `docs/phase3_3_protected_response_split_notes.md`
 - `docs/phase6_pilot_a_results.md`
 - `docs/phase7_adapt010_results.md`
+- `docs/phase8_batch1_results.md`
 
 
 ## Dataset
@@ -217,7 +226,7 @@ Current project-level conclusions:
 - **M3 `f025` remains the overall best-balanced mainline**
 - **Phase 3.3 `af025` remains the strongest structured refinement**
 - **Phase 6 Pilot A `adapt025` is stable but not experimentally superior**
-- **Phase 7 `adapt010` is now the current adaptive candidate**
+- **Phase 7 `adapt010` remains the current adaptive candidate, now supported by Phase 8 Batch 1 evidence**
 
 At this stage, the project focus is targeted, hypothesis-driven refinement rather than broad exploratory tuning.
 
