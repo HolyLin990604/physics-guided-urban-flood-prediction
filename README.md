@@ -23,6 +23,23 @@ flowchart LR
     E --> M
 ```
 
+## Stage Evolution
+
+```mermaid
+flowchart LR
+    A[Phase 2<br/>M3 f025] --> B[Phase 3.1<br/>Learned selective]
+    B --> C[Phase 3.2<br/>Response split]
+    C --> D[Phase 3.3<br/>Protected response split]
+    D --> E[Final Phase 3 best<br/>af025]
+
+    A --> A1[Best-balanced mainline]
+    B --> B1[Freer selector<br/>not enough]
+    C --> C1[Strong difficult-case gain<br/>too aggressive]
+    D --> D1[More conservative<br/>better balance]
+    E --> E1[Best Phase 3 variant<br/>but still below M3 overall]
+```
+
+
 ## Overview
 
 This repository implements a spatiotemporal urban flood forecasting prototype using the UrbanFlood24 Lite dataset.  
@@ -67,6 +84,69 @@ Phase 8 Batch 1 then provided the first narrow validation pass for that candidat
 - `seed42 / 40e` provided a strong full favorable-case guardrail pass
 
 This means `adapt010` remains the active adaptive candidate and now has meaningful early validation evidence.
+
+
+## Qualitative Examples
+
+### Baseline vs Phase 1
+
+#### Spatial Inundation Comparison
+
+![Baseline vs Phase 1 spatial comparison](assets/images/comparison_epoch19_step11_unified.png)
+
+#### Region-Averaged Process Comparison
+
+![Baseline vs Phase 1 process comparison](assets/images/comparison_timeseries_epoch19_regionavg.png)
+
+### Phase 2A vs Phase 2B h16 on Difficult Case (`seed202`)
+
+#### Spatial Inundation Comparison
+
+![Phase 2A vs Phase 2B h16 seed202 spatial comparison](assets/images/comparison_maps_seed202_test_batch0000.png)
+
+#### Region-Averaged Process Comparison
+
+![Phase 2A vs Phase 2B h16 seed202 process comparison](assets/images/comparison_timeseries_seed202_test_batch0000.png)
+
+## More Qualitative Figures
+
+<details>
+<summary>Expand additional favorable-case comparisons</summary>
+
+### Phase 2A vs Phase 2B h16 on Favorable Case (`seed42`)
+
+#### Spatial Inundation Comparison
+
+![Phase 2A vs Phase 2B h16 seed42 spatial comparison](assets/images/comparison_maps_seed42_test_batch0000.png)
+
+#### Region-Averaged Process Comparison
+
+![Phase 2A vs Phase 2B h16 seed42 process comparison](assets/images/comparison_timeseries_seed42_test_batch0000.png)
+
+</details>
+
+
+
+## Research Roadmap
+
+```mermaid
+flowchart TD
+    A[Phase 1<br/>Baseline + output-space physics losses] --> B[Phase 2<br/>Rainfall-conditioning exploration]
+    B --> C[Phase 3<br/>Structured refinement exploration]
+
+    A --> A1[non-negativity loss<br/>wet/dry consistency loss]
+    B --> B1[M2 residual gate<br/>M3 partial gate<br/>multi-seed validation]
+    C --> C1[3.1 learned selective<br/>3.2 response split<br/>3.3 protected response split]
+
+    B1 --> D[Current best-balanced architecture<br/>M3 f025]
+    C1 --> E[Best structured refinement<br/>Phase 3.3 af025]
+
+    D --> F[Project conclusion]
+    E --> F
+
+    F[Current conclusion:<br/>M3 f025 remains overall best-balanced<br/>Phase 3.3 af025 is strongest structured refinement]
+```
+
 
 ## Documentation
 
