@@ -30,13 +30,17 @@ flowchart LR
     A[Phase 2<br/>M3 f025] --> B[Phase 3.1<br/>Learned selective]
     B --> C[Phase 3.2<br/>Response split]
     C --> D[Phase 3.3<br/>Protected response split]
-    D --> E[Final Phase 3 best<br/>af025]
+    D --> E[Phase 6<br/>Adaptive pilot adapt025]
+    E --> F[Phase 7<br/>Conservative adaptive adapt010]
+    F --> G[Phase 8 Batch 1<br/>Candidate validation]
 
     A --> A1[Best-balanced mainline]
     B --> B1[Freer selector<br/>not enough]
     C --> C1[Strong difficult-case gain<br/>too aggressive]
-    D --> D1[More conservative<br/>better balance]
-    E --> E1[Best Phase 3 variant<br/>but still below M3 overall]
+    D --> D1[Strongest static structured refinement]
+    E --> E1[Technically stable<br/>but not ultimately superior]
+    F --> F1[Active adaptive candidate]
+    G --> G1[Initial validation evidence established]
 ```
 
 
@@ -131,20 +135,14 @@ This means `adapt010` remains the active adaptive candidate and now has meaningf
 
 ```mermaid
 flowchart TD
-    A[Phase 1<br/>Baseline + output-space physics losses] --> B[Phase 2<br/>Rainfall-conditioning exploration]
-    B --> C[Phase 3<br/>Structured refinement exploration]
+    A[Stage I<br/>Mainline and static refinement establishment] --> B[Stage II<br/>Adaptive pilot exploration]
+    B --> C[Stage III<br/>Adaptive candidate validation]
+    C --> D[Next stage<br/>Evidence expansion or consolidation]
 
-    A --> A1[non-negativity loss<br/>wet/dry consistency loss]
-    B --> B1[M2 residual gate<br/>M3 partial gate<br/>multi-seed validation]
-    C --> C1[3.1 learned selective<br/>3.2 response split<br/>3.3 protected response split]
-
-    B1 --> D[Current best-balanced architecture<br/>M3 f025]
-    C1 --> E[Best structured refinement<br/>Phase 3.3 af025]
-
-    D --> F[Project conclusion]
-    E --> F
-
-    F[Current conclusion:<br/>M3 f025 remains overall best-balanced<br/>Phase 3.3 af025 is strongest structured refinement]
+    A1[Phase 2-5<br/>- M3 f025 remains overall best-balanced mainline<br/>- Phase 3.3 af025 remains strongest static structured refinement] --> A
+    B1[Phase 6-7<br/>- adapt025 closed as negative/neutral<br/>- adapt010 promoted as active adaptive candidate] --> B
+    C1[Phase 8 Batch 1<br/>- seed202 / 40e decisive difficult-case support<br/>- seed123 / 40e supportive repeatability<br/>- seed42 / 40e strong full favorable-case guardrail pass] --> C
+    D1[Future focus<br/>- continue narrow validation if needed<br/>- strengthen credibility / stability evidence<br/>- avoid premature broad sweep] --> D
 ```
 
 
