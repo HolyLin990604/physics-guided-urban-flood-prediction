@@ -1,0 +1,22 @@
+{
+  "comparisons": [
+    {
+      "seed": "seed202",
+      "seed_role": "difficult-case reference",
+      "static_af025_run_root": "runs/phase3_3_temporal_gate_residual_response_split_protected_h16_a010_f025_af025_40e_seed202",
+      "adapt010_run_root": "runs/phase7_conservative_adaptive_followup_temporal_gate_residual_response_split_protected_h16_a010_f025_af025_adapt010_40e_seed202"
+    },
+    {
+      "seed": "seed123",
+      "seed_role": "repeatability reference with mixed IoU",
+      "static_af025_run_root": "runs/phase8_validation_temporal_gate_residual_response_split_protected_h16_a010_f025_af025_40e_seed123",
+      "adapt010_run_root": "runs/phase8_validation_temporal_gate_residual_response_split_protected_h16_a010_f025_af025_adapt010_40e_seed123"
+    },
+    {
+      "seed": "seed42",
+      "seed_role": "favorable-case guardrail reference",
+      "static_af025_run_root": "runs/phase3_3_temporal_gate_residual_response_split_protected_h16_a010_f025_af025_40e_seed42",
+      "adapt010_run_root": "runs/phase8_validation_temporal_gate_residual_response_split_protected_h16_a010_f025_af025_adapt010_40e_seed42"
+    }
+  ]
+}
