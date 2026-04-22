@@ -1,0 +1,60 @@
+{
+  "seed_label": "seed123",
+  "wet_threshold": 0.05,
+  "near_threshold_margin": 0.005,
+  "selected_epoch": "epoch_040",
+  "selected_batches": [
+    "val_batch_0000",
+    "val_batch_0001"
+  ],
+  "used_artifacts": [
+    {
+      "batch": "val_batch_0000",
+      "static_forecast_maps": "runs/phase8_validation_temporal_gate_residual_response_split_protected_h16_a010_f025_af025_40e_seed123/visualizations/epoch_040/val_batch_0000/forecast_maps.npz",
+      "adapt010_forecast_maps": "runs/phase8_validation_temporal_gate_residual_response_split_protected_h16_a010_f025_af025_adapt010_40e_seed123/visualizations/epoch_040/val_batch_0000/forecast_maps.npz",
+      "static_summary": "runs/phase8_validation_temporal_gate_residual_response_split_protected_h16_a010_f025_af025_40e_seed123/visualizations/epoch_040/val_batch_0000/summary.json",
+      "adapt010_summary": "runs/phase8_validation_temporal_gate_residual_response_split_protected_h16_a010_f025_af025_adapt010_40e_seed123/visualizations/epoch_040/val_batch_0000/summary.json",
+      "static_depth_timeseries": "runs/phase8_validation_temporal_gate_residual_response_split_protected_h16_a010_f025_af025_40e_seed123/visualizations/epoch_040/val_batch_0000/depth_timeseries.json",
+      "adapt010_depth_timeseries": "runs/phase8_validation_temporal_gate_residual_response_split_protected_h16_a010_f025_af025_adapt010_40e_seed123/visualizations/epoch_040/val_batch_0000/depth_timeseries.json"
+    },
+    {
+      "batch": "val_batch_0001",
+      "static_forecast_maps": "runs/phase8_validation_temporal_gate_residual_response_split_protected_h16_a010_f025_af025_40e_seed123/visualizations/epoch_040/val_batch_0001/forecast_maps.npz",
+      "adapt010_forecast_maps": "runs/phase8_validation_temporal_gate_residual_response_split_protected_h16_a010_f025_af025_adapt010_40e_seed123/visualizations/epoch_040/val_batch_0001/forecast_maps.npz",
+      "static_summary": "runs/phase8_validation_temporal_gate_residual_response_split_protected_h16_a010_f025_af025_40e_seed123/visualizations/epoch_040/val_batch_0001/summary.json",
+      "adapt010_summary": "runs/phase8_validation_temporal_gate_residual_response_split_protected_h16_a010_f025_af025_adapt010_40e_seed123/visualizations/epoch_040/val_batch_0001/summary.json",
+      "static_depth_timeseries": "runs/phase8_validation_temporal_gate_residual_response_split_protected_h16_a010_f025_af025_40e_seed123/visualizations/epoch_040/val_batch_0001/depth_timeseries.json",
+      "adapt010_depth_timeseries": "runs/phase8_validation_temporal_gate_residual_response_split_protected_h16_a010_f025_af025_adapt010_40e_seed123/visualizations/epoch_040/val_batch_0001/depth_timeseries.json"
+    }
+  ],
+  "target": {
+    "total_pixels": 786432,
+    "near_threshold_count": 8258,
+    "near_threshold_ratio": 0.010500590006510416,
+    "threshold": 0.05,
+    "margin": 0.005,
+    "min": 0.0,
+    "max": 2.11019229888916,
+    "mean": 0.06815973669290543
+  },
+  "static_af025_prediction": {
+    "total_pixels": 786432,
+    "near_threshold_count": 12232,
+    "near_threshold_ratio": 0.015553792317708334,
+    "threshold": 0.05,
+    "margin": 0.005,
+    "min": -0.09155230224132538,
+    "max": 2.370624303817749,
+    "mean": 0.05055124685168266
+  },
+  "adapt010_prediction": {
+    "total_pixels": 786432,
+    "near_threshold_count": 12698,
+    "near_threshold_ratio": 0.016146341959635418,
+    "threshold": 0.05,
+    "margin": 0.005,
+    "min": -0.10878744721412659,
+    "max": 2.450167417526245,
+    "mean": 0.051088009029626846
+  }
+}

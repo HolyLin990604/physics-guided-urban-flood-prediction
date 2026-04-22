@@ -1,0 +1,180 @@
+{
+  "seed_label": "seed123",
+  "selected_epoch": "epoch_040",
+  "selected_batches": [
+    "val_batch_0000",
+    "val_batch_0001"
+  ],
+  "tradeoff_summary": {
+    "mean_static_iou": 0.6788924440549372,
+    "mean_adapt010_iou": 0.6649497707462805,
+    "mean_iou_delta": -0.013942673308656728,
+    "total_static_fp": 15797,
+    "total_adapt010_fp": 17081,
+    "total_fp_delta": 1284,
+    "total_static_fn": 36545,
+    "total_adapt010_fn": 37876,
+    "total_fn_delta": 1331,
+    "static_prediction_near_threshold_ratio": 0.015553792317708334,
+    "adapt010_prediction_near_threshold_ratio": 0.016146341959635418,
+    "near_threshold_ratio_delta": 0.0005925496419270839,
+    "fp_increase_steps": 8,
+    "fn_increase_steps": 7,
+    "step_count": 12,
+    "step_deltas": [
+      {
+        "forecast_step": 0,
+        "static_iou": 0.5861759425493717,
+        "adapt010_iou": 0.561028968014484,
+        "iou_delta": -0.02514697453488768,
+        "fp_delta": -112,
+        "fn_delta": 399,
+        "static_prediction_wet_area_ratio": 0.1342620849609375,
+        "adapt010_prediction_wet_area_ratio": 0.12646484375
+      },
+      {
+        "forecast_step": 1,
+        "static_iou": 0.6146636432350718,
+        "adapt010_iou": 0.6094339622641509,
+        "iou_delta": -0.0052296809709209136,
+        "fp_delta": 20,
+        "fn_delta": 57,
+        "static_prediction_wet_area_ratio": 0.1365814208984375,
+        "adapt010_prediction_wet_area_ratio": 0.136016845703125
+      },
+      {
+        "forecast_step": 2,
+        "static_iou": 0.6425528677924844,
+        "adapt010_iou": 0.6405391160304194,
+        "iou_delta": -0.0020137517620650858,
+        "fp_delta": 135,
+        "fn_delta": -60,
+        "static_prediction_wet_area_ratio": 0.13946533203125,
+        "adapt010_prediction_wet_area_ratio": 0.1424407958984375
+      },
+      {
+        "forecast_step": 3,
+        "static_iou": 0.6795102899203845,
+        "adapt010_iou": 0.6752619454558966,
+        "iou_delta": -0.004248344464487963,
+        "fp_delta": 143,
+        "fn_delta": -40,
+        "static_prediction_wet_area_ratio": 0.147552490234375,
+        "adapt010_prediction_wet_area_ratio": 0.1503448486328125
+      },
+      {
+        "forecast_step": 4,
+        "static_iou": 0.6632143655465316,
+        "adapt010_iou": 0.69636001706242,
+        "iou_delta": 0.03314565151588844,
+        "fp_delta": 645,
+        "fn_delta": -894,
+        "static_prediction_wet_area_ratio": 0.14117431640625,
+        "adapt010_prediction_wet_area_ratio": 0.1646575927734375
+      },
+      {
+        "forecast_step": 5,
+        "static_iou": 0.664194299011053,
+        "adapt010_iou": 0.6087368037859483,
+        "iou_delta": -0.05545749522510468,
+        "fp_delta": -17,
+        "fn_delta": 773,
+        "static_prediction_wet_area_ratio": 0.14459228515625,
+        "adapt010_prediction_wet_area_ratio": 0.132537841796875
+      },
+      {
+        "forecast_step": 6,
+        "static_iou": 0.6874119130628291,
+        "adapt010_iou": 0.6642314436002338,
+        "iou_delta": -0.023180469462595332,
+        "fp_delta": 207,
+        "fn_delta": 175,
+        "static_prediction_wet_area_ratio": 0.1484222412109375,
+        "adapt010_prediction_wet_area_ratio": 0.1489105224609375
+      },
+      {
+        "forecast_step": 7,
+        "static_iou": 0.72984269321377,
+        "adapt010_iou": 0.6970528748916498,
+        "iou_delta": -0.032789818322120245,
+        "fp_delta": 685,
+        "fn_delta": -46,
+        "static_prediction_wet_area_ratio": 0.158203125,
+        "adapt010_prediction_wet_area_ratio": 0.1693572998046875
+      },
+      {
+        "forecast_step": 8,
+        "static_iou": 0.7495172626863366,
+        "adapt010_iou": 0.7395067401960784,
+        "iou_delta": -0.010010522490258134,
+        "fp_delta": 109,
+        "fn_delta": 49,
+        "static_prediction_wet_area_ratio": 0.164306640625,
+        "adapt010_prediction_wet_area_ratio": 0.16522216796875
+      },
+      {
+        "forecast_step": 9,
+        "static_iou": 0.7545481882423696,
+        "adapt010_iou": 0.6645822588963384,
+        "iou_delta": -0.0899659293460312,
+        "fp_delta": 2210,
+        "fn_delta": -272,
+        "static_prediction_wet_area_ratio": 0.1818084716796875,
+        "adapt010_prediction_wet_area_ratio": 0.2196807861328125
+      },
+      {
+        "forecast_step": 10,
+        "static_iou": 0.7369154082979036,
+        "adapt010_iou": 0.7399358460304731,
+        "iou_delta": 0.0030204377325695475,
+        "fp_delta": -1172,
+        "fn_delta": 826,
+        "static_prediction_wet_area_ratio": 0.1934356689453125,
+        "adapt010_prediction_wet_area_ratio": 0.1629486083984375
+      },
+      {
+        "forecast_step": 11,
+        "static_iou": 0.6381624551011406,
+        "adapt010_iou": 0.6827272727272727,
+        "iou_delta": 0.04456481762613218,
+        "fp_delta": -1569,
+        "fn_delta": 364,
+        "static_prediction_wet_area_ratio": 0.2341156005859375,
+        "adapt010_prediction_wet_area_ratio": 0.204620361328125
+      }
+    ],
+    "highlights": {
+      "largest_iou_drop": {
+        "forecast_step": 9,
+        "static_iou": 0.7545481882423696,
+        "adapt010_iou": 0.6645822588963384,
+        "iou_delta": -0.0899659293460312,
+        "fp_delta": 2210,
+        "fn_delta": -272,
+        "static_prediction_wet_area_ratio": 0.1818084716796875,
+        "adapt010_prediction_wet_area_ratio": 0.2196807861328125
+      },
+      "largest_fn_increase": {
+        "forecast_step": 10,
+        "static_iou": 0.7369154082979036,
+        "adapt010_iou": 0.7399358460304731,
+        "iou_delta": 0.0030204377325695475,
+        "fp_delta": -1172,
+        "fn_delta": 826,
+        "static_prediction_wet_area_ratio": 0.1934356689453125,
+        "adapt010_prediction_wet_area_ratio": 0.1629486083984375
+      },
+      "largest_fp_increase": {
+        "forecast_step": 9,
+        "static_iou": 0.7545481882423696,
+        "adapt010_iou": 0.6645822588963384,
+        "iou_delta": -0.0899659293460312,
+        "fp_delta": 2210,
+        "fn_delta": -272,
+        "static_prediction_wet_area_ratio": 0.1818084716796875,
+        "adapt010_prediction_wet_area_ratio": 0.2196807861328125
+      }
+    },
+    "interpretation": "The IoU give-back is mixed error mode, FN-leaning overall, with step-specific FP increases also present; adapt010 also has a higher near-threshold prediction ratio."
+  }
+}
