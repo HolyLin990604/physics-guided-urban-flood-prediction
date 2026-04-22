@@ -1,0 +1,48 @@
+{
+  "run_root": "runs/phase7_conservative_adaptive_followup_temporal_gate_residual_response_split_protected_h16_a010_f025_af025_adapt010_40e_seed202",
+  "checkpoint_path": "runs/phase7_conservative_adaptive_followup_temporal_gate_residual_response_split_protected_h16_a010_f025_af025_adapt010_40e_seed202/checkpoints/best.pt",
+  "config_source": "checkpoint_embedded_config",
+  "split": "val",
+  "max_batches": 8,
+  "inspected_batches": 8,
+  "inspected_samples": 16,
+  "inspected_values": 192,
+  "checkpoint_epoch": 40,
+  "checkpoint_best_metric": 0.03681199736893177,
+  "adaptive_alpha_range": 0.1,
+  "adaptive_alpha_lower_bound": 0.9,
+  "adaptive_alpha_upper_bound": 1.1,
+  "adaptive_alpha_scale": {
+    "count": 192,
+    "min": 0.9684820175170898,
+    "max": 0.9958045482635498,
+    "mean": 0.9884748791034023,
+    "std": 0.006889562397688985,
+    "percentiles": {
+      "p0": 0.9684820175170898,
+      "p1": 0.9684820175170898,
+      "p5": 0.9718182235956192,
+      "p25": 0.9859974980354309,
+      "p50": 0.99100261926651,
+      "p75": 0.9932077080011368,
+      "p95": 0.9951600074768067,
+      "p99": 0.9957359886169433,
+      "p100": 0.9958045482635498
+    },
+    "lower_bound": 0.9,
+    "upper_bound": 1.1,
+    "saturation_eps": 0.001,
+    "near_lower_bound_count": 0,
+    "near_upper_bound_count": 0,
+    "near_identity_count": 0,
+    "near_lower_bound_ratio": 0.0,
+    "near_upper_bound_ratio": 0.0,
+    "near_identity_ratio": 0.0
+  },
+  "signals_available": [
+    "future_rainfall",
+    "adaptive_alpha_mlp_output",
+    "bounded adaptive alpha scale"
+  ],
+  "inspection_path": "minimal evaluation-time scalar recomputation from checkpoint MLP and dataset future_rainfall"
+}
