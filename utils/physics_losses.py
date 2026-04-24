@@ -90,9 +90,29 @@ class PhysicsLossController:
     ) -> torch.Tensor:
         threshold = float(cfg.get("threshold", 0.05))
         temperature = float(cfg.get("temperature", 0.02))
+        boundary_band_pixels = int(cfg.get("boundary_band_pixels", 0))
+        boundary_weight = float(cfg.get("boundary_weight", 1.0))
         target_wet = (target > threshold).float()
         pred_wet_logits = (prediction - threshold) / max(temperature, 1e-6)
-        return F.binary_cross_entropy_with_logits(pred_wet_logits, target_wet)
+        loss = F.binary_cross_entropy_with_logits(pred_wet_logits, target_wet, reduction="none")
+        if boundary_band_pixels <= 0 or boundary_weight <= 1.0:
+            return loss.mean()
+
+        boundary_band = PhysicsLossController._target_wet_boundary_band(target_wet, boundary_band_pixels)
+        weights = torch.ones_like(loss).masked_fill(boundary_band, boundary_weight)
+        return (loss * weights).sum() / weights.sum().clamp_min(1e-6)
+
+    @staticmethod
+    def _target_wet_boundary_band(target_wet: torch.Tensor, band_pixels: int) -> torch.Tensor:
+        if band_pixels <= 0:
+            return torch.zeros_like(target_wet, dtype=torch.bool)
+
+        original_shape = target_wet.shape
+        flat = target_wet.reshape(-1, 1, original_shape[-2], original_shape[-1])
+        kernel_size = 2 * band_pixels + 1
+        wet_dilated = F.max_pool2d(flat, kernel_size=kernel_size, stride=1, padding=band_pixels)
+        dry_dilated = F.max_pool2d(1.0 - flat, kernel_size=kernel_size, stride=1, padding=band_pixels)
+        return ((wet_dilated > 0.0) & (dry_dilated > 0.0)).reshape(original_shape)
 
     @staticmethod
     def _rainfall_depth_consistency_loss(
