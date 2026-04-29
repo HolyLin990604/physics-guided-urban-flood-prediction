@@ -33,14 +33,18 @@ flowchart LR
     D --> E[Phase 6<br/>Adaptive pilot adapt025]
     E --> F[Phase 7<br/>Conservative adaptive adapt010]
     F --> G[Phase 8 Batch 2<br/>Trade-off positioning]
+    G --> H[Phase 9<br/>Interpretability diagnosis]
+    H --> I[Phase 10<br/>Margin-aware refinement]
 
     A --> A1[Best-balanced mainline]
     B --> B1[Freer selector<br/>not enough]
     C --> C1[Strong difficult-case gain<br/>too aggressive]
     D --> D1[Strongest static structured refinement]
     E --> E1[Technically stable<br/>but not ultimately superior]
-    F --> F1[Active adaptive candidate]
-    G --> G1[RMSE/MAE gains positioned<br/>mixed IoU noted]
+    F --> F1[Active adaptive candidate before margin-aware refinement]
+    G --> G1[RMSE/MAE gains positioned<br/>mixed IoU diagnosed]
+    H --> H1[Margin-region wet/dry trade-off identified]
+    I --> I1[Boundary-band refinement confirmed<br/>seed123 / seed42 / seed202]
 ```
 
 
@@ -58,16 +62,16 @@ These physics-guided losses are imposed on the predicted future flood depth fiel
 
 ## Current Mainline
 
-The current overall best-balanced architecture is:
+The current overall best-balanced architecture reference is:
 
 - `temporal_gate_residual_partial`
 - `hidden_channels = 16`
 - `residual_alpha = 0.10`
 - `conditioned_fraction = 0.25`
 
-This configuration is the current M3 `f025` mainline reference.
+This configuration remains the M3 `f025` mainline reference.
 
-The strongest structured refinement discovered so far is:
+The strongest static structured refinement discovered so far is:
 
 - `temporal_gate_residual_response_split_protected`
 - `hidden_channels = 16`
@@ -75,26 +79,31 @@ The strongest structured refinement discovered so far is:
 - `conditioned_fraction = 0.25`
 - `active_fraction_within_response = 0.25`
 
-This configuration is the Phase 3.3 `af025` reference.
+This configuration remains the Phase 3.3 `af025` static reference.
 
-Phase 6 Pilot A added an optional bounded adaptive scalar on top of the protected response-split path. The mechanism was technically stable, but the `adapt025` setting did not beat the static Phase 3.3 `af025` control in final validation, so it is currently treated as a documented negative/neutral result rather than a new mainline.
+Phase 6 Pilot A added an optional bounded adaptive scalar on top of the protected response-split path. The mechanism was technically stable, but the `adapt025` setting did not beat the static Phase 3.3 `af025` control in final validation, so it is treated as a documented negative/neutral adaptive result.
 
-Phase 7 tested a more conservative adaptive follow-up with `adaptive_alpha_range = 0.10`. This `adapt010` variant passed the decisive difficult-case `seed202 / 40e` check and also passed the favorable-case `seed42 / 5e` guardrail check, so it is now treated as the current adaptive candidate.
+Phase 7 and Phase 8 established the more conservative `adapt010` setting as the active adaptive candidate before margin-aware refinement. It showed consistent RMSE, MAE, and loss gains across the required full `40e` comparisons, but Phase 8 also exposed a mixed wet/dry IoU trade-off, mainly through `seed123`.
 
-Phase 8 Batch 1 then provided the first narrow validation pass for that candidate:
+Phase 9 diagnosed that trade-off as a mixed, margin-region, step-dependent wet/dry issue rather than adaptive multiplier saturation or seed-specific mechanism instability.
 
-- `seed202 / 40e` remains the decisive difficult-case support result
-- `seed123 / 40e` provided supportive repeatability evidence with a mixed wet/dry IoU signal
-- `seed42 / 40e` provided a strong full favorable-case guardrail pass
+Phase 10 introduced a minimal diagnosis-driven intervention: boundary-band weighted wet/dry consistency refinement. The recommended Phase 10 setting is:
 
-Phase 8 Batch 2 completed the trade-off positioning step using existing full `40e` evidence. `adapt010` showed consistent RMSE, MAE, and loss gains across the three required comparisons, with mixed wet/dry IoU because of `seed123` and no favorable-case guardrail failure.
+- `boundary_band_pixels = 1`
+- `boundary_weight = 2.0`
 
-This means `adapt010` remains the active adaptive candidate. Batch 2 evidence does not justify a new experiment or broader sweep.
+This setting passed test-facing confirmation across the three key seeds:
+
+- `seed123`: original mixed-IoU problem seed
+- `seed42`: favorable-case guardrail seed
+- `seed202`: difficult-case confirmation seed
+
+`boundary_weight = 1.5` remains only a conservative rollback setting. No broader Phase 10 boundary-weight sweep is justified at this point.
 
 
 ## Historical Qualitative Examples
 
-The figures below are earlier-stage qualitative comparisons retained for visual reference. They are not the only current evidence for the project state; the current adaptive-candidate evidence is summarized above in the Phase 8 Batch 1 results for `adapt010`.
+The figures below are earlier-stage qualitative comparisons retained for visual reference. They are not the only current evidence for the project state; the current project state is summarized above through Phase 10 margin-aware refinement.
 
 ### Baseline vs Phase 1
 
@@ -141,12 +150,16 @@ The figures below are earlier-stage qualitative comparisons retained for visual 
 flowchart TD
     A[Stage I<br/>Mainline and static refinement establishment] --> B[Stage II<br/>Adaptive pilot exploration]
     B --> C[Stage III<br/>Adaptive candidate validation]
-    C --> D[Next stage<br/>Evidence expansion or consolidation]
+    C --> D[Stage IV<br/>Interpretability diagnosis]
+    D --> E[Stage V<br/>Margin-aware refinement]
+    E --> F[Next stage<br/>Reliability and applicability diagnosis]
 
     A1[Phase 2-5<br/>- M3 f025 remains overall best-balanced mainline<br/>- Phase 3.3 af025 remains strongest static structured refinement] --> A
     B1[Phase 6-7<br/>- adapt025 closed as negative/neutral<br/>- adapt010 promoted as active adaptive candidate] --> B
     C1[Phase 8 Batch 2<br/>- consistent RMSE/MAE/loss gains<br/>- mixed IoU due to seed123<br/>- no favorable-case guardrail failure] --> C
-    D1[Future focus<br/>- keep adapt010 focused<br/>- avoid broader sweep without new evidence] --> D
+    D1[Phase 9<br/>- margin-region wet/dry trade-off diagnosed<br/>- no adaptive multiplier saturation found] --> D
+    E1[Phase 10<br/>- boundary-band refinement completed<br/>- w=2.0 confirmed on seed123 / seed42 / seed202] --> E
+    F1[Future focus<br/>- diagnose applicability limits<br/>- analyze failure modes<br/>- avoid unnecessary Phase 10 sweeps] --> F
 ```
 
 
@@ -156,12 +169,12 @@ For the current staged experiment record, see:
 
 - `docs/project_status.md`
 - `docs/experiment_index.md`
-- `docs/phase3_summary.md`
-- `docs/phase3_3_protected_response_split_notes.md`
 - `docs/phase6_pilot_a_results.md`
 - `docs/phase7_adapt010_results.md`
 - `docs/phase8_batch1_results.md`
-- `docs/phase8_batch2_results.md`
+- `docs/phase8_tradeoff_positioning.md`
+- `docs/phase9_interpretability_findings.md`
+- `docs/phase10_margin_aware_findings.md`
 
 
 ## Dataset
@@ -299,7 +312,7 @@ python compare_maps.py
 python compare_timeseries.py
 ```
 
-These scripts are used for paired qualitative comparison on representative cases such as `seed42`, `seed202`, and `seed123`, while Phase 8 Batch 2 provides the current trade-off positioning evidence for the active adaptive candidate.
+These scripts are used for paired qualitative comparison on representative cases such as `seed42`, `seed202`, and `seed123`, while Phase 10 provides the current margin-aware refinement evidence.
 
 Generated figures are organized under:
 
@@ -308,16 +321,20 @@ Generated figures are organized under:
 
 ## Current Project Status
 
-The repository has completed the main Phase 2-3 architecture comparison cycle, closed the Phase 6 `adapt025` pilot as negative/neutral, promoted Phase 7 `adapt010` as the active adaptive candidate, and completed Phase 8 Batch 2 trade-off positioning.
+The repository has completed the main Phase 2-3 architecture comparison cycle, closed the Phase 6 `adapt025` pilot as negative/neutral, established Phase 7/8 `adapt010` as the active adaptive candidate before margin-aware refinement, completed Phase 9 interpretability diagnosis, and completed the Phase 10 margin-aware refinement intervention.
 
 Current project-level conclusions:
 
-- **M3 `f025` remains the overall best-balanced mainline**
+- **M3 `f025` remains the overall best-balanced mainline reference**
 - **Phase 3.3 `af025` remains the strongest static structured refinement**
 - **Phase 6 Pilot A `adapt025` is closed as a negative/neutral result**
-- **Phase 7/8 `adapt010` remains the current adaptive candidate, with consistent RMSE/MAE/loss gains, mixed IoU due to `seed123`, and no favorable-case guardrail failure in Phase 8 Batch 2**
+- **Phase 7/8 `adapt010` remains the active adaptive candidate before margin-aware refinement**
+- **Phase 9 diagnosed the key wet/dry IoU issue as a mixed, margin-region, step-dependent trade-off**
+- **Phase 10 boundary-band weighted wet/dry consistency refinement is the current recommended margin-aware setting**
+- **Recommended Phase 10 setting: `boundary_band_pixels = 1`, `boundary_weight = 2.0`**
+- **This setting passed test-facing confirmation on `seed123`, `seed42`, and `seed202`**
 
-At this stage, the project focus remains targeted, hypothesis-driven refinement. Batch 2 evidence does not justify a broader sweep.
+At this stage, the project focus should move from Phase 10 tuning to mainline consolidation and reliability/applicability diagnosis. No broader Phase 10 boundary-weight sweep is justified.
 
 ## Representative Case Framing
 
@@ -327,10 +344,10 @@ Three representative cases continue to be useful for targeted comparison:
 - `seed202`: difficult-case reference where stronger structured refinement can show useful gains
 - `seed123`: repeatability reference for checking whether candidate behavior generalizes beyond the two anchor cases
 
-This framing motivated the Phase 6 Pilot A test and the Phase 7 conservative `adapt010` follow-up.
+This framing motivated the Phase 6 Pilot A test, the Phase 7 conservative `adapt010` follow-up, the Phase 9 diagnosis, and the Phase 10 margin-aware boundary-band refinement.
 
 
-## Adaptive Candidate Switch
+## Adaptive Candidate and Margin-Aware Refinement
 
 Phase 6 Pilot A kept the protected response-split path and added an optional bounded adaptive scalar. The earlier `adapt025` setting was technically stable, but it is now closed as a negative/neutral result:
 
@@ -347,7 +364,7 @@ Phase 6 Pilot A kept the protected response-split path and added an optional bou
 }
 ```
 
-The current active adaptive candidate is the more conservative Phase 7/Phase 8 `adapt010` setting:
+The active adaptive candidate before margin-aware refinement is the more conservative Phase 7/Phase 8 `adapt010` setting:
 
 ```json
 "rainfall_conditioning": {
@@ -364,16 +381,32 @@ The current active adaptive candidate is the more conservative Phase 7/Phase 8 `
 
 When `adaptive_alpha_enabled` is omitted or set to `false`, the model falls back to the static protected response-split behavior. This keeps the adaptive addition optional and backward compatible with existing configs while preserving Phase 3.3 `af025` as the strongest static structured refinement.
 
+Phase 10 keeps this adaptive structure and adds a margin-aware wet/dry consistency refinement. The recommended Phase 10 setting is:
+
+```json
+"wet_dry_consistency": {
+  "enabled": true,
+  "weight": 0.05,
+  "threshold": 0.05,
+  "temperature": 0.02,
+  "boundary_band_pixels": 1,
+  "boundary_weight": 2.0
+}
+```
+
+This boundary-band setting has passed test-facing confirmation across `seed123`, `seed42`, and `seed202`. `boundary_weight = 1.5` is retained only as a conservative rollback setting.
+
 ## Future Work
 
-The next justified follow-up should start from the current `adapt010` candidate rather than returning to the broader `adapt025` setting:
+The next justified follow-up is not another Phase 10 boundary-weight sweep. The current recommended setting is `boundary_band_pixels = 1` and `boundary_weight = 2.0`.
 
-- preserve the conservative adaptive-strength setting as the active direction
-- keep further checks tightly scoped and hypothesis-driven
-- avoid broad sweeps unless new evidence justifies expansion
+Recommended next work:
+
+- consolidate the Phase 10 result into the project mainline
+- keep `boundary_weight = 1.5` only as a conservative rollback setting
+- avoid new boundary-weight sweeps unless a new diagnosis clearly justifies them
+- start a reliability/applicability diagnosis phase focused on where the model is reliable, where it fails, and how performance changes across rainfall intensity, time step, water-depth range, and wet/dry boundary distance
 
 ## License
 
 MIT License.
-
-
