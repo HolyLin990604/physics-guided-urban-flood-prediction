@@ -49,6 +49,12 @@ Across seeds, the pooled diagnostic metrics were:
 
 In the Phase 12 pooled diagnostic view, `seed202` is the most reliable of the three seeds, while `seed42` has the lowest wet/dry IoU and highest wet/dry classification error rate. `seed123` has the highest RMSE among the three.
 
+### Seed-Level Diagnostic Figure
+
+![Seed-level reliability overview](../analysis/phase12_reliability/figures/seed_level_overview.png)
+
+This figure summarizes the seed-level diagnostic metrics. In the pooled Phase 12 diagnostic view, `seed202` shows the lowest RMSE and MAE, while `seed42` has the highest wet/dry classification error rate.
+
 ## Timestep Reliability
 
 The aggregate timestep metrics show that error does not simply increase with forecast horizon.
@@ -69,6 +75,12 @@ The early forecast steps show larger errors, while later listed steps show lower
 
 A likely interpretation is that the difficulty depends on the event phase and target wet fraction rather than only on forecast lead time. Early prediction windows may include sharper transitions, stronger initial mismatch, or more dynamic wet/dry evolution.
 
+### Timestep Diagnostic Figure
+
+![Timestep RMSE and MAE trend](../analysis/phase12_reliability/figures/timestep_rmse_mae_trend.png)
+
+This figure shows that aggregate RMSE and MAE do not monotonically increase with forecast lead time. The larger errors appear in the early forecast steps, while later steps show lower aggregate RMSE. This supports the interpretation that the reliability pattern is not a simple rollout-degradation problem.
+
 ## Depth-Bin Reliability
 
 Depth-bin diagnostics show a clear depth-dependent error structure.
@@ -87,6 +99,14 @@ The largest absolute errors occur in the deep-water bin. The deep and moderate b
 The shallow bin has a lower absolute RMSE than the moderate and deep bins, but it has a high wet/dry classification error rate. This is expected because shallow cells are close to the wet/dry threshold and are therefore sensitive to small depth errors.
 
 The dry / near-dry bin has low RMSE and MAE, but wet/dry IoU in this bin should not be over-interpreted because the target wet fraction is zero by definition for this bin.
+
+### Depth-Bin Diagnostic Figures
+
+![Depth-bin RMSE and MAE comparison](../analysis/phase12_reliability/figures/depth_bin_error_comparison.png)
+
+![Depth-bin bias comparison](../analysis/phase12_reliability/figures/depth_bin_bias_comparison.png)
+
+These figures show that absolute error increases substantially from dry or near-dry cells to shallow, moderate, and deep water-depth bins. The bias comparison also shows a consistent negative bias, especially in moderate and deep cells, indicating systematic underprediction for larger inundation depths.
 
 ## Boundary-Distance Reliability
 
@@ -107,6 +127,14 @@ The near-boundary 1–3 px band performs substantially better than the exact bou
 This confirms that the model is most reliable away from active wet/dry transition cells, while the immediate target wet/dry boundary remains the main reliability bottleneck.
 
 This finding is consistent with the motivation of Phase 10. Phase 10 improved the margin-aware treatment of the wet/dry boundary, but Phase 12 shows that the exact boundary band remains the most error-prone area and should be reported as a caution zone.
+
+### Boundary-Distance Diagnostic Figures
+
+![Boundary-distance RMSE and MAE comparison](../analysis/phase12_reliability/figures/boundary_distance_error_comparison.png)
+
+![Boundary-distance wet/dry class error](../analysis/phase12_reliability/figures/boundary_distance_class_error.png)
+
+These figures confirm that the exact target wet/dry boundary band remains the most difficult region. Both regression error and wet/dry classification error are highest at `boundary_0px`, while the far-field region has much lower error.
 
 ## Scenario And Failure-Case Reliability
 
@@ -133,6 +161,12 @@ Top failure cases show a consistent underprediction pattern. For example:
   - Prediction mean depth: 0.008866
 
 These cases indicate that the current model is less reliable for certain high-intensity `location2` scenarios where the target contains localized high depths but the prediction underestimates both mean inundation depth and wet extent.
+
+### Failure-Case Diagnostic Figure
+
+![Top 10 failure cases by RMSE](../analysis/phase12_reliability/figures/top_failure_cases_rmse.png)
+
+The highest-ranked failure cases are concentrated in `location2` and high-return-period rainfall scenarios, especially `r300y_p0.6_d3h`, `r300y_p0.8_d3h`, and `r200y_p0.5_d3h`. This supports the finding that the current model should be used cautiously for high-intensity localized failure cases.
 
 ## Applicability Interpretation
 
