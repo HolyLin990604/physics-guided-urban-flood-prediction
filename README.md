@@ -107,9 +107,40 @@ Phase 12 then diagnosed the reliability and applicability boundaries of this rec
 The main Phase 12 finding is that the model is useful for rapid spatiotemporal flood-process approximation, but reliability is not uniform. Exact wet/dry boundary cells remain the main bottleneck, moderate-to-deep target depths show stronger underprediction, and high-intensity `location2` cases dominate the highest-ranked failures.
 
 
+## Phase 12 Reliability Diagnostics
+
+The first-pass Phase 12 reliability/applicability diagnosis evaluates where the Phase 10 recommended model is reliable and where caution is needed. The diagnosis uses saved test-facing forecast maps and does not involve retraining, architecture changes, Phase 10 loss changes, or a new boundary-weight sweep.
+
+The main finding is that the model is useful for rapid spatiotemporal flood-process approximation, but reliability is not uniform. Exact wet/dry boundary cells remain the main bottleneck, moderate-to-deep target depths show stronger underprediction, and high-intensity `location2` cases dominate the highest-ranked failures.
+
+### Boundary-distance reliability
+
+![Boundary-distance wet/dry class error](analysis/phase12_reliability/figures/boundary_distance_class_error.png)
+
+### Depth-bin reliability
+
+![Depth-bin error comparison](analysis/phase12_reliability/figures/depth_bin_error_comparison.png)
+
+<details>
+<summary>Expand additional Phase 12 diagnostic figures</summary>
+
+### Timestep error trend
+
+![Timestep RMSE and MAE trend](analysis/phase12_reliability/figures/timestep_rmse_mae_trend.png)
+
+### Top failure cases
+
+![Top 10 failure cases by RMSE](analysis/phase12_reliability/figures/top_failure_cases_rmse.png)
+
+</details>
+
+
 ## Historical Qualitative Examples
 
-The figures below are earlier-stage qualitative comparisons retained for visual reference. They are not the only current evidence for the project state; the current project state is summarized above through Phase 10 margin-aware refinement.
+The figures below are earlier-stage qualitative comparisons retained for visual reference. They are not the current primary evidence for the project state; the current project state is summarized above through Phase 12 reliability/applicability diagnosis.
+
+<details>
+<summary>Expand earlier-stage qualitative flood-map examples</summary>
 
 ### Baseline vs Phase 1
 
@@ -131,11 +162,6 @@ The figures below are earlier-stage qualitative comparisons retained for visual 
 
 ![Phase 2A vs Phase 2B h16 seed202 process comparison](assets/images/comparison_timeseries_seed202_test_batch0000.png)
 
-## More Qualitative Figures
-
-<details>
-<summary>Expand additional favorable-case comparisons</summary>
-
 ### Phase 2A vs Phase 2B h16 on Favorable Case (`seed42`)
 
 #### Spatial Inundation Comparison
@@ -147,7 +173,6 @@ The figures below are earlier-stage qualitative comparisons retained for visual 
 ![Phase 2A vs Phase 2B h16 seed42 process comparison](assets/images/comparison_timeseries_seed42_test_batch0000.png)
 
 </details>
-
 
 
 ## Research Roadmap
@@ -331,7 +356,7 @@ Generated figures are organized under:
 
 ## Current Project Status
 
-The repository has completed the main Phase 2-3 architecture comparison cycle, closed the Phase 6 `adapt025` pilot as negative/neutral, established Phase 7/8 `adapt010` as the active adaptive candidate before margin-aware refinement, completed Phase 9 interpretability diagnosis, and completed the Phase 10 margin-aware refinement intervention.
+The repository has completed the main Phase 2-3 architecture comparison cycle, closed the Phase 6 `adapt025` pilot as negative/neutral, established Phase 7/8 `adapt010` as the active adaptive candidate before margin-aware refinement, completed Phase 9 interpretability diagnosis, completed the Phase 10 margin-aware refinement intervention, and completed the first-pass Phase 12 reliability/applicability diagnosis.
 
 Current project-level conclusions:
 
@@ -343,8 +368,11 @@ Current project-level conclusions:
 - **Phase 10 boundary-band weighted wet/dry consistency refinement is the current recommended margin-aware setting**
 - **Recommended Phase 10 setting: `boundary_band_pixels = 1`, `boundary_weight = 2.0`**
 - **This setting passed test-facing confirmation on `seed123`, `seed42`, and `seed202`**
+- **Phase 12 completed the first-pass reliability/applicability diagnosis of the Phase 10 recommended model**
+- **Main Phase 12 caution zones: exact wet/dry boundary cells, shallow threshold-adjacent cells, moderate-to-deep depths, high-intensity `location2` cases, and local peak-depth extremes**
 
-At this stage, the project focus should move from Phase 10 tuning to mainline consolidation and reliability/applicability diagnosis. No broader Phase 10 boundary-weight sweep is justified.
+At this stage, the project focus should move from broad model tuning to reliability-boundary interpretation, representative failure-case visualization, and possible uncertainty/confidence diagnostics. No broader Phase 10 boundary-weight sweep is justified.
+
 
 ## Representative Case Framing
 
