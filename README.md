@@ -340,18 +340,26 @@ Additional experiment settings are provided under `configs/`.
 
 ## Evaluation and Visualization
 
-Current evaluation combines staged validation metrics with paired qualitative checks. The comparison scripts remain useful for inspecting representative cases and historical visual outputs:
+Current evaluation combines staged validation metrics, paired qualitative checks, and Phase 12 reliability/applicability diagnostics.
+
+The historical comparison scripts remain useful for inspecting representative cases and earlier visual outputs:
 
 ```bash
 python compare_maps.py
 python compare_timeseries.py
 ```
 
-These scripts are used for paired qualitative comparison on representative cases such as `seed42`, `seed202`, and `seed123`, while Phase 10 provides the current margin-aware refinement evidence.
+Phase 12 adds reliability-focused diagnostic scripts:
+
+```bash
+python scripts/analyze_phase12_reliability.py
+python scripts/plot_phase12_reliability.py
+```
 
 Generated figures are organized under:
 
-- `docs/figures/phase2_qualitative/`
+- `docs/figures/phase2_qualitative/` for earlier qualitative comparisons
+- `analysis/phase12_reliability/figures/` for current reliability diagnostics
 
 
 ## Current Project Status
@@ -382,7 +390,7 @@ Three representative cases continue to be useful for targeted comparison:
 - `seed202`: difficult-case reference where stronger structured refinement can show useful gains
 - `seed123`: repeatability reference for checking whether candidate behavior generalizes beyond the two anchor cases
 
-This framing motivated the Phase 6 Pilot A test, the Phase 7 conservative `adapt010` follow-up, the Phase 9 diagnosis, and the Phase 10 margin-aware boundary-band refinement.
+This framing motivated the Phase 6 Pilot A test, the Phase 7 conservative `adapt010` follow-up, the Phase 9 diagnosis, the Phase 10 margin-aware boundary-band refinement, and the Phase 12 reliability/applicability diagnosis.
 
 
 ## Adaptive Candidate and Margin-Aware Refinement
