@@ -10,8 +10,11 @@ The repository should currently be interpreted as follows:
 - Phase 7/8 `adapt010` remains the active adaptive candidate before margin-aware refinement.
 - Phase 9 completed the interpretability and trade-off diagnosis for `adapt010`.
 - Phase 10 completed the first margin-aware intervention and established the current recommended refinement setting: `boundary_band_pixels = 1`, `boundary_weight = 2.0`.
+- Phase 12 completed the first-pass reliability/applicability diagnosis of the Phase 10 recommended model.
 
 The current Phase 10 conclusion is that boundary-band weighted wet/dry consistency refinement has passed test-facing confirmation on the three key project seeds: `seed123`, `seed42`, and `seed202`.
+
+The current Phase 12 conclusion is that the Phase 10 recommended model is broadly useful for rapid spatiotemporal flood-process approximation under the tested scenario set, but its reliability is not uniform across all pixels, depth ranges, and scenarios. The main caution zones are exact wet/dry boundary cells, shallow threshold-adjacent cells, moderate-to-deep inundation depths, high-intensity `location2` scenarios, and local peak-depth extremes.
 
 No additional Phase 10 boundary-weight sweep is justified at this point.
 
@@ -54,6 +57,27 @@ This setting passed test-facing confirmation across the three key seeds:
 
 `boundary_weight = 1.5` remains only a conservative rollback setting and is no longer the preferred setting.
 
+### Reliability and applicability diagnosis
+
+Phase 12 diagnosed the reliability and applicability boundaries of the Phase 10 recommended model using saved test-facing forecast maps.
+
+Generated diagnostics include:
+
+- timestep-wise error
+- depth-bin error
+- wet/dry boundary-distance error
+- scenario-level reliability
+- failure-case ranking
+- diagnostic figures
+
+The first-pass Phase 12 findings indicate:
+
+- the model has a mild overall underprediction bias
+- exact wet/dry boundary cells remain the main reliability bottleneck
+- moderate-to-deep target depths show stronger underprediction
+- high-intensity `location2` cases dominate the highest-ranked failures
+- no retraining, architecture change, Phase 10 loss change, or boundary-weight sweep was performed
+
 ## Practical Reading Guide
 
 When reading the repository:
@@ -64,6 +88,7 @@ When reading the repository:
 - treat Phase 7/8 `adapt010` as the active adaptive candidate before margin-aware refinement
 - read Phase 9 as the interpretability diagnosis explaining the wet/dry trade-off
 - read Phase 10 as the successful first margin-aware intervention that establishes the current recommended refinement setting
+- read Phase 12 as the first-pass reliability/applicability diagnosis of the current recommended model
 
 ## Key Documents
 
@@ -73,4 +98,6 @@ When reading the repository:
 - `docs/phase8_tradeoff_positioning.md`
 - `docs/phase9_interpretability_findings.md`
 - `docs/phase10_margin_aware_findings.md`
+- `docs/phase12_reliability_applicability_plan.md`
+- `docs/phase12_reliability_applicability_findings.md`
 - `docs/experiment_index.md`

@@ -35,6 +35,7 @@ flowchart LR
     F --> G[Phase 8 Batch 2<br/>Trade-off positioning]
     G --> H[Phase 9<br/>Interpretability diagnosis]
     H --> I[Phase 10<br/>Margin-aware refinement]
+    I --> J[Phase 12<br/>Reliability diagnosis]
 
     A --> A1[Best-balanced mainline]
     B --> B1[Freer selector<br/>not enough]
@@ -45,6 +46,7 @@ flowchart LR
     G --> G1[RMSE/MAE gains positioned<br/>mixed IoU diagnosed]
     H --> H1[Margin-region wet/dry trade-off identified]
     I --> I1[Boundary-band refinement confirmed<br/>seed123 / seed42 / seed202]
+    J --> J1[Reliability boundaries diagnosed<br/>boundary / depth / scenario failure modes]
 ```
 
 
@@ -100,6 +102,10 @@ This setting passed test-facing confirmation across the three key seeds:
 
 `boundary_weight = 1.5` remains only a conservative rollback setting. No broader Phase 10 boundary-weight sweep is justified at this point.
 
+Phase 12 then diagnosed the reliability and applicability boundaries of this recommended model using saved test-facing forecast maps. The first-pass diagnosis generated timestep-wise, depth-bin, boundary-distance, scenario-level, failure-case, and figure-based outputs under `analysis/phase12_reliability/`.
+
+The main Phase 12 finding is that the model is useful for rapid spatiotemporal flood-process approximation, but reliability is not uniform. Exact wet/dry boundary cells remain the main bottleneck, moderate-to-deep target depths show stronger underprediction, and high-intensity `location2` cases dominate the highest-ranked failures.
+
 
 ## Historical Qualitative Examples
 
@@ -152,14 +158,16 @@ flowchart TD
     B --> C[Stage III<br/>Adaptive candidate validation]
     C --> D[Stage IV<br/>Interpretability diagnosis]
     D --> E[Stage V<br/>Margin-aware refinement]
-    E --> F[Next stage<br/>Reliability and applicability diagnosis]
+    E --> F[Stage VI<br/>Reliability and applicability diagnosis]
+    F --> G[Next stage<br/>Failure visualization or uncertainty diagnosis]
 
     A1[Phase 2-5<br/>- M3 f025 remains overall best-balanced mainline<br/>- Phase 3.3 af025 remains strongest static structured refinement] --> A
     B1[Phase 6-7<br/>- adapt025 closed as negative/neutral<br/>- adapt010 promoted as active adaptive candidate] --> B
     C1[Phase 8 Batch 2<br/>- consistent RMSE/MAE/loss gains<br/>- mixed IoU due to seed123<br/>- no favorable-case guardrail failure] --> C
     D1[Phase 9<br/>- margin-region wet/dry trade-off diagnosed<br/>- no adaptive multiplier saturation found] --> D
     E1[Phase 10<br/>- boundary-band refinement completed<br/>- w=2.0 confirmed on seed123 / seed42 / seed202] --> E
-    F1[Future focus<br/>- diagnose applicability limits<br/>- analyze failure modes<br/>- avoid unnecessary Phase 10 sweeps] --> F
+    F1[Phase 12<br/>- reliability boundaries diagnosed<br/>- boundary / depth / scenario caution zones identified] --> F
+    G1[Future focus<br/>- representative failure visual summaries<br/>- uncertainty or confidence diagnostics<br/>- no unnecessary Phase 10 sweeps] --> G
 ```
 
 
@@ -175,6 +183,8 @@ For the current staged experiment record, see:
 - `docs/phase8_tradeoff_positioning.md`
 - `docs/phase9_interpretability_findings.md`
 - `docs/phase10_margin_aware_findings.md`
+- `docs/phase12_reliability_applicability_plan.md`
+- `docs/phase12_reliability_applicability_findings.md`
 
 
 ## Dataset
@@ -398,14 +408,15 @@ This boundary-band setting has passed test-facing confirmation across `seed123`,
 
 ## Future Work
 
-The next justified follow-up is not another Phase 10 boundary-weight sweep. The current recommended setting is `boundary_band_pixels = 1` and `boundary_weight = 2.0`.
+The next justified follow-up is not another Phase 10 boundary-weight sweep. The current recommended setting remains `boundary_band_pixels = 1` and `boundary_weight = 2.0`.
 
 Recommended next work:
 
-- consolidate the Phase 10 result into the project mainline
+- optionally add representative failure-case visual summaries
+- consider uncertainty or confidence diagnostics for boundary and high-intensity failure cases
 - keep `boundary_weight = 1.5` only as a conservative rollback setting
 - avoid new boundary-weight sweeps unless a new diagnosis clearly justifies them
-- start a reliability/applicability diagnosis phase focused on where the model is reliable, where it fails, and how performance changes across rainfall intensity, time step, water-depth range, and wet/dry boundary distance
+- keep using the Phase 12 reliability/applicability findings to define where the current model is reliable and where caution is required
 
 ## License
 

@@ -6,6 +6,7 @@
 - Phase 3.3 `af025`: strongest static structured refinement
 - Phase 7/8 `adapt010`: active adaptive candidate before margin-aware refinement
 - Phase 10 boundary-band refinement: current recommended margin-aware setting, with `boundary_band_pixels = 1` and `boundary_weight = 2.0`
+- Phase 12 reliability/applicability diagnosis: first-pass reliability boundary analysis of the current Phase 10 recommended model
 
 ## Phase 6
 
@@ -46,6 +47,17 @@
 - Rollback setting: `boundary_weight = 1.5` only
 - Decision: no broader boundary-weight sweep is justified at this point
 
+## Phase 12
+
+- Plan: `docs/phase12_reliability_applicability_plan.md`
+- Script: `scripts/analyze_phase12_reliability.py`
+- Visualization script: `scripts/plot_phase12_reliability.py`
+- Findings: `docs/phase12_reliability_applicability_findings.md`
+- Outputs: `analysis/phase12_reliability/`
+- Status: first-pass reliability/applicability diagnosis complete
+- Takeaway: the Phase 10 recommended model is useful for rapid spatiotemporal flood-process approximation, but reliability is lower at exact wet/dry boundary cells, shallow threshold-adjacent areas, moderate-to-deep depths, high-intensity `location2` cases, and local peak-depth extremes
+- Decision: no model retraining, architecture change, Phase 10 loss change, or boundary-weight sweep was performed
+
 ## Interpretation Order
 
 For current repository interpretation, read the experiment trail in this order:
@@ -56,14 +68,16 @@ For current repository interpretation, read the experiment trail in this order:
 4. `docs/phase8_tradeoff_positioning.md`
 5. `docs/phase9_interpretability_findings.md`
 6. `docs/phase10_margin_aware_findings.md`
-7. `docs/project_status.md`
+7. `docs/phase12_reliability_applicability_findings.md`
+8. `docs/project_status.md`
 
 ## Next Stage
 
-The next stage is mainline consolidation and reliability/applicability diagnosis, not another Phase 10 boundary-weight sweep.
+The next stage should build on the Phase 12 reliability/applicability diagnosis rather than reopening Phase 10 tuning.
 
 Recommended next work:
 
-- sync the Phase 10 result into the README
-- merge the Phase 10 branch into `main` after documentation review
-- start a future reliability/applicability diagnosis phase focused on where the model is reliable, where it fails, and how performance changes across rainfall intensity, time step, water-depth range, and wet/dry boundary distance
+- optionally add representative failure-case visual summaries
+- consider uncertainty or confidence diagnostics for boundary and high-intensity failure cases
+- keep the current Phase 10 setting fixed unless a new diagnosis clearly justifies a targeted intervention
+- update the README after Phase 12 documentation review
