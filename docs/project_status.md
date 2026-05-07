@@ -11,10 +11,13 @@ The repository should currently be interpreted as follows:
 - Phase 9 completed the interpretability and trade-off diagnosis for `adapt010`.
 - Phase 10 completed the first margin-aware intervention and established the current recommended refinement setting: `boundary_band_pixels = 1`, `boundary_weight = 2.0`.
 - Phase 12 completed the first-pass reliability/applicability diagnosis of the Phase 10 recommended model.
+- Phase 13 completed the first-pass representative failure-case visual summary.
 
 The current Phase 10 conclusion is that boundary-band weighted wet/dry consistency refinement has passed test-facing confirmation on the three key project seeds: `seed123`, `seed42`, and `seed202`.
 
 The current Phase 12 conclusion is that the Phase 10 recommended model is broadly useful for rapid spatiotemporal flood-process approximation under the tested scenario set, but its reliability is not uniform across all pixels, depth ranges, and scenarios. The main caution zones are exact wet/dry boundary cells, shallow threshold-adjacent cells, moderate-to-deep inundation depths, high-intensity `location2` scenarios, and local peak-depth extremes.
+
+The current Phase 13 conclusion is that the highest-ranked failures are not random scattered cases. They collapse into two high-intensity `location2` target scenarios repeated across seeds: `location2 / r300y_p0.6_d3h / start_idx = 0` at worst step 1, and `location2 / r300y_p0.8_d3h / start_idx = 0` at worst step 4. The visual summaries show systematic underprediction, reduced predicted wet fraction, local peak-depth underprediction, and false-dry dominated wet/dry mismatch.
 
 No additional Phase 10 boundary-weight sweep is justified at this point.
 
@@ -78,6 +81,27 @@ The first-pass Phase 12 findings indicate:
 - high-intensity `location2` cases dominate the highest-ranked failures
 - no retraining, architecture change, Phase 10 loss change, or boundary-weight sweep was performed
 
+### Representative failure-case visual summary
+
+Phase 13 converted the highest-ranked Phase 12 failure cases into representative worst-timestep visual summaries.
+
+Generated Phase 13 outputs include:
+
+- `docs/phase13_failure_case_visual_summary_plan.md`
+- `scripts/visualize_phase13_failure_cases.py`
+- `analysis/phase13_failure_cases/selected_failure_cases.csv`
+- `analysis/phase13_failure_cases/summary.json`
+- `analysis/phase13_failure_cases/figures/`
+- `docs/phase13_failure_case_visual_summary_findings.md`
+
+The first-pass Phase 13 findings indicate:
+
+- top failures collapse into two high-intensity `location2` target scenarios repeated across seeds
+- worst-timestep visualization is more explanatory than final-timestep visualization
+- the main visual failure mode is systematic underprediction with reduced wet extent
+- local peak depths are strongly underestimated
+- wet/dry mismatch is false-dry dominated
+
 ## Practical Reading Guide
 
 When reading the repository:
@@ -89,6 +113,7 @@ When reading the repository:
 - read Phase 9 as the interpretability diagnosis explaining the wet/dry trade-off
 - read Phase 10 as the successful first margin-aware intervention that establishes the current recommended refinement setting
 - read Phase 12 as the first-pass reliability/applicability diagnosis of the current recommended model
+- read Phase 13 as the representative visual explanation of the highest-ranked failure cases
 
 ## Key Documents
 
@@ -100,4 +125,6 @@ When reading the repository:
 - `docs/phase10_margin_aware_findings.md`
 - `docs/phase12_reliability_applicability_plan.md`
 - `docs/phase12_reliability_applicability_findings.md`
+- `docs/phase13_failure_case_visual_summary_plan.md`
+- `docs/phase13_failure_case_visual_summary_findings.md`
 - `docs/experiment_index.md`

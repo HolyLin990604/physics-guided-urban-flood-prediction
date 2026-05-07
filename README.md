@@ -36,6 +36,7 @@ flowchart LR
     G --> H[Phase 9<br/>Interpretability diagnosis]
     H --> I[Phase 10<br/>Margin-aware refinement]
     I --> J[Phase 12<br/>Reliability diagnosis]
+    J --> K[Phase 13<br/>Failure-case visual summary]
 
     A --> A1[Best-balanced mainline]
     B --> B1[Freer selector<br/>not enough]
@@ -47,6 +48,7 @@ flowchart LR
     H --> H1[Margin-region wet/dry trade-off identified]
     I --> I1[Boundary-band refinement confirmed<br/>seed123 / seed42 / seed202]
     J --> J1[Reliability boundaries diagnosed<br/>boundary / depth / scenario failure modes]
+    K --> K1[Top failures visualized<br/>location2 repeated failure modes]
 ```
 
 
@@ -135,6 +137,33 @@ The main finding is that the model is useful for rapid spatiotemporal flood-proc
 </details>
 
 
+
+## Phase 13 Failure-Case Visual Summary
+
+Phase 13 converts the highest-ranked Phase 12 failure cases into representative worst-timestep visual summaries. The top failures are not random scattered cases. They collapse into two high-intensity `location2` target scenarios repeated across seeds:
+
+- `location2 / r300y_p0.6_d3h / start_idx = 0`, worst step 1
+- `location2 / r300y_p0.8_d3h / start_idx = 0`, worst step 4
+
+The visual summaries show systematic underprediction, reduced predicted wet fraction, local peak-depth underprediction, and false-dry dominated wet/dry mismatch.
+
+### Representative failure-case visual summary
+
+![Representative Phase 13 failure case](analysis/phase13_failure_cases/figures/rank01_seed42_location2_r300y_p06_d3h_start0_t01_worst_maps.png)
+
+<details>
+<summary>Expand additional Phase 13 failure-case figures</summary>
+
+### Repeated `r300y_p0.8_d3h` failure case
+
+![Representative Phase 13 p0.8 failure case](analysis/phase13_failure_cases/figures/rank03_seed42_location2_r300y_p08_d3h_start0_t04_worst_maps.png)
+
+### Cross-seed `r300y_p0.6_d3h` failure case
+
+![Representative Phase 13 seed202 p0.6 failure case](analysis/phase13_failure_cases/figures/rank06_seed202_location2_r300y_p06_d3h_start0_t01_worst_maps.png)
+
+</details>
+
 ## Historical Qualitative Examples
 
 The figures below are earlier-stage qualitative comparisons retained for visual reference. They are not the current primary evidence for the project state; the current project state is summarized above through Phase 12 reliability/applicability diagnosis.
@@ -184,7 +213,8 @@ flowchart TD
     C --> D[Stage IV<br/>Interpretability diagnosis]
     D --> E[Stage V<br/>Margin-aware refinement]
     E --> F[Stage VI<br/>Reliability and applicability diagnosis]
-    F --> G[Next stage<br/>Failure visualization or uncertainty diagnosis]
+    F --> G[Stage VII<br/>Failure-case visual summary]
+    G --> H[Next stage<br/>Uncertainty or confidence diagnosis]
 
     A1[Phase 2-5<br/>- M3 f025 remains overall best-balanced mainline<br/>- Phase 3.3 af025 remains strongest static structured refinement] --> A
     B1[Phase 6-7<br/>- adapt025 closed as negative/neutral<br/>- adapt010 promoted as active adaptive candidate] --> B
@@ -192,7 +222,8 @@ flowchart TD
     D1[Phase 9<br/>- margin-region wet/dry trade-off diagnosed<br/>- no adaptive multiplier saturation found] --> D
     E1[Phase 10<br/>- boundary-band refinement completed<br/>- w=2.0 confirmed on seed123 / seed42 / seed202] --> E
     F1[Phase 12<br/>- reliability boundaries diagnosed<br/>- boundary / depth / scenario caution zones identified] --> F
-    G1[Future focus<br/>- representative failure visual summaries<br/>- uncertainty or confidence diagnostics<br/>- no unnecessary Phase 10 sweeps] --> G
+    G1[Phase 13<br/>- top failures visualized<br/>- repeated location2 failure modes explained] --> G
+    H1[Future focus<br/>- uncertainty or confidence diagnostics<br/>- targeted follow-up only if justified] --> H
 ```
 
 
@@ -210,6 +241,8 @@ For the current staged experiment record, see:
 - `docs/phase10_margin_aware_findings.md`
 - `docs/phase12_reliability_applicability_plan.md`
 - `docs/phase12_reliability_applicability_findings.md`
+- `docs/phase13_failure_case_visual_summary_plan.md`
+- `docs/phase13_failure_case_visual_summary_findings.md`
 
 
 ## Dataset
@@ -354,17 +387,19 @@ Phase 12 adds reliability-focused diagnostic scripts:
 ```bash
 python scripts/analyze_phase12_reliability.py
 python scripts/plot_phase12_reliability.py
+python scripts/visualize_phase13_failure_cases.py
 ```
 
 Generated figures are organized under:
 
 - `docs/figures/phase2_qualitative/` for earlier qualitative comparisons
 - `analysis/phase12_reliability/figures/` for current reliability diagnostics
+- `analysis/phase13_failure_cases/figures/` for representative failure-case visual summaries
 
 
 ## Current Project Status
 
-The repository has completed the main Phase 2-3 architecture comparison cycle, closed the Phase 6 `adapt025` pilot as negative/neutral, established Phase 7/8 `adapt010` as the active adaptive candidate before margin-aware refinement, completed Phase 9 interpretability diagnosis, completed the Phase 10 margin-aware refinement intervention, and completed the first-pass Phase 12 reliability/applicability diagnosis.
+The repository has completed the main Phase 2-3 architecture comparison cycle, closed the Phase 6 `adapt025` pilot as negative/neutral, established Phase 7/8 `adapt010` as the active adaptive candidate before margin-aware refinement, completed Phase 9 interpretability diagnosis, completed the Phase 10 margin-aware refinement intervention, completed the first-pass Phase 12 reliability/applicability diagnosis, and completed the first-pass Phase 13 representative failure-case visual summary.
 
 Current project-level conclusions:
 
@@ -378,9 +413,10 @@ Current project-level conclusions:
 - **This setting passed test-facing confirmation on `seed123`, `seed42`, and `seed202`**
 - **Phase 12 completed the first-pass reliability/applicability diagnosis of the Phase 10 recommended model**
 - **Main Phase 12 caution zones: exact wet/dry boundary cells, shallow threshold-adjacent cells, moderate-to-deep depths, high-intensity `location2` cases, and local peak-depth extremes**
+- **Phase 13 completed representative worst-timestep visual summaries for the highest-ranked failure cases**
+- **Main Phase 13 finding: top failures collapse into two high-intensity `location2` target scenarios repeated across seeds, with systematic underprediction, reduced wet extent, local peak-depth underprediction, and false-dry dominated mismatch**
 
-At this stage, the project focus should move from broad model tuning to reliability-boundary interpretation, representative failure-case visualization, and possible uncertainty/confidence diagnostics. No broader Phase 10 boundary-weight sweep is justified.
-
+At this stage, the project focus should move from broad model tuning to reliability-boundary interpretation, representative failure-case explanation, and possible uncertainty/confidence diagnostics. No broader Phase 10 boundary-weight sweep is justified.
 
 ## Representative Case Framing
 
@@ -390,7 +426,7 @@ Three representative cases continue to be useful for targeted comparison:
 - `seed202`: difficult-case reference where stronger structured refinement can show useful gains
 - `seed123`: repeatability reference for checking whether candidate behavior generalizes beyond the two anchor cases
 
-This framing motivated the Phase 6 Pilot A test, the Phase 7 conservative `adapt010` follow-up, the Phase 9 diagnosis, the Phase 10 margin-aware boundary-band refinement, and the Phase 12 reliability/applicability diagnosis.
+This framing motivated the Phase 6 Pilot A test, the Phase 7 conservative `adapt010` follow-up, the Phase 9 diagnosis, the Phase 10 margin-aware boundary-band refinement, the Phase 12 reliability/applicability diagnosis, and the Phase 13 representative failure-case visual summary.
 
 
 ## Adaptive Candidate and Margin-Aware Refinement
@@ -448,11 +484,11 @@ The next justified follow-up is not another Phase 10 boundary-weight sweep. The 
 
 Recommended next work:
 
-- optionally add representative failure-case visual summaries
-- consider uncertainty or confidence diagnostics for boundary and high-intensity failure cases
+- consider uncertainty or confidence diagnostics for boundary and high-intensity `location2` failure cases
+- consider targeted follow-up only if Phase 12/13 diagnosis clearly justifies an intervention
 - keep `boundary_weight = 1.5` only as a conservative rollback setting
 - avoid new boundary-weight sweeps unless a new diagnosis clearly justifies them
-- keep using the Phase 12 reliability/applicability findings to define where the current model is reliable and where caution is required
+- keep using the Phase 12/13 reliability and failure-case findings to define where the current model is reliable and where caution is required
 
 ## License
 

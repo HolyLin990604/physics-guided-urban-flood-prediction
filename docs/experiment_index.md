@@ -7,6 +7,7 @@
 - Phase 7/8 `adapt010`: active adaptive candidate before margin-aware refinement
 - Phase 10 boundary-band refinement: current recommended margin-aware setting, with `boundary_band_pixels = 1` and `boundary_weight = 2.0`
 - Phase 12 reliability/applicability diagnosis: first-pass reliability boundary analysis of the current Phase 10 recommended model
+- Phase 13 failure-case visual summary: representative visual explanation of the highest-ranked Phase 12 failures
 
 ## Phase 6
 
@@ -58,6 +59,17 @@
 - Takeaway: the Phase 10 recommended model is useful for rapid spatiotemporal flood-process approximation, but reliability is lower at exact wet/dry boundary cells, shallow threshold-adjacent areas, moderate-to-deep depths, high-intensity `location2` cases, and local peak-depth extremes
 - Decision: no model retraining, architecture change, Phase 10 loss change, or boundary-weight sweep was performed
 
+## Phase 13
+
+- Plan: `docs/phase13_failure_case_visual_summary_plan.md`
+- Script: `scripts/visualize_phase13_failure_cases.py`
+- Findings: `docs/phase13_failure_case_visual_summary_findings.md`
+- Outputs: `analysis/phase13_failure_cases/`
+- Status: first-pass representative failure-case visual summary complete
+- Takeaway: the top-ranked failures are not random. They collapse into two high-intensity `location2` target scenarios repeated across seeds: `r300y_p0.6_d3h` at worst step 1 and `r300y_p0.8_d3h` at worst step 4
+- Visual failure mode: systematic underprediction, reduced predicted wet fraction, local peak-depth underprediction, and false-dry dominated wet/dry mismatch
+- Decision: formal Phase 13 outputs use worst-timestep visualizations rather than final-timestep visualizations
+
 ## Interpretation Order
 
 For current repository interpretation, read the experiment trail in this order:
@@ -69,15 +81,17 @@ For current repository interpretation, read the experiment trail in this order:
 5. `docs/phase9_interpretability_findings.md`
 6. `docs/phase10_margin_aware_findings.md`
 7. `docs/phase12_reliability_applicability_findings.md`
-8. `docs/project_status.md`
+8. `docs/phase13_failure_case_visual_summary_findings.md`
+9. `docs/project_status.md`
 
 ## Next Stage
 
-The next stage should build on the Phase 12 reliability/applicability diagnosis rather than reopening Phase 10 tuning.
+The next stage should build on the Phase 12 and Phase 13 reliability/applicability evidence rather than reopening Phase 10 tuning.
 
 Recommended next work:
 
-- optionally add representative failure-case visual summaries
-- consider uncertainty or confidence diagnostics for boundary and high-intensity failure cases
-- keep the current Phase 10 setting fixed unless a new diagnosis clearly justifies a targeted intervention
-- update the README after Phase 12 documentation review
+- consider uncertainty or confidence diagnostics for boundary and high-intensity `location2` failure cases
+- consider targeted follow-up only if the Phase 12/13 diagnosis clearly justifies an intervention
+- keep the current Phase 10 setting fixed unless new evidence justifies changing it
+- avoid broader boundary-weight sweeps
+- update README only lightly if new Phase 13 figures need to be surfaced
