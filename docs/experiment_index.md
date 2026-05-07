@@ -8,6 +8,7 @@
 - Phase 10 boundary-band refinement: current recommended margin-aware setting, with `boundary_band_pixels = 1` and `boundary_weight = 2.0`
 - Phase 12 reliability/applicability diagnosis: first-pass reliability boundary analysis of the current Phase 10 recommended model
 - Phase 13 failure-case visual summary: representative visual explanation of the highest-ranked Phase 12 failures
+- Phase 14 confidence proxy diagnosis: first-pass output-space confidence and cross-seed disagreement proxy analysis
 
 ## Phase 6
 
@@ -70,6 +71,17 @@
 - Visual failure mode: systematic underprediction, reduced predicted wet fraction, local peak-depth underprediction, and false-dry dominated wet/dry mismatch
 - Decision: formal Phase 13 outputs use worst-timestep visualizations rather than final-timestep visualizations
 
+## Phase 14
+
+- Plan: `docs/phase14_uncertainty_confidence_diagnostics_plan.md`
+- Script: `scripts/analyze_phase14_confidence.py`
+- Findings: `docs/phase14_uncertainty_confidence_diagnostics_findings.md`
+- Outputs: `analysis/phase14_confidence/`
+- Status: first-pass proxy-based confidence diagnosis complete
+- Takeaway: confidence margin is useful for wet/dry classification risk because low-margin bins show much higher wet/dry error and false-dry rate
+- Disagreement result: cross-seed disagreement has weak global correlation with scenario RMSE and should be treated as an auxiliary disagreement proxy rather than a strong standalone scenario-error predictor
+- Decision: Phase 14 should be interpreted as confidence/risk/disagreement proxy diagnostics, not calibrated probabilistic uncertainty
+
 ## Interpretation Order
 
 For current repository interpretation, read the experiment trail in this order:
@@ -82,16 +94,18 @@ For current repository interpretation, read the experiment trail in this order:
 6. `docs/phase10_margin_aware_findings.md`
 7. `docs/phase12_reliability_applicability_findings.md`
 8. `docs/phase13_failure_case_visual_summary_findings.md`
-9. `docs/project_status.md`
+9. `docs/phase14_uncertainty_confidence_diagnostics_findings.md`
+10. `docs/project_status.md`
 
 ## Next Stage
 
-The next stage should build on the Phase 12 and Phase 13 reliability/applicability evidence rather than reopening Phase 10 tuning.
+The next stage should build on the Phase 12 to Phase 14 reliability/applicability evidence rather than reopening Phase 10 tuning.
 
 Recommended next work:
 
-- consider uncertainty or confidence diagnostics for boundary and high-intensity `location2` failure cases
-- consider targeted follow-up only if the Phase 12/13 diagnosis clearly justifies an intervention
+- consider confidence maps for Phase 13 failure cases
+- consider scenario-level reliability screening rules
+- consider calibrated uncertainty only if calibration data and evaluation design are added
 - keep the current Phase 10 setting fixed unless new evidence justifies changing it
 - avoid broader boundary-weight sweeps
-- update README only lightly if new Phase 13 figures need to be surfaced
+- update README only lightly if new Phase 14 figures need to be surfaced

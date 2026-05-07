@@ -37,6 +37,7 @@ flowchart LR
     H --> I[Phase 10<br/>Margin-aware refinement]
     I --> J[Phase 12<br/>Reliability diagnosis]
     J --> K[Phase 13<br/>Failure-case visual summary]
+    K --> L[Phase 14<br/>Confidence proxy diagnosis]
 
     A --> A1[Best-balanced mainline]
     B --> B1[Freer selector<br/>not enough]
@@ -49,6 +50,7 @@ flowchart LR
     I --> I1[Boundary-band refinement confirmed<br/>seed123 / seed42 / seed202]
     J --> J1[Reliability boundaries diagnosed<br/>boundary / depth / scenario failure modes]
     K --> K1[Top failures visualized<br/>location2 repeated failure modes]
+    L --> L1[Confidence proxies diagnosed<br/>not calibrated uncertainty]
 ```
 
 
@@ -164,6 +166,26 @@ The visual summaries show systematic underprediction, reduced predicted wet frac
 
 </details>
 
+
+## Phase 14 Confidence Proxy Diagnostics
+
+Phase 14 diagnoses whether output-space proxy signals can help identify when the current Phase 10 recommended model may be less reliable. It does not retrain the model, modify the architecture, tune Phase 10 parameters, or claim calibrated probabilistic uncertainty.
+
+The main finding is that confidence margin is useful for wet/dry classification risk: low-margin bins show much higher wet/dry class error and false-dry rate. Cross-seed disagreement is weaker as a global scenario-error predictor and should be treated as an auxiliary disagreement proxy.
+
+### Confidence margin versus wet/dry error
+
+![Phase 14 confidence margin proxy](analysis/phase14_confidence/figures/confidence_margin_vs_wet_dry_error.png)
+
+<details>
+<summary>Expand additional Phase 14 diagnostic figure</summary>
+
+### Seed disagreement versus scenario error
+
+![Phase 14 seed disagreement proxy](analysis/phase14_confidence/figures/seed_disagreement_vs_rmse.png)
+
+</details>
+
 ## Historical Qualitative Examples
 
 The figures below are earlier-stage qualitative comparisons retained for visual reference. They are not the current primary evidence for the project state; the current project state is summarized above through Phase 12 reliability/applicability diagnosis.
@@ -214,7 +236,8 @@ flowchart TD
     D --> E[Stage V<br/>Margin-aware refinement]
     E --> F[Stage VI<br/>Reliability and applicability diagnosis]
     F --> G[Stage VII<br/>Failure-case visual summary]
-    G --> H[Next stage<br/>Uncertainty or confidence diagnosis]
+    G --> H[Stage VIII<br/>Confidence proxy diagnosis]
+    H --> I[Next stage<br/>Reliability screening or calibrated uncertainty]
 
     A1[Phase 2-5<br/>- M3 f025 remains overall best-balanced mainline<br/>- Phase 3.3 af025 remains strongest static structured refinement] --> A
     B1[Phase 6-7<br/>- adapt025 closed as negative/neutral<br/>- adapt010 promoted as active adaptive candidate] --> B
@@ -223,7 +246,8 @@ flowchart TD
     E1[Phase 10<br/>- boundary-band refinement completed<br/>- w=2.0 confirmed on seed123 / seed42 / seed202] --> E
     F1[Phase 12<br/>- reliability boundaries diagnosed<br/>- boundary / depth / scenario caution zones identified] --> F
     G1[Phase 13<br/>- top failures visualized<br/>- repeated location2 failure modes explained] --> G
-    H1[Future focus<br/>- uncertainty or confidence diagnostics<br/>- targeted follow-up only if justified] --> H
+    H1[Phase 14<br/>- confidence-margin risk proxy<br/>- weak cross-seed disagreement proxy] --> H
+    I1[Future focus<br/>- reliability screening rules<br/>- calibrated uncertainty only with calibration design] --> I
 ```
 
 
@@ -243,6 +267,8 @@ For the current staged experiment record, see:
 - `docs/phase12_reliability_applicability_findings.md`
 - `docs/phase13_failure_case_visual_summary_plan.md`
 - `docs/phase13_failure_case_visual_summary_findings.md`
+- `docs/phase14_uncertainty_confidence_diagnostics_plan.md`
+- `docs/phase14_uncertainty_confidence_diagnostics_findings.md`
 
 
 ## Dataset
@@ -388,6 +414,7 @@ Phase 12 adds reliability-focused diagnostic scripts:
 python scripts/analyze_phase12_reliability.py
 python scripts/plot_phase12_reliability.py
 python scripts/visualize_phase13_failure_cases.py
+python scripts/analyze_phase14_confidence.py
 ```
 
 Generated figures are organized under:
@@ -395,11 +422,12 @@ Generated figures are organized under:
 - `docs/figures/phase2_qualitative/` for earlier qualitative comparisons
 - `analysis/phase12_reliability/figures/` for current reliability diagnostics
 - `analysis/phase13_failure_cases/figures/` for representative failure-case visual summaries
+- `analysis/phase14_confidence/figures/` for confidence proxy diagnostics
 
 
 ## Current Project Status
 
-The repository has completed the main Phase 2-3 architecture comparison cycle, closed the Phase 6 `adapt025` pilot as negative/neutral, established Phase 7/8 `adapt010` as the active adaptive candidate before margin-aware refinement, completed Phase 9 interpretability diagnosis, completed the Phase 10 margin-aware refinement intervention, completed the first-pass Phase 12 reliability/applicability diagnosis, and completed the first-pass Phase 13 representative failure-case visual summary.
+The repository has completed the main Phase 2-3 architecture comparison cycle, closed the Phase 6 `adapt025` pilot as negative/neutral, established Phase 7/8 `adapt010` as the active adaptive candidate before margin-aware refinement, completed Phase 9 interpretability diagnosis, completed the Phase 10 margin-aware refinement intervention, completed the first-pass Phase 12 reliability/applicability diagnosis, completed the first-pass Phase 13 representative failure-case visual summary, and completed the first-pass Phase 14 proxy-based confidence diagnosis.
 
 Current project-level conclusions:
 
@@ -415,8 +443,11 @@ Current project-level conclusions:
 - **Main Phase 12 caution zones: exact wet/dry boundary cells, shallow threshold-adjacent cells, moderate-to-deep depths, high-intensity `location2` cases, and local peak-depth extremes**
 - **Phase 13 completed representative worst-timestep visual summaries for the highest-ranked failure cases**
 - **Main Phase 13 finding: top failures collapse into two high-intensity `location2` target scenarios repeated across seeds, with systematic underprediction, reduced wet extent, local peak-depth underprediction, and false-dry dominated mismatch**
+- **Phase 14 completed first-pass confidence proxy diagnostics**
+- **Main Phase 14 finding: confidence margin is useful for wet/dry classification risk, while cross-seed disagreement is only an auxiliary proxy and not a strong standalone scenario-error predictor**
+- **Phase 14 does not provide calibrated probabilistic uncertainty**
 
-At this stage, the project focus should move from broad model tuning to reliability-boundary interpretation, representative failure-case explanation, and possible uncertainty/confidence diagnostics. No broader Phase 10 boundary-weight sweep is justified.
+At this stage, the project focus should move from broad model tuning to reliability-boundary interpretation, representative failure-case explanation, confidence-proxy diagnosis, and possible reliability-screening rules. No broader Phase 10 boundary-weight sweep is justified.
 
 ## Representative Case Framing
 
@@ -426,7 +457,7 @@ Three representative cases continue to be useful for targeted comparison:
 - `seed202`: difficult-case reference where stronger structured refinement can show useful gains
 - `seed123`: repeatability reference for checking whether candidate behavior generalizes beyond the two anchor cases
 
-This framing motivated the Phase 6 Pilot A test, the Phase 7 conservative `adapt010` follow-up, the Phase 9 diagnosis, the Phase 10 margin-aware boundary-band refinement, the Phase 12 reliability/applicability diagnosis, and the Phase 13 representative failure-case visual summary.
+This framing motivated the Phase 6 Pilot A test, the Phase 7 conservative `adapt010` follow-up, the Phase 9 diagnosis, the Phase 10 margin-aware boundary-band refinement, the Phase 12 reliability/applicability diagnosis, the Phase 13 representative failure-case visual summary, and the Phase 14 confidence proxy diagnosis.
 
 
 ## Adaptive Candidate and Margin-Aware Refinement
@@ -484,11 +515,12 @@ The next justified follow-up is not another Phase 10 boundary-weight sweep. The 
 
 Recommended next work:
 
-- consider uncertainty or confidence diagnostics for boundary and high-intensity `location2` failure cases
-- consider targeted follow-up only if Phase 12/13 diagnosis clearly justifies an intervention
+- consider confidence maps for Phase 13 failure cases
+- consider scenario-level reliability screening rules based on Phase 12 to Phase 14 evidence
+- consider calibrated uncertainty only if calibration data and evaluation design are added
 - keep `boundary_weight = 1.5` only as a conservative rollback setting
 - avoid new boundary-weight sweeps unless a new diagnosis clearly justifies them
-- keep using the Phase 12/13 reliability and failure-case findings to define where the current model is reliable and where caution is required
+- keep using the Phase 12/13/14 reliability, failure-case, and confidence-proxy findings to define where the current model is reliable and where caution is required
 
 ## License
 

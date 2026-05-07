@@ -12,12 +12,15 @@ The repository should currently be interpreted as follows:
 - Phase 10 completed the first margin-aware intervention and established the current recommended refinement setting: `boundary_band_pixels = 1`, `boundary_weight = 2.0`.
 - Phase 12 completed the first-pass reliability/applicability diagnosis of the Phase 10 recommended model.
 - Phase 13 completed the first-pass representative failure-case visual summary.
+- Phase 14 completed the first-pass proxy-based uncertainty/confidence diagnosis.
 
 The current Phase 10 conclusion is that boundary-band weighted wet/dry consistency refinement has passed test-facing confirmation on the three key project seeds: `seed123`, `seed42`, and `seed202`.
 
 The current Phase 12 conclusion is that the Phase 10 recommended model is broadly useful for rapid spatiotemporal flood-process approximation under the tested scenario set, but its reliability is not uniform across all pixels, depth ranges, and scenarios. The main caution zones are exact wet/dry boundary cells, shallow threshold-adjacent cells, moderate-to-deep inundation depths, high-intensity `location2` scenarios, and local peak-depth extremes.
 
 The current Phase 13 conclusion is that the highest-ranked failures are not random scattered cases. They collapse into two high-intensity `location2` target scenarios repeated across seeds: `location2 / r300y_p0.6_d3h / start_idx = 0` at worst step 1, and `location2 / r300y_p0.8_d3h / start_idx = 0` at worst step 4. The visual summaries show systematic underprediction, reduced predicted wet fraction, local peak-depth underprediction, and false-dry dominated wet/dry mismatch.
+
+The current Phase 14 conclusion is that output-space confidence proxies are useful but limited. Confidence margin is useful for wet/dry classification risk because low-margin bins show much higher wet/dry error and false-dry rate. Cross-seed disagreement has only weak global correlation with scenario RMSE, so it should be treated as an auxiliary disagreement proxy rather than a strong standalone scenario-error predictor. Phase 14 is not calibrated probabilistic uncertainty.
 
 No additional Phase 10 boundary-weight sweep is justified at this point.
 
@@ -102,6 +105,32 @@ The first-pass Phase 13 findings indicate:
 - local peak depths are strongly underestimated
 - wet/dry mismatch is false-dry dominated
 
+### Proxy-based uncertainty and confidence diagnosis
+
+Phase 14 diagnosed whether output-space confidence and disagreement proxies can help identify less reliable predictions.
+
+Generated Phase 14 outputs include:
+
+- `docs/phase14_uncertainty_confidence_diagnostics_plan.md`
+- `scripts/analyze_phase14_confidence.py`
+- `analysis/phase14_confidence/summary.json`
+- `analysis/phase14_confidence/confidence_margin_metrics.csv`
+- `analysis/phase14_confidence/seed_disagreement_metrics.csv`
+- `analysis/phase14_confidence/risk_proxy_metrics.csv`
+- `analysis/phase14_confidence/scenario_confidence_metrics.csv`
+- `analysis/phase14_confidence/figures/`
+- `docs/phase14_uncertainty_confidence_diagnostics_findings.md`
+
+The first-pass Phase 14 findings indicate:
+
+- confidence margin is useful for wet/dry classification risk
+- low-margin bins show much higher wet/dry class error and false-dry rate
+- confidence margin is not a complete depth-error uncertainty measure
+- high-confidence wet/dry state does not guarantee accurate depth magnitude
+- cross-seed disagreement has weak global correlation with scenario RMSE
+- cross-seed disagreement should be treated as an auxiliary proxy rather than a strong standalone error predictor
+- Phase 14 does not provide calibrated probabilistic uncertainty
+
 ## Practical Reading Guide
 
 When reading the repository:
@@ -114,6 +143,7 @@ When reading the repository:
 - read Phase 10 as the successful first margin-aware intervention that establishes the current recommended refinement setting
 - read Phase 12 as the first-pass reliability/applicability diagnosis of the current recommended model
 - read Phase 13 as the representative visual explanation of the highest-ranked failure cases
+- read Phase 14 as a proxy-based confidence and disagreement diagnosis, not as calibrated probabilistic uncertainty
 
 ## Key Documents
 
@@ -127,4 +157,6 @@ When reading the repository:
 - `docs/phase12_reliability_applicability_findings.md`
 - `docs/phase13_failure_case_visual_summary_plan.md`
 - `docs/phase13_failure_case_visual_summary_findings.md`
+- `docs/phase14_uncertainty_confidence_diagnostics_plan.md`
+- `docs/phase14_uncertainty_confidence_diagnostics_findings.md`
 - `docs/experiment_index.md`
