@@ -1,0 +1,104 @@
+{
+  "phase": "Phase 15 Reliability Screening and Risk Mapping",
+  "interpretation_note": "Risk categories are deterministic screening labels derived from existing prediction artifacts. They are not calibrated probabilities or new model evaluations.",
+  "constraints": {
+    "retrained": false,
+    "evaluated_model_from_checkpoint": false,
+    "modified_model_architecture": false,
+    "modified_phase10_loss": false,
+    "tuned_boundary_weight": false,
+    "tuned_boundary_band_pixels": false,
+    "opened_new_sweep": false
+  },
+  "inputs": {
+    "run_glob": "runs/phase10_margin_aware_boundary_band_seed*_40e/evaluation_test",
+    "map_files_loaded": 57,
+    "map_key_usage": {
+      "prediction->target": 57
+    },
+    "pandas_available": false,
+    "optional_diagnostics": {
+      "phase12_reliability_dir": {
+        "path": "analysis\\phase12_reliability",
+        "available": true,
+        "csv_files": [
+          "boundary_distance_metrics.csv",
+          "depth_bin_metrics.csv",
+          "failure_cases.csv",
+          "scenario_metrics.csv",
+          "timestep_metrics.csv"
+        ],
+        "summary_json_available": true
+      },
+      "phase13_failure_cases_dir": {
+        "path": "analysis\\phase13_failure_cases",
+        "available": true,
+        "csv_files": [
+          "selected_failure_cases.csv"
+        ],
+        "summary_json_available": true
+      },
+      "phase14_confidence_dir": {
+        "path": "analysis\\phase14_confidence",
+        "available": true,
+        "csv_files": [
+          "confidence_margin_metrics.csv",
+          "risk_proxy_metrics.csv",
+          "scenario_confidence_metrics.csv",
+          "seed_disagreement_metrics.csv"
+        ],
+        "summary_json_available": true
+      }
+    }
+  },
+  "settings": {
+    "wet_threshold": 0.05,
+    "low_margin_band": 0.02,
+    "deep_underprediction_threshold": 0.1
+  },
+  "scoring_rules": {
+    "category_thresholds": {
+      "reliable": "risk_score < 2.5",
+      "caution": "2.5 <= risk_score < 5.0",
+      "high-risk": "risk_score >= 5.0"
+    },
+    "components": {
+      "low_margin_component": "linear 0 to 1.5 for low_margin_fraction 0.05 to 0.20",
+      "false_dry_component": "linear 0 to 2.0 for false_dry_rate 0.10 to 0.55",
+      "wet_fraction_contraction_component": "linear 0 to 1.5 for contraction 0.15 to 0.65",
+      "peak_underprediction_component": "linear 0 to 1.5 for peak underprediction 0.25 to 1.25",
+      "underprediction_bias_component": "linear 0 to 1.0 for negative mean bias 0.005 to 0.035",
+      "boundary_component": "linear 0 to 1.0 for boundary false-dry rate 0.15 to 0.65",
+      "high_intensity_location2_component": "2.5 for location2+r300y+(p0.6_d3h or p0.8_d3h), 1.5 for partial location2 intensity, 0.5 for weak high-intensity token",
+      "cross_seed_disagreement_component": "optional 0 to 1.0 from comparable scenario spread in predicted wet fraction and peak depth"
+    }
+  },
+  "row_counts": {
+    "scenario_risk_scores": 114,
+    "pixel_risk_summary": 16384,
+    "high_risk_cases": 13
+  },
+  "category_counts": {
+    "caution": 25,
+    "high-risk": 13,
+    "reliable": 76
+  },
+  "phase13_like_location2_check": {
+    "matching_rows": 24,
+    "flagged_caution_or_high_risk": 24,
+    "all_matching_rows_flagged": true
+  },
+  "outputs": {
+    "summary_json": "analysis\\phase15_reliability_screening\\summary.json",
+    "scenario_risk_scores_csv": "analysis\\phase15_reliability_screening\\scenario_risk_scores.csv",
+    "pixel_risk_summary_csv": "analysis\\phase15_reliability_screening\\pixel_risk_summary.csv",
+    "high_risk_cases_csv": "analysis\\phase15_reliability_screening\\high_risk_cases.csv",
+    "figures": [
+      "analysis\\phase15_reliability_screening\\figures\\scenario_risk_score_distribution.png",
+      "analysis\\phase15_reliability_screening\\figures\\scenario_risk_category_counts.png",
+      "analysis\\phase15_reliability_screening\\figures\\risk_component_heatmap.png",
+      "analysis\\phase15_reliability_screening\\figures\\repeated_false_dry_pixel_risk.png",
+      "analysis\\phase15_reliability_screening\\figures\\pixel_risk_map_example.png"
+    ]
+  }
+}
