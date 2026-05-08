@@ -9,6 +9,7 @@
 - Phase 12 reliability/applicability diagnosis: first-pass reliability boundary analysis of the current Phase 10 recommended model
 - Phase 13 failure-case visual summary: representative visual explanation of the highest-ranked Phase 12 failures
 - Phase 14 confidence proxy diagnosis: first-pass output-space confidence and cross-seed disagreement proxy analysis
+- Phase 15 reliability screening and risk mapping: first implementation of deterministic scenario screening and pixel-level risk mapping
 
 ## Phase 6
 
@@ -82,6 +83,29 @@
 - Disagreement result: cross-seed disagreement has weak global correlation with scenario RMSE and should be treated as an auxiliary disagreement proxy rather than a strong standalone scenario-error predictor
 - Decision: Phase 14 should be interpreted as confidence/risk/disagreement proxy diagnostics, not calibrated probabilistic uncertainty
 
+## Phase 15
+
+- Plan: `docs/phase15_reliability_screening_risk_mapping_plan.md`
+- Script: `scripts/screen_phase15_reliability.py`
+- Findings: `docs/phase15_reliability_screening_risk_mapping_findings.md`
+- Outputs: `analysis/phase15_reliability_screening/`
+- Summary output: `analysis/phase15_reliability_screening/summary.json`
+- Scenario scores: `analysis/phase15_reliability_screening/scenario_risk_scores.csv`
+- Pixel summary: `analysis/phase15_reliability_screening/pixel_risk_summary.csv`
+- High-risk cases: `analysis/phase15_reliability_screening/high_risk_cases.csv`
+- Figures:
+  - `analysis/phase15_reliability_screening/figures/scenario_risk_score_distribution.png`
+  - `analysis/phase15_reliability_screening/figures/scenario_risk_category_counts.png`
+  - `analysis/phase15_reliability_screening/figures/risk_component_heatmap.png`
+  - `analysis/phase15_reliability_screening/figures/repeated_false_dry_pixel_risk.png`
+  - `analysis/phase15_reliability_screening/figures/pixel_risk_map_example.png`
+- Status: first implementation of reliability screening and risk mapping complete
+- Core result: 57 Phase 10 map files were loaded, producing 114 scenario-level risk records and 16,384 pixel-level risk records
+- Category counts: 76 `reliable`, 25 `caution`, and 13 `high-risk`
+- Validation check: all 24 known Phase 13-like `location2` + `r300y` cases were flagged as `caution` or `high-risk`
+- Decision: Phase 15 converts Phase 12/13/14 diagnostic evidence into deterministic screening labels and spatial risk maps; it does not provide calibrated probabilities or Bayesian uncertainty
+- Model status: no retraining, architecture change, Phase 10 loss change, `boundary_band_pixels` tuning, `boundary_weight` tuning, or new sweep was performed
+
 ## Interpretation Order
 
 For current repository interpretation, read the experiment trail in this order:
@@ -95,17 +119,16 @@ For current repository interpretation, read the experiment trail in this order:
 7. `docs/phase12_reliability_applicability_findings.md`
 8. `docs/phase13_failure_case_visual_summary_findings.md`
 9. `docs/phase14_uncertainty_confidence_diagnostics_findings.md`
-10. `docs/project_status.md`
+10. `docs/phase15_reliability_screening_risk_mapping_findings.md`
+11. `docs/project_status.md`
 
 ## Next Stage
 
-The next stage should build on the Phase 12 to Phase 14 reliability/applicability evidence rather than reopening Phase 10 tuning.
+The next stage should build on the Phase 12 to Phase 15 reliability/applicability and screening evidence rather than reopening Phase 10 tuning.
 
 Recommended next work:
 
-- consider confidence maps for Phase 13 failure cases
-- consider scenario-level reliability screening rules
 - consider calibrated uncertainty only if calibration data and evaluation design are added
 - keep the current Phase 10 setting fixed unless new evidence justifies changing it
 - avoid broader boundary-weight sweeps
-- update README only lightly if new Phase 14 figures need to be surfaced
+- maintain the Phase 15 screening layer as deterministic risk-screening support unless a new calibration design is added
