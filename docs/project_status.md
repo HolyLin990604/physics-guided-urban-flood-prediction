@@ -14,6 +14,7 @@ The repository should currently be interpreted as follows:
 - Phase 13 completed the first-pass representative failure-case visual summary.
 - Phase 14 completed the first-pass proxy-based uncertainty/confidence diagnosis.
 - Phase 15 completed the first implementation of reliability screening and risk mapping.
+- Phase 16 completed the first implementation of reliability-aware warning rules and applicability boundary guidance.
 
 The current Phase 10 conclusion is that boundary-band weighted wet/dry consistency refinement has passed test-facing confirmation on the three key project seeds: `seed123`, `seed42`, and `seed202`.
 
@@ -31,6 +32,12 @@ The current Phase 14 conclusion is that output-space confidence proxies are usef
 The current Phase 15 conclusion is that the Phase 12/13/14 diagnostic evidence has been converted into a functional deterministic screening layer. The first implementation loaded 57 Phase 10 map files, generated 114 scenario-level risk records and 16,384 pixel-level risk records, and assigned 76 scenario records to `reliable`, 25 to `caution`, and 13 to `high-risk`. As a validation check, all 24 known Phase 13-like `location2` + `r300y` cases were flagged as `caution` or `high-risk`.
 
 Phase 15 screening labels are deterministic risk-screening labels. They are not calibrated probabilities, Bayesian uncertainty estimates, or a substitute for a formal calibration design.
+
+The current Phase 16 conclusion is that the Phase 15 deterministic reliability-screening labels have been converted into application-oriented warning guidance and an applicability boundary summary. Scenario warning counts are 76 `reliable`, 25 `caution`, and 13 `high-risk`. Pixel warning counts are 5,714 `reliable`, 8,805 `caution`, and 1,865 `high-risk`. The 13 high-risk warning cases match the Phase 15 high-risk cases.
+
+Phase 16 warning labels are deterministic operational interpretation labels. They are not calibrated probabilities, Bayesian uncertainty estimates, formal confidence intervals, or a substitute for a formal calibration design.
+
+The current project position after Phase 16 is rapid prediction with reliability screening, spatial risk mapping, and deterministic warning-rule guidance. Calibration should only be introduced through a separate calibration design, and the current Phase 10 setting remains fixed unless new evidence justifies changing it.
 
 No retraining, architecture change, Phase 10 loss change, `boundary_band_pixels` tuning, `boundary_weight` tuning, or additional Phase 10 boundary-weight sweep was performed.
 
@@ -166,6 +173,32 @@ The first-pass Phase 15 findings indicate:
 - the labels are deterministic screening labels, not calibrated probabilities or Bayesian uncertainty
 - no retraining, tuning, architecture change, or new sweep was performed
 
+### Reliability-aware warning rules and applicability boundary
+
+Phase 16 converted the Phase 15 deterministic scenario and pixel screening labels into warning-rule guidance and an applicability boundary summary for application-facing interpretation.
+
+Generated Phase 16 outputs include:
+
+- `docs/phase16_reliability_warning_applicability_plan.md`
+- `scripts/build_phase16_warning_rules.py`
+- `analysis/phase16_warning_rules/summary.json`
+- `analysis/phase16_warning_rules/warning_rules.json`
+- `analysis/phase16_warning_rules/scenario_warning_summary.csv`
+- `analysis/phase16_warning_rules/applicability_boundary_table.csv`
+- `analysis/phase16_warning_rules/high_risk_warning_cases.csv`
+- `analysis/phase16_warning_rules/pixel_warning_summary.csv`
+- `analysis/phase16_warning_rules/figures/`
+- `docs/phase16_reliability_warning_applicability_findings.md`
+
+The first-pass Phase 16 findings indicate:
+
+- scenario warnings produced 76 `reliable`, 25 `caution`, and 13 `high-risk` records
+- pixel warnings produced 5,714 `reliable`, 8,805 `caution`, and 1,865 `high-risk` records
+- the 13 high-risk warning cases match the Phase 15 high-risk cases
+- Phase 16 turns rapid prediction, reliability screening, and spatial risk mapping into application-oriented warning-rule guidance
+- warning labels are deterministic operational interpretation labels, not calibrated probabilities, Bayesian uncertainty, or formal confidence intervals
+- no retraining, tuning, architecture change, Phase 10 loss change, or new sweep was performed
+
 ## Practical Reading Guide
 
 When reading the repository:
@@ -180,6 +213,7 @@ When reading the repository:
 - read Phase 13 as the representative visual explanation of the highest-ranked failure cases
 - read Phase 14 as a proxy-based confidence and disagreement diagnosis, not as calibrated probabilistic uncertainty
 - read Phase 15 as the first implementation of deterministic reliability screening and spatial risk mapping
+- read Phase 16 as the first implementation of deterministic warning-rule guidance and applicability boundary interpretation
 
 ## Key Documents
 
@@ -197,4 +231,6 @@ When reading the repository:
 - `docs/phase14_uncertainty_confidence_diagnostics_findings.md`
 - `docs/phase15_reliability_screening_risk_mapping_plan.md`
 - `docs/phase15_reliability_screening_risk_mapping_findings.md`
+- `docs/phase16_reliability_warning_applicability_plan.md`
+- `docs/phase16_reliability_warning_applicability_findings.md`
 - `docs/experiment_index.md`
