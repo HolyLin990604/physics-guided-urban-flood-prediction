@@ -39,6 +39,7 @@ flowchart LR
     J --> K[Phase 13<br/>Failure-case visual summary]
     K --> L[Phase 14<br/>Confidence proxy diagnosis]
     L --> M[Phase 15<br/>Reliability screening and risk mapping]
+    M --> N[Phase 16<br/>Warning rules and applicability boundary]
 
     A --> A1[Best-balanced mainline]
     B --> B1[Freer selector<br/>not enough]
@@ -53,6 +54,7 @@ flowchart LR
     K --> K1[Top failures visualized<br/>location2 repeated failure modes]
     L --> L1[Confidence proxies diagnosed<br/>not calibrated uncertainty]
     M --> M1[Deterministic screening labels<br/>scenario and pixel risk maps]
+    N --> N1[Warning-rule guidance<br/>deterministic operational labels]
 ```
 
 
@@ -113,6 +115,16 @@ Phase 12 then diagnosed the reliability and applicability boundaries of this rec
 The main Phase 12 finding is that the model is useful for rapid spatiotemporal flood-process approximation, but reliability is not uniform. Exact wet/dry boundary cells remain the main bottleneck, moderate-to-deep target depths show stronger underprediction, and high-intensity `location2` cases dominate the highest-ranked failures.
 
 Phase 15 converts the Phase 12/13/14 diagnostic evidence into a functional reliability-screening and spatial risk-mapping layer. It does not retrain models, modify architecture, modify the Phase 10 loss, tune `boundary_weight` or `boundary_band_pixels`, or start a new sweep.
+
+Phase 16 converts the Phase 15 deterministic reliability-screening labels into application-oriented warning-rule guidance and an applicability boundary summary. The project progression is now:
+
+```text
+rapid prediction + reliability screening + spatial risk mapping
+becomes
+rapid prediction + reliability screening + spatial risk mapping + warning-rule guidance
+```
+
+Phase 16 warning labels are deterministic operational interpretation labels. They are not calibrated probabilities, Bayesian uncertainty, or formal confidence intervals.
 
 
 ## Phase 12 Reliability Diagnostics
@@ -210,9 +222,33 @@ The Phase 15 labels are deterministic screening labels. They should not be inter
 
 ![Phase 15 pixel risk map example](analysis/phase15_reliability_screening/figures/pixel_risk_map_example.png)
 
+## Phase 16 Reliability-Aware Warning Rules and Applicability Boundary
+
+Phase 16 provides the first implementation of reliability-aware warning rules and an applicability boundary for the current Phase 10 recommended model. It translates Phase 15 deterministic reliability-screening labels into application-oriented warning guidance without retraining, architecture changes, Phase 10 loss changes, `boundary_weight` tuning, `boundary_band_pixels` tuning, or a new sweep.
+
+The Phase 16 scenario warning counts are 76 `reliable`, 25 `caution`, and 13 `high-risk`. The 13 high-risk warning cases match the Phase 15 high-risk cases. Pixel warning counts are 5,714 `reliable`, 8,805 `caution`, and 1,865 `high-risk`.
+
+The warning labels are deterministic operational interpretation labels. They should not be read as calibrated probabilities, Bayesian uncertainty estimates, formal confidence intervals, or a substitute for a calibration design.
+
+### Warning level counts
+
+![Phase 16 warning level counts](analysis/phase16_warning_rules/figures/warning_level_counts.png)
+
+### Warning action matrix
+
+![Phase 16 warning action matrix](analysis/phase16_warning_rules/figures/warning_action_matrix.png)
+
+### Applicability boundary summary
+
+![Phase 16 applicability boundary summary](analysis/phase16_warning_rules/figures/applicability_boundary_summary.png)
+
+### Pixel warning map example
+
+![Phase 16 pixel warning map example](analysis/phase16_warning_rules/figures/pixel_warning_map_example.png)
+
 ## Historical Qualitative Examples
 
-The figures below are earlier-stage qualitative comparisons retained for visual reference. They are not the current primary evidence for the project state; the current project state is summarized above through Phase 12 reliability/applicability diagnosis.
+The figures below are earlier-stage qualitative comparisons retained for visual reference. They are not the current primary evidence for the project state; the current project state is summarized above through Phase 16 warning-rule guidance.
 
 <details>
 <summary>Expand earlier-stage qualitative flood-map examples</summary>
@@ -262,7 +298,8 @@ flowchart TD
     F --> G[Stage VII<br/>Failure-case visual summary]
     G --> H[Stage VIII<br/>Confidence proxy diagnosis]
     H --> I[Stage IX<br/>Reliability screening and risk mapping]
-    I --> J[Next stage<br/>Calibration design only if needed]
+    I --> J[Stage X<br/>Warning-rule guidance and applicability boundary]
+    J --> K[Next stage<br/>Calibration design only if needed]
 
     A1[Phase 2-5<br/>- M3 f025 remains overall best-balanced mainline<br/>- Phase 3.3 af025 remains strongest static structured refinement] --> A
     B1[Phase 6-7<br/>- adapt025 closed as negative/neutral<br/>- adapt010 promoted as active adaptive candidate] --> B
@@ -273,7 +310,8 @@ flowchart TD
     G1[Phase 13<br/>- top failures visualized<br/>- repeated location2 failure modes explained] --> G
     H1[Phase 14<br/>- confidence-margin risk proxy<br/>- weak cross-seed disagreement proxy] --> H
     I1[Phase 15<br/>- deterministic scenario labels<br/>- pixel risk maps<br/>- known location2+r300y cases flagged] --> I
-    J1[Future focus<br/>- calibrated uncertainty only with calibration design<br/>- no Phase 10 tuning without new diagnosis] --> J
+    J1[Phase 16<br/>- warning-rule guidance<br/>- applicability boundary<br/>- high-risk cases preserved] --> J
+    K1[Future focus<br/>- calibrated uncertainty only with calibration design<br/>- no Phase 10 tuning without new diagnosis] --> K
 ```
 
 
@@ -297,6 +335,8 @@ For the current staged experiment record, see:
 - `docs/phase14_uncertainty_confidence_diagnostics_findings.md`
 - `docs/phase15_reliability_screening_risk_mapping_plan.md`
 - `docs/phase15_reliability_screening_risk_mapping_findings.md`
+- `docs/phase16_reliability_warning_applicability_plan.md`
+- `docs/phase16_reliability_warning_applicability_findings.md`
 
 
 ## Dataset
@@ -444,6 +484,7 @@ python scripts/plot_phase12_reliability.py
 python scripts/visualize_phase13_failure_cases.py
 python scripts/analyze_phase14_confidence.py
 python scripts/screen_phase15_reliability.py
+python scripts/build_phase16_warning_rules.py
 ```
 
 Generated figures are organized under:
@@ -453,11 +494,12 @@ Generated figures are organized under:
 - `analysis/phase13_failure_cases/figures/` for representative failure-case visual summaries
 - `analysis/phase14_confidence/figures/` for confidence proxy diagnostics
 - `analysis/phase15_reliability_screening/figures/` for reliability-screening and risk-mapping outputs
+- `analysis/phase16_warning_rules/figures/` for reliability-aware warning-rule and applicability-boundary outputs
 
 
 ## Current Project Status
 
-The repository has completed the main Phase 2-3 architecture comparison cycle, closed the Phase 6 `adapt025` pilot as negative/neutral, established Phase 7/8 `adapt010` as the active adaptive candidate before margin-aware refinement, completed Phase 9 interpretability diagnosis, completed the Phase 10 margin-aware refinement intervention, completed the first-pass Phase 12 reliability/applicability diagnosis, completed the first-pass Phase 13 representative failure-case visual summary, completed the first-pass Phase 14 proxy-based confidence diagnosis, and completed the first implementation of Phase 15 reliability screening and risk mapping.
+The repository has completed the main Phase 2-3 architecture comparison cycle, closed the Phase 6 `adapt025` pilot as negative/neutral, established Phase 7/8 `adapt010` as the active adaptive candidate before margin-aware refinement, completed Phase 9 interpretability diagnosis, completed the Phase 10 margin-aware refinement intervention, completed the first-pass Phase 12 reliability/applicability diagnosis, completed the first-pass Phase 13 representative failure-case visual summary, completed the first-pass Phase 14 proxy-based confidence diagnosis, completed the first implementation of Phase 15 reliability screening and risk mapping, and completed the first implementation of Phase 16 reliability-aware warning rules and applicability boundary guidance.
 
 Current project-level conclusions:
 
@@ -481,8 +523,13 @@ Current project-level conclusions:
 - **Phase 15 scenario labels: 76 reliable, 25 caution, and 13 high-risk**
 - **All 24 known Phase 13-like `location2` + `r300y` cases were flagged as `caution` or `high-risk`**
 - **Phase 15 screening labels are deterministic labels, not calibrated probabilities or Bayesian uncertainty**
+- **Phase 16 completed first-pass reliability-aware warning rules and applicability boundary guidance**
+- **Phase 16 scenario warnings: 76 reliable, 25 caution, and 13 high-risk**
+- **Phase 16 pixel warnings: 5,714 reliable, 8,805 caution, and 1,865 high-risk**
+- **The 13 Phase 16 high-risk warning cases match the Phase 15 high-risk cases**
+- **Phase 16 warning labels are deterministic operational interpretation labels, not calibrated probabilities, Bayesian uncertainty, or formal confidence intervals**
 
-At this stage, the project has moved from broad model tuning to rapid flood prediction with reliability screening and spatial risk mapping. No broader Phase 10 boundary-weight sweep is justified.
+At this stage, the project has moved from broad model tuning to rapid flood prediction with reliability screening, spatial risk mapping, and warning-rule guidance. No broader Phase 10 boundary-weight sweep is justified.
 
 ## Representative Case Framing
 
@@ -492,7 +539,7 @@ Three representative cases continue to be useful for targeted comparison:
 - `seed202`: difficult-case reference where stronger structured refinement can show useful gains
 - `seed123`: repeatability reference for checking whether candidate behavior generalizes beyond the two anchor cases
 
-This framing motivated the Phase 6 Pilot A test, the Phase 7 conservative `adapt010` follow-up, the Phase 9 diagnosis, the Phase 10 margin-aware boundary-band refinement, the Phase 12 reliability/applicability diagnosis, the Phase 13 representative failure-case visual summary, the Phase 14 confidence proxy diagnosis, and the Phase 15 reliability-screening layer.
+This framing motivated the Phase 6 Pilot A test, the Phase 7 conservative `adapt010` follow-up, the Phase 9 diagnosis, the Phase 10 margin-aware boundary-band refinement, the Phase 12 reliability/applicability diagnosis, the Phase 13 representative failure-case visual summary, the Phase 14 confidence proxy diagnosis, the Phase 15 reliability-screening layer, and the Phase 16 warning-rule guidance layer.
 
 
 ## Adaptive Candidate and Margin-Aware Refinement

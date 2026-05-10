@@ -10,6 +10,7 @@
 - Phase 13 failure-case visual summary: representative visual explanation of the highest-ranked Phase 12 failures
 - Phase 14 confidence proxy diagnosis: first-pass output-space confidence and cross-seed disagreement proxy analysis
 - Phase 15 reliability screening and risk mapping: first implementation of deterministic scenario screening and pixel-level risk mapping
+- Phase 16 reliability-aware warning rules and applicability boundary: first implementation of deterministic warning-rule guidance based on Phase 15 screening labels
 
 ## Phase 6
 
@@ -106,6 +107,32 @@
 - Decision: Phase 15 converts Phase 12/13/14 diagnostic evidence into deterministic screening labels and spatial risk maps; it does not provide calibrated probabilities or Bayesian uncertainty
 - Model status: no retraining, architecture change, Phase 10 loss change, `boundary_band_pixels` tuning, `boundary_weight` tuning, or new sweep was performed
 
+## Phase 16
+
+- Plan: `docs/phase16_reliability_warning_applicability_plan.md`
+- Script: `scripts/build_phase16_warning_rules.py`
+- Findings: `docs/phase16_reliability_warning_applicability_findings.md`
+- Outputs: `analysis/phase16_warning_rules/`
+- Summary output: `analysis/phase16_warning_rules/summary.json`
+- Warning rules: `analysis/phase16_warning_rules/warning_rules.json`
+- Scenario warning summary: `analysis/phase16_warning_rules/scenario_warning_summary.csv`
+- Applicability boundary table: `analysis/phase16_warning_rules/applicability_boundary_table.csv`
+- High-risk warning cases: `analysis/phase16_warning_rules/high_risk_warning_cases.csv`
+- Pixel warning summary: `analysis/phase16_warning_rules/pixel_warning_summary.csv`
+- Figures:
+  - `analysis/phase16_warning_rules/figures/warning_level_counts.png`
+  - `analysis/phase16_warning_rules/figures/warning_action_matrix.png`
+  - `analysis/phase16_warning_rules/figures/applicability_boundary_summary.png`
+  - `analysis/phase16_warning_rules/figures/high_risk_warning_case_distribution.png`
+  - `analysis/phase16_warning_rules/figures/pixel_warning_map_example.png`
+- Status: first implementation of reliability-aware warning rules and applicability boundary complete
+- Core result: Phase 16 converts Phase 15 deterministic reliability-screening labels into application-oriented warning guidance
+- Scenario warning counts: 76 `reliable`, 25 `caution`, and 13 `high-risk`
+- Pixel warning counts: 5,714 `reliable`, 8,805 `caution`, and 1,865 `high-risk`
+- Validation check: the 13 high-risk warning cases match the Phase 15 high-risk cases
+- Decision: Phase 16 warning labels are deterministic operational interpretation labels, not calibrated probabilities, Bayesian uncertainty, or formal confidence intervals
+- Model status: no retraining, architecture change, Phase 10 loss change, `boundary_band_pixels` tuning, `boundary_weight` tuning, or new sweep was performed
+
 ## Interpretation Order
 
 For current repository interpretation, read the experiment trail in this order:
@@ -120,15 +147,16 @@ For current repository interpretation, read the experiment trail in this order:
 8. `docs/phase13_failure_case_visual_summary_findings.md`
 9. `docs/phase14_uncertainty_confidence_diagnostics_findings.md`
 10. `docs/phase15_reliability_screening_risk_mapping_findings.md`
-11. `docs/project_status.md`
+11. `docs/phase16_reliability_warning_applicability_findings.md`
+12. `docs/project_status.md`
 
 ## Next Stage
 
-The next stage should build on the Phase 12 to Phase 15 reliability/applicability and screening evidence rather than reopening Phase 10 tuning.
+The next stage should build on the Phase 12 to Phase 16 reliability/applicability, screening, and warning-rule evidence rather than reopening Phase 10 tuning.
 
 Recommended next work:
 
 - consider calibrated uncertainty only if calibration data and evaluation design are added
 - keep the current Phase 10 setting fixed unless new evidence justifies changing it
 - avoid broader boundary-weight sweeps
-- maintain the Phase 15 screening layer as deterministic risk-screening support unless a new calibration design is added
+- maintain the Phase 15 screening layer and Phase 16 warning-rule layer as deterministic operational support unless a new calibration design is added

@@ -1,0 +1,111 @@
+{
+  "action_matrix": {
+    "caution": {
+      "action": "use with targeted review",
+      "recommendation": "use_with_targeted_review",
+      "review_level": "targeted_review",
+      "use_note": "Inspect wet/dry boundaries, shallow transition areas, local peak-depth areas, and pixel-level risk maps."
+    },
+    "high-risk": {
+      "action": "do not use alone for warning decisions",
+      "recommendation": "do_not_use_alone",
+      "review_level": "mandatory_review",
+      "use_note": "Trigger conservative interpretation, hydrodynamic-model confirmation, or expert review before warning decisions."
+    },
+    "reliable": {
+      "action": "use as rapid prediction reference",
+      "recommendation": "use_as_rapid_reference",
+      "review_level": "normal_review",
+      "use_note": "Prediction is within the stronger applicability range of the current surrogate model."
+    }
+  },
+  "applicability_boundary_rows": [
+    {
+      "caution_note": "Warning labels are operational interpretation labels derived from deterministic Phase 15 screening outputs. They are not calibrated probabilities, Bayesian uncertainty estimates, or formal confidence intervals.",
+      "condition_description": "Scenarios with Phase 15 reliable labels and no strong risk components.",
+      "condition_type": "ordinary test scenarios",
+      "evidence_source": "Phase 15 scenario_risk_scores.csv reliable category",
+      "recommended_use": "Use as a rapid flood-depth reference with normal review.",
+      "reliability_level": "stronger applicability"
+    },
+    {
+      "caution_note": "Wet/dry boundaries are sensitive to small depth and threshold changes.",
+      "condition_description": "Cells near predicted or target wet/dry transitions.",
+      "condition_type": "wet/dry boundary cells",
+      "evidence_source": "Phase 15 boundary false-dry and pixel boundary fractions",
+      "recommended_use": "Inspect with pixel risk maps and avoid overinterpreting exact edge placement.",
+      "reliability_level": "caution"
+    },
+    {
+      "caution_note": "These labels are screening indicators, not calibrated confidence intervals.",
+      "condition_description": "Cells near the wet-depth threshold or low confidence-margin band.",
+      "condition_type": "shallow threshold-adjacent cells",
+      "evidence_source": "Phase 15 low_margin_fraction and pixel low_margin_count",
+      "recommended_use": "Use with targeted review of shallow transition areas.",
+      "reliability_level": "caution"
+    },
+    {
+      "caution_note": "This is an applicability-boundary warning for the current surrogate model.",
+      "condition_description": "Known Phase 13-like location2+r300y high-intensity cases.",
+      "condition_type": "high-intensity location2+r300y cases",
+      "evidence_source": "Phase 15 high_intensity_reason and Phase 13 consistency check",
+      "recommended_use": "Do not use prediction alone; trigger hydrodynamic-model or expert confirmation.",
+      "reliability_level": "high-risk"
+    },
+    {
+      "caution_note": "Peak-depth review is required where local maxima control warning severity.",
+      "condition_description": "Cases or pixels with peak-depth underprediction or deep-depth underprediction signals.",
+      "condition_type": "local peak-depth extremes",
+      "evidence_source": "Phase 15 peak_underprediction and deep_underprediction_fraction",
+      "recommended_use": "Check possible local-depth underprediction before warning decisions.",
+      "reliability_level": "caution to high-risk"
+    },
+    {
+      "caution_note": "Repeated false-dry labels indicate spatial screening risk, not event probability.",
+      "condition_description": "Pixels repeatedly dry in prediction when wet in target across Phase 15 screening artifacts.",
+      "condition_type": "repeated false-dry pixels",
+      "evidence_source": "Phase 15 pixel false_dry_fraction",
+      "recommended_use": "Treat as missed-inundation caution zones in spatial warning interpretation.",
+      "reliability_level": "high-risk spatial caution"
+    },
+    {
+      "caution_note": "Contraction can indicate extent underestimation in rapid surrogate predictions.",
+      "condition_description": "Scenarios where predicted inundation extent is substantially smaller than target extent.",
+      "condition_type": "strong wet-fraction contraction cases",
+      "evidence_source": "Phase 15 wet_fraction_contraction component",
+      "recommended_use": "Review inundation extent before operational warning use.",
+      "reliability_level": "caution to high-risk"
+    }
+  ],
+  "constraints": {
+    "evaluated_model_from_checkpoint": false,
+    "modified_model_architecture": false,
+    "modified_phase10_loss": false,
+    "opened_new_sweep": false,
+    "reads_existing_phase15_outputs_only": true,
+    "trained_model": false,
+    "tuned_boundary_band_pixels": false,
+    "tuned_boundary_weight": false
+  },
+  "interpretation_note": "Warning labels are operational interpretation labels derived from deterministic Phase 15 screening outputs. They are not calibrated probabilities, Bayesian uncertainty estimates, or formal confidence intervals.",
+  "limitations": [
+    "Warning labels are operational interpretation labels derived from deterministic Phase 15 screening outputs. They are not calibrated probabilities, Bayesian uncertainty estimates, or formal confidence intervals.",
+    "The rules convert Phase 15 screening labels into operational guidance; they do not replace hydrodynamic simulation or expert judgment in high-stakes final warning decisions.",
+    "Pixel warning labels summarize repeated screening signals and should be interpreted as spatial caution guidance."
+  ],
+  "phase": "Phase 16 Reliability-Aware Warning Rules and Applicability Boundary",
+  "pixel_warning_thresholds": {
+    "boundary_fraction_caution": 0.1,
+    "deep_underprediction_fraction_caution": 0.1,
+    "deep_underprediction_fraction_high": 0.25,
+    "false_dry_fraction_caution": 0.0,
+    "false_dry_fraction_high": 0.1,
+    "high_risk_case_fraction_high": 0.05,
+    "low_margin_fraction_caution": 0.1
+  },
+  "scenario_warning_thresholds": {
+    "false_dry_rate_warning": 0.1,
+    "peak_underprediction_warning_m": 0.25,
+    "wet_fraction_contraction_warning": 0.15
+  }
+}
