@@ -11,6 +11,7 @@
 - Phase 14 confidence proxy diagnosis: first-pass output-space confidence and cross-seed disagreement proxy analysis
 - Phase 15 reliability screening and risk mapping: first implementation of deterministic scenario screening and pixel-level risk mapping
 - Phase 16 reliability-aware warning rules and applicability boundary: first implementation of deterministic warning-rule guidance based on Phase 15 screening labels
+- Phase 17 reliability-aware warning framework synthesis: documentation synthesis integrating Phase 12-16 into the current project narrative
 
 ## Phase 6
 
@@ -133,6 +134,18 @@
 - Decision: Phase 16 warning labels are deterministic operational interpretation labels, not calibrated probabilities, Bayesian uncertainty, or formal confidence intervals
 - Model status: no retraining, architecture change, Phase 10 loss change, `boundary_band_pixels` tuning, `boundary_weight` tuning, or new sweep was performed
 
+## Phase 17
+
+- Synthesis document: `docs/phase17_reliability_warning_framework_synthesis.md`
+- Status: reliability-aware warning framework synthesis complete
+- Core result: Phase 17 integrates Phase 12 reliability/applicability diagnosis, Phase 13 representative failure-case visualization, Phase 14 confidence/disagreement proxy diagnostics, Phase 15 reliability screening and spatial risk mapping, and Phase 16 warning-rule/applicability-boundary guidance into a coherent reliability-aware warning framework narrative
+- Project position: rapid prediction plus reliability diagnosis, failure-mode interpretation, confidence proxy diagnostics, spatial risk mapping, and warning-rule guidance
+- Purpose: support manuscript writing, README narrative, and project positioning
+- Decision: Phase 17 is a synthesis/documentation phase, not a new experiment phase
+- Model status: no retraining, architecture change, Phase 10 loss change, `boundary_band_pixels` tuning, `boundary_weight` tuning, or new sweep was performed
+- Current recommended Phase 10 setting: `boundary_band_pixels = 1`, `boundary_weight = 2.0`
+- Interpretation guardrail: the framework does not claim calibrated uncertainty or universal generalization
+
 ## Interpretation Order
 
 For current repository interpretation, read the experiment trail in this order:
@@ -148,11 +161,12 @@ For current repository interpretation, read the experiment trail in this order:
 9. `docs/phase14_uncertainty_confidence_diagnostics_findings.md`
 10. `docs/phase15_reliability_screening_risk_mapping_findings.md`
 11. `docs/phase16_reliability_warning_applicability_findings.md`
-12. `docs/project_status.md`
+12. `docs/phase17_reliability_warning_framework_synthesis.md`
+13. `docs/project_status.md`
 
 ## Next Stage
 
-The next stage should build on the Phase 12 to Phase 16 reliability/applicability, screening, and warning-rule evidence rather than reopening Phase 10 tuning.
+The next stage should build on the Phase 12 to Phase 17 reliability/applicability, screening, warning-rule, and synthesis evidence rather than reopening Phase 10 tuning.
 
 Recommended next work:
 

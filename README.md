@@ -40,6 +40,7 @@ flowchart LR
     K --> L[Phase 14<br/>Confidence proxy diagnosis]
     L --> M[Phase 15<br/>Reliability screening and risk mapping]
     M --> N[Phase 16<br/>Warning rules and applicability boundary]
+    N --> O[Phase 17<br/>Reliability-aware framework synthesis]
 
     A --> A1[Best-balanced mainline]
     B --> B1[Freer selector<br/>not enough]
@@ -55,6 +56,7 @@ flowchart LR
     L --> L1[Confidence proxies diagnosed<br/>not calibrated uncertainty]
     M --> M1[Deterministic screening labels<br/>scenario and pixel risk maps]
     N --> N1[Warning-rule guidance<br/>deterministic operational labels]
+    O --> O1[Phase 12-16 synthesized<br/>manuscript and positioning narrative]
 ```
 
 
@@ -125,6 +127,20 @@ rapid prediction + reliability screening + spatial risk mapping + warning-rule g
 ```
 
 Phase 16 warning labels are deterministic operational interpretation labels. They are not calibrated probabilities, Bayesian uncertainty, or formal confidence intervals.
+
+Phase 17 synthesizes the Phase 12 through Phase 16 evidence into a coherent reliability-aware flood-warning framework narrative. It does not retrain models, modify architecture, modify the Phase 10 loss, tune `boundary_weight` or `boundary_band_pixels`, or open a new sweep. The current recommended Phase 10 setting remains:
+
+- `boundary_band_pixels = 1`
+- `boundary_weight = 2.0`
+
+The project position after Phase 17 is:
+
+```text
+rapid prediction + reliability diagnosis + failure-mode interpretation
++ confidence proxy diagnostics + spatial risk mapping + warning-rule guidance
+```
+
+This synthesis is intended to support manuscript writing, README narrative, and project positioning. It should not be interpreted as calibrated uncertainty or universal generalization beyond the tested evidence.
 
 
 ## Phase 12 Reliability Diagnostics
@@ -246,9 +262,17 @@ The warning labels are deterministic operational interpretation labels. They sho
 
 ![Phase 16 pixel warning map example](analysis/phase16_warning_rules/figures/pixel_warning_map_example.png)
 
+## Phase 17 Reliability-Aware Warning Framework Synthesis
+
+Phase 17 is a synthesis/documentation phase, not a new experiment phase. It integrates the Phase 12 reliability and applicability diagnosis, Phase 13 representative failure-case visualization, Phase 14 confidence/disagreement proxy diagnostics, Phase 15 reliability screening and spatial risk mapping, and Phase 16 warning-rule and applicability-boundary guidance into one reliability-aware warning framework narrative.
+
+The synthesis frames the project as rapid flood-depth prediction plus reliability diagnosis, failure-mode interpretation, confidence proxy diagnostics, spatial risk mapping, and warning-rule guidance. Phase 17 does not retrain models, modify architecture, modify the Phase 10 loss, tune `boundary_weight` or `boundary_band_pixels`, or open a new sweep. The recommended Phase 10 setting remains `boundary_band_pixels = 1` and `boundary_weight = 2.0`.
+
+See `docs/phase17_reliability_warning_framework_synthesis.md` for the synthesis document.
+
 ## Historical Qualitative Examples
 
-The figures below are earlier-stage qualitative comparisons retained for visual reference. They are not the current primary evidence for the project state; the current project state is summarized above through Phase 16 warning-rule guidance.
+The figures below are earlier-stage qualitative comparisons retained for visual reference. They are not the current primary evidence for the project state; the current project state is summarized above through Phase 17 reliability-aware framework synthesis.
 
 <details>
 <summary>Expand earlier-stage qualitative flood-map examples</summary>
@@ -299,7 +323,8 @@ flowchart TD
     G --> H[Stage VIII<br/>Confidence proxy diagnosis]
     H --> I[Stage IX<br/>Reliability screening and risk mapping]
     I --> J[Stage X<br/>Warning-rule guidance and applicability boundary]
-    J --> K[Next stage<br/>Calibration design only if needed]
+    J --> K[Stage XI<br/>Reliability-aware warning framework synthesis]
+    K --> L[Next stage<br/>Calibration design only if needed]
 
     A1[Phase 2-5<br/>- M3 f025 remains overall best-balanced mainline<br/>- Phase 3.3 af025 remains strongest static structured refinement] --> A
     B1[Phase 6-7<br/>- adapt025 closed as negative/neutral<br/>- adapt010 promoted as active adaptive candidate] --> B
@@ -311,7 +336,8 @@ flowchart TD
     H1[Phase 14<br/>- confidence-margin risk proxy<br/>- weak cross-seed disagreement proxy] --> H
     I1[Phase 15<br/>- deterministic scenario labels<br/>- pixel risk maps<br/>- known location2+r300y cases flagged] --> I
     J1[Phase 16<br/>- warning-rule guidance<br/>- applicability boundary<br/>- high-risk cases preserved] --> J
-    K1[Future focus<br/>- calibrated uncertainty only with calibration design<br/>- no Phase 10 tuning without new diagnosis] --> K
+    K1[Phase 17<br/>- Phase 12-16 synthesis<br/>- manuscript and positioning support<br/>- no retraining or tuning] --> K
+    L1[Future focus<br/>- calibrated uncertainty only with calibration design<br/>- no Phase 10 tuning without new diagnosis] --> L
 ```
 
 
@@ -337,6 +363,7 @@ For the current staged experiment record, see:
 - `docs/phase15_reliability_screening_risk_mapping_findings.md`
 - `docs/phase16_reliability_warning_applicability_plan.md`
 - `docs/phase16_reliability_warning_applicability_findings.md`
+- `docs/phase17_reliability_warning_framework_synthesis.md`
 
 
 ## Dataset
@@ -499,7 +526,7 @@ Generated figures are organized under:
 
 ## Current Project Status
 
-The repository has completed the main Phase 2-3 architecture comparison cycle, closed the Phase 6 `adapt025` pilot as negative/neutral, established Phase 7/8 `adapt010` as the active adaptive candidate before margin-aware refinement, completed Phase 9 interpretability diagnosis, completed the Phase 10 margin-aware refinement intervention, completed the first-pass Phase 12 reliability/applicability diagnosis, completed the first-pass Phase 13 representative failure-case visual summary, completed the first-pass Phase 14 proxy-based confidence diagnosis, completed the first implementation of Phase 15 reliability screening and risk mapping, and completed the first implementation of Phase 16 reliability-aware warning rules and applicability boundary guidance.
+The repository has completed the main Phase 2-3 architecture comparison cycle, closed the Phase 6 `adapt025` pilot as negative/neutral, established Phase 7/8 `adapt010` as the active adaptive candidate before margin-aware refinement, completed Phase 9 interpretability diagnosis, completed the Phase 10 margin-aware refinement intervention, completed the first-pass Phase 12 reliability/applicability diagnosis, completed the first-pass Phase 13 representative failure-case visual summary, completed the first-pass Phase 14 proxy-based confidence diagnosis, completed the first implementation of Phase 15 reliability screening and risk mapping, completed the first implementation of Phase 16 reliability-aware warning rules and applicability boundary guidance, and completed the Phase 17 reliability-aware warning framework synthesis.
 
 Current project-level conclusions:
 
@@ -528,8 +555,10 @@ Current project-level conclusions:
 - **Phase 16 pixel warnings: 5,714 reliable, 8,805 caution, and 1,865 high-risk**
 - **The 13 Phase 16 high-risk warning cases match the Phase 15 high-risk cases**
 - **Phase 16 warning labels are deterministic operational interpretation labels, not calibrated probabilities, Bayesian uncertainty, or formal confidence intervals**
+- **Phase 17 completed the synthesis of Phase 12-16 into a reliability-aware warning framework narrative for manuscript writing, README narrative, and project positioning**
+- **Phase 17 is documentation synthesis only: no retraining, architecture change, Phase 10 loss change, boundary-parameter tuning, or new sweep**
 
-At this stage, the project has moved from broad model tuning to rapid flood prediction with reliability screening, spatial risk mapping, and warning-rule guidance. No broader Phase 10 boundary-weight sweep is justified.
+At this stage, the project has moved from broad model tuning to rapid flood prediction with reliability diagnosis, failure-mode interpretation, confidence proxy diagnostics, spatial risk mapping, and warning-rule guidance. No broader Phase 10 boundary-weight sweep is justified.
 
 ## Representative Case Framing
 
@@ -539,7 +568,7 @@ Three representative cases continue to be useful for targeted comparison:
 - `seed202`: difficult-case reference where stronger structured refinement can show useful gains
 - `seed123`: repeatability reference for checking whether candidate behavior generalizes beyond the two anchor cases
 
-This framing motivated the Phase 6 Pilot A test, the Phase 7 conservative `adapt010` follow-up, the Phase 9 diagnosis, the Phase 10 margin-aware boundary-band refinement, the Phase 12 reliability/applicability diagnosis, the Phase 13 representative failure-case visual summary, the Phase 14 confidence proxy diagnosis, the Phase 15 reliability-screening layer, and the Phase 16 warning-rule guidance layer.
+This framing motivated the Phase 6 Pilot A test, the Phase 7 conservative `adapt010` follow-up, the Phase 9 diagnosis, the Phase 10 margin-aware boundary-band refinement, the Phase 12 reliability/applicability diagnosis, the Phase 13 representative failure-case visual summary, the Phase 14 confidence proxy diagnosis, the Phase 15 reliability-screening layer, the Phase 16 warning-rule guidance layer, and the Phase 17 reliability-aware framework synthesis.
 
 
 ## Adaptive Candidate and Margin-Aware Refinement
@@ -600,7 +629,7 @@ Recommended next work:
 - consider calibrated uncertainty only if calibration data and evaluation design are added
 - keep `boundary_weight = 1.5` only as a conservative rollback setting
 - avoid new boundary-weight sweeps unless a new diagnosis clearly justifies them
-- keep using the Phase 12/13/14/15 reliability, failure-case, confidence-proxy, and screening findings to define where the current model is reliable and where caution is required
+- keep using the Phase 12/13/14/15/16/17 reliability, failure-case, confidence-proxy, screening, warning-rule, and synthesis findings to define where the current model is reliable and where caution is required
 
 ## License
 

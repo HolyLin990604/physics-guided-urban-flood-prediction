@@ -15,6 +15,7 @@ The repository should currently be interpreted as follows:
 - Phase 14 completed the first-pass proxy-based uncertainty/confidence diagnosis.
 - Phase 15 completed the first implementation of reliability screening and risk mapping.
 - Phase 16 completed the first implementation of reliability-aware warning rules and applicability boundary guidance.
+- Phase 17 completed the reliability-aware warning framework synthesis across Phase 12 through Phase 16.
 
 The current Phase 10 conclusion is that boundary-band weighted wet/dry consistency refinement has passed test-facing confirmation on the three key project seeds: `seed123`, `seed42`, and `seed202`.
 
@@ -37,9 +38,13 @@ The current Phase 16 conclusion is that the Phase 15 deterministic reliability-s
 
 Phase 16 warning labels are deterministic operational interpretation labels. They are not calibrated probabilities, Bayesian uncertainty estimates, formal confidence intervals, or a substitute for a formal calibration design.
 
-The current project position after Phase 16 is rapid prediction with reliability screening, spatial risk mapping, and deterministic warning-rule guidance. Calibration should only be introduced through a separate calibration design, and the current Phase 10 setting remains fixed unless new evidence justifies changing it.
+The current Phase 17 conclusion is that Phase 12 through Phase 16 now form a coherent reliability-aware warning framework narrative: Phase 12 diagnoses reliability and applicability boundaries, Phase 13 visualizes representative repeated failure modes, Phase 14 evaluates confidence and disagreement proxies, Phase 15 converts the evidence into deterministic reliability screening and spatial risk mapping, and Phase 16 translates those labels into warning-rule and applicability-boundary guidance.
 
-No retraining, architecture change, Phase 10 loss change, `boundary_band_pixels` tuning, `boundary_weight` tuning, or additional Phase 10 boundary-weight sweep was performed.
+Phase 17 is a synthesis/documentation phase rather than a new experiment. It is intended to support manuscript writing, README narrative, and project positioning. It should not be read as calibrated uncertainty or universal generalization beyond the tested evidence.
+
+The current project position after Phase 17 is rapid flood prediction with reliability diagnosis, failure-mode interpretation, confidence proxy diagnostics, spatial risk mapping, and deterministic warning-rule guidance. Calibration should only be introduced through a separate calibration design, and the current Phase 10 setting remains fixed unless new evidence justifies changing it.
+
+No retraining, architecture change, Phase 10 loss change, `boundary_band_pixels` tuning, `boundary_weight` tuning, or additional Phase 10 boundary-weight sweep was performed. The current recommended Phase 10 setting remains `boundary_band_pixels = 1` and `boundary_weight = 2.0`.
 
 ## Meaning Of Each Reference
 
@@ -199,6 +204,22 @@ The first-pass Phase 16 findings indicate:
 - warning labels are deterministic operational interpretation labels, not calibrated probabilities, Bayesian uncertainty, or formal confidence intervals
 - no retraining, tuning, architecture change, Phase 10 loss change, or new sweep was performed
 
+### Reliability-aware warning framework synthesis
+
+Phase 17 synthesizes Phase 12 through Phase 16 into a coherent reliability-aware flood-warning framework narrative.
+
+Generated Phase 17 output:
+
+- `docs/phase17_reliability_warning_framework_synthesis.md`
+
+The Phase 17 synthesis indicates:
+
+- the project has evolved from rapid flood-depth prediction to rapid prediction plus reliability diagnosis, failure-mode interpretation, confidence proxy diagnostics, spatial risk mapping, and warning-rule guidance
+- Phase 17 does not introduce a new experiment, retrain models, modify architecture, modify the Phase 10 loss, tune `boundary_weight` or `boundary_band_pixels`, or open a new sweep
+- the current recommended Phase 10 setting remains `boundary_band_pixels = 1` and `boundary_weight = 2.0`
+- the synthesis supports manuscript writing, README narrative, and project positioning
+- the framework remains deterministic and evidence-based; it does not claim calibrated uncertainty or universal generalization
+
 ## Practical Reading Guide
 
 When reading the repository:
@@ -214,6 +235,7 @@ When reading the repository:
 - read Phase 14 as a proxy-based confidence and disagreement diagnosis, not as calibrated probabilistic uncertainty
 - read Phase 15 as the first implementation of deterministic reliability screening and spatial risk mapping
 - read Phase 16 as the first implementation of deterministic warning-rule guidance and applicability boundary interpretation
+- read Phase 17 as the synthesis of Phase 12-16 into a reliability-aware warning framework narrative
 
 ## Key Documents
 
@@ -233,4 +255,5 @@ When reading the repository:
 - `docs/phase15_reliability_screening_risk_mapping_findings.md`
 - `docs/phase16_reliability_warning_applicability_plan.md`
 - `docs/phase16_reliability_warning_applicability_findings.md`
+- `docs/phase17_reliability_warning_framework_synthesis.md`
 - `docs/experiment_index.md`
