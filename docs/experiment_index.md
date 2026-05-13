@@ -15,6 +15,7 @@
 - Phase 18 manuscript-oriented reliability-aware warning layer: writing synthesis converting Phase 12-17 into manuscript-ready material
 - Phase 19 manuscript structure and paper-ready consolidation: manuscript-structure and submission-consolidation planning based on Phase 12-18
 - Phase 20 manuscript draft assembly: first full manuscript draft skeleton assembled from Phase 18-19 materials
+- Phase 21 manuscript evidence and figure/table alignment: claim-to-evidence and figure/table planning based on existing outputs and findings
 
 ## Phase 6
 
@@ -180,6 +181,16 @@
 - Model status: no retraining, architecture modification, Phase 10 loss modification, `boundary_band_pixels` tuning, `boundary_weight` tuning, new sweep, or new result generation was performed
 - Current recommended Phase 10 setting: `boundary_band_pixels = 1`, `boundary_weight = 2.0`
 
+## Phase 21
+
+- Plan: `docs/phase21_manuscript_evidence_figure_alignment_plan.md`
+- Evidence alignment: `docs/manuscript_evidence_figure_table_alignment.md`
+- Status: manuscript evidence and figure/table alignment complete
+- Core result: Phase 21 aligns manuscript claims with existing evidence sources, figures, tables, JSON/CSV outputs, and findings documents before full manuscript expansion
+- Decision: Phase 21 is an evidence-alignment and figure/table planning phase, not a new experiment phase
+- Model status: no retraining, architecture modification, Phase 10 loss modification, `boundary_band_pixels` tuning, `boundary_weight` tuning, new sweep, new result generation, or new uncertainty claim was performed
+- Current recommended Phase 10 setting: `boundary_band_pixels = 1`, `boundary_weight = 2.0`
+
 ## Interpretation Order
 
 For current repository interpretation, read the experiment trail in this order:
@@ -199,11 +210,12 @@ For current repository interpretation, read the experiment trail in this order:
 13. `docs/manuscript_reliability_aware_warning_layer.md`
 14. `docs/manuscript_structure_and_submission_consolidation.md`
 15. `docs/manuscript_draft_reliability_aware_urban_flood_warning.md`
-16. `docs/project_status.md`
+16. `docs/manuscript_evidence_figure_table_alignment.md`
+17. `docs/project_status.md`
 
 ## Next Stage
 
-The next stage should build on the Phase 12 to Phase 20 reliability/applicability, screening, warning-rule, synthesis, manuscript-writing, manuscript-consolidation, and manuscript-draft evidence rather than reopening Phase 10 tuning.
+The next stage should build on the Phase 12 to Phase 21 reliability/applicability, screening, warning-rule, synthesis, manuscript-writing, manuscript-consolidation, manuscript-draft, and evidence-alignment materials rather than reopening Phase 10 tuning.
 
 Recommended next work:
 

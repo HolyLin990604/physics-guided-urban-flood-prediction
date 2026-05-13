@@ -19,6 +19,7 @@ The repository should currently be interpreted as follows:
 - Phase 18 completed the manuscript-oriented reliability-aware warning layer writing phase, with the first manuscript note completed.
 - Phase 19 completed manuscript-structure and submission consolidation, with a paper-ready manuscript outline and submission-oriented planning document created.
 - Phase 20 completed manuscript draft assembly, with the first full manuscript draft skeleton created.
+- Phase 21 completed manuscript evidence and figure/table alignment, with a claim-to-evidence alignment document created.
 
 The current Phase 10 conclusion is that boundary-band weighted wet/dry consistency refinement has passed test-facing confirmation on the three key project seeds: `seed123`, `seed42`, and `seed202`.
 
@@ -49,9 +50,11 @@ The current Phase 19 conclusion is that the completed Phase 12 through Phase 18 
 
 The current Phase 20 conclusion is that the Phase 18 and Phase 19 manuscript-oriented materials have been assembled into the first full manuscript draft skeleton: `docs/manuscript_draft_reliability_aware_urban_flood_warning.md`. Phase 20 is manuscript draft assembly, not a new experiment phase.
 
-The current project position after Phase 20 is rapid flood prediction with reliability diagnosis, failure-mode interpretation, confidence proxy diagnostics, spatial risk mapping, deterministic warning-rule guidance, manuscript-ready warning-layer synthesis, paper-ready manuscript/submission consolidation, and a first full manuscript draft skeleton. Calibration should only be introduced through a separate calibration design, and the current Phase 10 setting remains fixed unless new evidence justifies changing it.
+The current Phase 21 conclusion is that manuscript claims have been aligned with existing evidence sources, figures, tables, JSON/CSV outputs, and findings documents before full manuscript expansion. The claim-to-evidence and figure/table alignment document has been created: `docs/manuscript_evidence_figure_table_alignment.md`. Phase 21 is evidence alignment and figure/table planning, not a new experiment phase.
 
-No retraining, architecture modification, Phase 10 loss modification, `boundary_band_pixels` tuning, `boundary_weight` tuning, additional Phase 10 boundary-weight sweep, new sweep, or new result generation was performed. The current recommended Phase 10 setting remains `boundary_band_pixels = 1` and `boundary_weight = 2.0`.
+The current project position after Phase 21 is rapid flood prediction with reliability diagnosis, failure-mode interpretation, confidence proxy diagnostics, spatial risk mapping, deterministic warning-rule guidance, manuscript-ready warning-layer synthesis, paper-ready manuscript/submission consolidation, a first full manuscript draft skeleton, and claim-to-evidence/figure-table alignment. Calibration should only be introduced through a separate calibration design, and the current Phase 10 setting remains fixed unless new evidence justifies changing it.
+
+No retraining, architecture modification, Phase 10 loss modification, `boundary_band_pixels` tuning, `boundary_weight` tuning, additional Phase 10 boundary-weight sweep, new sweep, new result generation, or new uncertainty claim was performed. The current recommended Phase 10 setting remains `boundary_band_pixels = 1` and `boundary_weight = 2.0`.
 
 ## Meaning Of Each Reference
 
@@ -276,6 +279,22 @@ The Phase 20 assembly indicates:
 - no retraining, architecture modification, Phase 10 loss modification, `boundary_weight` tuning, `boundary_band_pixels` tuning, new sweep, or new result generation was performed
 - the current recommended Phase 10 setting remains `boundary_band_pixels = 1` and `boundary_weight = 2.0`
 
+### Manuscript evidence and figure/table alignment
+
+Phase 21 aligns manuscript claims with existing evidence sources, figures, tables, JSON/CSV outputs, and findings documents before full manuscript expansion.
+
+Generated Phase 21 deliverables:
+
+- `docs/phase21_manuscript_evidence_figure_alignment_plan.md`
+- `docs/manuscript_evidence_figure_table_alignment.md`
+
+The Phase 21 alignment indicates:
+
+- the claim-to-evidence and figure/table alignment document has been created
+- Phase 21 is evidence alignment and figure/table planning, not a new experiment phase
+- no retraining, architecture modification, Phase 10 loss modification, `boundary_weight` tuning, `boundary_band_pixels` tuning, new sweep, new result generation, or new uncertainty claim was performed
+- the current recommended Phase 10 setting remains `boundary_band_pixels = 1` and `boundary_weight = 2.0`
+
 ## Practical Reading Guide
 
 When reading the repository:
@@ -295,6 +314,7 @@ When reading the repository:
 - read Phase 18 as manuscript-oriented writing material derived from the Phase 12-17 reliability-aware warning framework
 - read Phase 19 as manuscript-structure and submission consolidation derived from the completed Phase 12-18 materials
 - read Phase 20 as the first full manuscript draft skeleton assembled from the Phase 18-19 manuscript-oriented materials
+- read Phase 21 as claim-to-evidence and figure/table alignment for manuscript expansion, not as a new experiment
 
 ## Key Documents
 
@@ -321,4 +341,6 @@ When reading the repository:
 - `docs/manuscript_structure_and_submission_consolidation.md`
 - `docs/phase20_manuscript_draft_assembly_plan.md`
 - `docs/manuscript_draft_reliability_aware_urban_flood_warning.md`
+- `docs/phase21_manuscript_evidence_figure_alignment_plan.md`
+- `docs/manuscript_evidence_figure_table_alignment.md`
 - `docs/experiment_index.md`
