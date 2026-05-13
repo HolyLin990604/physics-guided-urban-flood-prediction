@@ -21,6 +21,7 @@ The repository should currently be interpreted as follows:
 - Phase 20 completed manuscript draft assembly, with the first full manuscript draft skeleton created.
 - Phase 21 completed manuscript evidence and figure/table alignment, with a claim-to-evidence alignment document created.
 - Phase 22 completed manuscript full draft expansion, with a fuller academic manuscript draft created from the Phase 20 skeleton and Phase 21 evidence alignment.
+- Phase 23 completed the reliability-aware warning case-study and application prototype.
 
 The current Phase 10 conclusion is that boundary-band weighted wet/dry consistency refinement has passed test-facing confirmation on the three key project seeds: `seed123`, `seed42`, and `seed202`.
 
@@ -55,9 +56,11 @@ The current Phase 21 conclusion is that manuscript claims have been aligned with
 
 The current Phase 22 conclusion is that the Phase 20 manuscript skeleton has been expanded into a fuller academic manuscript draft using the Phase 21 evidence-alignment document. The full manuscript draft expansion has been created: `docs/manuscript_full_draft_reliability_aware_urban_flood_warning.md`. Phase 22 is manuscript full-draft expansion, not a new experiment phase.
 
-The current project position after Phase 22 is rapid flood prediction with reliability diagnosis, failure-mode interpretation, confidence proxy diagnostics, spatial risk mapping, deterministic warning-rule guidance, manuscript-ready warning-layer synthesis, paper-ready manuscript/submission consolidation, a first full manuscript draft skeleton, claim-to-evidence/figure-table alignment, and a fuller academic manuscript draft. Calibration should only be introduced through a separate calibration design, and the current Phase 10 setting remains fixed unless new evidence justifies changing it.
+The current Phase 23 conclusion is that the completed reliability-aware warning framework has been converted into a representative case-study prototype. Phase 23 integrates Phase 15 reliability screening, Phase 16 warning rules, and existing Phase 10 forecast map arrays for one `reliable`, one `caution`, and one `high-risk` case. The selected cases are `location1|r100y_p0.5_d3h|6`, `location2|r300y_p0.6_d3h|6`, and `location2|r300y_p0.8_d3h|0`.
 
-No retraining, architecture modification, Phase 10 loss modification, `boundary_band_pixels` tuning, `boundary_weight` tuning, additional Phase 10 boundary-weight sweep, new sweep, new result generation, invented references, unsupported claims, or new uncertainty claim was performed. The current recommended Phase 10 setting remains `boundary_band_pixels = 1` and `boundary_weight = 2.0`.
+The current project position after Phase 23 is rapid flood prediction with reliability diagnosis, failure-mode interpretation, confidence proxy diagnostics, spatial risk mapping, deterministic warning-rule guidance, manuscript-ready synthesis, manuscript drafting, and representative case-specific warning interpretation. Calibration should only be introduced through a separate calibration design, and the current Phase 10 setting remains fixed unless new evidence justifies changing it.
+
+No retraining, architecture modification, Phase 10 loss modification, `boundary_band_pixels` tuning, `boundary_weight` tuning, additional Phase 10 boundary-weight sweep, new sweep, new prediction generation, metric-chasing experiment, invented references, unsupported claims, or new uncertainty claim was performed. The current recommended Phase 10 setting remains `boundary_band_pixels = 1` and `boundary_weight = 2.0`.
 
 ## Meaning Of Each Reference
 
@@ -314,6 +317,28 @@ The Phase 22 expansion indicates:
 - no retraining, architecture modification, Phase 10 loss modification, `boundary_weight` tuning, `boundary_band_pixels` tuning, new sweep, new result generation, invented references, unsupported claims, or new uncertainty claim was performed
 - the current recommended Phase 10 setting remains `boundary_band_pixels = 1` and `boundary_weight = 2.0`
 
+### Reliability-aware warning case study and application prototype
+
+Phase 23 converts the completed reliability-aware warning framework into a representative application prototype by integrating Phase 15 reliability screening, Phase 16 warning rules, and existing Phase 10 forecast map arrays.
+
+Generated Phase 23 outputs include:
+
+- `docs/phase23_reliability_warning_case_study_plan.md`
+- `scripts/build_phase23_warning_case_study.py`
+- `analysis/phase23_warning_case_study/summary.json`
+- `analysis/phase23_warning_case_study/selected_cases.csv`
+- `analysis/phase23_warning_case_study/case_warning_report.md`
+- `analysis/phase23_warning_case_study/figures/`
+- `docs/phase23_reliability_warning_case_study_findings.md`
+
+The Phase 23 prototype indicates:
+
+- selected cases: `location1|r100y_p0.5_d3h|6`, `location2|r300y_p0.6_d3h|6`, and `location2|r300y_p0.8_d3h|0`
+- the framework now supports rapid prediction, reliability screening, scenario-level warning classification, pixel-level risk visualization, case-specific warning explanation, and applicability-boundary interpretation
+- Phase 23 is an application-prototype phase, not a model-tuning phase
+- no retraining, architecture modification, Phase 10 loss modification, `boundary_weight` tuning, `boundary_band_pixels` tuning, new sweep, new prediction generation, or metric-chasing experiment was performed
+- the current recommended Phase 10 setting remains `boundary_band_pixels = 1` and `boundary_weight = 2.0`
+
 ## Practical Reading Guide
 
 When reading the repository:
@@ -335,6 +360,7 @@ When reading the repository:
 - read Phase 20 as the first full manuscript draft skeleton assembled from the Phase 18-19 manuscript-oriented materials
 - read Phase 21 as claim-to-evidence and figure/table alignment for manuscript expansion, not as a new experiment
 - read Phase 22 as the full academic manuscript draft expansion based on Phase 20 and Phase 21, not as a new experiment
+- read Phase 23 as a representative warning-oriented case-study prototype, not as retraining, tuning, or new prediction generation
 
 ## Key Documents
 
@@ -365,4 +391,6 @@ When reading the repository:
 - `docs/manuscript_evidence_figure_table_alignment.md`
 - `docs/phase22_manuscript_full_draft_expansion_plan.md`
 - `docs/manuscript_full_draft_reliability_aware_urban_flood_warning.md`
+- `docs/phase23_reliability_warning_case_study_plan.md`
+- `docs/phase23_reliability_warning_case_study_findings.md`
 - `docs/experiment_index.md`

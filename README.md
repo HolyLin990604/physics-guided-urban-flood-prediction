@@ -46,6 +46,7 @@ flowchart LR
     Q --> R[Phase 20<br/>Manuscript draft assembly]
     R --> S[Phase 21<br/>Evidence and figure/table alignment]
     S --> T[Phase 22<br/>Full manuscript draft expansion]
+    T --> U[Phase 23<br/>Reliability-aware warning case study]
 
     A --> A1[Best-balanced mainline]
     B --> B1[Freer selector<br/>not enough]
@@ -67,6 +68,7 @@ flowchart LR
     R --> R1[First full manuscript draft skeleton<br/>based on Phase 18-19]
     S --> S1[Claim-to-evidence alignment<br/>using existing outputs and figures]
     T --> T1[Full academic draft expansion<br/>based on Phase 20-21]
+    U --> U1[Representative warning prototype<br/>using Phase 15, Phase 16, and Phase 10 map arrays]
 ```
 
 
@@ -161,6 +163,8 @@ Phase 20 assembles the Phase 18 and Phase 19 manuscript-oriented materials into 
 Phase 21 aligns manuscript claims with existing evidence sources, figures, tables, JSON/CSV outputs, and findings documents before full manuscript expansion. It is not a new experiment phase and does not involve retraining, architecture modification, Phase 10 loss modification, boundary-parameter tuning, a new sweep, new result generation, or a new uncertainty claim. See `docs/manuscript_evidence_figure_table_alignment.md`.
 
 Phase 22 expands the Phase 20 manuscript skeleton into a fuller academic manuscript draft using the Phase 21 evidence-alignment document. It is not a new experiment phase and does not involve retraining, architecture modification, Phase 10 loss modification, boundary-parameter tuning, a new sweep, new result generation, invented references, or unsupported claims. See `docs/manuscript_full_draft_reliability_aware_urban_flood_warning.md`.
+
+Phase 23 converts the completed reliability-aware warning framework into a representative case-study prototype. It integrates Phase 15 reliability screening, Phase 16 warning rules, and existing Phase 10 forecast map arrays to support case-specific warning interpretation. It does not involve retraining, architecture modification, Phase 10 loss modification, boundary-parameter tuning, a new sweep, metric chasing, or new prediction generation. See `docs/phase23_reliability_warning_case_study_findings.md`.
 
 
 ## Phase 12 Reliability Diagnostics
@@ -310,9 +314,21 @@ Phase 21 is an evidence-alignment phase, not a new experiment phase. It maps man
 
 Phase 22 is a manuscript full-draft expansion phase, not a new experiment phase. It expands the Phase 20 manuscript skeleton into a fuller academic draft using the Phase 21 evidence-alignment document. See `docs/manuscript_full_draft_reliability_aware_urban_flood_warning.md`.
 
+## Phase 23 Reliability-Aware Warning Case Study and Application Prototype
+
+Phase 23 is an application-prototype phase, not a model-tuning phase. It converts the Phase 15 reliability screening, Phase 16 warning rules, and existing Phase 10 forecast map arrays into a representative warning-oriented case study covering one `reliable`, one `caution`, and one `high-risk` case.
+
+Selected cases:
+
+- `reliable`: `location1|r100y_p0.5_d3h|6`
+- `caution`: `location2|r300y_p0.6_d3h|6`
+- `high-risk`: `location2|r300y_p0.8_d3h|0`
+
+The prototype demonstrates that the framework has moved beyond pure flood-depth prediction toward rapid prediction, reliability screening, scenario-level warning classification, pixel-level risk visualization, case-specific warning explanation, and applicability-boundary interpretation. See `docs/phase23_reliability_warning_case_study_findings.md`.
+
 ## Historical Qualitative Examples
 
-The figures below are earlier-stage qualitative comparisons retained for visual reference. They are not the current primary evidence for the project state; the current project state is summarized above through Phase 22 manuscript full draft expansion.
+The figures below are earlier-stage qualitative comparisons retained for visual reference. They are not the current primary evidence for the project state; the current project state is summarized above through Phase 23 reliability-aware warning case-study prototyping.
 
 <details>
 <summary>Expand earlier-stage qualitative flood-map examples</summary>
@@ -369,7 +385,8 @@ flowchart TD
     M --> N[Stage XIV<br/>Manuscript draft assembly]
     N --> O[Stage XV<br/>Manuscript evidence alignment]
     O --> P[Stage XVI<br/>Manuscript full draft expansion]
-    P --> Q[Next stage<br/>Calibration design only if needed]
+    P --> Q[Stage XVII<br/>Warning case-study prototype]
+    Q --> R[Next stage<br/>Calibration design only if needed]
 
     A1[Phase 2-5<br/>- M3 f025 remains overall best-balanced mainline<br/>- Phase 3.3 af025 remains strongest static structured refinement] --> A
     B1[Phase 6-7<br/>- adapt025 closed as negative/neutral<br/>- adapt010 promoted as active adaptive candidate] --> B
@@ -387,7 +404,8 @@ flowchart TD
     N1[Phase 20<br/>- first full manuscript draft skeleton<br/>- based on Phase 18-19<br/>- no retraining or tuning] --> N
     O1[Phase 21<br/>- claim-to-evidence alignment<br/>- figure/table planning<br/>- no new experiment] --> O
     P1[Phase 22<br/>- full academic manuscript draft<br/>- based on Phase 20-21<br/>- no new experiment] --> P
-    Q1[Future focus<br/>- calibrated uncertainty only with calibration design<br/>- no Phase 10 tuning without new diagnosis] --> Q
+    Q1[Phase 23<br/>- representative warning case study<br/>- selected reliable / caution / high-risk cases<br/>- no retraining or new predictions] --> Q
+    R1[Future focus<br/>- calibrated uncertainty only with calibration design<br/>- no Phase 10 tuning without new diagnosis] --> R
 ```
 
 
@@ -419,6 +437,8 @@ For the current staged experiment record, see:
 - `docs/manuscript_draft_reliability_aware_urban_flood_warning.md`
 - `docs/manuscript_evidence_figure_table_alignment.md`
 - `docs/manuscript_full_draft_reliability_aware_urban_flood_warning.md`
+- `docs/phase23_reliability_warning_case_study_plan.md`
+- `docs/phase23_reliability_warning_case_study_findings.md`
 
 
 ## Dataset
@@ -567,6 +587,7 @@ python scripts/visualize_phase13_failure_cases.py
 python scripts/analyze_phase14_confidence.py
 python scripts/screen_phase15_reliability.py
 python scripts/build_phase16_warning_rules.py
+python scripts/build_phase23_warning_case_study.py
 ```
 
 Generated figures are organized under:
@@ -577,11 +598,12 @@ Generated figures are organized under:
 - `analysis/phase14_confidence/figures/` for confidence proxy diagnostics
 - `analysis/phase15_reliability_screening/figures/` for reliability-screening and risk-mapping outputs
 - `analysis/phase16_warning_rules/figures/` for reliability-aware warning-rule and applicability-boundary outputs
+- `analysis/phase23_warning_case_study/figures/` for representative warning case-study prototype outputs
 
 
 ## Current Project Status
 
-The repository has completed the main Phase 2-3 architecture comparison cycle, closed the Phase 6 `adapt025` pilot as negative/neutral, established Phase 7/8 `adapt010` as the active adaptive candidate before margin-aware refinement, completed Phase 9 interpretability diagnosis, completed the Phase 10 margin-aware refinement intervention, completed the Phase 12-16 reliability-aware warning layer, completed the Phase 17-20 manuscript synthesis, consolidation, and draft assembly, completed Phase 21 manuscript evidence and figure/table alignment, and completed Phase 22 manuscript full draft expansion.
+The repository has completed the main Phase 2-3 architecture comparison cycle, closed the Phase 6 `adapt025` pilot as negative/neutral, established Phase 7/8 `adapt010` as the active adaptive candidate before margin-aware refinement, completed Phase 9 interpretability diagnosis, completed the Phase 10 margin-aware refinement intervention, completed the Phase 12-16 reliability-aware warning layer, completed the Phase 17-22 manuscript synthesis and drafting sequence, and completed the Phase 23 reliability-aware warning case-study prototype.
 
 Current project-level conclusions:
 
@@ -622,8 +644,12 @@ Current project-level conclusions:
 - **Phase 21 is evidence alignment only: no retraining, architecture change, Phase 10 loss change, boundary-parameter tuning, new sweep, new result generation, or new uncertainty claim**
 - **Phase 22 has produced a fuller academic manuscript draft from the Phase 20 skeleton and Phase 21 evidence alignment**
 - **Phase 22 is manuscript full-draft expansion only: no retraining, architecture change, Phase 10 loss change, boundary-parameter tuning, new sweep, new result generation, invented references, or unsupported claims**
+- **Phase 23 has produced a representative reliability-aware warning case-study prototype**
+- **Phase 23 selected one `reliable`, one `caution`, and one `high-risk` case for warning-oriented interpretation**
+- **Phase 23 demonstrates rapid prediction, reliability screening, scenario-level warning classification, pixel-level risk visualization, case-specific warning explanation, and applicability-boundary interpretation**
+- **Phase 23 is an application-prototype phase only: no retraining, architecture change, Phase 10 loss change, boundary-parameter tuning, new sweep, metric-chasing experiment, or new prediction generation**
 
-At this stage, the project has moved from broad model tuning to rapid flood prediction with reliability diagnosis, failure-mode interpretation, confidence proxy diagnostics, spatial risk mapping, warning-rule guidance, a first full manuscript draft skeleton, claim-to-evidence/figure-table alignment, and a fuller academic manuscript draft. No broader Phase 10 boundary-weight sweep is justified.
+At this stage, the project has moved from broad model tuning to rapid flood prediction with reliability diagnosis, failure-mode interpretation, confidence proxy diagnostics, spatial risk mapping, warning-rule guidance, manuscript drafting, and a representative warning-oriented case-study prototype. No broader Phase 10 boundary-weight sweep is justified.
 
 ## Representative Case Framing
 
@@ -633,7 +659,7 @@ Three representative cases continue to be useful for targeted comparison:
 - `seed202`: difficult-case reference where stronger structured refinement can show useful gains
 - `seed123`: repeatability reference for checking whether candidate behavior generalizes beyond the two anchor cases
 
-This framing motivated the Phase 6 Pilot A test, the Phase 7 conservative `adapt010` follow-up, the Phase 9 diagnosis, the Phase 10 margin-aware boundary-band refinement, the Phase 12 reliability/applicability diagnosis, the Phase 13 representative failure-case visual summary, the Phase 14 confidence proxy diagnosis, the Phase 15 reliability-screening layer, the Phase 16 warning-rule guidance layer, the Phase 17 reliability-aware framework synthesis, the Phase 19 manuscript-structure consolidation, the Phase 20 manuscript draft assembly, the Phase 21 manuscript evidence alignment, and the Phase 22 manuscript full draft expansion.
+This framing motivated the Phase 6 Pilot A test, the Phase 7 conservative `adapt010` follow-up, the Phase 9 diagnosis, the Phase 10 margin-aware boundary-band refinement, the Phase 12 reliability/applicability diagnosis, the Phase 13 representative failure-case visual summary, the Phase 14 confidence proxy diagnosis, the Phase 15 reliability-screening layer, the Phase 16 warning-rule guidance layer, the Phase 17 reliability-aware framework synthesis, the Phase 19 manuscript-structure consolidation, the Phase 20 manuscript draft assembly, the Phase 21 manuscript evidence alignment, the Phase 22 manuscript full draft expansion, and the Phase 23 warning case-study prototype.
 
 
 ## Adaptive Candidate and Margin-Aware Refinement
@@ -694,7 +720,7 @@ Recommended next work:
 - consider calibrated uncertainty only if calibration data and evaluation design are added
 - keep `boundary_weight = 1.5` only as a conservative rollback setting
 - avoid new boundary-weight sweeps unless a new diagnosis clearly justifies them
-- keep using the Phase 12/13/14/15/16/17 reliability, failure-case, confidence-proxy, screening, warning-rule, and synthesis findings, plus the Phase 18 manuscript note, Phase 19 manuscript-structure consolidation, Phase 20 manuscript draft skeleton, Phase 21 evidence alignment, and Phase 22 full manuscript draft expansion, to define where the current model is reliable and where caution is required
+- keep using the Phase 12/13/14/15/16/17 reliability, failure-case, confidence-proxy, screening, warning-rule, and synthesis findings, plus the Phase 18-22 manuscript materials and the Phase 23 warning case-study prototype, to define where the current model is reliable and where caution is required
 
 ## License
 

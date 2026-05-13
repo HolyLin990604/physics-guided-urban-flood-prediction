@@ -17,6 +17,7 @@
 - Phase 20 manuscript draft assembly: first full manuscript draft skeleton assembled from Phase 18-19 materials
 - Phase 21 manuscript evidence and figure/table alignment: claim-to-evidence and figure/table planning based on existing outputs and findings
 - Phase 22 manuscript full draft expansion: fuller academic manuscript draft expanded from the Phase 20 skeleton using Phase 21 evidence alignment
+- Phase 23 reliability-aware warning case study and application prototype: representative warning-oriented interpretation using Phase 15 screening, Phase 16 rules, and existing Phase 10 forecast map arrays
 
 ## Phase 6
 
@@ -202,6 +203,28 @@
 - Model status: no retraining, architecture modification, Phase 10 loss modification, `boundary_band_pixels` tuning, `boundary_weight` tuning, new sweep, new result generation, invented references, unsupported claims, or new uncertainty claim was performed
 - Current recommended Phase 10 setting: `boundary_band_pixels = 1`, `boundary_weight = 2.0`
 
+## Phase 23
+
+- Plan: `docs/phase23_reliability_warning_case_study_plan.md`
+- Script: `scripts/build_phase23_warning_case_study.py`
+- Findings: `docs/phase23_reliability_warning_case_study_findings.md`
+- Outputs: `analysis/phase23_warning_case_study/`
+- Summary output: `analysis/phase23_warning_case_study/summary.json`
+- Selected cases: `analysis/phase23_warning_case_study/selected_cases.csv`
+- Case report: `analysis/phase23_warning_case_study/case_warning_report.md`
+- Figures:
+  - `analysis/phase23_warning_case_study/figures/case_warning_level_overview.png`
+  - `analysis/phase23_warning_case_study/figures/case_risk_component_comparison.png`
+  - `analysis/phase23_warning_case_study/figures/reliable_case_maps.png`
+  - `analysis/phase23_warning_case_study/figures/caution_case_maps.png`
+  - `analysis/phase23_warning_case_study/figures/high_risk_case_maps.png`
+- Status: reliability-aware warning case-study and application prototype complete
+- Selected case IDs: `location1|r100y_p0.5_d3h|6`, `location2|r300y_p0.6_d3h|6`, and `location2|r300y_p0.8_d3h|0`
+- Core result: Phase 23 demonstrates warning-oriented interpretation with rapid prediction, reliability screening, scenario-level warning classification, pixel-level risk visualization, case-specific warning explanation, and applicability-boundary interpretation
+- Decision: Phase 23 is an application-prototype phase, not a model-tuning or metric-chasing experiment
+- Model status: no retraining, architecture modification, Phase 10 loss modification, `boundary_band_pixels` tuning, `boundary_weight` tuning, new sweep, or new prediction generation was performed
+- Current recommended Phase 10 setting: `boundary_band_pixels = 1`, `boundary_weight = 2.0`
+
 ## Interpretation Order
 
 For current repository interpretation, read the experiment trail in this order:
@@ -223,11 +246,12 @@ For current repository interpretation, read the experiment trail in this order:
 15. `docs/manuscript_draft_reliability_aware_urban_flood_warning.md`
 16. `docs/manuscript_evidence_figure_table_alignment.md`
 17. `docs/manuscript_full_draft_reliability_aware_urban_flood_warning.md`
-18. `docs/project_status.md`
+18. `docs/phase23_reliability_warning_case_study_findings.md`
+19. `docs/project_status.md`
 
 ## Next Stage
 
-The next stage should build on the Phase 12 to Phase 22 reliability/applicability, screening, warning-rule, synthesis, manuscript-writing, manuscript-consolidation, manuscript-draft, evidence-alignment, and full-draft expansion materials rather than reopening Phase 10 tuning.
+The next stage should build on the Phase 12 to Phase 23 reliability/applicability, screening, warning-rule, synthesis, manuscript-writing, manuscript-consolidation, manuscript-draft, evidence-alignment, full-draft expansion, and warning case-study prototype materials rather than reopening Phase 10 tuning.
 
 Recommended next work:
 
