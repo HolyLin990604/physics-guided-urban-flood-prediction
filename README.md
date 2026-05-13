@@ -43,6 +43,7 @@ flowchart LR
     N --> O[Phase 17<br/>Reliability-aware framework synthesis]
     O --> P[Phase 18<br/>Manuscript warning-layer writing]
     P --> Q[Phase 19<br/>Manuscript structure consolidation]
+    Q --> R[Phase 20<br/>Manuscript draft assembly]
 
     A --> A1[Best-balanced mainline]
     B --> B1[Freer selector<br/>not enough]
@@ -61,6 +62,7 @@ flowchart LR
     O --> O1[Phase 12-16 synthesized<br/>manuscript and positioning narrative]
     P --> P1[Manuscript-ready warning-layer section<br/>based on Phase 12-17]
     Q --> Q1[Paper-ready outline and submission planning<br/>based on Phase 12-18]
+    R --> R1[First full manuscript draft skeleton<br/>based on Phase 18-19]
 ```
 
 
@@ -149,6 +151,8 @@ This synthesis is intended to support manuscript writing, README narrative, and 
 Phase 18 prepares manuscript-ready material for the section "Reliability-Aware Warning Layer for Urban Flood Surrogate Prediction" using the completed Phase 12-17 reliability-aware warning framework. It is a writing/synthesis phase only: no retraining, architecture modification, Phase 10 loss change, `boundary_weight` or `boundary_band_pixels` tuning, or new sweep was performed. See `docs/manuscript_reliability_aware_warning_layer.md`.
 
 Phase 19 prepares a paper-ready manuscript structure and submission-consolidation plan from the completed Phase 12-18 materials. It is not a new experiment phase and does not involve retraining, architecture modification, Phase 10 loss modification, boundary-parameter tuning, a new sweep, or new result generation. See `docs/manuscript_structure_and_submission_consolidation.md`.
+
+Phase 20 assembles the Phase 18 and Phase 19 manuscript-oriented materials into the first full manuscript draft skeleton. It is not a new experiment phase and does not involve retraining, architecture modification, Phase 10 loss modification, boundary-parameter tuning, a new sweep, or new result generation. See `docs/manuscript_draft_reliability_aware_urban_flood_warning.md`.
 
 
 ## Phase 12 Reliability Diagnostics
@@ -286,9 +290,13 @@ Phase 18 is a manuscript-writing and synthesis phase, not a new experiment phase
 
 Phase 19 is a manuscript-structure and submission-consolidation phase, not a new experiment phase. It converts the completed Phase 12-18 reliability-aware warning framework and manuscript notes into a paper-ready outline and submission-oriented planning document covering positioning, candidate titles, abstract logic, section structure, figure/table inventory, contribution statements, limitations, submission positioning, and immediate writing tasks. See `docs/manuscript_structure_and_submission_consolidation.md`.
 
+## Phase 20 Manuscript Draft Assembly
+
+Phase 20 is a manuscript draft assembly phase, not a new experiment phase. It assembles the Phase 18 and Phase 19 manuscript-oriented materials into the first full draft skeleton for "Reliability-Aware Urban Flood Warning." See `docs/manuscript_draft_reliability_aware_urban_flood_warning.md`.
+
 ## Historical Qualitative Examples
 
-The figures below are earlier-stage qualitative comparisons retained for visual reference. They are not the current primary evidence for the project state; the current project state is summarized above through Phase 17 reliability-aware framework synthesis.
+The figures below are earlier-stage qualitative comparisons retained for visual reference. They are not the current primary evidence for the project state; the current project state is summarized above through Phase 20 manuscript draft assembly.
 
 <details>
 <summary>Expand earlier-stage qualitative flood-map examples</summary>
@@ -342,7 +350,8 @@ flowchart TD
     J --> K[Stage XI<br/>Reliability-aware warning framework synthesis]
     K --> L[Stage XII<br/>Manuscript warning-layer writing]
     L --> M[Stage XIII<br/>Manuscript structure consolidation]
-    M --> N[Next stage<br/>Calibration design only if needed]
+    M --> N[Stage XIV<br/>Manuscript draft assembly]
+    N --> O[Next stage<br/>Calibration design only if needed]
 
     A1[Phase 2-5<br/>- M3 f025 remains overall best-balanced mainline<br/>- Phase 3.3 af025 remains strongest static structured refinement] --> A
     B1[Phase 6-7<br/>- adapt025 closed as negative/neutral<br/>- adapt010 promoted as active adaptive candidate] --> B
@@ -357,7 +366,8 @@ flowchart TD
     K1[Phase 17<br/>- Phase 12-16 synthesis<br/>- manuscript and positioning support<br/>- no retraining or tuning] --> K
     L1[Phase 18<br/>- manuscript-ready warning-layer material<br/>- based on Phase 12-17<br/>- no retraining or tuning] --> L
     M1[Phase 19<br/>- paper-ready manuscript outline<br/>- submission consolidation<br/>- no retraining or tuning] --> M
-    N1[Future focus<br/>- calibrated uncertainty only with calibration design<br/>- no Phase 10 tuning without new diagnosis] --> N
+    N1[Phase 20<br/>- first full manuscript draft skeleton<br/>- based on Phase 18-19<br/>- no retraining or tuning] --> N
+    O1[Future focus<br/>- calibrated uncertainty only with calibration design<br/>- no Phase 10 tuning without new diagnosis] --> O
 ```
 
 
@@ -386,6 +396,7 @@ For the current staged experiment record, see:
 - `docs/phase17_reliability_warning_framework_synthesis.md`
 - `docs/manuscript_reliability_aware_warning_layer.md`
 - `docs/manuscript_structure_and_submission_consolidation.md`
+- `docs/manuscript_draft_reliability_aware_urban_flood_warning.md`
 
 
 ## Dataset
@@ -548,7 +559,7 @@ Generated figures are organized under:
 
 ## Current Project Status
 
-The repository has completed the main Phase 2-3 architecture comparison cycle, closed the Phase 6 `adapt025` pilot as negative/neutral, established Phase 7/8 `adapt010` as the active adaptive candidate before margin-aware refinement, completed Phase 9 interpretability diagnosis, completed the Phase 10 margin-aware refinement intervention, completed the first-pass Phase 12 reliability/applicability diagnosis, completed the first-pass Phase 13 representative failure-case visual summary, completed the first-pass Phase 14 proxy-based confidence diagnosis, completed the first implementation of Phase 15 reliability screening and risk mapping, completed the first implementation of Phase 16 reliability-aware warning rules and applicability boundary guidance, completed the Phase 17 reliability-aware warning framework synthesis, completed Phase 18 manuscript-oriented warning-layer writing, and completed Phase 19 manuscript-structure and submission consolidation.
+The repository has completed the main Phase 2-3 architecture comparison cycle, closed the Phase 6 `adapt025` pilot as negative/neutral, established Phase 7/8 `adapt010` as the active adaptive candidate before margin-aware refinement, completed Phase 9 interpretability diagnosis, completed the Phase 10 margin-aware refinement intervention, completed the Phase 12-16 reliability-aware warning layer, completed the Phase 17-19 manuscript synthesis and structure consolidation, and completed Phase 20 manuscript draft assembly.
 
 Current project-level conclusions:
 
@@ -583,8 +594,10 @@ Current project-level conclusions:
 - **Phase 18 is writing/synthesis only: no retraining, architecture change, Phase 10 loss change, boundary-parameter tuning, new sweep, or new result generation**
 - **Phase 19 has produced a paper-ready manuscript structure and submission-consolidation document from the completed Phase 12-18 materials**
 - **Phase 19 is manuscript-structure consolidation only: no retraining, architecture change, Phase 10 loss change, boundary-parameter tuning, new sweep, or new result generation**
+- **Phase 20 has produced the first full manuscript draft skeleton from the Phase 18-19 manuscript-oriented materials**
+- **Phase 20 is manuscript draft assembly only: no retraining, architecture change, Phase 10 loss change, boundary-parameter tuning, new sweep, or new result generation**
 
-At this stage, the project has moved from broad model tuning to rapid flood prediction with reliability diagnosis, failure-mode interpretation, confidence proxy diagnostics, spatial risk mapping, warning-rule guidance, and paper-ready manuscript/submission consolidation. No broader Phase 10 boundary-weight sweep is justified.
+At this stage, the project has moved from broad model tuning to rapid flood prediction with reliability diagnosis, failure-mode interpretation, confidence proxy diagnostics, spatial risk mapping, warning-rule guidance, and a first full manuscript draft skeleton. No broader Phase 10 boundary-weight sweep is justified.
 
 ## Representative Case Framing
 
@@ -594,7 +607,7 @@ Three representative cases continue to be useful for targeted comparison:
 - `seed202`: difficult-case reference where stronger structured refinement can show useful gains
 - `seed123`: repeatability reference for checking whether candidate behavior generalizes beyond the two anchor cases
 
-This framing motivated the Phase 6 Pilot A test, the Phase 7 conservative `adapt010` follow-up, the Phase 9 diagnosis, the Phase 10 margin-aware boundary-band refinement, the Phase 12 reliability/applicability diagnosis, the Phase 13 representative failure-case visual summary, the Phase 14 confidence proxy diagnosis, the Phase 15 reliability-screening layer, the Phase 16 warning-rule guidance layer, the Phase 17 reliability-aware framework synthesis, and the Phase 19 manuscript-structure consolidation.
+This framing motivated the Phase 6 Pilot A test, the Phase 7 conservative `adapt010` follow-up, the Phase 9 diagnosis, the Phase 10 margin-aware boundary-band refinement, the Phase 12 reliability/applicability diagnosis, the Phase 13 representative failure-case visual summary, the Phase 14 confidence proxy diagnosis, the Phase 15 reliability-screening layer, the Phase 16 warning-rule guidance layer, the Phase 17 reliability-aware framework synthesis, the Phase 19 manuscript-structure consolidation, and the Phase 20 manuscript draft assembly.
 
 
 ## Adaptive Candidate and Margin-Aware Refinement
@@ -655,7 +668,7 @@ Recommended next work:
 - consider calibrated uncertainty only if calibration data and evaluation design are added
 - keep `boundary_weight = 1.5` only as a conservative rollback setting
 - avoid new boundary-weight sweeps unless a new diagnosis clearly justifies them
-- keep using the Phase 12/13/14/15/16/17 reliability, failure-case, confidence-proxy, screening, warning-rule, and synthesis findings, plus the Phase 18 manuscript note and Phase 19 manuscript-structure consolidation, to define where the current model is reliable and where caution is required
+- keep using the Phase 12/13/14/15/16/17 reliability, failure-case, confidence-proxy, screening, warning-rule, and synthesis findings, plus the Phase 18 manuscript note, Phase 19 manuscript-structure consolidation, and Phase 20 manuscript draft skeleton, to define where the current model is reliable and where caution is required
 
 ## License
 
