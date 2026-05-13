@@ -1,0 +1,169 @@
+{
+  "constraints": {
+    "evaluated_model_from_checkpoint": false,
+    "generated_new_predictions": false,
+    "modified_model_architecture": false,
+    "modified_phase10_loss": false,
+    "opened_new_sweep": false,
+    "performed_manuscript_literature_review": false,
+    "performed_metric_chasing_experiment": false,
+    "trained_model": false,
+    "tuned_boundary_band_pixels": false,
+    "tuned_boundary_weight": false
+  },
+  "figures": {
+    "generated": [
+      "analysis\\phase23_warning_case_study\\figures\\case_warning_level_overview.png",
+      "analysis\\phase23_warning_case_study\\figures\\case_risk_component_comparison.png",
+      "analysis\\phase23_warning_case_study\\figures\\reliable_case_maps.png",
+      "analysis\\phase23_warning_case_study\\figures\\caution_case_maps.png",
+      "analysis\\phase23_warning_case_study\\figures\\high_risk_case_maps.png"
+    ],
+    "map_level_status": {
+      "generated": true,
+      "notes": [
+        "Generated analysis\\phase23_warning_case_study\\figures\\reliable_case_maps.png from runs\\phase10_margin_aware_boundary_band_seed123_40e\\evaluation_test\\test_batch_0000\\forecast_maps.npz.",
+        "Generated analysis\\phase23_warning_case_study\\figures\\caution_case_maps.png from runs\\phase10_margin_aware_boundary_band_seed123_40e\\evaluation_test\\test_batch_0009\\forecast_maps.npz.",
+        "Generated analysis\\phase23_warning_case_study\\figures\\high_risk_case_maps.png from runs\\phase10_margin_aware_boundary_band_seed123_40e\\evaluation_test\\test_batch_0011\\forecast_maps.npz."
+      ]
+    },
+    "map_level_visualizations_generated": true
+  },
+  "inputs": {
+    "expected_inputs": {
+      "phase15_high_risk_cases": "analysis\\phase15_reliability_screening\\high_risk_cases.csv",
+      "phase15_pixel_risk_summary": "analysis\\phase15_reliability_screening\\pixel_risk_summary.csv",
+      "phase15_scenario_risk_scores": "analysis\\phase15_reliability_screening\\scenario_risk_scores.csv",
+      "phase15_summary": "analysis\\phase15_reliability_screening\\summary.json",
+      "phase16_high_risk_warning_cases": "analysis\\phase16_warning_rules\\high_risk_warning_cases.csv",
+      "phase16_pixel_warning_summary": "analysis\\phase16_warning_rules\\pixel_warning_summary.csv",
+      "phase16_scenario_warning_summary": "analysis\\phase16_warning_rules\\scenario_warning_summary.csv",
+      "phase16_summary": "analysis\\phase16_warning_rules\\summary.json",
+      "phase16_warning_rules": "analysis\\phase16_warning_rules\\warning_rules.json"
+    },
+    "missing_inputs": [],
+    "phase15_dir": "analysis\\phase15_reliability_screening",
+    "phase15_summary_loaded": true,
+    "phase16_dir": "analysis\\phase16_warning_rules",
+    "phase16_summary_loaded": true,
+    "scenario_source": "analysis\\phase16_warning_rules\\scenario_warning_summary.csv",
+    "warning_rules_loaded": true
+  },
+  "interpretation_note": "This Phase 23 prototype reuses existing Phase 15 reliability-screening outputs and Phase 16 warning-rule outputs. It does not retrain models, tune Phase 10 settings, or generate new predictions.",
+  "limitations": [
+    "Warning levels are deterministic screening and warning-rule labels, not calibrated probabilities.",
+    "Case map figures reuse existing .npz forecast artifacts referenced by the selected rows; no new predictions are generated.",
+    "The pixel-warning panel summarizes Phase 16 repeated pixel-warning signals and is not a newly generated case-specific uncertainty field."
+  ],
+  "outputs": {
+    "case_warning_report_md": "analysis\\phase23_warning_case_study\\case_warning_report.md",
+    "figures_dir": "analysis\\phase23_warning_case_study\\figures",
+    "selected_cases_csv": "analysis\\phase23_warning_case_study\\selected_cases.csv",
+    "summary_json": "analysis\\phase23_warning_case_study\\summary.json"
+  },
+  "phase": "Phase 23 Reliability-Aware Warning Case Study",
+  "row_counts": {
+    "pixel_warning_rows": 16384,
+    "scenario_rows_used": 114,
+    "selected_cases": 3
+  },
+  "selection": {
+    "required_case_roles": [
+      "reliable",
+      "caution",
+      "high-risk"
+    ],
+    "selected_case_roles": [
+      "reliable",
+      "caution",
+      "high-risk"
+    ],
+    "selected_cases": [
+      {
+        "applicability_boundary_note": "Prediction is within the stronger applicability range of the current surrogate model.",
+        "batch_index": "0",
+        "boundary_false_dry_rate": 0.1258182625097082,
+        "case_role": "reliable",
+        "dominant_risk_components": "cross seed disagreement=0.0559; low margin=0.0505",
+        "event": "r100y_p0.5_d3h",
+        "false_dry_rate": 0.07422870984191739,
+        "location": "location1",
+        "maps_path": "runs\\phase10_margin_aware_boundary_band_seed123_40e\\evaluation_test\\test_batch_0000\\forecast_maps.npz",
+        "model_reliability_interpretation": "Phase 15/16 screening labels this case reliable with risk score 0.106; the available missed-inundation and boundary indicators are comparatively low.",
+        "peak_underprediction": 0.0,
+        "risk_score": 0.10639864603678383,
+        "rmse": 0.0474657264080249,
+        "run_name": "phase10_margin_aware_boundary_band_seed123_40e",
+        "sample_index": "1",
+        "scenario_identity": "location1|r100y_p0.5_d3h|6",
+        "seed": "seed123",
+        "selection_basis": "Selected as the lowest-risk reliable-labeled case using risk score, false-dry, boundary, RMSE, and stable identity tie-breaks.",
+        "start_idx": "6",
+        "suggested_warning_action": "use as rapid prediction reference",
+        "warning_level": "reliable",
+        "wet_fraction_contraction": 0.0
+      },
+      {
+        "applicability_boundary_note": "Inspect wet/dry boundaries, shallow transition areas, local peak-depth areas, and pixel-level risk maps.",
+        "batch_index": "9",
+        "boundary_false_dry_rate": 0.3079696150379812,
+        "case_role": "caution",
+        "dominant_risk_components": "high intensity location2=2.5; false dry=0.65; boundary=0.316",
+        "event": "r300y_p0.6_d3h",
+        "false_dry_rate": 0.2462679896308215,
+        "location": "location2",
+        "maps_path": "runs\\phase10_margin_aware_boundary_band_seed123_40e\\evaluation_test\\test_batch_0009\\forecast_maps.npz",
+        "model_reliability_interpretation": "Phase 15/16 screening labels this case caution with risk score 3.85; the prediction may be useful as a rapid reference after targeted review.",
+        "peak_underprediction": 0.3835580348968506,
+        "risk_score": 3.8519024533100814,
+        "rmse": 0.06297659765057725,
+        "run_name": "phase10_margin_aware_boundary_band_seed123_40e",
+        "sample_index": "1",
+        "scenario_identity": "location2|r300y_p0.6_d3h|6",
+        "seed": "seed123",
+        "selection_basis": "Selected as a representative caution-labeled case closest to the caution risk midpoint with stable tie-breaks.",
+        "start_idx": "6",
+        "suggested_warning_action": "use with targeted review",
+        "warning_level": "caution",
+        "wet_fraction_contraction": 0.019755072852417985
+      },
+      {
+        "applicability_boundary_note": "Trigger conservative interpretation, hydrodynamic-model confirmation, or expert review before warning decisions.",
+        "batch_index": "11",
+        "boundary_false_dry_rate": 0.682092555331992,
+        "case_role": "high-risk",
+        "dominant_risk_components": "high intensity location2=2.5; false dry=2; peak underprediction=1.5",
+        "event": "r300y_p0.8_d3h",
+        "false_dry_rate": 0.5846616876602385,
+        "location": "location2",
+        "maps_path": "runs\\phase10_margin_aware_boundary_band_seed123_40e\\evaluation_test\\test_batch_0011\\forecast_maps.npz",
+        "model_reliability_interpretation": "Phase 15/16 screening labels this case high-risk with risk score 8.74, false-dry rate 0.585, wet-fraction contraction 0.549, and peak underprediction 1.53 m.",
+        "peak_underprediction": 1.5271356105804443,
+        "risk_score": 8.73513925840442,
+        "rmse": 0.09742745060894134,
+        "run_name": "phase10_margin_aware_boundary_band_seed123_40e",
+        "sample_index": "1",
+        "scenario_identity": "location2|r300y_p0.8_d3h|0",
+        "seed": "seed123",
+        "selection_basis": "Selected as a high-risk case, prioritizing Phase-13-like location2+r300y evidence and then stronger risk evidence.",
+        "start_idx": "0",
+        "suggested_warning_action": "do not use alone for warning decisions",
+        "warning_level": "high-risk",
+        "wet_fraction_contraction": 0.5486567829673392
+      }
+    ],
+    "selection_notes": {
+      "available_counts": {
+        "caution": 25,
+        "high-risk": 13,
+        "reliable": 76
+      },
+      "logic": {
+        "caution": "risk score closest to the caution midpoint when available, then stable identity",
+        "high-risk": "prefer location2+r300y/Phase-13-like cases, then highest risk evidence",
+        "reliable": "lowest available risk score, then lowest false-dry/boundary risk and RMSE"
+      },
+      "missing_levels": []
+    }
+  }
+}
