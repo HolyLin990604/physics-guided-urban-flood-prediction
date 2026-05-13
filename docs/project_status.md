@@ -16,6 +16,7 @@ The repository should currently be interpreted as follows:
 - Phase 15 completed the first implementation of reliability screening and risk mapping.
 - Phase 16 completed the first implementation of reliability-aware warning rules and applicability boundary guidance.
 - Phase 17 completed the reliability-aware warning framework synthesis across Phase 12 through Phase 16.
+- Phase 18 has started the manuscript-oriented reliability-aware warning layer writing phase, with the first manuscript note completed.
 
 The current Phase 10 conclusion is that boundary-band weighted wet/dry consistency refinement has passed test-facing confirmation on the three key project seeds: `seed123`, `seed42`, and `seed202`.
 
@@ -42,9 +43,9 @@ The current Phase 17 conclusion is that Phase 12 through Phase 16 now form a coh
 
 Phase 17 is a synthesis/documentation phase rather than a new experiment. It is intended to support manuscript writing, README narrative, and project positioning. It should not be read as calibrated uncertainty or universal generalization beyond the tested evidence.
 
-The current project position after Phase 17 is rapid flood prediction with reliability diagnosis, failure-mode interpretation, confidence proxy diagnostics, spatial risk mapping, and deterministic warning-rule guidance. Calibration should only be introduced through a separate calibration design, and the current Phase 10 setting remains fixed unless new evidence justifies changing it.
+The current project position after Phase 18 is rapid flood prediction with reliability diagnosis, failure-mode interpretation, confidence proxy diagnostics, spatial risk mapping, deterministic warning-rule guidance, and manuscript-ready synthesis for a reliability-aware warning layer section. Calibration should only be introduced through a separate calibration design, and the current Phase 10 setting remains fixed unless new evidence justifies changing it.
 
-No retraining, architecture change, Phase 10 loss change, `boundary_band_pixels` tuning, `boundary_weight` tuning, or additional Phase 10 boundary-weight sweep was performed. The current recommended Phase 10 setting remains `boundary_band_pixels = 1` and `boundary_weight = 2.0`.
+No retraining, architecture change, Phase 10 loss change, `boundary_band_pixels` tuning, `boundary_weight` tuning, additional Phase 10 boundary-weight sweep, or new result generation was performed. The current recommended Phase 10 setting remains `boundary_band_pixels = 1` and `boundary_weight = 2.0`.
 
 ## Meaning Of Each Reference
 
@@ -220,6 +221,22 @@ The Phase 17 synthesis indicates:
 - the synthesis supports manuscript writing, README narrative, and project positioning
 - the framework remains deterministic and evidence-based; it does not claim calibrated uncertainty or universal generalization
 
+### Manuscript-oriented reliability-aware warning layer
+
+Phase 18 converts the completed Phase 12 through Phase 17 reliability-aware warning framework into manuscript-ready writing material for a section titled "Reliability-Aware Warning Layer for Urban Flood Surrogate Prediction."
+
+Generated Phase 18 writing deliverables:
+
+- `docs/phase18_manuscript_reliability_warning_layer_plan.md`
+- `docs/manuscript_reliability_aware_warning_layer.md`
+
+The Phase 18 writing phase indicates:
+
+- the manuscript reliability-aware warning layer note has been created
+- Phase 18 is manuscript-oriented synthesis/writing, not a new experiment
+- no retraining, architecture modification, Phase 10 loss modification, `boundary_weight` tuning, `boundary_band_pixels` tuning, new sweep, or new result generation was performed
+- the current recommended Phase 10 setting remains `boundary_band_pixels = 1` and `boundary_weight = 2.0`
+
 ## Practical Reading Guide
 
 When reading the repository:
@@ -236,6 +253,7 @@ When reading the repository:
 - read Phase 15 as the first implementation of deterministic reliability screening and spatial risk mapping
 - read Phase 16 as the first implementation of deterministic warning-rule guidance and applicability boundary interpretation
 - read Phase 17 as the synthesis of Phase 12-16 into a reliability-aware warning framework narrative
+- read Phase 18 as manuscript-oriented writing material derived from the Phase 12-17 reliability-aware warning framework
 
 ## Key Documents
 
@@ -256,4 +274,6 @@ When reading the repository:
 - `docs/phase16_reliability_warning_applicability_plan.md`
 - `docs/phase16_reliability_warning_applicability_findings.md`
 - `docs/phase17_reliability_warning_framework_synthesis.md`
+- `docs/phase18_manuscript_reliability_warning_layer_plan.md`
+- `docs/manuscript_reliability_aware_warning_layer.md`
 - `docs/experiment_index.md`

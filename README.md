@@ -41,6 +41,7 @@ flowchart LR
     L --> M[Phase 15<br/>Reliability screening and risk mapping]
     M --> N[Phase 16<br/>Warning rules and applicability boundary]
     N --> O[Phase 17<br/>Reliability-aware framework synthesis]
+    O --> P[Phase 18<br/>Manuscript warning-layer writing]
 
     A --> A1[Best-balanced mainline]
     B --> B1[Freer selector<br/>not enough]
@@ -57,6 +58,7 @@ flowchart LR
     M --> M1[Deterministic screening labels<br/>scenario and pixel risk maps]
     N --> N1[Warning-rule guidance<br/>deterministic operational labels]
     O --> O1[Phase 12-16 synthesized<br/>manuscript and positioning narrative]
+    P --> P1[Manuscript-ready warning-layer section<br/>based on Phase 12-17]
 ```
 
 
@@ -141,6 +143,8 @@ rapid prediction + reliability diagnosis + failure-mode interpretation
 ```
 
 This synthesis is intended to support manuscript writing, README narrative, and project positioning. It should not be interpreted as calibrated uncertainty or universal generalization beyond the tested evidence.
+
+Phase 18 prepares manuscript-ready material for the section "Reliability-Aware Warning Layer for Urban Flood Surrogate Prediction" using the completed Phase 12-17 reliability-aware warning framework. It is a writing/synthesis phase only: no retraining, architecture modification, Phase 10 loss change, `boundary_weight` or `boundary_band_pixels` tuning, or new sweep was performed. See `docs/manuscript_reliability_aware_warning_layer.md`.
 
 
 ## Phase 12 Reliability Diagnostics
@@ -270,6 +274,10 @@ The synthesis frames the project as rapid flood-depth prediction plus reliabilit
 
 See `docs/phase17_reliability_warning_framework_synthesis.md` for the synthesis document.
 
+## Phase 18 Manuscript-Oriented Reliability-Aware Warning Layer
+
+Phase 18 is a manuscript-writing and synthesis phase, not a new experiment phase. It converts the completed Phase 12-17 reliability-aware warning framework into manuscript-ready material for "Reliability-Aware Warning Layer for Urban Flood Surrogate Prediction" without retraining, model changes, Phase 10 loss changes, boundary-parameter tuning, or new result generation. See `docs/manuscript_reliability_aware_warning_layer.md`.
+
 ## Historical Qualitative Examples
 
 The figures below are earlier-stage qualitative comparisons retained for visual reference. They are not the current primary evidence for the project state; the current project state is summarized above through Phase 17 reliability-aware framework synthesis.
@@ -324,7 +332,8 @@ flowchart TD
     H --> I[Stage IX<br/>Reliability screening and risk mapping]
     I --> J[Stage X<br/>Warning-rule guidance and applicability boundary]
     J --> K[Stage XI<br/>Reliability-aware warning framework synthesis]
-    K --> L[Next stage<br/>Calibration design only if needed]
+    K --> L[Stage XII<br/>Manuscript warning-layer writing]
+    L --> M[Next stage<br/>Calibration design only if needed]
 
     A1[Phase 2-5<br/>- M3 f025 remains overall best-balanced mainline<br/>- Phase 3.3 af025 remains strongest static structured refinement] --> A
     B1[Phase 6-7<br/>- adapt025 closed as negative/neutral<br/>- adapt010 promoted as active adaptive candidate] --> B
@@ -337,7 +346,8 @@ flowchart TD
     I1[Phase 15<br/>- deterministic scenario labels<br/>- pixel risk maps<br/>- known location2+r300y cases flagged] --> I
     J1[Phase 16<br/>- warning-rule guidance<br/>- applicability boundary<br/>- high-risk cases preserved] --> J
     K1[Phase 17<br/>- Phase 12-16 synthesis<br/>- manuscript and positioning support<br/>- no retraining or tuning] --> K
-    L1[Future focus<br/>- calibrated uncertainty only with calibration design<br/>- no Phase 10 tuning without new diagnosis] --> L
+    L1[Phase 18<br/>- manuscript-ready warning-layer material<br/>- based on Phase 12-17<br/>- no retraining or tuning] --> L
+    M1[Future focus<br/>- calibrated uncertainty only with calibration design<br/>- no Phase 10 tuning without new diagnosis] --> M
 ```
 
 
@@ -364,6 +374,7 @@ For the current staged experiment record, see:
 - `docs/phase16_reliability_warning_applicability_plan.md`
 - `docs/phase16_reliability_warning_applicability_findings.md`
 - `docs/phase17_reliability_warning_framework_synthesis.md`
+- `docs/manuscript_reliability_aware_warning_layer.md`
 
 
 ## Dataset
@@ -526,7 +537,7 @@ Generated figures are organized under:
 
 ## Current Project Status
 
-The repository has completed the main Phase 2-3 architecture comparison cycle, closed the Phase 6 `adapt025` pilot as negative/neutral, established Phase 7/8 `adapt010` as the active adaptive candidate before margin-aware refinement, completed Phase 9 interpretability diagnosis, completed the Phase 10 margin-aware refinement intervention, completed the first-pass Phase 12 reliability/applicability diagnosis, completed the first-pass Phase 13 representative failure-case visual summary, completed the first-pass Phase 14 proxy-based confidence diagnosis, completed the first implementation of Phase 15 reliability screening and risk mapping, completed the first implementation of Phase 16 reliability-aware warning rules and applicability boundary guidance, and completed the Phase 17 reliability-aware warning framework synthesis.
+The repository has completed the main Phase 2-3 architecture comparison cycle, closed the Phase 6 `adapt025` pilot as negative/neutral, established Phase 7/8 `adapt010` as the active adaptive candidate before margin-aware refinement, completed Phase 9 interpretability diagnosis, completed the Phase 10 margin-aware refinement intervention, completed the first-pass Phase 12 reliability/applicability diagnosis, completed the first-pass Phase 13 representative failure-case visual summary, completed the first-pass Phase 14 proxy-based confidence diagnosis, completed the first implementation of Phase 15 reliability screening and risk mapping, completed the first implementation of Phase 16 reliability-aware warning rules and applicability boundary guidance, completed the Phase 17 reliability-aware warning framework synthesis, and started Phase 18 manuscript-oriented warning-layer writing.
 
 Current project-level conclusions:
 
@@ -557,6 +568,8 @@ Current project-level conclusions:
 - **Phase 16 warning labels are deterministic operational interpretation labels, not calibrated probabilities, Bayesian uncertainty, or formal confidence intervals**
 - **Phase 17 completed the synthesis of Phase 12-16 into a reliability-aware warning framework narrative for manuscript writing, README narrative, and project positioning**
 - **Phase 17 is documentation synthesis only: no retraining, architecture change, Phase 10 loss change, boundary-parameter tuning, or new sweep**
+- **Phase 18 has produced manuscript-ready reliability-aware warning layer material from the completed Phase 12-17 framework**
+- **Phase 18 is writing/synthesis only: no retraining, architecture change, Phase 10 loss change, boundary-parameter tuning, new sweep, or new result generation**
 
 At this stage, the project has moved from broad model tuning to rapid flood prediction with reliability diagnosis, failure-mode interpretation, confidence proxy diagnostics, spatial risk mapping, and warning-rule guidance. No broader Phase 10 boundary-weight sweep is justified.
 
@@ -629,7 +642,7 @@ Recommended next work:
 - consider calibrated uncertainty only if calibration data and evaluation design are added
 - keep `boundary_weight = 1.5` only as a conservative rollback setting
 - avoid new boundary-weight sweeps unless a new diagnosis clearly justifies them
-- keep using the Phase 12/13/14/15/16/17 reliability, failure-case, confidence-proxy, screening, warning-rule, and synthesis findings to define where the current model is reliable and where caution is required
+- keep using the Phase 12/13/14/15/16/17 reliability, failure-case, confidence-proxy, screening, warning-rule, and synthesis findings, plus the Phase 18 manuscript note, to define where the current model is reliable and where caution is required
 
 ## License
 
