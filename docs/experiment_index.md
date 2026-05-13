@@ -14,6 +14,7 @@
 - Phase 17 reliability-aware warning framework synthesis: documentation synthesis integrating Phase 12-16 into the current project narrative
 - Phase 18 manuscript-oriented reliability-aware warning layer: writing synthesis converting Phase 12-17 into manuscript-ready material
 - Phase 19 manuscript structure and paper-ready consolidation: manuscript-structure and submission-consolidation planning based on Phase 12-18
+- Phase 20 manuscript draft assembly: first full manuscript draft skeleton assembled from Phase 18-19 materials
 
 ## Phase 6
 
@@ -152,7 +153,7 @@
 
 - Plan: `docs/phase18_manuscript_reliability_warning_layer_plan.md`
 - Manuscript note: `docs/manuscript_reliability_aware_warning_layer.md`
-- Status: manuscript-oriented writing phase in progress; first writing deliverable completed
+- Status: manuscript-oriented writing phase complete; first writing deliverable completed
 - Core result: Phase 18 converts the completed Phase 12-17 reliability-aware warning framework into manuscript-ready material for "Reliability-Aware Warning Layer for Urban Flood Surrogate Prediction"
 - Decision: Phase 18 is a manuscript-oriented synthesis/writing phase, not a new experiment phase
 - Model status: no retraining, architecture modification, Phase 10 loss modification, `boundary_band_pixels` tuning, `boundary_weight` tuning, new sweep, or new result generation was performed
@@ -166,6 +167,16 @@
 - Core result: Phase 19 converts the completed Phase 12-18 reliability-aware warning framework and manuscript notes into a paper-ready manuscript outline and submission-oriented planning document
 - Scope: paper positioning, candidate titles, abstract logic, methods/results/discussion structure, figure/table inventory, contribution statements, limitations, submission positioning, and immediate writing tasks
 - Decision: Phase 19 is a manuscript-structure and submission-consolidation phase, not a new experiment phase
+- Model status: no retraining, architecture modification, Phase 10 loss modification, `boundary_band_pixels` tuning, `boundary_weight` tuning, new sweep, or new result generation was performed
+- Current recommended Phase 10 setting: `boundary_band_pixels = 1`, `boundary_weight = 2.0`
+
+## Phase 20
+
+- Plan: `docs/phase20_manuscript_draft_assembly_plan.md`
+- Manuscript draft: `docs/manuscript_draft_reliability_aware_urban_flood_warning.md`
+- Status: manuscript draft assembly complete
+- Core result: Phase 20 assembles the Phase 18 and Phase 19 manuscript-oriented materials into the first full manuscript draft skeleton
+- Decision: Phase 20 is a manuscript draft assembly phase, not a new experiment phase
 - Model status: no retraining, architecture modification, Phase 10 loss modification, `boundary_band_pixels` tuning, `boundary_weight` tuning, new sweep, or new result generation was performed
 - Current recommended Phase 10 setting: `boundary_band_pixels = 1`, `boundary_weight = 2.0`
 
@@ -187,11 +198,12 @@ For current repository interpretation, read the experiment trail in this order:
 12. `docs/phase17_reliability_warning_framework_synthesis.md`
 13. `docs/manuscript_reliability_aware_warning_layer.md`
 14. `docs/manuscript_structure_and_submission_consolidation.md`
-15. `docs/project_status.md`
+15. `docs/manuscript_draft_reliability_aware_urban_flood_warning.md`
+16. `docs/project_status.md`
 
 ## Next Stage
 
-The next stage should build on the Phase 12 to Phase 19 reliability/applicability, screening, warning-rule, synthesis, manuscript-writing, and manuscript-consolidation evidence rather than reopening Phase 10 tuning.
+The next stage should build on the Phase 12 to Phase 20 reliability/applicability, screening, warning-rule, synthesis, manuscript-writing, manuscript-consolidation, and manuscript-draft evidence rather than reopening Phase 10 tuning.
 
 Recommended next work:
 
