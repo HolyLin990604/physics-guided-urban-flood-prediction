@@ -13,6 +13,7 @@
 - Phase 16 reliability-aware warning rules and applicability boundary: first implementation of deterministic warning-rule guidance based on Phase 15 screening labels
 - Phase 17 reliability-aware warning framework synthesis: documentation synthesis integrating Phase 12-16 into the current project narrative
 - Phase 18 manuscript-oriented reliability-aware warning layer: writing synthesis converting Phase 12-17 into manuscript-ready material
+- Phase 19 manuscript structure and paper-ready consolidation: manuscript-structure and submission-consolidation planning based on Phase 12-18
 
 ## Phase 6
 
@@ -157,6 +158,17 @@
 - Model status: no retraining, architecture modification, Phase 10 loss modification, `boundary_band_pixels` tuning, `boundary_weight` tuning, new sweep, or new result generation was performed
 - Current recommended Phase 10 setting: `boundary_band_pixels = 1`, `boundary_weight = 2.0`
 
+## Phase 19
+
+- Plan: `docs/phase19_manuscript_structure_consolidation_plan.md`
+- Manuscript consolidation: `docs/manuscript_structure_and_submission_consolidation.md`
+- Status: manuscript-structure and submission-consolidation phase complete
+- Core result: Phase 19 converts the completed Phase 12-18 reliability-aware warning framework and manuscript notes into a paper-ready manuscript outline and submission-oriented planning document
+- Scope: paper positioning, candidate titles, abstract logic, methods/results/discussion structure, figure/table inventory, contribution statements, limitations, submission positioning, and immediate writing tasks
+- Decision: Phase 19 is a manuscript-structure and submission-consolidation phase, not a new experiment phase
+- Model status: no retraining, architecture modification, Phase 10 loss modification, `boundary_band_pixels` tuning, `boundary_weight` tuning, new sweep, or new result generation was performed
+- Current recommended Phase 10 setting: `boundary_band_pixels = 1`, `boundary_weight = 2.0`
+
 ## Interpretation Order
 
 For current repository interpretation, read the experiment trail in this order:
@@ -174,11 +186,12 @@ For current repository interpretation, read the experiment trail in this order:
 11. `docs/phase16_reliability_warning_applicability_findings.md`
 12. `docs/phase17_reliability_warning_framework_synthesis.md`
 13. `docs/manuscript_reliability_aware_warning_layer.md`
-14. `docs/project_status.md`
+14. `docs/manuscript_structure_and_submission_consolidation.md`
+15. `docs/project_status.md`
 
 ## Next Stage
 
-The next stage should build on the Phase 12 to Phase 18 reliability/applicability, screening, warning-rule, synthesis, and manuscript-writing evidence rather than reopening Phase 10 tuning.
+The next stage should build on the Phase 12 to Phase 19 reliability/applicability, screening, warning-rule, synthesis, manuscript-writing, and manuscript-consolidation evidence rather than reopening Phase 10 tuning.
 
 Recommended next work:
 

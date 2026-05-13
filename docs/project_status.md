@@ -16,7 +16,8 @@ The repository should currently be interpreted as follows:
 - Phase 15 completed the first implementation of reliability screening and risk mapping.
 - Phase 16 completed the first implementation of reliability-aware warning rules and applicability boundary guidance.
 - Phase 17 completed the reliability-aware warning framework synthesis across Phase 12 through Phase 16.
-- Phase 18 has started the manuscript-oriented reliability-aware warning layer writing phase, with the first manuscript note completed.
+- Phase 18 completed the manuscript-oriented reliability-aware warning layer writing phase, with the first manuscript note completed.
+- Phase 19 completed manuscript-structure and submission consolidation, with a paper-ready manuscript outline and submission-oriented planning document created.
 
 The current Phase 10 conclusion is that boundary-band weighted wet/dry consistency refinement has passed test-facing confirmation on the three key project seeds: `seed123`, `seed42`, and `seed202`.
 
@@ -43,9 +44,11 @@ The current Phase 17 conclusion is that Phase 12 through Phase 16 now form a coh
 
 Phase 17 is a synthesis/documentation phase rather than a new experiment. It is intended to support manuscript writing, README narrative, and project positioning. It should not be read as calibrated uncertainty or universal generalization beyond the tested evidence.
 
-The current project position after Phase 18 is rapid flood prediction with reliability diagnosis, failure-mode interpretation, confidence proxy diagnostics, spatial risk mapping, deterministic warning-rule guidance, and manuscript-ready synthesis for a reliability-aware warning layer section. Calibration should only be introduced through a separate calibration design, and the current Phase 10 setting remains fixed unless new evidence justifies changing it.
+The current Phase 19 conclusion is that the completed Phase 12 through Phase 18 reliability-aware warning framework and manuscript notes have been consolidated into a paper-ready manuscript structure and submission-oriented plan. The document covers paper positioning, candidate titles, abstract logic, methods/results/discussion structure, figure and table inventory, contribution statements, limitations, submission positioning, and immediate writing tasks.
 
-No retraining, architecture change, Phase 10 loss change, `boundary_band_pixels` tuning, `boundary_weight` tuning, additional Phase 10 boundary-weight sweep, or new result generation was performed. The current recommended Phase 10 setting remains `boundary_band_pixels = 1` and `boundary_weight = 2.0`.
+The current project position after Phase 19 is rapid flood prediction with reliability diagnosis, failure-mode interpretation, confidence proxy diagnostics, spatial risk mapping, deterministic warning-rule guidance, manuscript-ready warning-layer synthesis, and paper-ready manuscript/submission consolidation. Calibration should only be introduced through a separate calibration design, and the current Phase 10 setting remains fixed unless new evidence justifies changing it.
+
+No retraining, architecture modification, Phase 10 loss modification, `boundary_band_pixels` tuning, `boundary_weight` tuning, additional Phase 10 boundary-weight sweep, new sweep, or new result generation was performed. The current recommended Phase 10 setting remains `boundary_band_pixels = 1` and `boundary_weight = 2.0`.
 
 ## Meaning Of Each Reference
 
@@ -237,6 +240,23 @@ The Phase 18 writing phase indicates:
 - no retraining, architecture modification, Phase 10 loss modification, `boundary_weight` tuning, `boundary_band_pixels` tuning, new sweep, or new result generation was performed
 - the current recommended Phase 10 setting remains `boundary_band_pixels = 1` and `boundary_weight = 2.0`
 
+### Manuscript structure and paper-ready consolidation
+
+Phase 19 converts the completed reliability-aware warning framework and Phase 18 manuscript note into a paper-ready manuscript outline and submission-oriented planning document.
+
+Generated Phase 19 deliverables:
+
+- `docs/phase19_manuscript_structure_consolidation_plan.md`
+- `docs/manuscript_structure_and_submission_consolidation.md`
+
+The Phase 19 consolidation indicates:
+
+- the manuscript structure and submission consolidation document has been created
+- Phase 19 is manuscript-structure and submission consolidation, not a new experiment
+- the document covers paper positioning, candidate titles, abstract logic, methods/results/discussion structure, figure/table inventory, contribution statements, limitations, submission positioning, and immediate writing tasks
+- no retraining, architecture modification, Phase 10 loss modification, `boundary_weight` tuning, `boundary_band_pixels` tuning, new sweep, or new result generation was performed
+- the current recommended Phase 10 setting remains `boundary_band_pixels = 1` and `boundary_weight = 2.0`
+
 ## Practical Reading Guide
 
 When reading the repository:
@@ -254,6 +274,7 @@ When reading the repository:
 - read Phase 16 as the first implementation of deterministic warning-rule guidance and applicability boundary interpretation
 - read Phase 17 as the synthesis of Phase 12-16 into a reliability-aware warning framework narrative
 - read Phase 18 as manuscript-oriented writing material derived from the Phase 12-17 reliability-aware warning framework
+- read Phase 19 as manuscript-structure and submission consolidation derived from the completed Phase 12-18 materials
 
 ## Key Documents
 
@@ -276,4 +297,6 @@ When reading the repository:
 - `docs/phase17_reliability_warning_framework_synthesis.md`
 - `docs/phase18_manuscript_reliability_warning_layer_plan.md`
 - `docs/manuscript_reliability_aware_warning_layer.md`
+- `docs/phase19_manuscript_structure_consolidation_plan.md`
+- `docs/manuscript_structure_and_submission_consolidation.md`
 - `docs/experiment_index.md`
