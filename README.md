@@ -190,7 +190,13 @@ Representative Phase 24 figures:
 
 ![Phase 24 peak underprediction by warning level](analysis/phase24_physical_consistency/figures/peak_underprediction_by_warning_level.png)
 
-![Phase 24 physics consistency versus risk score](analysis/phase24_physical_consistency/figures/physics_consistency_vs_risk_score.png)
+![Phase 24 physical consistency vs risk score](analysis/phase24_physical_consistency/figures/physics_consistency_vs_risk_score.png)
+
+![Phase 24 wet connectivity fragmentation](analysis/phase24_physical_consistency/figures/wet_connectivity_fragmentation.png)
+
+![Phase 24 temporal volume bias examples](analysis/phase24_physical_consistency/figures/temporal_volume_bias_examples.png)
+
+![Phase 24 Phase 23 case physical failure profiles](analysis/phase24_physical_consistency/figures/phase23_case_physical_failure_profiles.png)
 
 
 ## Phase 12 Reliability Diagnostics
