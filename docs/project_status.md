@@ -22,6 +22,7 @@ The repository should currently be interpreted as follows:
 - Phase 21 completed manuscript evidence and figure/table alignment, with a claim-to-evidence alignment document created.
 - Phase 22 completed manuscript full draft expansion, with a fuller academic manuscript draft created from the Phase 20 skeleton and Phase 21 evidence alignment.
 - Phase 23 completed the reliability-aware warning case-study and application prototype.
+- Phase 24 completed physical consistency deepening and process diagnostics for the existing Phase 10 recommended outputs.
 
 The current Phase 10 conclusion is that boundary-band weighted wet/dry consistency refinement has passed test-facing confirmation on the three key project seeds: `seed123`, `seed42`, and `seed202`.
 
@@ -58,9 +59,11 @@ The current Phase 22 conclusion is that the Phase 20 manuscript skeleton has bee
 
 The current Phase 23 conclusion is that the completed reliability-aware warning framework has been converted into a representative case-study prototype. Phase 23 integrates Phase 15 reliability screening, Phase 16 warning rules, and existing Phase 10 forecast map arrays for one `reliable`, one `caution`, and one `high-risk` case. The selected cases are `location1|r100y_p0.5_d3h|6`, `location2|r300y_p0.6_d3h|6`, and `location2|r300y_p0.8_d3h|0`.
 
-The current project position after Phase 23 is rapid flood prediction with reliability diagnosis, failure-mode interpretation, confidence proxy diagnostics, spatial risk mapping, deterministic warning-rule guidance, manuscript-ready synthesis, manuscript drafting, and representative case-specific warning interpretation. Calibration should only be introduced through a separate calibration design, and the current Phase 10 setting remains fixed unless new evidence justifies changing it.
+The current Phase 24 conclusion is that high-risk cases are not only statistically worse; they are physically less consistent. Compared with reliable cases, high-risk cases show stronger false-dry behavior, stronger wet-area contraction, stronger peak-depth underprediction, stronger connectivity loss, and stronger volume under-response. Correlations with `risk_score` are 0.913 for `false_dry_rate`, 0.862 for `wet_area_contraction`, 0.856 for `peak_depth_underprediction`, and 0.539 for `connectivity_loss_indicator`.
 
-No retraining, architecture modification, Phase 10 loss modification, `boundary_band_pixels` tuning, `boundary_weight` tuning, additional Phase 10 boundary-weight sweep, new sweep, new prediction generation, metric-chasing experiment, invented references, unsupported claims, or new uncertainty claim was performed. The current recommended Phase 10 setting remains `boundary_band_pixels = 1` and `boundary_weight = 2.0`.
+The current project position after Phase 24 is rapid flood prediction with reliability diagnosis, failure-mode interpretation, confidence proxy diagnostics, spatial risk mapping, deterministic warning-rule guidance, manuscript-ready synthesis, manuscript drafting, representative case-specific warning interpretation, and physical-consistency diagnosis. Later model refinement should prioritize targeted physical-consistency constraints, including false-dry reduction, wet-area contraction penalty, peak-depth preservation, wet-connectivity preservation, and volume-response consistency. A full SWE/PINN residual is not recommended unless compatible velocity, flux, boundary, DEM, and source-sink information become available.
+
+No retraining, architecture modification, Phase 10 loss modification, `boundary_band_pixels` tuning, `boundary_weight` tuning, additional Phase 10 boundary-weight sweep, new sweep, new prediction generation, metric-chasing experiment, traffic-impact modeling, invented references, unsupported claims, or new uncertainty claim was performed. The current recommended Phase 10 setting remains `boundary_band_pixels = 1` and `boundary_weight = 2.0`.
 
 ## Meaning Of Each Reference
 
@@ -339,6 +342,34 @@ The Phase 23 prototype indicates:
 - no retraining, architecture modification, Phase 10 loss modification, `boundary_weight` tuning, `boundary_band_pixels` tuning, new sweep, new prediction generation, or metric-chasing experiment was performed
 - the current recommended Phase 10 setting remains `boundary_band_pixels = 1` and `boundary_weight = 2.0`
 
+### Physical consistency deepening and process diagnostics
+
+Phase 24 diagnoses whether the existing Phase 10 recommended surrogate outputs are physically consistent in volume response, wet-area contraction, peak-depth preservation, wet-area connectivity, temporal behavior, and linkage with Phase 15/16 warning-risk labels.
+
+Generated Phase 24 outputs include:
+
+- `docs/phase24_physical_consistency_deepening_plan.md`
+- `scripts/analyze_phase24_physical_consistency.py`
+- `analysis/phase24_physical_consistency/summary.json`
+- `analysis/phase24_physical_consistency/scenario_physical_consistency_metrics.csv`
+- `analysis/phase24_physical_consistency/volume_response_metrics.csv`
+- `analysis/phase24_physical_consistency/peak_depth_consistency.csv`
+- `analysis/phase24_physical_consistency/wet_connectivity_metrics.csv`
+- `analysis/phase24_physical_consistency/temporal_consistency_metrics.csv`
+- `analysis/phase24_physical_consistency/physics_risk_linkage.csv`
+- `analysis/phase24_physical_consistency/topographic_consistency.csv`
+- `analysis/phase24_physical_consistency/figures/`
+- `docs/phase24_physical_consistency_deepening_findings.md`
+
+The Phase 24 diagnostics indicate:
+
+- high-risk cases are physically less consistent than reliable cases
+- warning-level means for `reliable` / `caution` / `high-risk` are 0.125 / 0.268 / 0.444 for `false_dry_rate`, 0.046 / 0.135 / 0.383 for `wet_area_contraction`, 0.024 m / 0.241 m / 1.381 m for `peak_depth_underprediction`, 0.197 / 0.240 / 1.000 for `connectivity_loss_indicator`, and -0.040 / -0.145 / -0.448 for `relative_volume_bias`
+- topographic consistency was skipped because no shape-compatible DEM/static elevation layer was found; this limitation is recorded in `summary.json` and `topographic_consistency.csv`
+- Phase 24 is a diagnostic phase, not a model-refinement or tuning phase
+- no retraining, architecture modification, Phase 10 loss modification, `boundary_weight` tuning, `boundary_band_pixels` tuning, new sweep, new prediction generation, metric-chasing experiment, or traffic-impact modeling was performed
+- the current recommended Phase 10 setting remains `boundary_band_pixels = 1` and `boundary_weight = 2.0`
+
 ## Practical Reading Guide
 
 When reading the repository:
@@ -361,6 +392,7 @@ When reading the repository:
 - read Phase 21 as claim-to-evidence and figure/table alignment for manuscript expansion, not as a new experiment
 - read Phase 22 as the full academic manuscript draft expansion based on Phase 20 and Phase 21, not as a new experiment
 - read Phase 23 as a representative warning-oriented case-study prototype, not as retraining, tuning, or new prediction generation
+- read Phase 24 as physical-consistency diagnostics for existing Phase 10 outputs, not as retraining, tuning, new predictions, or a full physics-residual model
 
 ## Key Documents
 
@@ -393,4 +425,6 @@ When reading the repository:
 - `docs/manuscript_full_draft_reliability_aware_urban_flood_warning.md`
 - `docs/phase23_reliability_warning_case_study_plan.md`
 - `docs/phase23_reliability_warning_case_study_findings.md`
+- `docs/phase24_physical_consistency_deepening_plan.md`
+- `docs/phase24_physical_consistency_deepening_findings.md`
 - `docs/experiment_index.md`
