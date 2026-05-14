@@ -166,6 +166,18 @@ Phase 22 expands the Phase 20 manuscript skeleton into a fuller academic manuscr
 
 Phase 23 converts the completed reliability-aware warning framework into a representative case-study prototype. It integrates Phase 15 reliability screening, Phase 16 warning rules, and existing Phase 10 forecast map arrays to support case-specific warning interpretation. It does not involve retraining, architecture modification, Phase 10 loss modification, boundary-parameter tuning, a new sweep, metric chasing, or new prediction generation. See `docs/phase23_reliability_warning_case_study_findings.md`.
 
+Representative Phase 23 figures:
+
+![Phase 23 warning level overview](analysis/phase23_warning_case_study/figures/case_warning_level_overview.png)
+
+![Phase 23 risk component comparison](analysis/phase23_warning_case_study/figures/case_risk_component_comparison.png)
+
+![Phase 23 reliable case maps](analysis/phase23_warning_case_study/figures/reliable_case_maps.png)
+
+![Phase 23 caution case maps](analysis/phase23_warning_case_study/figures/caution_case_maps.png)
+
+![Phase 23 high-risk case maps](analysis/phase23_warning_case_study/figures/high_risk_case_maps.png)
+
 
 ## Phase 12 Reliability Diagnostics
 
