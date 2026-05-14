@@ -18,6 +18,7 @@
 - Phase 21 manuscript evidence and figure/table alignment: claim-to-evidence and figure/table planning based on existing outputs and findings
 - Phase 22 manuscript full draft expansion: fuller academic manuscript draft expanded from the Phase 20 skeleton using Phase 21 evidence alignment
 - Phase 23 reliability-aware warning case study and application prototype: representative warning-oriented interpretation using Phase 15 screening, Phase 16 rules, and existing Phase 10 forecast map arrays
+- Phase 24 physical consistency deepening and process diagnostics: diagnostic linkage between warning-risk labels and physical consistency of existing Phase 10 recommended outputs
 
 ## Phase 6
 
@@ -225,6 +226,36 @@
 - Model status: no retraining, architecture modification, Phase 10 loss modification, `boundary_band_pixels` tuning, `boundary_weight` tuning, new sweep, or new prediction generation was performed
 - Current recommended Phase 10 setting: `boundary_band_pixels = 1`, `boundary_weight = 2.0`
 
+## Phase 24
+
+- Plan: `docs/phase24_physical_consistency_deepening_plan.md`
+- Script: `scripts/analyze_phase24_physical_consistency.py`
+- Findings: `docs/phase24_physical_consistency_deepening_findings.md`
+- Outputs: `analysis/phase24_physical_consistency/`
+- Summary output: `analysis/phase24_physical_consistency/summary.json`
+- Scenario metrics: `analysis/phase24_physical_consistency/scenario_physical_consistency_metrics.csv`
+- Volume response: `analysis/phase24_physical_consistency/volume_response_metrics.csv`
+- Peak-depth consistency: `analysis/phase24_physical_consistency/peak_depth_consistency.csv`
+- Wet connectivity: `analysis/phase24_physical_consistency/wet_connectivity_metrics.csv`
+- Temporal consistency: `analysis/phase24_physical_consistency/temporal_consistency_metrics.csv`
+- Physics-risk linkage: `analysis/phase24_physical_consistency/physics_risk_linkage.csv`
+- Topographic consistency: `analysis/phase24_physical_consistency/topographic_consistency.csv`
+- Figures:
+  - `analysis/phase24_physical_consistency/figures/volume_bias_by_warning_level.png`
+  - `analysis/phase24_physical_consistency/figures/peak_underprediction_by_warning_level.png`
+  - `analysis/phase24_physical_consistency/figures/physics_consistency_vs_risk_score.png`
+  - `analysis/phase24_physical_consistency/figures/wet_connectivity_fragmentation.png`
+  - `analysis/phase24_physical_consistency/figures/temporal_volume_bias_examples.png`
+  - `analysis/phase24_physical_consistency/figures/phase23_case_physical_failure_profiles.png`
+- Status: physical consistency deepening and process diagnostics complete
+- Core result: high-risk cases are not only statistically worse; they are physically less consistent than reliable cases
+- Risk-score correlations: `false_dry_rate` = 0.913, `wet_area_contraction` = 0.862, `peak_depth_underprediction` = 0.856, and `connectivity_loss_indicator` = 0.539
+- Warning-level means for `reliable` / `caution` / `high-risk`: `false_dry_rate` = 0.125 / 0.268 / 0.444, `wet_area_contraction` = 0.046 / 0.135 / 0.383, `peak_depth_underprediction` = 0.024 m / 0.241 m / 1.381 m, `connectivity_loss_indicator` = 0.197 / 0.240 / 1.000, and `relative_volume_bias` = -0.040 / -0.145 / -0.448
+- Skipped diagnostic: topographic consistency was skipped because no shape-compatible DEM/static elevation layer was found
+- Decision: later model refinement should prioritize targeted physical-consistency constraints; a full SWE/PINN residual is not recommended without compatible velocity, flux, boundary, DEM, and source-sink information
+- Model status: no retraining, architecture modification, Phase 10 loss modification, `boundary_band_pixels` tuning, `boundary_weight` tuning, new sweep, metric-chasing experiment, traffic-impact modeling, or new prediction generation was performed
+- Current recommended Phase 10 setting: `boundary_band_pixels = 1`, `boundary_weight = 2.0`
+
 ## Interpretation Order
 
 For current repository interpretation, read the experiment trail in this order:
@@ -247,14 +278,17 @@ For current repository interpretation, read the experiment trail in this order:
 16. `docs/manuscript_evidence_figure_table_alignment.md`
 17. `docs/manuscript_full_draft_reliability_aware_urban_flood_warning.md`
 18. `docs/phase23_reliability_warning_case_study_findings.md`
-19. `docs/project_status.md`
+19. `docs/phase24_physical_consistency_deepening_findings.md`
+20. `docs/project_status.md`
 
 ## Next Stage
 
-The next stage should build on the Phase 12 to Phase 23 reliability/applicability, screening, warning-rule, synthesis, manuscript-writing, manuscript-consolidation, manuscript-draft, evidence-alignment, full-draft expansion, and warning case-study prototype materials rather than reopening Phase 10 tuning.
+The next stage should build on the Phase 12 to Phase 24 reliability/applicability, screening, warning-rule, synthesis, manuscript-writing, manuscript-consolidation, manuscript-draft, evidence-alignment, full-draft expansion, warning case-study prototype, and physical-consistency diagnostic materials rather than reopening Phase 10 tuning.
 
 Recommended next work:
 
+- prioritize targeted physical-consistency constraints, including false-dry reduction, wet-area contraction penalty, peak-depth preservation, wet-connectivity preservation, and volume-response consistency
+- avoid a full SWE/PINN residual unless compatible velocity, flux, boundary, DEM, and source-sink information become available
 - consider calibrated uncertainty only if calibration data and evaluation design are added
 - keep the current Phase 10 setting fixed unless new evidence justifies changing it
 - avoid broader boundary-weight sweeps

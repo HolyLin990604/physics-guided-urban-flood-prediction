@@ -47,6 +47,7 @@ flowchart LR
     R --> S[Phase 21<br/>Evidence and figure/table alignment]
     S --> T[Phase 22<br/>Full manuscript draft expansion]
     T --> U[Phase 23<br/>Reliability-aware warning case study]
+    U --> V[Phase 24<br/>Physical consistency diagnostics]
 
     A --> A1[Best-balanced mainline]
     B --> B1[Freer selector<br/>not enough]
@@ -69,6 +70,7 @@ flowchart LR
     S --> S1[Claim-to-evidence alignment<br/>using existing outputs and figures]
     T --> T1[Full academic draft expansion<br/>based on Phase 20-21]
     U --> U1[Representative warning prototype<br/>using Phase 15, Phase 16, and Phase 10 map arrays]
+    V --> V1[Physical consistency risk linkage<br/>false-dry / contraction / peaks / connectivity / volume]
 ```
 
 
@@ -177,6 +179,18 @@ Representative Phase 23 figures:
 ![Phase 23 caution case maps](analysis/phase23_warning_case_study/figures/caution_case_maps.png)
 
 ![Phase 23 high-risk case maps](analysis/phase23_warning_case_study/figures/high_risk_case_maps.png)
+
+Phase 24 deepens the reliability-aware warning framework by diagnosing whether the existing Phase 10 recommended surrogate outputs are physically consistent in volume response, wet-area contraction, peak-depth preservation, wet-area connectivity, temporal behavior, and linkage with Phase 15/16 warning-risk labels. It is a diagnostic phase only: no retraining, architecture modification, Phase 10 loss modification, boundary-parameter tuning, new sweep, metric chasing, traffic-impact modeling, or new prediction generation was performed. See `docs/phase24_physical_consistency_deepening_findings.md`.
+
+The main Phase 24 finding is that high-risk cases are not only statistically worse; they are physically less consistent. Relative to reliable cases, high-risk cases show stronger false-dry behavior, wet-area contraction, peak-depth underprediction, connectivity loss, and volume under-response. Correlations with `risk_score` are 0.913 for `false_dry_rate`, 0.862 for `wet_area_contraction`, 0.856 for `peak_depth_underprediction`, and 0.539 for `connectivity_loss_indicator`.
+
+Representative Phase 24 figures:
+
+![Phase 24 volume bias by warning level](analysis/phase24_physical_consistency/figures/volume_bias_by_warning_level.png)
+
+![Phase 24 peak underprediction by warning level](analysis/phase24_physical_consistency/figures/peak_underprediction_by_warning_level.png)
+
+![Phase 24 physics consistency versus risk score](analysis/phase24_physical_consistency/figures/physics_consistency_vs_risk_score.png)
 
 
 ## Phase 12 Reliability Diagnostics
@@ -338,9 +352,17 @@ Selected cases:
 
 The prototype demonstrates that the framework has moved beyond pure flood-depth prediction toward rapid prediction, reliability screening, scenario-level warning classification, pixel-level risk visualization, case-specific warning explanation, and applicability-boundary interpretation. See `docs/phase23_reliability_warning_case_study_findings.md`.
 
+## Phase 24 Physical Consistency Deepening and Process Diagnostics
+
+Phase 24 is a physical-consistency diagnostic phase for the existing Phase 10 recommended outputs. It links Phase 15/16 warning-risk labels with process-level behavior: false-dry rate, wet-area contraction, peak-depth underprediction, wet-connectivity loss, temporal volume response, and overall volume bias.
+
+The diagnosis confirms that high-risk cases are physically less consistent than reliable cases. Warning-level means for `reliable` / `caution` / `high-risk` are 0.125 / 0.268 / 0.444 for `false_dry_rate`, 0.046 / 0.135 / 0.383 for `wet_area_contraction`, 0.024 m / 0.241 m / 1.381 m for `peak_depth_underprediction`, 0.197 / 0.240 / 1.000 for `connectivity_loss_indicator`, and -0.040 / -0.145 / -0.448 for `relative_volume_bias`. Topographic consistency was skipped because no shape-compatible DEM/static elevation layer was found.
+
+The Phase 25 implication is targeted model refinement around false-dry reduction, wet-area contraction penalty, peak-depth preservation, wet-connectivity preservation, and volume-response consistency. A full SWE/PINN residual is not recommended unless compatible velocity, flux, boundary, DEM, and source-sink information become available.
+
 ## Historical Qualitative Examples
 
-The figures below are earlier-stage qualitative comparisons retained for visual reference. They are not the current primary evidence for the project state; the current project state is summarized above through Phase 23 reliability-aware warning case-study prototyping.
+The figures below are earlier-stage qualitative comparisons retained for visual reference. They are not the current primary evidence for the project state; the current project state is summarized above through Phase 24 physical-consistency diagnostics.
 
 <details>
 <summary>Expand earlier-stage qualitative flood-map examples</summary>
@@ -398,7 +420,8 @@ flowchart TD
     N --> O[Stage XV<br/>Manuscript evidence alignment]
     O --> P[Stage XVI<br/>Manuscript full draft expansion]
     P --> Q[Stage XVII<br/>Warning case-study prototype]
-    Q --> R[Next stage<br/>Calibration design only if needed]
+    Q --> R[Stage XVIII<br/>Physical consistency diagnostics]
+    R --> S[Next stage<br/>Targeted physical-consistency refinement]
 
     A1[Phase 2-5<br/>- M3 f025 remains overall best-balanced mainline<br/>- Phase 3.3 af025 remains strongest static structured refinement] --> A
     B1[Phase 6-7<br/>- adapt025 closed as negative/neutral<br/>- adapt010 promoted as active adaptive candidate] --> B
@@ -417,7 +440,8 @@ flowchart TD
     O1[Phase 21<br/>- claim-to-evidence alignment<br/>- figure/table planning<br/>- no new experiment] --> O
     P1[Phase 22<br/>- full academic manuscript draft<br/>- based on Phase 20-21<br/>- no new experiment] --> P
     Q1[Phase 23<br/>- representative warning case study<br/>- selected reliable / caution / high-risk cases<br/>- no retraining or new predictions] --> Q
-    R1[Future focus<br/>- calibrated uncertainty only with calibration design<br/>- no Phase 10 tuning without new diagnosis] --> R
+    R1[Phase 24<br/>- physical consistency linked to warning risk<br/>- false-dry / contraction / peak / connectivity / volume diagnostics<br/>- no retraining or new predictions] --> R
+    S1[Future focus<br/>- targeted physical-consistency constraints<br/>- no full SWE/PINN residual without required physics inputs] --> S
 ```
 
 
@@ -451,6 +475,8 @@ For the current staged experiment record, see:
 - `docs/manuscript_full_draft_reliability_aware_urban_flood_warning.md`
 - `docs/phase23_reliability_warning_case_study_plan.md`
 - `docs/phase23_reliability_warning_case_study_findings.md`
+- `docs/phase24_physical_consistency_deepening_plan.md`
+- `docs/phase24_physical_consistency_deepening_findings.md`
 
 
 ## Dataset
@@ -600,6 +626,7 @@ python scripts/analyze_phase14_confidence.py
 python scripts/screen_phase15_reliability.py
 python scripts/build_phase16_warning_rules.py
 python scripts/build_phase23_warning_case_study.py
+python scripts/analyze_phase24_physical_consistency.py
 ```
 
 Generated figures are organized under:
@@ -611,11 +638,12 @@ Generated figures are organized under:
 - `analysis/phase15_reliability_screening/figures/` for reliability-screening and risk-mapping outputs
 - `analysis/phase16_warning_rules/figures/` for reliability-aware warning-rule and applicability-boundary outputs
 - `analysis/phase23_warning_case_study/figures/` for representative warning case-study prototype outputs
+- `analysis/phase24_physical_consistency/figures/` for physical-consistency and warning-risk linkage diagnostics
 
 
 ## Current Project Status
 
-The repository has completed the main Phase 2-3 architecture comparison cycle, closed the Phase 6 `adapt025` pilot as negative/neutral, established Phase 7/8 `adapt010` as the active adaptive candidate before margin-aware refinement, completed Phase 9 interpretability diagnosis, completed the Phase 10 margin-aware refinement intervention, completed the Phase 12-16 reliability-aware warning layer, completed the Phase 17-22 manuscript synthesis and drafting sequence, and completed the Phase 23 reliability-aware warning case-study prototype.
+The repository has completed the main Phase 2-3 architecture comparison cycle, closed the Phase 6 `adapt025` pilot as negative/neutral, established Phase 7/8 `adapt010` as the active adaptive candidate before margin-aware refinement, completed Phase 9 interpretability diagnosis, completed the Phase 10 margin-aware refinement intervention, completed the Phase 12-16 reliability-aware warning layer, completed the Phase 17-22 manuscript synthesis and drafting sequence, completed the Phase 23 reliability-aware warning case-study prototype, and completed Phase 24 physical-consistency deepening diagnostics.
 
 Current project-level conclusions:
 
@@ -660,8 +688,13 @@ Current project-level conclusions:
 - **Phase 23 selected one `reliable`, one `caution`, and one `high-risk` case for warning-oriented interpretation**
 - **Phase 23 demonstrates rapid prediction, reliability screening, scenario-level warning classification, pixel-level risk visualization, case-specific warning explanation, and applicability-boundary interpretation**
 - **Phase 23 is an application-prototype phase only: no retraining, architecture change, Phase 10 loss change, boundary-parameter tuning, new sweep, metric-chasing experiment, or new prediction generation**
+- **Phase 24 has diagnosed physical consistency of the existing Phase 10 recommended outputs**
+- **Main Phase 24 finding: high-risk cases are statistically worse and physically less consistent, with stronger false-dry behavior, wet-area contraction, peak-depth underprediction, connectivity loss, and volume under-response**
+- **Phase 24 risk-score correlations: `false_dry_rate` = 0.913, `wet_area_contraction` = 0.862, `peak_depth_underprediction` = 0.856, and `connectivity_loss_indicator` = 0.539**
+- **Phase 24 topographic consistency was skipped because no shape-compatible DEM/static elevation layer was found**
+- **Phase 24 is diagnostic only: no retraining, architecture change, Phase 10 loss change, boundary-parameter tuning, new sweep, metric-chasing experiment, traffic-impact modeling, or new prediction generation**
 
-At this stage, the project has moved from broad model tuning to rapid flood prediction with reliability diagnosis, failure-mode interpretation, confidence proxy diagnostics, spatial risk mapping, warning-rule guidance, manuscript drafting, and a representative warning-oriented case-study prototype. No broader Phase 10 boundary-weight sweep is justified.
+At this stage, the project has moved from broad model tuning to rapid flood prediction with reliability diagnosis, failure-mode interpretation, confidence proxy diagnostics, spatial risk mapping, warning-rule guidance, manuscript drafting, representative warning-oriented case-study prototyping, and physical-consistency diagnostics. No broader Phase 10 boundary-weight sweep is justified.
 
 ## Representative Case Framing
 
@@ -671,7 +704,7 @@ Three representative cases continue to be useful for targeted comparison:
 - `seed202`: difficult-case reference where stronger structured refinement can show useful gains
 - `seed123`: repeatability reference for checking whether candidate behavior generalizes beyond the two anchor cases
 
-This framing motivated the Phase 6 Pilot A test, the Phase 7 conservative `adapt010` follow-up, the Phase 9 diagnosis, the Phase 10 margin-aware boundary-band refinement, the Phase 12 reliability/applicability diagnosis, the Phase 13 representative failure-case visual summary, the Phase 14 confidence proxy diagnosis, the Phase 15 reliability-screening layer, the Phase 16 warning-rule guidance layer, the Phase 17 reliability-aware framework synthesis, the Phase 19 manuscript-structure consolidation, the Phase 20 manuscript draft assembly, the Phase 21 manuscript evidence alignment, the Phase 22 manuscript full draft expansion, and the Phase 23 warning case-study prototype.
+This framing motivated the Phase 6 Pilot A test, the Phase 7 conservative `adapt010` follow-up, the Phase 9 diagnosis, the Phase 10 margin-aware boundary-band refinement, the Phase 12 reliability/applicability diagnosis, the Phase 13 representative failure-case visual summary, the Phase 14 confidence proxy diagnosis, the Phase 15 reliability-screening layer, the Phase 16 warning-rule guidance layer, the Phase 17 reliability-aware framework synthesis, the Phase 19 manuscript-structure consolidation, the Phase 20 manuscript draft assembly, the Phase 21 manuscript evidence alignment, the Phase 22 manuscript full draft expansion, the Phase 23 warning case-study prototype, and the Phase 24 physical-consistency diagnostics.
 
 
 ## Adaptive Candidate and Margin-Aware Refinement
@@ -729,10 +762,12 @@ The next justified follow-up is not another Phase 10 boundary-weight sweep. The 
 
 Recommended next work:
 
+- prioritize targeted physical-consistency constraints in a later model-refinement phase, including false-dry reduction, wet-area contraction penalty, peak-depth preservation, wet-connectivity preservation, and volume-response consistency
+- do not recommend a full SWE/PINN residual unless compatible velocity, flux, boundary, DEM, and source-sink information become available
 - consider calibrated uncertainty only if calibration data and evaluation design are added
 - keep `boundary_weight = 1.5` only as a conservative rollback setting
 - avoid new boundary-weight sweeps unless a new diagnosis clearly justifies them
-- keep using the Phase 12/13/14/15/16/17 reliability, failure-case, confidence-proxy, screening, warning-rule, and synthesis findings, plus the Phase 18-22 manuscript materials and the Phase 23 warning case-study prototype, to define where the current model is reliable and where caution is required
+- keep using the Phase 12/13/14/15/16/17 reliability, failure-case, confidence-proxy, screening, warning-rule, and synthesis findings, plus the Phase 18-22 manuscript materials, the Phase 23 warning case-study prototype, and the Phase 24 physical-consistency diagnostics, to define where the current model is reliable and where caution is required
 
 ## License
 
