@@ -42,6 +42,12 @@ class PhysicsLossController:
             loss_fn=lambda cfg: self._wet_dry_consistency_loss(prediction, target, cfg),
         )
         total, metrics = self._apply_term(
+            name="target_wet_recall_consistency",
+            total=total,
+            metrics=metrics,
+            loss_fn=lambda cfg: self._target_wet_recall_consistency_loss(prediction, target, cfg),
+        )
+        total, metrics = self._apply_term(
             name="rainfall_depth_consistency",
             total=total,
             metrics=metrics,
@@ -101,6 +107,20 @@ class PhysicsLossController:
         boundary_band = PhysicsLossController._target_wet_boundary_band(target_wet, boundary_band_pixels)
         weights = torch.ones_like(loss).masked_fill(boundary_band, boundary_weight)
         return (loss * weights).sum() / weights.sum().clamp_min(1e-6)
+
+    @staticmethod
+    def _target_wet_recall_consistency_loss(
+        prediction: torch.Tensor,
+        target: torch.Tensor,
+        cfg: Dict,
+    ) -> torch.Tensor:
+        threshold = float(cfg.get("threshold", 0.05))
+        temperature = float(cfg.get("temperature", 0.02))
+        eps = float(cfg.get("eps", 1e-6))
+        target_wet = (target > threshold).to(dtype=prediction.dtype)
+        pred_wet_prob = torch.sigmoid((prediction - threshold) / max(temperature, eps))
+        penalty = (1.0 - pred_wet_prob).pow(2) * target_wet
+        return penalty.sum() / target_wet.sum().clamp_min(eps)
 
     @staticmethod
     def _target_wet_boundary_band(target_wet: torch.Tensor, band_pixels: int) -> torch.Tensor:
