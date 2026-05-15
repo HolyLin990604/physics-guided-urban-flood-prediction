@@ -58,19 +58,58 @@ LOWER_IS_BETTER = {
 }
 
 STANDARD_METRICS = {
-    "phase10_seed123_baseline": {
-        "rmse": 0.061625179099409205,
-        "mae": 0.02252520179670108,
-        "wet_dry_iou": 0.7068078314003191,
-        "rollout_stability": 0.982880363338872,
-        "step_rmse_std": 0.017476716078817844,
+    "seed123": {
+        "phase10_label": "phase10_seed123_baseline",
+        "phase25_label": "phase25_seed123",
+        "phase10": {
+            "rmse": 0.061625179099409205,
+            "mae": 0.02252520179670108,
+            "wet_dry_iou": 0.7068078314003191,
+            "rollout_stability": 0.982880363338872,
+            "step_rmse_std": 0.017476716078817844,
+        },
+        "phase25": {
+            "rmse": 0.05673027646384741,
+            "mae": 0.02153666278249339,
+            "wet_dry_iou": 0.780236404193075,
+            "rollout_stability": 0.9832738888891119,
+            "step_rmse_std": 0.017054059983868348,
+        },
     },
-    "phase25_seed123": {
-        "rmse": 0.05673027646384741,
-        "mae": 0.02153666278249339,
-        "wet_dry_iou": 0.780236404193075,
-        "rollout_stability": 0.9832738888891119,
-        "step_rmse_std": 0.017054059983868348,
+    "seed42": {
+        "phase10_label": "phase10_seed42_baseline",
+        "phase25_label": "phase25_seed42",
+        "phase10": {
+            "rmse": 0.05858768875661649,
+            "mae": 0.021415419190337782,
+            "wet_dry_iou": 0.6821141023384897,
+            "rollout_stability": 0.9878152420646266,
+            "step_rmse_std": 0.012386485223511332,
+        },
+        "phase25": {
+            "rmse": 0.04474700261887751,
+            "mae": 0.01793944482740603,
+            "wet_dry_iou": 0.8038777207073412,
+            "rollout_stability": 0.989504199278982,
+            "step_rmse_std": 0.010653742564548003,
+        },
+    },
+}
+
+PRESETS = {
+    "seed123": {
+        "phase10_dir": DEFAULT_PHASE10_DIR,
+        "phase25_dir": DEFAULT_PHASE25_DIR,
+        "output_dir": DEFAULT_OUTPUT_DIR,
+        "phase10_run_token": DEFAULT_PHASE10_RUN_TOKEN,
+        "phase25_run_token": DEFAULT_PHASE25_RUN_TOKEN,
+    },
+    "seed42": {
+        "phase10_dir": BASE_DIR / "phase10_seed42_physical",
+        "phase25_dir": BASE_DIR / "phase25_seed42_physical",
+        "output_dir": BASE_DIR / "aligned_comparison_seed42",
+        "phase10_run_token": "phase10_margin_aware_boundary_band_seed42_40e",
+        "phase25_run_token": "phase25_target_wet_recall_seed42_40e",
     },
 }
 
@@ -89,17 +128,40 @@ def display_path(path: Path) -> str:
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description=(
-            "Compare Phase 25 target-wet recall diagnostics against the Phase 10 seed123 baseline "
+            "Compare Phase 25 target-wet recall diagnostics against the Phase 10 baseline "
             "on common aligned cases only. This script reads existing CSVs; it does not retrain or "
             "generate predictions."
         )
     )
-    parser.add_argument("--phase10-dir", type=Path, default=DEFAULT_PHASE10_DIR)
-    parser.add_argument("--phase25-dir", type=Path, default=DEFAULT_PHASE25_DIR)
-    parser.add_argument("--output-dir", type=Path, default=DEFAULT_OUTPUT_DIR)
-    parser.add_argument("--phase10-run-token", default=DEFAULT_PHASE10_RUN_TOKEN)
-    parser.add_argument("--phase25-run-token", default=DEFAULT_PHASE25_RUN_TOKEN)
+    parser.add_argument("--seed", choices=sorted(PRESETS), default="seed123")
+    parser.add_argument("--phase10-dir", type=Path)
+    parser.add_argument("--phase25-dir", type=Path)
+    parser.add_argument("--output-dir", type=Path)
+    parser.add_argument("--phase10-run-token")
+    parser.add_argument("--phase25-run-token")
+    parser.add_argument(
+        "--phase10-standard-metrics-json",
+        type=Path,
+        help="Optional JSON file containing Phase 10 standard test metrics.",
+    )
+    parser.add_argument(
+        "--phase25-standard-metrics-json",
+        type=Path,
+        help="Optional JSON file containing Phase 25 standard test metrics.",
+    )
     return parser.parse_args()
+
+
+def resolved_config(args: argparse.Namespace) -> dict[str, Any]:
+    preset = PRESETS[args.seed]
+    return {
+        "seed": args.seed,
+        "phase10_dir": args.phase10_dir or preset["phase10_dir"],
+        "phase25_dir": args.phase25_dir or preset["phase25_dir"],
+        "output_dir": args.output_dir or preset["output_dir"],
+        "phase10_run_token": args.phase10_run_token or preset["phase10_run_token"],
+        "phase25_run_token": args.phase25_run_token or preset["phase25_run_token"],
+    }
 
 
 def read_csv_rows(path: Path) -> list[dict[str, str]]:
@@ -132,6 +194,14 @@ def write_json(path: Path, data: dict[str, Any]) -> None:
     with path.open("w", encoding="utf-8") as handle:
         json.dump(data, handle, indent=2, sort_keys=True)
         handle.write("\n")
+
+
+def read_json(path: Path) -> dict[str, Any]:
+    with path.open("r", encoding="utf-8") as handle:
+        data = json.load(handle)
+    if not isinstance(data, dict):
+        raise ValueError(f"Expected a JSON object in {display_path(path)}")
+    return data
 
 
 def to_float(value: Any) -> float:
@@ -219,15 +289,28 @@ def load_enriched_rows(input_dir: Path, run_token: str) -> tuple[list[dict[str, 
     return rows, len(raw_rows)
 
 
-def standard_metric_deltas() -> dict[str, dict[str, float]]:
-    phase10 = STANDARD_METRICS["phase10_seed123_baseline"]
-    phase25 = STANDARD_METRICS["phase25_seed123"]
+def load_standard_metrics(args: argparse.Namespace) -> dict[str, Any]:
+    preset = STANDARD_METRICS[args.seed]
+    phase10 = read_json(resolve_repo_path(args.phase10_standard_metrics_json)) if args.phase10_standard_metrics_json else preset["phase10"]
+    phase25 = read_json(resolve_repo_path(args.phase25_standard_metrics_json)) if args.phase25_standard_metrics_json else preset["phase25"]
+    return {
+        "phase10_label": preset["phase10_label"],
+        "phase25_label": preset["phase25_label"],
+        "phase10": phase10,
+        "phase25": phase25,
+    }
+
+
+def standard_metric_deltas(phase10: dict[str, Any], phase25: dict[str, Any]) -> dict[str, dict[str, float | None]]:
     deltas = {}
-    for metric in phase10:
+    for metric in sorted(set(phase10) | set(phase25)):
+        phase10_value = to_float(phase10.get(metric))
+        phase25_value = to_float(phase25.get(metric))
+        delta = phase25_value - phase10_value if math.isfinite(phase10_value) and math.isfinite(phase25_value) else math.nan
         deltas[metric] = {
-            "phase10": phase10[metric],
-            "phase25": phase25[metric],
-            "delta_phase25_minus_phase10": phase25[metric] - phase10[metric],
+            "phase10": clean_number(phase10_value),
+            "phase25": clean_number(phase25_value),
+            "delta_phase25_minus_phase10": clean_number(delta),
         }
     return deltas
 
@@ -321,12 +404,13 @@ def build_aligned_rows(
 
 def main() -> None:
     args = parse_args()
-    phase10_dir = resolve_repo_path(args.phase10_dir)
-    phase25_dir = resolve_repo_path(args.phase25_dir)
-    output_dir = resolve_repo_path(args.output_dir)
+    config = resolved_config(args)
+    phase10_dir = resolve_repo_path(config["phase10_dir"])
+    phase25_dir = resolve_repo_path(config["phase25_dir"])
+    output_dir = resolve_repo_path(config["output_dir"])
 
-    phase10_rows, phase10_raw_rows = load_enriched_rows(phase10_dir, args.phase10_run_token)
-    phase25_rows, phase25_raw_rows = load_enriched_rows(phase25_dir, args.phase25_run_token)
+    phase10_rows, phase10_raw_rows = load_enriched_rows(phase10_dir, config["phase10_run_token"])
+    phase25_rows, phase25_raw_rows = load_enriched_rows(phase25_dir, config["phase25_run_token"])
     key_cols = choose_alignment_key(phase10_rows, phase25_rows)
     aligned_rows, row_counts = build_aligned_rows(
         phase10_rows, phase25_rows, key_cols, phase10_raw_rows, phase25_raw_rows
@@ -334,10 +418,12 @@ def main() -> None:
 
     metric_summary = [summarize_metric(aligned_rows, metric) for metric in METRICS]
     warning_summary = summarize_by_warning_level(aligned_rows)
+    standard_metrics = load_standard_metrics(args)
+    standard_deltas = standard_metric_deltas(standard_metrics["phase10"], standard_metrics["phase25"])
     standard = {
-        "phase10_seed123_baseline": STANDARD_METRICS["phase10_seed123_baseline"],
-        "phase25_seed123": STANDARD_METRICS["phase25_seed123"],
-        "delta_phase25_minus_phase10": standard_metric_deltas(),
+        standard_metrics["phase10_label"]: standard_metrics["phase10"],
+        standard_metrics["phase25_label"]: standard_metrics["phase25"],
+        "delta_phase25_minus_phase10": standard_deltas,
     }
 
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -352,12 +438,12 @@ def main() -> None:
             "key_columns": list(key_cols),
             "key_selection_policy": "First available unique stable key set from scenario_identity, scenario_key, stable scenario/sample columns, then phase24_case_key. run_name is never used as an alignment key.",
             "phase10_subset_filter": {
-                "run_token": args.phase10_run_token,
-                "note": "Used only to select the Phase 10 seed123 diagnostic subset from the aggregate CSV before alignment.",
+                "run_token": config["phase10_run_token"],
+                "note": "Used only to select the Phase 10 diagnostic subset from the aggregate CSV before alignment.",
             },
             "phase25_subset_filter": {
-                "run_token": args.phase25_run_token,
-                "note": "Used only to select the Phase 25 seed123 diagnostic subset from the aggregate CSV before alignment.",
+                "run_token": config["phase25_run_token"],
+                "note": "Used only to select the Phase 25 diagnostic subset from the aggregate CSV before alignment.",
             },
             **row_counts,
         },
@@ -372,7 +458,7 @@ def main() -> None:
             "aligned_metric_delta_summary": display_path(output_dir / "aligned_metric_delta_summary.csv"),
             "phase10_vs_phase25_standard_metrics": display_path(output_dir / "phase10_vs_phase25_standard_metrics.json"),
         },
-        "standard_metric_deltas": standard["delta_phase25_minus_phase10"],
+        "standard_metric_deltas": standard_deltas,
         "physical_metric_delta_summary": metric_summary_by_name,
         "warning_level_summary": warning_summary,
         "phase25_improves_false_dry_rate": metric_summary_by_name["false_dry_rate"]["phase25_improved"],
