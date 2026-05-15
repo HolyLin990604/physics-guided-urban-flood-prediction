@@ -23,6 +23,7 @@ The repository should currently be interpreted as follows:
 - Phase 22 completed manuscript full draft expansion, with a fuller academic manuscript draft created from the Phase 20 skeleton and Phase 21 evidence alignment.
 - Phase 23 completed the reliability-aware warning case-study and application prototype.
 - Phase 24 completed physical consistency deepening and process diagnostics for the existing Phase 10 recommended outputs.
+- Phase 25 completed Physics-Consistency Guided Surrogate Refinement: Target-Wet Recall Consistency through three-seed synthesis.
 
 The current Phase 10 conclusion is that boundary-band weighted wet/dry consistency refinement has passed test-facing confirmation on the three key project seeds: `seed123`, `seed42`, and `seed202`.
 
@@ -61,9 +62,15 @@ The current Phase 23 conclusion is that the completed reliability-aware warning 
 
 The current Phase 24 conclusion is that high-risk cases are not only statistically worse; they are physically less consistent. Compared with reliable cases, high-risk cases show stronger false-dry behavior, stronger wet-area contraction, stronger peak-depth underprediction, stronger connectivity loss, and stronger volume under-response. Correlations with `risk_score` are 0.913 for `false_dry_rate`, 0.862 for `wet_area_contraction`, 0.856 for `peak_depth_underprediction`, and 0.539 for `connectivity_loss_indicator`.
 
-The current project position after Phase 24 is rapid flood prediction with reliability diagnosis, failure-mode interpretation, confidence proxy diagnostics, spatial risk mapping, deterministic warning-rule guidance, manuscript-ready synthesis, manuscript drafting, representative case-specific warning interpretation, and physical-consistency diagnosis. Later model refinement should prioritize targeted physical-consistency constraints, including false-dry reduction, wet-area contraction penalty, peak-depth preservation, wet-connectivity preservation, and volume-response consistency. A full SWE/PINN residual is not recommended unless compatible velocity, flux, boundary, DEM, and source-sink information become available.
+The current Phase 25 conclusion is that the Phase 24 physical-consistency diagnosis has been converted into a targeted model refinement. The fixed Phase 10 boundary-band settings remain `boundary_band_pixels = 1` and `boundary_weight = 2.0`. Phase 25 adds config-gated `target_wet_recall_consistency` with `weight = 0.02`, `threshold = 0.05`, `temperature = 0.02`, and `eps = 1e-6`.
 
-No retraining, architecture modification, Phase 10 loss modification, `boundary_band_pixels` tuning, `boundary_weight` tuning, additional Phase 10 boundary-weight sweep, new sweep, new prediction generation, metric-chasing experiment, traffic-impact modeling, invented references, unsupported claims, or new uncertainty claim was performed. The current recommended Phase 10 setting remains `boundary_band_pixels = 1` and `boundary_weight = 2.0`.
+Across `seed123`, `seed42`, and `seed202`, Phase 25 consistently improved standard test metrics and reduced the intended aligned physical failure modes. Mean standard test deltas versus Phase 10 were `RMSE = -0.007057`, `MAE = -0.001519`, `wet/dry IoU = +0.076670`, `rollout stability = +0.001035`, and `step RMSE std = -0.001071`. Mean aligned physical deltas were `false_dry_rate = -0.111321`, `wet_area_contraction = -0.079104`, `relative_volume_bias = +0.105093`, `peak_depth_underprediction = -0.014962`, `RMSE = -0.007244`, and `MAE = -0.001885`.
+
+Phase 25 is a diagnosis-driven, depth-field-compatible physical-consistency refinement. It improves target-wet recall and wet-region preservation while maintaining or improving standard prediction metrics. It is a strong three-seed positive candidate and a credible targeted refinement over the Phase 10 baseline, but not a complete physical-consistency solution: `false_wet_rate` increased slightly on average, `connectivity_loss_indicator` was not consistently improved, and no full SWE/PINN residual was implemented.
+
+The current project position after Phase 25 is rapid flood prediction with reliability diagnosis, failure-mode interpretation, confidence proxy diagnostics, spatial risk mapping, deterministic warning-rule guidance, manuscript-ready synthesis, manuscript drafting, representative case-specific warning interpretation, physical-consistency diagnosis, and diagnosis-driven target-wet recall refinement. Later work should focus on the remaining Phase 25 limitations, especially slight false-wet increase and non-uniform connectivity behavior. A full SWE/PINN residual is not recommended unless compatible velocity, flux, boundary, DEM, and source-sink information become available.
+
+No additional Phase 10 boundary-weight sweep, Phase 10 boundary-parameter tuning, traffic-impact modeling, invented references, unsupported claims, or new uncertainty claim was performed. The current Phase 10 boundary-band setting remains `boundary_band_pixels = 1` and `boundary_weight = 2.0`.
 
 ## Meaning Of Each Reference
 
@@ -370,6 +377,36 @@ The Phase 24 diagnostics indicate:
 - no retraining, architecture modification, Phase 10 loss modification, `boundary_weight` tuning, `boundary_band_pixels` tuning, new sweep, new prediction generation, metric-chasing experiment, or traffic-impact modeling was performed
 - the current recommended Phase 10 setting remains `boundary_band_pixels = 1` and `boundary_weight = 2.0`
 
+### Physics-consistency guided surrogate refinement: target-wet recall consistency
+
+Phase 25 converts the Phase 24 physical-consistency diagnosis into a targeted model refinement to reduce false-dry behavior and wet-area contraction.
+
+Phase 25 artifacts include:
+
+- `docs/phase25_physics_consistency_guided_refinement_plan.md`
+- `utils/physics_losses.py`
+- `configs/train_phase25_target_wet_recall_seed123_40e.json`
+- `configs/train_phase25_target_wet_recall_seed42_40e.json`
+- `configs/train_phase25_target_wet_recall_seed202_40e.json`
+- `docs/phase25_target_wet_recall_implementation_note.md`
+- `scripts/compare_phase25_target_wet_recall_aligned.py`
+- `analysis/phase25_target_wet_recall_comparison/`
+- `docs/phase25_target_wet_recall_pilot_findings.md`
+- `docs/phase25_seed42_guardrail_findings.md`
+- `docs/phase25_three_seed_target_wet_recall_synthesis_findings.md`
+
+The Phase 25 refinement indicates:
+
+- Phase 10 boundary-band settings stayed fixed at `boundary_band_pixels = 1` and `boundary_weight = 2.0`
+- `target_wet_recall_consistency` used `weight = 0.02`, `threshold = 0.05`, `temperature = 0.02`, and `eps = 1e-6`
+- standard RMSE, MAE, and wet/dry IoU improved across `seed123`, `seed42`, and `seed202`
+- mean standard test deltas versus Phase 10 were `RMSE = -0.007057`, `MAE = -0.001519`, `wet/dry IoU = +0.076670`, `rollout stability = +0.001035`, and `step RMSE std = -0.001071`
+- false-dry rate and wet-area contraction improved in all three seeds
+- mean aligned physical deltas versus Phase 10 were `false_dry_rate = -0.111321`, `wet_area_contraction = -0.079104`, `relative_volume_bias = +0.105093`, `peak_depth_underprediction = -0.014962`, `RMSE = -0.007244`, and `MAE = -0.001885`
+- high-risk cases showed especially strong false-dry and wet-area contraction reductions
+- `false_wet_rate` increased slightly and `connectivity_loss_indicator` was not consistently improved
+- Phase 25 is a strong three-seed positive candidate, not a complete hydrodynamic consistency solution or full SWE/PINN residual
+
 ## Practical Reading Guide
 
 When reading the repository:
@@ -393,6 +430,7 @@ When reading the repository:
 - read Phase 22 as the full academic manuscript draft expansion based on Phase 20 and Phase 21, not as a new experiment
 - read Phase 23 as a representative warning-oriented case-study prototype, not as retraining, tuning, or new prediction generation
 - read Phase 24 as physical-consistency diagnostics for existing Phase 10 outputs, not as retraining, tuning, new predictions, or a full physics-residual model
+- read Phase 25 as a targeted target-wet recall and wet-region preservation refinement, not as a complete physical-consistency solution
 
 ## Key Documents
 
@@ -427,4 +465,9 @@ When reading the repository:
 - `docs/phase23_reliability_warning_case_study_findings.md`
 - `docs/phase24_physical_consistency_deepening_plan.md`
 - `docs/phase24_physical_consistency_deepening_findings.md`
+- `docs/phase25_physics_consistency_guided_refinement_plan.md`
+- `docs/phase25_target_wet_recall_implementation_note.md`
+- `docs/phase25_target_wet_recall_pilot_findings.md`
+- `docs/phase25_seed42_guardrail_findings.md`
+- `docs/phase25_three_seed_target_wet_recall_synthesis_findings.md`
 - `docs/experiment_index.md`

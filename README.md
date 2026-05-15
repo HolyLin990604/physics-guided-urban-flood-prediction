@@ -48,6 +48,7 @@ flowchart LR
     S --> T[Phase 22<br/>Full manuscript draft expansion]
     T --> U[Phase 23<br/>Reliability-aware warning case study]
     U --> V[Phase 24<br/>Physical consistency diagnostics]
+    V --> W[Phase 25<br/>Target-wet recall consistency]
 
     A --> A1[Best-balanced mainline]
     B --> B1[Freer selector<br/>not enough]
@@ -71,6 +72,7 @@ flowchart LR
     T --> T1[Full academic draft expansion<br/>based on Phase 20-21]
     U --> U1[Representative warning prototype<br/>using Phase 15, Phase 16, and Phase 10 map arrays]
     V --> V1[Physical consistency risk linkage<br/>false-dry / contraction / peaks / connectivity / volume]
+    W --> W1[Diagnosis-driven refinement<br/>target-wet recall and wet-region preservation]
 ```
 
 
@@ -183,6 +185,12 @@ Representative Phase 23 figures:
 Phase 24 deepens the reliability-aware warning framework by diagnosing whether the existing Phase 10 recommended surrogate outputs are physically consistent in volume response, wet-area contraction, peak-depth preservation, wet-area connectivity, temporal behavior, and linkage with Phase 15/16 warning-risk labels. It is a diagnostic phase only: no retraining, architecture modification, Phase 10 loss modification, boundary-parameter tuning, new sweep, metric chasing, traffic-impact modeling, or new prediction generation was performed. See `docs/phase24_physical_consistency_deepening_findings.md`.
 
 The main Phase 24 finding is that high-risk cases are not only statistically worse; they are physically less consistent. Relative to reliable cases, high-risk cases show stronger false-dry behavior, wet-area contraction, peak-depth underprediction, connectivity loss, and volume under-response. Correlations with `risk_score` are 0.913 for `false_dry_rate`, 0.862 for `wet_area_contraction`, 0.856 for `peak_depth_underprediction`, and 0.539 for `connectivity_loss_indicator`.
+
+Phase 25 converts the Phase 24 physical-consistency diagnosis into a targeted model refinement: **Physics-Consistency Guided Surrogate Refinement: Target-Wet Recall Consistency**. The fixed Phase 10 boundary-band settings remain `boundary_band_pixels = 1` and `boundary_weight = 2.0`; Phase 25 adds a config-gated `target_wet_recall_consistency` loss with `weight = 0.02`, `threshold = 0.05`, `temperature = 0.02`, and `eps = 1e-6`. See `docs/phase25_three_seed_target_wet_recall_synthesis_findings.md`.
+
+The main Phase 25 finding is that target-wet recall consistency is a strong three-seed positive candidate and a credible targeted refinement over the Phase 10 baseline. Across `seed123`, `seed42`, and `seed202`, it improved standard test metrics and reduced the intended aligned physical failure modes. Mean standard test deltas versus Phase 10 were `RMSE = -0.007057`, `MAE = -0.001519`, `wet/dry IoU = +0.076670`, `rollout stability = +0.001035`, and `step RMSE std = -0.001071`. Mean aligned physical deltas were `false_dry_rate = -0.111321`, `wet_area_contraction = -0.079104`, `relative_volume_bias = +0.105093`, `peak_depth_underprediction = -0.014962`, `RMSE = -0.007244`, and `MAE = -0.001885`.
+
+Phase 25 is a diagnosis-driven, depth-field-compatible physical-consistency refinement. It improves target-wet recall and wet-region preservation while maintaining or improving standard prediction metrics. Remaining limitations include slight false-wet increase and non-uniform connectivity behavior; Phase 25 is not a complete hydrodynamic consistency solution and does not implement a full SWE/PINN residual.
 
 Representative Phase 24 figures:
 
@@ -364,11 +372,28 @@ Phase 24 is a physical-consistency diagnostic phase for the existing Phase 10 re
 
 The diagnosis confirms that high-risk cases are physically less consistent than reliable cases. Warning-level means for `reliable` / `caution` / `high-risk` are 0.125 / 0.268 / 0.444 for `false_dry_rate`, 0.046 / 0.135 / 0.383 for `wet_area_contraction`, 0.024 m / 0.241 m / 1.381 m for `peak_depth_underprediction`, 0.197 / 0.240 / 1.000 for `connectivity_loss_indicator`, and -0.040 / -0.145 / -0.448 for `relative_volume_bias`. Topographic consistency was skipped because no shape-compatible DEM/static elevation layer was found.
 
-The Phase 25 implication is targeted model refinement around false-dry reduction, wet-area contraction penalty, peak-depth preservation, wet-connectivity preservation, and volume-response consistency. A full SWE/PINN residual is not recommended unless compatible velocity, flux, boundary, DEM, and source-sink information become available.
+The Phase 25 implication was a targeted model refinement around false-dry reduction and wet-area preservation while keeping the Phase 10 boundary-band settings fixed. A full SWE/PINN residual is not recommended unless compatible velocity, flux, boundary, DEM, and source-sink information become available.
+
+## Phase 25 Physics-Consistency Guided Surrogate Refinement: Target-Wet Recall Consistency
+
+Phase 25 adds a config-gated `target_wet_recall_consistency` loss to reduce false-dry behavior and wet-area contraction. It keeps the Phase 10 boundary-band settings fixed at `boundary_band_pixels = 1` and `boundary_weight = 2.0`.
+
+The Phase 25 loss setting is:
+
+- `target_wet_recall_consistency.weight = 0.02`
+- `threshold = 0.05`
+- `temperature = 0.02`
+- `eps = 1e-6`
+
+Across `seed123`, `seed42`, and `seed202`, Phase 25 consistently improved standard test metrics versus Phase 10. Mean deltas were `RMSE = -0.007057`, `MAE = -0.001519`, `wet/dry IoU = +0.076670`, `rollout stability = +0.001035`, and `step RMSE std = -0.001071`.
+
+Aligned physical metrics also moved in the intended direction for the main diagnosed failure modes: mean deltas were `false_dry_rate = -0.111321`, `wet_area_contraction = -0.079104`, `relative_volume_bias = +0.105093`, `peak_depth_underprediction = -0.014962`, `RMSE = -0.007244`, and `MAE = -0.001885`. False-dry rate and wet-area contraction improved in all three seeds, with especially strong reductions in high-risk cases.
+
+Phase 25 is a strong three-seed positive candidate and a credible targeted refinement over the Phase 10 baseline. It is not a complete physical-consistency solution: `false_wet_rate` increased slightly on average, `connectivity_loss_indicator` was not consistently improved, and the model still does not implement a full SWE/PINN residual.
 
 ## Historical Qualitative Examples
 
-The figures below are earlier-stage qualitative comparisons retained for visual reference. They are not the current primary evidence for the project state; the current project state is summarized above through Phase 24 physical-consistency diagnostics.
+The figures below are earlier-stage qualitative comparisons retained for visual reference. They are not the current primary evidence for the project state; the current project state is summarized above through Phase 25 target-wet recall consistency.
 
 <details>
 <summary>Expand earlier-stage qualitative flood-map examples</summary>
@@ -427,7 +452,8 @@ flowchart TD
     O --> P[Stage XVI<br/>Manuscript full draft expansion]
     P --> Q[Stage XVII<br/>Warning case-study prototype]
     Q --> R[Stage XVIII<br/>Physical consistency diagnostics]
-    R --> S[Next stage<br/>Targeted physical-consistency refinement]
+    R --> S[Stage XIX<br/>Target-wet recall refinement]
+    S --> T[Next stage<br/>Focused limitation analysis]
 
     A1[Phase 2-5<br/>- M3 f025 remains overall best-balanced mainline<br/>- Phase 3.3 af025 remains strongest static structured refinement] --> A
     B1[Phase 6-7<br/>- adapt025 closed as negative/neutral<br/>- adapt010 promoted as active adaptive candidate] --> B
@@ -447,7 +473,8 @@ flowchart TD
     P1[Phase 22<br/>- full academic manuscript draft<br/>- based on Phase 20-21<br/>- no new experiment] --> P
     Q1[Phase 23<br/>- representative warning case study<br/>- selected reliable / caution / high-risk cases<br/>- no retraining or new predictions] --> Q
     R1[Phase 24<br/>- physical consistency linked to warning risk<br/>- false-dry / contraction / peak / connectivity / volume diagnostics<br/>- no retraining or new predictions] --> R
-    S1[Future focus<br/>- targeted physical-consistency constraints<br/>- no full SWE/PINN residual without required physics inputs] --> S
+    S1[Phase 25<br/>- target-wet recall consistency<br/>- three-seed positive candidate<br/>- false-dry and contraction reduced] --> S
+    T1[Future focus<br/>- false-wet and connectivity limitations<br/>- no full SWE/PINN residual without required physics inputs] --> T
 ```
 
 
@@ -483,6 +510,11 @@ For the current staged experiment record, see:
 - `docs/phase23_reliability_warning_case_study_findings.md`
 - `docs/phase24_physical_consistency_deepening_plan.md`
 - `docs/phase24_physical_consistency_deepening_findings.md`
+- `docs/phase25_physics_consistency_guided_refinement_plan.md`
+- `docs/phase25_target_wet_recall_implementation_note.md`
+- `docs/phase25_target_wet_recall_pilot_findings.md`
+- `docs/phase25_seed42_guardrail_findings.md`
+- `docs/phase25_three_seed_target_wet_recall_synthesis_findings.md`
 
 
 ## Dataset
@@ -633,9 +665,10 @@ python scripts/screen_phase15_reliability.py
 python scripts/build_phase16_warning_rules.py
 python scripts/build_phase23_warning_case_study.py
 python scripts/analyze_phase24_physical_consistency.py
+python scripts/compare_phase25_target_wet_recall_aligned.py
 ```
 
-Generated figures are organized under:
+Generated figures and analysis outputs are organized under:
 
 - `docs/figures/phase2_qualitative/` for earlier qualitative comparisons
 - `analysis/phase12_reliability/figures/` for current reliability diagnostics
@@ -645,11 +678,12 @@ Generated figures are organized under:
 - `analysis/phase16_warning_rules/figures/` for reliability-aware warning-rule and applicability-boundary outputs
 - `analysis/phase23_warning_case_study/figures/` for representative warning case-study prototype outputs
 - `analysis/phase24_physical_consistency/figures/` for physical-consistency and warning-risk linkage diagnostics
+- `analysis/phase25_target_wet_recall_comparison/` for aligned Phase 25 versus Phase 10 target-wet recall comparison outputs
 
 
 ## Current Project Status
 
-The repository has completed the main Phase 2-3 architecture comparison cycle, closed the Phase 6 `adapt025` pilot as negative/neutral, established Phase 7/8 `adapt010` as the active adaptive candidate before margin-aware refinement, completed Phase 9 interpretability diagnosis, completed the Phase 10 margin-aware refinement intervention, completed the Phase 12-16 reliability-aware warning layer, completed the Phase 17-22 manuscript synthesis and drafting sequence, completed the Phase 23 reliability-aware warning case-study prototype, and completed Phase 24 physical-consistency deepening diagnostics.
+The repository has completed the main Phase 2-3 architecture comparison cycle, closed the Phase 6 `adapt025` pilot as negative/neutral, established Phase 7/8 `adapt010` as the active adaptive candidate before margin-aware refinement, completed Phase 9 interpretability diagnosis, completed the Phase 10 margin-aware refinement intervention, completed the Phase 12-16 reliability-aware warning layer, completed the Phase 17-22 manuscript synthesis and drafting sequence, completed the Phase 23 reliability-aware warning case-study prototype, completed Phase 24 physical-consistency deepening diagnostics, and completed Phase 25 target-wet recall consistency refinement through three-seed synthesis.
 
 Current project-level conclusions:
 
@@ -699,8 +733,14 @@ Current project-level conclusions:
 - **Phase 24 risk-score correlations: `false_dry_rate` = 0.913, `wet_area_contraction` = 0.862, `peak_depth_underprediction` = 0.856, and `connectivity_loss_indicator` = 0.539**
 - **Phase 24 topographic consistency was skipped because no shape-compatible DEM/static elevation layer was found**
 - **Phase 24 is diagnostic only: no retraining, architecture change, Phase 10 loss change, boundary-parameter tuning, new sweep, metric-chasing experiment, traffic-impact modeling, or new prediction generation**
+- **Phase 25 completed Physics-Consistency Guided Surrogate Refinement: Target-Wet Recall Consistency**
+- **Phase 25 keeps Phase 10 boundary-band settings fixed: `boundary_band_pixels = 1`, `boundary_weight = 2.0`**
+- **Phase 25 adds config-gated `target_wet_recall_consistency` with `weight = 0.02`, `threshold = 0.05`, `temperature = 0.02`, and `eps = 1e-6`**
+- **Mean Phase 25 standard test deltas versus Phase 10: `RMSE = -0.007057`, `MAE = -0.001519`, `wet/dry IoU = +0.076670`, `rollout stability = +0.001035`, and `step RMSE std = -0.001071`**
+- **Mean aligned physical deltas versus Phase 10: `false_dry_rate = -0.111321`, `wet_area_contraction = -0.079104`, `relative_volume_bias = +0.105093`, `peak_depth_underprediction = -0.014962`, `RMSE = -0.007244`, and `MAE = -0.001885`**
+- **Phase 25 is a strong three-seed positive candidate for reducing false-dry behavior and wet-area contraction, but not a complete physical-consistency solution**
 
-At this stage, the project has moved from broad model tuning to rapid flood prediction with reliability diagnosis, failure-mode interpretation, confidence proxy diagnostics, spatial risk mapping, warning-rule guidance, manuscript drafting, representative warning-oriented case-study prototyping, and physical-consistency diagnostics. No broader Phase 10 boundary-weight sweep is justified.
+At this stage, the project has moved from broad model tuning to rapid flood prediction with reliability diagnosis, failure-mode interpretation, confidence proxy diagnostics, spatial risk mapping, warning-rule guidance, manuscript drafting, representative warning-oriented case-study prototyping, physical-consistency diagnostics, and diagnosis-driven target-wet recall refinement. No broader Phase 10 boundary-weight sweep is justified.
 
 ## Representative Case Framing
 
@@ -710,7 +750,7 @@ Three representative cases continue to be useful for targeted comparison:
 - `seed202`: difficult-case reference where stronger structured refinement can show useful gains
 - `seed123`: repeatability reference for checking whether candidate behavior generalizes beyond the two anchor cases
 
-This framing motivated the Phase 6 Pilot A test, the Phase 7 conservative `adapt010` follow-up, the Phase 9 diagnosis, the Phase 10 margin-aware boundary-band refinement, the Phase 12 reliability/applicability diagnosis, the Phase 13 representative failure-case visual summary, the Phase 14 confidence proxy diagnosis, the Phase 15 reliability-screening layer, the Phase 16 warning-rule guidance layer, the Phase 17 reliability-aware framework synthesis, the Phase 19 manuscript-structure consolidation, the Phase 20 manuscript draft assembly, the Phase 21 manuscript evidence alignment, the Phase 22 manuscript full draft expansion, the Phase 23 warning case-study prototype, and the Phase 24 physical-consistency diagnostics.
+This framing motivated the Phase 6 Pilot A test, the Phase 7 conservative `adapt010` follow-up, the Phase 9 diagnosis, the Phase 10 margin-aware boundary-band refinement, the Phase 12 reliability/applicability diagnosis, the Phase 13 representative failure-case visual summary, the Phase 14 confidence proxy diagnosis, the Phase 15 reliability-screening layer, the Phase 16 warning-rule guidance layer, the Phase 17 reliability-aware framework synthesis, the Phase 19 manuscript-structure consolidation, the Phase 20 manuscript draft assembly, the Phase 21 manuscript evidence alignment, the Phase 22 manuscript full draft expansion, the Phase 23 warning case-study prototype, the Phase 24 physical-consistency diagnostics, and the Phase 25 target-wet recall refinement.
 
 
 ## Adaptive Candidate and Margin-Aware Refinement
@@ -762,18 +802,31 @@ Phase 10 keeps this adaptive structure and adds a margin-aware wet/dry consisten
 
 This boundary-band setting has passed test-facing confirmation across `seed123`, `seed42`, and `seed202`. `boundary_weight = 1.5` is retained only as a conservative rollback setting.
 
+Phase 25 keeps the Phase 10 boundary-band settings fixed and adds a targeted target-wet recall consistency term:
+
+```json
+"target_wet_recall_consistency": {
+  "enabled": true,
+  "weight": 0.02,
+  "threshold": 0.05,
+  "temperature": 0.02,
+  "eps": 1e-6
+}
+```
+
 ## Future Work
 
-The next justified follow-up is not another Phase 10 boundary-weight sweep. The current recommended setting remains `boundary_band_pixels = 1` and `boundary_weight = 2.0`.
+The next justified follow-up is not another Phase 10 boundary-weight sweep. The current Phase 10 boundary-band setting remains `boundary_band_pixels = 1` and `boundary_weight = 2.0`, with Phase 25 target-wet recall consistency as a strong three-seed positive candidate.
 
 Recommended next work:
 
-- prioritize targeted physical-consistency constraints in a later model-refinement phase, including false-dry reduction, wet-area contraction penalty, peak-depth preservation, wet-connectivity preservation, and volume-response consistency
+- analyze the remaining Phase 25 limitations, especially slight false-wet increase and non-uniform connectivity behavior
+- treat Phase 25 as a targeted target-wet recall and wet-region preservation refinement, not as a complete physical-consistency solution
 - do not recommend a full SWE/PINN residual unless compatible velocity, flux, boundary, DEM, and source-sink information become available
 - consider calibrated uncertainty only if calibration data and evaluation design are added
 - keep `boundary_weight = 1.5` only as a conservative rollback setting
 - avoid new boundary-weight sweeps unless a new diagnosis clearly justifies them
-- keep using the Phase 12/13/14/15/16/17 reliability, failure-case, confidence-proxy, screening, warning-rule, and synthesis findings, plus the Phase 18-22 manuscript materials, the Phase 23 warning case-study prototype, and the Phase 24 physical-consistency diagnostics, to define where the current model is reliable and where caution is required
+- keep using the Phase 12/13/14/15/16/17 reliability, failure-case, confidence-proxy, screening, warning-rule, and synthesis findings, plus the Phase 18-22 manuscript materials, the Phase 23 warning case-study prototype, the Phase 24 physical-consistency diagnostics, and the Phase 25 three-seed target-wet recall synthesis, to define where the current model is reliable and where caution is required
 
 ## License
 
