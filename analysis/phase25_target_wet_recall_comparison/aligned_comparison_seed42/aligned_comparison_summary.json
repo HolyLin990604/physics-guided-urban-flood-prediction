@@ -1,0 +1,273 @@
+{
+  "alignment": {
+    "common_rows": 38,
+    "key_columns": [
+      "scenario_key"
+    ],
+    "key_selection_policy": "First available unique stable key set from scenario_identity, scenario_key, stable scenario/sample columns, then phase24_case_key. run_name is never used as an alignment key.",
+    "phase10_filtered_rows": 38,
+    "phase10_only_rows": 0,
+    "phase10_rows": 114,
+    "phase10_subset_filter": {
+      "note": "Used only to select the Phase 10 diagnostic subset from the aggregate CSV before alignment.",
+      "run_token": "phase10_margin_aware_boundary_band_seed42_40e"
+    },
+    "phase25_filtered_rows": 38,
+    "phase25_only_rows": 0,
+    "phase25_rows": 152,
+    "phase25_subset_filter": {
+      "note": "Used only to select the Phase 25 diagnostic subset from the aggregate CSV before alignment.",
+      "run_token": "phase25_target_wet_recall_seed42_40e"
+    }
+  },
+  "inputs": {
+    "optional_files_considered": [
+      "volume_response_metrics.csv",
+      "peak_depth_consistency.csv",
+      "wet_connectivity_metrics.csv",
+      "temporal_consistency_metrics.csv"
+    ],
+    "phase10_scenario_metrics": "analysis\\phase25_target_wet_recall_comparison\\phase10_seed42_physical\\scenario_physical_consistency_metrics.csv",
+    "phase25_scenario_metrics": "analysis\\phase25_target_wet_recall_comparison\\phase25_seed42_physical\\scenario_physical_consistency_metrics.csv"
+  },
+  "outputs": {
+    "aligned_case_metrics": "analysis\\phase25_target_wet_recall_comparison\\aligned_comparison_seed42\\aligned_case_metrics.csv",
+    "aligned_metric_delta_summary": "analysis\\phase25_target_wet_recall_comparison\\aligned_comparison_seed42\\aligned_metric_delta_summary.csv",
+    "aligned_summary_by_warning_level": "analysis\\phase25_target_wet_recall_comparison\\aligned_comparison_seed42\\aligned_summary_by_warning_level.csv",
+    "phase10_vs_phase25_standard_metrics": "analysis\\phase25_target_wet_recall_comparison\\aligned_comparison_seed42\\phase10_vs_phase25_standard_metrics.json"
+  },
+  "phase25_improves_false_dry_rate": true,
+  "phase25_improves_wet_area_contraction": true,
+  "physical_metric_delta_summary": {
+    "connectivity_loss_indicator": {
+      "delta_mean_phase25_minus_phase10": 0.15789473684210525,
+      "lower_is_better": true,
+      "metric": "connectivity_loss_indicator",
+      "n": 38,
+      "phase10_mean": 0.2894736842105263,
+      "phase25_improved": false,
+      "phase25_mean": 0.4473684210526316
+    },
+    "false_dry_rate": {
+      "delta_mean_phase25_minus_phase10": -0.15255527683655457,
+      "lower_is_better": true,
+      "metric": "false_dry_rate",
+      "n": 38,
+      "phase10_mean": 0.23167214330084154,
+      "phase25_improved": true,
+      "phase25_mean": 0.07911686646428699
+    },
+    "false_wet_rate": {
+      "delta_mean_phase25_minus_phase10": 0.002349675671416919,
+      "lower_is_better": true,
+      "metric": "false_wet_rate",
+      "n": 38,
+      "phase10_mean": 0.014134507651864022,
+      "phase25_improved": false,
+      "phase25_mean": 0.016484183323280936
+    },
+    "largest_component_ratio_change": {
+      "delta_mean_phase25_minus_phase10": -0.005105653334023212,
+      "lower_is_better": false,
+      "metric": "largest_component_ratio_change",
+      "n": 38,
+      "phase10_mean": -0.060571774225513,
+      "phase25_improved": null,
+      "phase25_mean": -0.06567742755953625
+    },
+    "mae": {
+      "delta_mean_phase25_minus_phase10": -0.004073682128630589,
+      "lower_is_better": true,
+      "metric": "mae",
+      "n": 38,
+      "phase10_mean": 0.01793318469360401,
+      "phase25_improved": true,
+      "phase25_mean": 0.01385950256497342
+    },
+    "peak_depth_underprediction": {
+      "delta_mean_phase25_minus_phase10": -0.03726905898043984,
+      "lower_is_better": true,
+      "metric": "peak_depth_underprediction",
+      "n": 38,
+      "phase10_mean": 0.2503681182861328,
+      "phase25_improved": true,
+      "phase25_mean": 0.21309905930569298
+    },
+    "relative_volume_bias": {
+      "delta_mean_phase25_minus_phase10": 0.15721129738576078,
+      "lower_is_better": false,
+      "metric": "relative_volume_bias",
+      "n": 38,
+      "phase10_mean": -0.1465391463066512,
+      "phase25_improved": null,
+      "phase25_mean": 0.010672151079109578
+    },
+    "rmse": {
+      "delta_mean_phase25_minus_phase10": -0.014146101578852224,
+      "lower_is_better": true,
+      "metric": "rmse",
+      "n": 38,
+      "phase10_mean": 0.05656751035030019,
+      "phase25_improved": true,
+      "phase25_mean": 0.042421408771447976
+    },
+    "wet_area_contraction": {
+      "delta_mean_phase25_minus_phase10": -0.1061939763518542,
+      "lower_is_better": true,
+      "metric": "wet_area_contraction",
+      "n": 38,
+      "phase10_mean": 0.12713008019018177,
+      "phase25_improved": true,
+      "phase25_mean": 0.020936103838327585
+    }
+  },
+  "standard_metric_deltas": {
+    "mae": {
+      "delta_phase25_minus_phase10": -0.0034759743629317504,
+      "phase10": 0.021415419190337782,
+      "phase25": 0.01793944482740603
+    },
+    "rmse": {
+      "delta_phase25_minus_phase10": -0.013840686137738978,
+      "phase10": 0.05858768875661649,
+      "phase25": 0.04474700261887751
+    },
+    "rollout_stability": {
+      "delta_phase25_minus_phase10": 0.0016889572143554688,
+      "phase10": 0.9878152420646266,
+      "phase25": 0.989504199278982
+    },
+    "step_rmse_std": {
+      "delta_phase25_minus_phase10": -0.001732742658963329,
+      "phase10": 0.012386485223511332,
+      "phase25": 0.010653742564548003
+    },
+    "wet_dry_iou": {
+      "delta_phase25_minus_phase10": 0.12176361836885152,
+      "phase10": 0.6821141023384897,
+      "phase25": 0.8038777207073412
+    }
+  },
+  "warning_level_summary": [
+    {
+      "delta_connectivity_loss_indicator_mean": 0.2,
+      "delta_false_dry_rate_mean": -0.23637442112230928,
+      "delta_false_wet_rate_mean": 0.0020154281696890515,
+      "delta_largest_component_ratio_change_mean": -0.01778904399753497,
+      "delta_mae_mean": -0.003145682470226857,
+      "delta_peak_depth_underprediction_mean": -0.04594864845275879,
+      "delta_relative_volume_bias_mean": 0.23413662690689682,
+      "delta_rmse_mean": -0.013826478099405038,
+      "delta_wet_area_contraction_mean": -0.15164379838832917,
+      "n": 10,
+      "phase10_connectivity_loss_indicator_mean": 0.2,
+      "phase10_false_dry_rate_mean": 0.324735252657333,
+      "phase10_false_wet_rate_mean": 0.010271618690530174,
+      "phase10_largest_component_ratio_change_mean": -0.009577623059226733,
+      "phase10_mae_mean": 0.013343381386169703,
+      "phase10_peak_depth_underprediction_mean": 0.19641562700271606,
+      "phase10_relative_volume_bias_mean": -0.18303178450668098,
+      "phase10_rmse_mean": 0.04777022459203835,
+      "phase10_wet_area_contraction_mean": 0.17195965555450604,
+      "phase25_connectivity_loss_indicator_mean": 0.4,
+      "phase25_false_dry_rate_mean": 0.08836083153502367,
+      "phase25_false_wet_rate_mean": 0.012287046860219227,
+      "phase25_improved_connectivity_loss_indicator": false,
+      "phase25_improved_false_dry_rate": true,
+      "phase25_improved_false_wet_rate": false,
+      "phase25_improved_largest_component_ratio_change": null,
+      "phase25_improved_mae": true,
+      "phase25_improved_peak_depth_underprediction": true,
+      "phase25_improved_relative_volume_bias": null,
+      "phase25_improved_rmse": true,
+      "phase25_improved_wet_area_contraction": true,
+      "phase25_largest_component_ratio_change_mean": -0.027366667056761697,
+      "phase25_mae_mean": 0.010197698915942846,
+      "phase25_peak_depth_underprediction_mean": 0.15046697854995728,
+      "phase25_relative_volume_bias_mean": 0.05110484240021582,
+      "phase25_rmse_mean": 0.033943746492633306,
+      "phase25_wet_area_contraction_mean": 0.020315857166176825,
+      "warning_level": "caution"
+    },
+    {
+      "delta_connectivity_loss_indicator_mean": -0.2,
+      "delta_false_dry_rate_mean": -0.2616121164246294,
+      "delta_false_wet_rate_mean": 0.0034458680361772144,
+      "delta_largest_component_ratio_change_mean": 0.04291393050193516,
+      "delta_mae_mean": -0.00454813862751016,
+      "delta_peak_depth_underprediction_mean": -0.14059197902679443,
+      "delta_relative_volume_bias_mean": 0.23664881821013478,
+      "delta_rmse_mean": -0.014619064019118421,
+      "delta_wet_area_contraction_mean": -0.2898227184135028,
+      "n": 5,
+      "phase10_connectivity_loss_indicator_mean": 1.0,
+      "phase10_false_dry_rate_mean": 0.4650131668305229,
+      "phase10_false_wet_rate_mean": 0.005999249846354351,
+      "phase10_largest_component_ratio_change_mean": -0.28729359562389256,
+      "phase10_mae_mean": 0.019495833454471947,
+      "phase10_peak_depth_underprediction_mean": 1.4592108726501465,
+      "phase10_relative_volume_bias_mean": -0.46136319913290363,
+      "phase10_rmse_mean": 0.08690540652543151,
+      "phase10_wet_area_contraction_mean": 0.38957953492543174,
+      "phase25_connectivity_loss_indicator_mean": 0.8,
+      "phase25_false_dry_rate_mean": 0.20340105040589354,
+      "phase25_false_wet_rate_mean": 0.009445117882531565,
+      "phase25_improved_connectivity_loss_indicator": true,
+      "phase25_improved_false_dry_rate": true,
+      "phase25_improved_false_wet_rate": false,
+      "phase25_improved_largest_component_ratio_change": null,
+      "phase25_improved_mae": true,
+      "phase25_improved_peak_depth_underprediction": true,
+      "phase25_improved_relative_volume_bias": null,
+      "phase25_improved_rmse": true,
+      "phase25_improved_wet_area_contraction": true,
+      "phase25_largest_component_ratio_change_mean": -0.2443796651219574,
+      "phase25_mae_mean": 0.014947694826961788,
+      "phase25_peak_depth_underprediction_mean": 1.318618893623352,
+      "phase25_relative_volume_bias_mean": -0.22471438092276882,
+      "phase25_rmse_mean": 0.07228634250631308,
+      "phase25_wet_area_contraction_mean": 0.0997568165119288,
+      "warning_level": "high-risk"
+    },
+    {
+      "delta_connectivity_loss_indicator_mean": 0.21739130434782608,
+      "delta_false_dry_rate_mean": -0.09240416201925371,
+      "delta_false_wet_rate_mean": 0.0022566979841767976,
+      "delta_largest_component_ratio_change_mean": -0.01003017561857427,
+      "delta_mae_mean": -0.004374017523832306,
+      "delta_peak_depth_underprediction_mean": -0.011033820069354513,
+      "delta_relative_volume_bias_mean": 0.10649647567562033,
+      "delta_rmse_mean": -0.014182250387249648,
+      "delta_wet_area_contraction_mean": -0.04651389240955014,
+      "n": 23,
+      "phase10_connectivity_loss_indicator_mean": 0.17391304347826086,
+      "phase10_false_dry_rate_mean": 0.1404836123785233,
+      "phase10_false_wet_rate_mean": 0.01758255889711997,
+      "phase10_largest_component_ratio_change_mean": -0.03345579181990281,
+      "phase10_mae_mean": 0.01958904509664764,
+      "phase10_peak_depth_underprediction_mean": 0.011033820069354513,
+      "phase10_relative_volume_bias_mean": -0.0622327703878877,
+      "phase10_rmse_mean": 0.05379722238103767,
+      "phase10_wet_area_contraction_mean": 0.05058473117629084,
+      "phase25_connectivity_loss_indicator_mean": 0.391304347826087,
+      "phase25_false_dry_rate_mean": 0.04807945035926963,
+      "phase25_false_wet_rate_mean": 0.019839256881296764,
+      "phase25_improved_connectivity_loss_indicator": false,
+      "phase25_improved_false_dry_rate": true,
+      "phase25_improved_false_wet_rate": false,
+      "phase25_improved_largest_component_ratio_change": null,
+      "phase25_improved_mae": true,
+      "phase25_improved_peak_depth_underprediction": true,
+      "phase25_improved_relative_volume_bias": null,
+      "phase25_improved_rmse": true,
+      "phase25_improved_wet_area_contraction": true,
+      "phase25_largest_component_ratio_change_mean": -0.04348596743847708,
+      "phase25_mae_mean": 0.015215027572815332,
+      "phase25_peak_depth_underprediction_mean": 0.0,
+      "phase25_relative_volume_bias_mean": 0.04426370528773261,
+      "phase25_rmse_mean": 0.03961497199378802,
+      "phase25_wet_area_contraction_mean": 0.004070838766740696,
+      "warning_level": "reliable"
+    }
+  ]
+}

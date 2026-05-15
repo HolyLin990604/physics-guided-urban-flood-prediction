@@ -1,0 +1,2 @@
+status,reason,expected_shape,candidate_notes
+skipped,no shape-compatible DEM/static elevation layer found,"(128, 128)",candidate unreadable: analysis\phase24_physical_consistency\topographic_consistency.csv | candidate unreadable: analysis\phase25_target_wet_recall_comparison\phase10_seed123_physical\topographic_consistency.csv | candidate unreadable: analysis\phase25_target_wet_recall_comparison\phase25_seed123_physical\topographic_consistency.csv
