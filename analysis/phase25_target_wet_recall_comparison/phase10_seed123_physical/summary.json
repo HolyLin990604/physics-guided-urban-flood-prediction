@@ -1,0 +1,131 @@
+{
+  "explicit_non_actions": [
+    "no model retraining",
+    "no architecture modification",
+    "no new prediction generation",
+    "no Phase 10 boundary_weight tuning",
+    "no boundary_band_pixels tuning",
+    "no new loss-function deployment",
+    "no new parameter sweep",
+    "no metric-chasing experiment",
+    "no traffic-impact modeling"
+  ],
+  "figures_generated": [
+    "analysis\\phase25_target_wet_recall_comparison\\phase10_seed123_physical\\figures\\volume_bias_by_warning_level.png",
+    "analysis\\phase25_target_wet_recall_comparison\\phase10_seed123_physical\\figures\\peak_underprediction_by_warning_level.png",
+    "analysis\\phase25_target_wet_recall_comparison\\phase10_seed123_physical\\figures\\physics_consistency_vs_risk_score.png",
+    "analysis\\phase25_target_wet_recall_comparison\\phase10_seed123_physical\\figures\\wet_connectivity_fragmentation.png",
+    "analysis\\phase25_target_wet_recall_comparison\\phase10_seed123_physical\\figures\\temporal_volume_bias_examples.png",
+    "analysis\\phase25_target_wet_recall_comparison\\phase10_seed123_physical\\figures\\phase23_case_physical_failure_profiles.png"
+  ],
+  "input_sources": {
+    "map_artifacts_discovered": 57,
+    "map_artifacts_loaded": 57,
+    "phase15_scenario_rows": 114,
+    "phase16_scenario_warning_rows": 114,
+    "phase23_selected_cases": 3
+  },
+  "interpretation": {
+    "connectivity_explanation": "Connectivity-loss indicators compare peak wet-area component structure. Positive component-count changes with lower largest-component ratios indicate fragmented predicted inundation, which can explain false-dry gaps inside otherwise connected target flood extents.",
+    "grouped_metric_means": {
+      "connectivity_loss_indicator": {
+        "caution": 0.24,
+        "high-risk": 1.0,
+        "reliable": 0.19736842105263158
+      },
+      "false_dry_rate": {
+        "caution": 0.26760057740159093,
+        "high-risk": 0.4442675015677491,
+        "reliable": 0.12450025371177731
+      },
+      "largest_component_ratio_change": {
+        "caution": -0.03986060970295974,
+        "high-risk": -0.3082906283934204,
+        "reliable": -0.027851462681615303
+      },
+      "peak_depth_underprediction": {
+        "caution": 0.2411422872543335,
+        "high-risk": 1.3807678039257343,
+        "reliable": 0.023646269973955657
+      },
+      "relative_volume_bias": {
+        "caution": -0.14522530725970015,
+        "high-risk": -0.4477686663782936,
+        "reliable": -0.04026499675168386
+      },
+      "wet_area_contraction": {
+        "caution": 0.1353094455874771,
+        "high-risk": 0.38344186341449,
+        "reliable": 0.04612263912108449
+      }
+    },
+    "high_risk_cases_show_stronger_physical_inconsistency": true,
+    "high_risk_interpretation": "High-risk cases show stronger physical inconsistency in at least one core diagnostic (false-dry, wet-area contraction, or peak underprediction).",
+    "phase13_phase23_failure_mode_alignment": "Peak-depth underprediction, wet-area contraction, and false-dry behavior are reported explicitly. When these metrics rise in caution or high-risk cases, they support the Phase 13/23 interpretation that model risk is concentrated in missed extent and attenuated local maxima.",
+    "promising_phase25_constraints": [
+      "connectivity_loss_indicator",
+      "false_dry_rate",
+      "peak_depth_underprediction",
+      "wet_area_contraction"
+    ],
+    "skipped_diagnostics": [
+      {
+        "diagnostic": "topographic_consistency",
+        "reason": "no shape-compatible DEM/static elevation layer found"
+      }
+    ],
+    "topographic_diagnostics": {
+      "candidate_count": 1,
+      "candidate_notes": [
+        "candidate unreadable: analysis\\phase24_physical_consistency\\topographic_consistency.csv"
+      ],
+      "expected_shape": [
+        128,
+        128
+      ],
+      "reason": "no shape-compatible DEM/static elevation layer found",
+      "status": "skipped"
+    },
+    "warning_level_counts": {
+      "caution": 25,
+      "high-risk": 13,
+      "reliable": 76
+    }
+  },
+  "output_dir": "analysis\\phase25_target_wet_recall_comparison\\phase10_seed123_physical",
+  "phase": "Phase 24 physical consistency deepening",
+  "phase10_recommended_setting": {
+    "boundary_band_pixels": 1,
+    "boundary_weight": 2.0
+  },
+  "repo_root": "C:\\Users\\39053\\Documents\\physics-guided-urban-flood-prediction",
+  "row_counts": {
+    "peak_depth_consistency.csv": 114,
+    "physics_risk_linkage.csv": 10,
+    "scenario_physical_consistency_metrics.csv": 114,
+    "temporal_consistency_metrics.csv": 1368,
+    "topographic_consistency.csv": 1,
+    "volume_response_metrics.csv": 114,
+    "wet_connectivity_metrics.csv": 114
+  },
+  "run_glob": "runs/phase10_margin_aware_boundary_band_seed123_40e/evaluation_test",
+  "skipped_diagnostics": [
+    {
+      "diagnostic": "topographic_consistency",
+      "reason": "no shape-compatible DEM/static elevation layer found"
+    }
+  ],
+  "topographic_summary": {
+    "candidate_count": 1,
+    "candidate_notes": [
+      "candidate unreadable: analysis\\phase24_physical_consistency\\topographic_consistency.csv"
+    ],
+    "expected_shape": [
+      128,
+      128
+    ],
+    "reason": "no shape-compatible DEM/static elevation layer found",
+    "status": "skipped"
+  },
+  "wet_threshold": 0.05
+}
