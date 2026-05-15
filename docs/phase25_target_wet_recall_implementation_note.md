@@ -62,19 +62,19 @@ The new loss is enabled through the following config block:
 
 
 
-&#x20;   "target_wet_recall_consistency": {
+    "target_wet_recall_consistency": {
 
-&#x20;     "enabled": true,
+      "enabled": true,
 
-&#x20;     "weight": 0.02,
+      "weight": 0.02,
 
-&#x20;     "threshold": 0.05,
+      "threshold": 0.05,
 
-&#x20;     "temperature": 0.02,
+      "temperature": 0.02,
 
-&#x20;     "eps": 1e-6
+      "eps": 1e-6
 
-&#x20;   }
+    }
 
 
 
@@ -82,11 +82,11 @@ The implemented logic is:
 
 
 
-&#x20;   target_wet = target > threshold
+    target_wet = target > threshold
 
-&#x20;   pred_wet_prob = sigmoid((prediction - threshold) / max(temperature, eps))
+    pred_wet_prob = sigmoid((prediction - threshold) / max(temperature, eps))
 
-&#x20;   loss = sum(((1 - pred_wet_prob) ** 2) * target_wet) / clamp(sum(target_wet), min=eps)
+    loss = sum(((1 - pred_wet_prob) ** 2) * target_wet) / clamp(sum(target_wet), min=eps)
 
 
 
