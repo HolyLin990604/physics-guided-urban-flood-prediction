@@ -391,6 +391,12 @@ Aligned physical metrics also moved in the intended direction for the main diagn
 
 Phase 25 is a strong three-seed positive candidate and a credible targeted refinement over the Phase 10 baseline. It is not a complete physical-consistency solution: `false_wet_rate` increased slightly on average, `connectivity_loss_indicator` was not consistently improved, and the model still does not implement a full SWE/PINN residual.
 
+Representative Phase 25 figures:
+
+![Phase 25 standard metric deltas across three seeds](analysis/phase25_target_wet_recall_comparison/figures/phase25_standard_metric_deltas_three_seeds.png)
+
+![Phase 25 aligned physical metric deltas across three seeds](analysis/phase25_target_wet_recall_comparison/figures/phase25_aligned_physical_deltas_three_seeds.png)
+
 ## Historical Qualitative Examples
 
 The figures below are earlier-stage qualitative comparisons retained for visual reference. They are not the current primary evidence for the project state; the current project state is summarized above through Phase 25 target-wet recall consistency.
@@ -678,7 +684,7 @@ Generated figures and analysis outputs are organized under:
 - `analysis/phase16_warning_rules/figures/` for reliability-aware warning-rule and applicability-boundary outputs
 - `analysis/phase23_warning_case_study/figures/` for representative warning case-study prototype outputs
 - `analysis/phase24_physical_consistency/figures/` for physical-consistency and warning-risk linkage diagnostics
-- `analysis/phase25_target_wet_recall_comparison/` for aligned Phase 25 versus Phase 10 target-wet recall comparison outputs
+- `analysis/phase25_target_wet_recall_comparison/figures/` for Phase 25 versus Phase 10 summary comparison figures
 
 
 ## Current Project Status

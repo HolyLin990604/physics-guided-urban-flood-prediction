@@ -267,7 +267,11 @@
   - `configs/train_phase25_target_wet_recall_seed202_40e.json`
 - Implementation note: `docs/phase25_target_wet_recall_implementation_note.md`
 - Comparison script: `scripts/compare_phase25_target_wet_recall_aligned.py`
+- Visualization script: `scripts/plot_phase25_summary_figures.py`
 - Outputs: `analysis/phase25_target_wet_recall_comparison/`
+- Figures:
+  - `analysis/phase25_target_wet_recall_comparison/figures/phase25_standard_metric_deltas_three_seeds.png`
+  - `analysis/phase25_target_wet_recall_comparison/figures/phase25_aligned_physical_deltas_three_seeds.png`
 - Pilot findings: `docs/phase25_target_wet_recall_pilot_findings.md`
 - Guardrail findings: `docs/phase25_seed42_guardrail_findings.md`
 - Three-seed synthesis: `docs/phase25_three_seed_target_wet_recall_synthesis_findings.md`

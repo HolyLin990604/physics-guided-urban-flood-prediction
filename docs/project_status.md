@@ -390,7 +390,9 @@ Phase 25 artifacts include:
 - `configs/train_phase25_target_wet_recall_seed202_40e.json`
 - `docs/phase25_target_wet_recall_implementation_note.md`
 - `scripts/compare_phase25_target_wet_recall_aligned.py`
+- `scripts/plot_phase25_summary_figures.py`
 - `analysis/phase25_target_wet_recall_comparison/`
+- `analysis/phase25_target_wet_recall_comparison/figures/`
 - `docs/phase25_target_wet_recall_pilot_findings.md`
 - `docs/phase25_seed42_guardrail_findings.md`
 - `docs/phase25_three_seed_target_wet_recall_synthesis_findings.md`
@@ -403,6 +405,7 @@ The Phase 25 refinement indicates:
 - mean standard test deltas versus Phase 10 were `RMSE = -0.007057`, `MAE = -0.001519`, `wet/dry IoU = +0.076670`, `rollout stability = +0.001035`, and `step RMSE std = -0.001071`
 - false-dry rate and wet-area contraction improved in all three seeds
 - mean aligned physical deltas versus Phase 10 were `false_dry_rate = -0.111321`, `wet_area_contraction = -0.079104`, `relative_volume_bias = +0.105093`, `peak_depth_underprediction = -0.014962`, `RMSE = -0.007244`, and `MAE = -0.001885`
+- summary figures now show the three-seed standard metric deltas and aligned physical metric deltas
 - high-risk cases showed especially strong false-dry and wet-area contraction reductions
 - `false_wet_rate` increased slightly and `connectivity_loss_indicator` was not consistently improved
 - Phase 25 is a strong three-seed positive candidate, not a complete hydrodynamic consistency solution or full SWE/PINN residual
