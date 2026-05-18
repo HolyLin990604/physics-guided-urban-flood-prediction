@@ -49,6 +49,7 @@ flowchart LR
     T --> U[Phase 23<br/>Reliability-aware warning case study]
     U --> V[Phase 24<br/>Physical consistency diagnostics]
     V --> W[Phase 25<br/>Target-wet recall consistency]
+    W --> X[Phase 26<br/>Strong physics feasibility]
 
     A --> A1[Best-balanced mainline]
     B --> B1[Freer selector<br/>not enough]
@@ -73,6 +74,7 @@ flowchart LR
     U --> U1[Representative warning prototype<br/>using Phase 15, Phase 16, and Phase 10 map arrays]
     V --> V1[Physical consistency risk linkage<br/>false-dry / contraction / peaks / connectivity / volume]
     W --> W1[Diagnosis-driven refinement<br/>target-wet recall and wet-region preservation]
+    X --> X1[Level 4 conservation-proxy supported<br/>Level 5 SWE/PINN not supported]
 ```
 
 
@@ -191,6 +193,20 @@ Phase 25 converts the Phase 24 physical-consistency diagnosis into a targeted mo
 The main Phase 25 finding is that target-wet recall consistency is a strong three-seed positive candidate and a credible targeted refinement over the Phase 10 baseline. Across `seed123`, `seed42`, and `seed202`, it improved standard test metrics and reduced the intended aligned physical failure modes. Mean standard test deltas versus Phase 10 were `RMSE = -0.007057`, `MAE = -0.001519`, `wet/dry IoU = +0.076670`, `rollout stability = +0.001035`, and `step RMSE std = -0.001071`. Mean aligned physical deltas were `false_dry_rate = -0.111321`, `wet_area_contraction = -0.079104`, `relative_volume_bias = +0.105093`, `peak_depth_underprediction = -0.014962`, `RMSE = -0.007244`, and `MAE = -0.001885`.
 
 Phase 25 is a diagnosis-driven, depth-field-compatible physical-consistency refinement. It improves target-wet recall and wet-region preservation while maintaining or improving standard prediction metrics. Remaining limitations include slight false-wet increase and non-uniform connectivity behavior; Phase 25 is not a complete hydrodynamic consistency solution and does not implement a full SWE/PINN residual.
+
+Phase 26 performs **Strong Physics Constraint Feasibility Audit and Conservation-Proxy Diagnostics**. It is diagnostic only: no retraining, architecture modification, Phase 10 loss modification, boundary-parameter tuning, Phase 25 weight sweep, new prediction generation, or full SWE/PINN implementation was performed. See `docs/phase26_strong_physics_constraint_feasibility_findings.md` and `analysis/phase26_strong_physics_constraint_feasibility/conservation_residual_summary.md`.
+
+The Phase 26 input audit found that repository-local `.npy` files were not found in the scanned directories; `evaluation_test` `forecast_maps.npz` artifacts under `runs/` are available; the representative flood spatial shape is `[128, 128]`; the Phase 10 recommended baseline is `boundary_weight = 2.0 / w20`; `w15` / `boundary_weight = 1.5` is rollback or non-default; Phase 25 `target_wet_recall` runs are available for `seed123`, `seed42`, and `seed202`; Level 4 conservation-oriented diagnostics are partially supported; Level 4 conservation-aware loss design remains unclear; and Level 5 full SWE/PINN residual constraints are not supported because velocity/flux fields, boundary inflow/outflow, pump/gate operations, `dx/dy`, and shape-compatible DEM/static elevation are missing or unclear.
+
+The conservation-proxy diagnostics processed 114 map files and 2,736 step records. The main Phase 26 conclusion is that Phase 25 is directionally stronger than the Phase 10 recommended baseline on the main conservation-proxy diagnostics, especially aggregate water-volume response, false-dry volume loss, wet-area contraction, peak-depth preservation, RMSE, and MAE.
+
+Key Phase 26 deltas show aggregate volume-response improvement and reduced under-response:
+
+- Aggregate absolute relative volume bias improves across all three seeds: `seed123 = -0.064695`, `seed42 = -0.114739`, and `seed202 = -0.0405758`.
+- False-dry volume loss decreases across all three seeds: `seed123 = -26.4163`, `seed42 = -32.2189`, and `seed202 = -13.3703`.
+- Wet-area contraction decreases across all three seeds: `seed123 = -0.0848763`, `seed42 = -0.104508`, and `seed202 = -0.0519941`.
+
+The boundary is important: Phase 25 improves aggregate water-volume response and reduces under-response, but it is not a strict timestep-wise conservation solution. Timestep-wise absolute relative volume bias is mixed: `seed42` improves, while `seed123` and `seed202` show very small increases. False-wet rate and false-wet volume excess increase slightly and should be treated as trade-offs.
 
 Representative Phase 24 figures:
 
@@ -399,7 +415,7 @@ Representative Phase 25 figures:
 
 ## Historical Qualitative Examples
 
-The figures below are earlier-stage qualitative comparisons retained for visual reference. They are not the current primary evidence for the project state; the current project state is summarized above through Phase 25 target-wet recall consistency.
+The figures below are earlier-stage qualitative comparisons retained for visual reference. They are not the current primary evidence for the project state; the current project state is summarized above through Phase 26 strong-physics feasibility audit and conservation-proxy diagnostics.
 
 <details>
 <summary>Expand earlier-stage qualitative flood-map examples</summary>
@@ -685,11 +701,12 @@ Generated figures and analysis outputs are organized under:
 - `analysis/phase23_warning_case_study/figures/` for representative warning case-study prototype outputs
 - `analysis/phase24_physical_consistency/figures/` for physical-consistency and warning-risk linkage diagnostics
 - `analysis/phase25_target_wet_recall_comparison/figures/` for Phase 25 versus Phase 10 summary comparison figures
+- `analysis/phase26_strong_physics_constraint_feasibility/` for Phase 26 physics-input audit and conservation-proxy diagnostic outputs
 
 
 ## Current Project Status
 
-The repository has completed the main Phase 2-3 architecture comparison cycle, closed the Phase 6 `adapt025` pilot as negative/neutral, established Phase 7/8 `adapt010` as the active adaptive candidate before margin-aware refinement, completed Phase 9 interpretability diagnosis, completed the Phase 10 margin-aware refinement intervention, completed the Phase 12-16 reliability-aware warning layer, completed the Phase 17-22 manuscript synthesis and drafting sequence, completed the Phase 23 reliability-aware warning case-study prototype, completed Phase 24 physical-consistency deepening diagnostics, and completed Phase 25 target-wet recall consistency refinement through three-seed synthesis.
+The repository has completed the main Phase 2-3 architecture comparison cycle, closed the Phase 6 `adapt025` pilot as negative/neutral, established Phase 7/8 `adapt010` as the active adaptive candidate before margin-aware refinement, completed Phase 9 interpretability diagnosis, completed the Phase 10 margin-aware refinement intervention, completed the Phase 12-16 reliability-aware warning layer, completed the Phase 17-22 manuscript synthesis and drafting sequence, completed the Phase 23 reliability-aware warning case-study prototype, completed Phase 24 physical-consistency deepening diagnostics, completed Phase 25 target-wet recall consistency refinement through three-seed synthesis, and completed Phase 26 strong-physics feasibility audit and conservation-proxy diagnostics.
 
 Current project-level conclusions:
 
@@ -745,8 +762,11 @@ Current project-level conclusions:
 - **Mean Phase 25 standard test deltas versus Phase 10: `RMSE = -0.007057`, `MAE = -0.001519`, `wet/dry IoU = +0.076670`, `rollout stability = +0.001035`, and `step RMSE std = -0.001071`**
 - **Mean aligned physical deltas versus Phase 10: `false_dry_rate = -0.111321`, `wet_area_contraction = -0.079104`, `relative_volume_bias = +0.105093`, `peak_depth_underprediction = -0.014962`, `RMSE = -0.007244`, and `MAE = -0.001885`**
 - **Phase 25 is a strong three-seed positive candidate for reducing false-dry behavior and wet-area contraction, but not a complete physical-consistency solution**
+- **Phase 26 completed Strong Physics Constraint Feasibility Audit and Conservation-Proxy Diagnostics**
+- **Phase 26 found partial support for Level 4 conservation-proxy diagnostics, unclear support for Level 4 conservation-aware loss design, and no support for Level 5 full SWE/PINN residual constraints**
+- **Phase 26 conservation-proxy diagnostics indicate aggregate volume-response improvement for Phase 25 versus Phase 10 w20, while preserving the guardrail that Phase 25 is not a strict timestep-wise conservation solution**
 
-At this stage, the project has moved from broad model tuning to rapid flood prediction with reliability diagnosis, failure-mode interpretation, confidence proxy diagnostics, spatial risk mapping, warning-rule guidance, manuscript drafting, representative warning-oriented case-study prototyping, physical-consistency diagnostics, and diagnosis-driven target-wet recall refinement. No broader Phase 10 boundary-weight sweep is justified.
+At this stage, the project has moved from broad model tuning to rapid flood prediction with reliability diagnosis, failure-mode interpretation, confidence proxy diagnostics, spatial risk mapping, warning-rule guidance, manuscript drafting, representative warning-oriented case-study prototyping, physical-consistency diagnostics, diagnosis-driven target-wet recall refinement, strong-physics feasibility audit, and conservation-proxy diagnostics. No broader Phase 10 boundary-weight sweep is justified.
 
 ## Representative Case Framing
 
@@ -756,7 +776,7 @@ Three representative cases continue to be useful for targeted comparison:
 - `seed202`: difficult-case reference where stronger structured refinement can show useful gains
 - `seed123`: repeatability reference for checking whether candidate behavior generalizes beyond the two anchor cases
 
-This framing motivated the Phase 6 Pilot A test, the Phase 7 conservative `adapt010` follow-up, the Phase 9 diagnosis, the Phase 10 margin-aware boundary-band refinement, the Phase 12 reliability/applicability diagnosis, the Phase 13 representative failure-case visual summary, the Phase 14 confidence proxy diagnosis, the Phase 15 reliability-screening layer, the Phase 16 warning-rule guidance layer, the Phase 17 reliability-aware framework synthesis, the Phase 19 manuscript-structure consolidation, the Phase 20 manuscript draft assembly, the Phase 21 manuscript evidence alignment, the Phase 22 manuscript full draft expansion, the Phase 23 warning case-study prototype, the Phase 24 physical-consistency diagnostics, and the Phase 25 target-wet recall refinement.
+This framing motivated the Phase 6 Pilot A test, the Phase 7 conservative `adapt010` follow-up, the Phase 9 diagnosis, the Phase 10 margin-aware boundary-band refinement, the Phase 12 reliability/applicability diagnosis, the Phase 13 representative failure-case visual summary, the Phase 14 confidence proxy diagnosis, the Phase 15 reliability-screening layer, the Phase 16 warning-rule guidance layer, the Phase 17 reliability-aware framework synthesis, the Phase 19 manuscript-structure consolidation, the Phase 20 manuscript draft assembly, the Phase 21 manuscript evidence alignment, the Phase 22 manuscript full draft expansion, the Phase 23 warning case-study prototype, the Phase 24 physical-consistency diagnostics, the Phase 25 target-wet recall refinement, and the Phase 26 strong-physics feasibility audit.
 
 
 ## Adaptive Candidate and Margin-Aware Refinement
@@ -822,17 +842,18 @@ Phase 25 keeps the Phase 10 boundary-band settings fixed and adds a targeted tar
 
 ## Future Work
 
-The next justified follow-up is not another Phase 10 boundary-weight sweep. The current Phase 10 boundary-band setting remains `boundary_band_pixels = 1` and `boundary_weight = 2.0`, with Phase 25 target-wet recall consistency as a strong three-seed positive candidate.
+The next justified follow-up is not another Phase 10 boundary-weight sweep. The current Phase 10 boundary-band setting remains `boundary_band_pixels = 1` and `boundary_weight = 2.0`, with Phase 25 target-wet recall consistency as a strong three-seed positive candidate and Phase 26 conservation-proxy diagnostics as the current strong-physics feasibility boundary.
 
 Recommended next work:
 
 - analyze the remaining Phase 25 limitations, especially slight false-wet increase and non-uniform connectivity behavior
 - treat Phase 25 as a targeted target-wet recall and wet-region preservation refinement, not as a complete physical-consistency solution
+- treat Phase 26 as conservation-proxy diagnostics and aggregate volume-response improvement evidence, not full conservation enforcement
 - do not recommend a full SWE/PINN residual unless compatible velocity, flux, boundary, DEM, and source-sink information become available
 - consider calibrated uncertainty only if calibration data and evaluation design are added
 - keep `boundary_weight = 1.5` only as a conservative rollback setting
 - avoid new boundary-weight sweeps unless a new diagnosis clearly justifies them
-- keep using the Phase 12/13/14/15/16/17 reliability, failure-case, confidence-proxy, screening, warning-rule, and synthesis findings, plus the Phase 18-22 manuscript materials, the Phase 23 warning case-study prototype, the Phase 24 physical-consistency diagnostics, and the Phase 25 three-seed target-wet recall synthesis, to define where the current model is reliable and where caution is required
+- keep using the Phase 12/13/14/15/16/17 reliability, failure-case, confidence-proxy, screening, warning-rule, and synthesis findings, plus the Phase 18-22 manuscript materials, the Phase 23 warning case-study prototype, the Phase 24 physical-consistency diagnostics, the Phase 25 three-seed target-wet recall synthesis, and the Phase 26 strong-physics feasibility audit, to define where the current model is reliable and where caution is required
 
 ## License
 
