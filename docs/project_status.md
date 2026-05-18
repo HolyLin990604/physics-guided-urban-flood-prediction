@@ -25,6 +25,7 @@ The repository should currently be interpreted as follows:
 - Phase 24 completed physical consistency deepening and process diagnostics for the existing Phase 10 recommended outputs.
 - Phase 25 completed Physics-Consistency Guided Surrogate Refinement: Target-Wet Recall Consistency through three-seed synthesis.
 - Phase 26 completed Strong Physics Constraint Feasibility Audit and Conservation-Proxy Diagnostics.
+- Phase 27 completed a seed42 conservative volume-response consistency pilot with mixed results.
 
 The current Phase 10 conclusion is that boundary-band weighted wet/dry consistency refinement has passed test-facing confirmation on the three key project seeds: `seed123`, `seed42`, and `seed202`.
 
@@ -71,7 +72,11 @@ Phase 25 is a diagnosis-driven, depth-field-compatible physical-consistency refi
 
 The current Phase 26 conclusion is that the project has tested whether the current data and outputs can support stronger physics constraints. Current data support Level 4 conservation-proxy diagnostics only partially, Level 4 conservation-aware loss design remains unclear, and Level 5 full SWE/PINN residual constraints are not supported. Phase 25 improves aggregate water-volume response and reduces under-response, but it is not a strict timestep-wise conservation solution. No retraining, architecture modification, Phase 10 loss modification, boundary tuning, Phase 25 sweep, or full SWE/PINN implementation was performed.
 
-The current project position after Phase 26 is rapid flood prediction with reliability diagnosis, failure-mode interpretation, confidence proxy diagnostics, spatial risk mapping, deterministic warning-rule guidance, manuscript-ready synthesis, manuscript drafting, representative case-specific warning interpretation, physical-consistency diagnosis, diagnosis-driven target-wet recall refinement, strong-physics feasibility audit, and conservation-proxy diagnostics. Later work should focus on the remaining Phase 25 limitations, especially slight false-wet increase and non-uniform connectivity behavior, while treating the Phase 26 results as conservation-proxy diagnostics rather than full conservation enforcement. A full SWE/PINN residual is not recommended unless compatible velocity, flux, boundary, DEM, and source-sink information become available.
+The current Phase 27 conclusion is that the conservative `volume_response_consistency` seed42 pilot is mixed. It improved all standard test metrics relative to the Phase 25 seed42 reference (`RMSE = -0.00236602`, `MAE = -0.000654673`, `wet/dry IoU = +0.00892365`, `rollout stability = +0.000618097`, and `step RMSE std = -0.000631138`) and improved several under-response-related proxies, including false-dry volume loss, wet-area contraction, peak-depth underprediction, false-wet rate, and false-wet volume excess. However, it did not achieve the primary conservative volume-response objective: aggregate absolute relative volume bias worsened by `+0.0216934`, mean-step absolute relative volume bias worsened by `+0.0170953`, and run-level aggregate relative volume bias moved from Phase 25 `+0.00296825` to Phase 27 `+0.0246616`.
+
+Phase 27 is therefore not a confirmed conservation-constrained success. The current decision is `remain_seed42_positive_only`: do not proceed to `seed123` / `seed202` confirmation, do not start a Phase 27 weight sweep, and do not claim strong physics success, strict mass conservation, timestep-wise conservation, full mass conservation, or SWE/PINN support. Any future confirmation should require a revised loss design rather than extending the current Phase 27 pilot unchanged.
+
+The current project position after Phase 27 is rapid flood prediction with reliability diagnosis, failure-mode interpretation, confidence proxy diagnostics, spatial risk mapping, deterministic warning-rule guidance, manuscript-ready synthesis, manuscript drafting, representative case-specific warning interpretation, physical-consistency diagnosis, diagnosis-driven target-wet recall refinement, strong-physics feasibility audit, conservation-proxy diagnostics, and a mixed seed42 conservative volume-response pilot. Later work should focus on the remaining Phase 25 limitations, especially slight false-wet increase and non-uniform connectivity behavior, while treating Phase 26 as conservation-proxy diagnostics rather than full conservation enforcement and Phase 27 as standard-metric positive but volume-response objective not confirmed. A full SWE/PINN residual is not recommended unless compatible velocity, flux, boundary, DEM, and source-sink information become available.
 
 No additional Phase 10 boundary-weight sweep, Phase 10 boundary-parameter tuning, traffic-impact modeling, invented references, unsupported claims, or new uncertainty claim was performed. The current Phase 10 boundary-band setting remains `boundary_band_pixels = 1` and `boundary_weight = 2.0`.
 
@@ -438,6 +443,7 @@ When reading the repository:
 - read Phase 24 as physical-consistency diagnostics for existing Phase 10 outputs, not as retraining, tuning, new predictions, or a full physics-residual model
 - read Phase 25 as a targeted target-wet recall and wet-region preservation refinement, not as a complete physical-consistency solution
 - read Phase 26 as a strong-physics feasibility audit and conservation-proxy diagnostics phase, not as full conservation enforcement or SWE/PINN support
+- read Phase 27 as a mixed seed42 conservative volume-response pilot: standard metrics improved, but the primary volume-response objective was not confirmed
 
 ## Key Documents
 
@@ -479,4 +485,6 @@ When reading the repository:
 - `docs/phase25_three_seed_target_wet_recall_synthesis_findings.md`
 - `docs/phase26_strong_physics_constraint_feasibility_plan.md`
 - `docs/phase26_strong_physics_constraint_feasibility_findings.md`
+- `docs/phase27_conservative_volume_response_consistency_plan.md`
+- `docs/phase27_seed42_volume_response_pilot_findings.md`
 - `docs/experiment_index.md`
