@@ -48,6 +48,12 @@ class PhysicsLossController:
             loss_fn=lambda cfg: self._target_wet_recall_consistency_loss(prediction, target, cfg),
         )
         total, metrics = self._apply_term(
+            name="volume_response_consistency",
+            total=total,
+            metrics=metrics,
+            loss_fn=lambda cfg: self._volume_response_consistency_loss(prediction, target, cfg),
+        )
+        total, metrics = self._apply_term(
             name="rainfall_depth_consistency",
             total=total,
             metrics=metrics,
@@ -121,6 +127,49 @@ class PhysicsLossController:
         pred_wet_prob = torch.sigmoid((prediction - threshold) / max(temperature, eps))
         penalty = (1.0 - pred_wet_prob).pow(2) * target_wet
         return penalty.sum() / target_wet.sum().clamp_min(eps)
+
+    @staticmethod
+    def _volume_response_consistency_loss(
+        prediction: torch.Tensor,
+        target: torch.Tensor,
+        cfg: Dict,
+    ) -> torch.Tensor:
+        """
+        Conservative volume-response guidance:
+        penalizes aggregate underresponse in positive predicted flood depth relative to
+        positive target depth per sample and lead time. This is not a closed mass balance.
+        """
+
+        eps = float(cfg.get("eps", 1e-6))
+        underresponse_only = bool(cfg.get("underresponse_only", True))
+        normalize = bool(cfg.get("normalize", True))
+        min_target_volume = float(cfg.get("min_target_volume", 1e-6))
+        reduction = str(cfg.get("reduction", "mean")).lower()
+
+        pred_pos = prediction.clamp_min(0.0)
+        target_pos = target.to(device=prediction.device, dtype=prediction.dtype).clamp_min(0.0)
+
+        pred_volume_dims = tuple(range(2, pred_pos.ndim))
+        target_volume_dims = tuple(range(2, target_pos.ndim))
+        pred_volume = pred_pos.sum(dim=pred_volume_dims) if pred_volume_dims else pred_pos
+        target_volume = target_pos.sum(dim=target_volume_dims) if target_volume_dims else target_pos
+
+        active_mask = target_volume > min_target_volume
+        if underresponse_only:
+            residual = torch.relu(target_volume - pred_volume)
+        else:
+            residual = torch.abs(target_volume - pred_volume)
+        if normalize:
+            residual = residual / target_volume.clamp_min(eps)
+
+        active_residual = residual[active_mask]
+        if active_residual.numel() == 0:
+            return prediction.new_zeros(())
+        if reduction == "mean":
+            return active_residual.mean()
+        if reduction == "sum":
+            return active_residual.sum()
+        raise ValueError(f"Unsupported volume_response_consistency reduction '{reduction}'.")
 
     @staticmethod
     def _target_wet_boundary_band(target_wet: torch.Tensor, band_pixels: int) -> torch.Tensor:
