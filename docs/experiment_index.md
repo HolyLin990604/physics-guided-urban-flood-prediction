@@ -21,6 +21,7 @@
 - Phase 24 physical consistency deepening and process diagnostics: diagnostic linkage between warning-risk labels and physical consistency of existing Phase 10 recommended outputs
 - Phase 25 Physics-Consistency Guided Surrogate Refinement: Target-Wet Recall Consistency: targeted model refinement to reduce false-dry behavior and wet-area contraction while preserving the fixed Phase 10 boundary-band settings
 - Phase 26 Strong Physics Constraint Feasibility Audit and Conservation-Proxy Diagnostics: audit of available physics inputs and conservation-proxy comparison of Phase 10 w20 versus Phase 25 target_wet_recall
+- Phase 27 Conservative Volume-Response Consistency: seed42 mixed pilot with standard-metric improvement but primary volume-response objective not confirmed
 
 ## Phase 6
 
@@ -307,6 +308,23 @@
 - Guardrail: Phase 25 is not a strict timestep-wise conservation solution; timestep-wise absolute relative volume bias is mixed, and false-wet trade-offs increase slightly
 - Model status: no retraining, architecture modification, Phase 10 loss change, boundary tuning, Phase 25 weight sweep, full SWE/PINN implementation, or new prediction generation was performed
 
+## Phase 27
+
+- Plan: `docs/phase27_conservative_volume_response_consistency_plan.md`
+- Loss implementation: `utils/physics_losses.py`
+- Config: `configs/train_phase27_volume_response_seed42_40e.json`
+- Comparison script: `scripts/compare_phase27_volume_response_seed42.py`
+- Findings: `docs/phase27_seed42_volume_response_pilot_findings.md`
+- Outputs: `analysis/phase27_conservative_volume_response_consistency/`
+- Summary output: `analysis/phase27_conservative_volume_response_consistency/phase27_seed42_summary.md`
+- Status: seed42 mixed pilot complete
+- Core result: standard metrics improved and several under-response proxies improved, but the primary volume-response objective was not confirmed
+- Standard metric deltas versus Phase 25 seed42: `RMSE = -0.00236602`, `MAE = -0.000654673`, `wet/dry IoU = +0.00892365`, `rollout stability = +0.000618097`, and `step RMSE std = -0.000631138`
+- Positive physical indicators: `false_dry_volume_loss = -1.77546`, `wet_area_contraction = -0.00626303`, `peak_depth_underprediction = -0.011376`, `false_wet_rate = -0.000387357`, and `false_wet_volume_excess = -0.403664`
+- Failed primary objective: aggregate absolute relative volume bias worsened by `+0.0216934`, mean-step absolute relative volume bias worsened by `+0.0170953`, and run-level aggregate relative volume bias moved from Phase 25 `+0.00296825` to Phase 27 `+0.0246616`
+- Decision: `remain_seed42_positive_only`
+- Guardrail: no `seed123` / `seed202` confirmation, no Phase 27 weight sweep, no SWE/PINN claim, no strict timestep-wise conservation claim, no full mass-conservation claim, and no strong physics success claim
+
 ## Interpretation Order
 
 For current repository interpretation, read the experiment trail in this order:
@@ -332,16 +350,18 @@ For current repository interpretation, read the experiment trail in this order:
 19. `docs/phase24_physical_consistency_deepening_findings.md`
 20. `docs/phase25_three_seed_target_wet_recall_synthesis_findings.md`
 21. `docs/phase26_strong_physics_constraint_feasibility_findings.md`
-22. `docs/project_status.md`
+22. `docs/phase27_seed42_volume_response_pilot_findings.md`
+23. `docs/project_status.md`
 
 ## Next Stage
 
-The next stage should build on the Phase 12 to Phase 26 reliability/applicability, screening, warning-rule, synthesis, manuscript-writing, manuscript-consolidation, manuscript-draft, evidence-alignment, full-draft expansion, warning case-study prototype, physical-consistency diagnostic, target-wet recall refinement, and strong-physics feasibility audit materials rather than reopening Phase 10 tuning.
+The next stage should build on the Phase 12 to Phase 27 reliability/applicability, screening, warning-rule, synthesis, manuscript-writing, manuscript-consolidation, manuscript-draft, evidence-alignment, full-draft expansion, warning case-study prototype, physical-consistency diagnostic, target-wet recall refinement, strong-physics feasibility audit, and mixed conservative volume-response pilot materials rather than reopening Phase 10 tuning.
 
 Recommended next work:
 
 - analyze the remaining Phase 25 limitations, especially slight false-wet increase and non-uniform connectivity behavior
 - treat Phase 25 as a targeted target-wet recall and wet-region preservation refinement, not a complete hydrodynamic consistency solution
+- treat Phase 27 as a mixed seed42 pilot; do not extend it to `seed123` / `seed202` or a weight sweep without revised loss design
 - avoid a full SWE/PINN residual unless compatible velocity, flux, boundary, DEM, and source-sink information become available
 - consider calibrated uncertainty only if calibration data and evaluation design are added
 - keep the current Phase 10 setting fixed unless new evidence justifies changing it
