@@ -24,6 +24,7 @@ The repository should currently be interpreted as follows:
 - Phase 23 completed the reliability-aware warning case-study and application prototype.
 - Phase 24 completed physical consistency deepening and process diagnostics for the existing Phase 10 recommended outputs.
 - Phase 25 completed Physics-Consistency Guided Surrogate Refinement: Target-Wet Recall Consistency through three-seed synthesis.
+- Phase 26 completed Strong Physics Constraint Feasibility Audit and Conservation-Proxy Diagnostics.
 
 The current Phase 10 conclusion is that boundary-band weighted wet/dry consistency refinement has passed test-facing confirmation on the three key project seeds: `seed123`, `seed42`, and `seed202`.
 
@@ -68,7 +69,9 @@ Across `seed123`, `seed42`, and `seed202`, Phase 25 consistently improved standa
 
 Phase 25 is a diagnosis-driven, depth-field-compatible physical-consistency refinement. It improves target-wet recall and wet-region preservation while maintaining or improving standard prediction metrics. It is a strong three-seed positive candidate and a credible targeted refinement over the Phase 10 baseline, but not a complete physical-consistency solution: `false_wet_rate` increased slightly on average, `connectivity_loss_indicator` was not consistently improved, and no full SWE/PINN residual was implemented.
 
-The current project position after Phase 25 is rapid flood prediction with reliability diagnosis, failure-mode interpretation, confidence proxy diagnostics, spatial risk mapping, deterministic warning-rule guidance, manuscript-ready synthesis, manuscript drafting, representative case-specific warning interpretation, physical-consistency diagnosis, and diagnosis-driven target-wet recall refinement. Later work should focus on the remaining Phase 25 limitations, especially slight false-wet increase and non-uniform connectivity behavior. A full SWE/PINN residual is not recommended unless compatible velocity, flux, boundary, DEM, and source-sink information become available.
+The current Phase 26 conclusion is that the project has tested whether the current data and outputs can support stronger physics constraints. Current data support Level 4 conservation-proxy diagnostics only partially, Level 4 conservation-aware loss design remains unclear, and Level 5 full SWE/PINN residual constraints are not supported. Phase 25 improves aggregate water-volume response and reduces under-response, but it is not a strict timestep-wise conservation solution. No retraining, architecture modification, Phase 10 loss modification, boundary tuning, Phase 25 sweep, or full SWE/PINN implementation was performed.
+
+The current project position after Phase 26 is rapid flood prediction with reliability diagnosis, failure-mode interpretation, confidence proxy diagnostics, spatial risk mapping, deterministic warning-rule guidance, manuscript-ready synthesis, manuscript drafting, representative case-specific warning interpretation, physical-consistency diagnosis, diagnosis-driven target-wet recall refinement, strong-physics feasibility audit, and conservation-proxy diagnostics. Later work should focus on the remaining Phase 25 limitations, especially slight false-wet increase and non-uniform connectivity behavior, while treating the Phase 26 results as conservation-proxy diagnostics rather than full conservation enforcement. A full SWE/PINN residual is not recommended unless compatible velocity, flux, boundary, DEM, and source-sink information become available.
 
 No additional Phase 10 boundary-weight sweep, Phase 10 boundary-parameter tuning, traffic-impact modeling, invented references, unsupported claims, or new uncertainty claim was performed. The current Phase 10 boundary-band setting remains `boundary_band_pixels = 1` and `boundary_weight = 2.0`.
 
@@ -434,6 +437,7 @@ When reading the repository:
 - read Phase 23 as a representative warning-oriented case-study prototype, not as retraining, tuning, or new prediction generation
 - read Phase 24 as physical-consistency diagnostics for existing Phase 10 outputs, not as retraining, tuning, new predictions, or a full physics-residual model
 - read Phase 25 as a targeted target-wet recall and wet-region preservation refinement, not as a complete physical-consistency solution
+- read Phase 26 as a strong-physics feasibility audit and conservation-proxy diagnostics phase, not as full conservation enforcement or SWE/PINN support
 
 ## Key Documents
 
@@ -473,4 +477,6 @@ When reading the repository:
 - `docs/phase25_target_wet_recall_pilot_findings.md`
 - `docs/phase25_seed42_guardrail_findings.md`
 - `docs/phase25_three_seed_target_wet_recall_synthesis_findings.md`
+- `docs/phase26_strong_physics_constraint_feasibility_plan.md`
+- `docs/phase26_strong_physics_constraint_feasibility_findings.md`
 - `docs/experiment_index.md`

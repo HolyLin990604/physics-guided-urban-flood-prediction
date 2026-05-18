@@ -20,6 +20,7 @@
 - Phase 23 reliability-aware warning case study and application prototype: representative warning-oriented interpretation using Phase 15 screening, Phase 16 rules, and existing Phase 10 forecast map arrays
 - Phase 24 physical consistency deepening and process diagnostics: diagnostic linkage between warning-risk labels and physical consistency of existing Phase 10 recommended outputs
 - Phase 25 Physics-Consistency Guided Surrogate Refinement: Target-Wet Recall Consistency: targeted model refinement to reduce false-dry behavior and wet-area contraction while preserving the fixed Phase 10 boundary-band settings
+- Phase 26 Strong Physics Constraint Feasibility Audit and Conservation-Proxy Diagnostics: audit of available physics inputs and conservation-proxy comparison of Phase 10 w20 versus Phase 25 target_wet_recall
 
 ## Phase 6
 
@@ -284,6 +285,28 @@
 - Limitation: false-wet rate increased slightly and connectivity loss was not consistently improved
 - Decision: Phase 25 target-wet recall is a strong three-seed positive candidate and credible targeted refinement over the Phase 10 baseline, but not a complete physical-consistency solution or full SWE/PINN residual
 
+## Phase 26
+
+- Plan: `docs/phase26_strong_physics_constraint_feasibility_plan.md`
+- Input audit script: `scripts/audit_phase26_physics_inputs.py`
+- Conservation diagnostic script: `scripts/analyze_phase26_conservation_residual.py`
+- Findings: `docs/phase26_strong_physics_constraint_feasibility_findings.md`
+- Outputs: `analysis/phase26_strong_physics_constraint_feasibility/`
+- Summary outputs:
+  - `physics_input_audit.json`
+  - `physics_input_audit.md`
+  - `conservation_residual_by_step.csv`
+  - `conservation_residual_by_run.csv`
+  - `conservation_residual_by_seed.csv`
+  - `conservation_residual_phase_delta.csv`
+  - `summary.json`
+  - `conservation_residual_summary.md`
+- Status: strong-physics feasibility audit and conservation-proxy diagnostics complete
+- Core result: current data partially support Level 4 conservation-oriented diagnostics, leave Level 4 conservation-aware loss design unclear, and do not support Level 5 full SWE/PINN residual constraints
+- Conservation-proxy result: Phase 25 improves aggregate volume response, false-dry volume loss, wet-area contraction, peak-depth preservation, RMSE, and MAE relative to Phase 10 w20
+- Guardrail: Phase 25 is not a strict timestep-wise conservation solution; timestep-wise absolute relative volume bias is mixed, and false-wet trade-offs increase slightly
+- Model status: no retraining, architecture modification, Phase 10 loss change, boundary tuning, Phase 25 weight sweep, full SWE/PINN implementation, or new prediction generation was performed
+
 ## Interpretation Order
 
 For current repository interpretation, read the experiment trail in this order:
@@ -308,11 +331,12 @@ For current repository interpretation, read the experiment trail in this order:
 18. `docs/phase23_reliability_warning_case_study_findings.md`
 19. `docs/phase24_physical_consistency_deepening_findings.md`
 20. `docs/phase25_three_seed_target_wet_recall_synthesis_findings.md`
-21. `docs/project_status.md`
+21. `docs/phase26_strong_physics_constraint_feasibility_findings.md`
+22. `docs/project_status.md`
 
 ## Next Stage
 
-The next stage should build on the Phase 12 to Phase 25 reliability/applicability, screening, warning-rule, synthesis, manuscript-writing, manuscript-consolidation, manuscript-draft, evidence-alignment, full-draft expansion, warning case-study prototype, physical-consistency diagnostic, and target-wet recall refinement materials rather than reopening Phase 10 tuning.
+The next stage should build on the Phase 12 to Phase 26 reliability/applicability, screening, warning-rule, synthesis, manuscript-writing, manuscript-consolidation, manuscript-draft, evidence-alignment, full-draft expansion, warning case-study prototype, physical-consistency diagnostic, target-wet recall refinement, and strong-physics feasibility audit materials rather than reopening Phase 10 tuning.
 
 Recommended next work:
 
