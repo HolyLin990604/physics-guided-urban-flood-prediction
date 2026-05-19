@@ -26,63 +26,25 @@ flowchart LR
 ## Stage Evolution
 
 ```mermaid
-flowchart LR
-    A[Phase 2<br/>M3 f025] --> B[Phase 3.1<br/>Learned selective]
-    B --> C[Phase 3.2<br/>Response split]
-    C --> D[Phase 3.3<br/>Protected response split]
-    D --> E[Phase 6<br/>Adaptive pilot adapt025]
-    E --> F[Phase 7<br/>Conservative adaptive adapt010]
-    F --> G[Phase 8 Batch 2<br/>Trade-off positioning]
-    G --> H[Phase 9<br/>Interpretability diagnosis]
-    H --> I[Phase 10<br/>Margin-aware refinement]
-    I --> J[Phase 12<br/>Reliability diagnosis]
-    J --> K[Phase 13<br/>Failure-case visual summary]
-    K --> L[Phase 14<br/>Confidence proxy diagnosis]
-    L --> M[Phase 15<br/>Reliability screening and risk mapping]
-    M --> N[Phase 16<br/>Warning rules and applicability boundary]
-    N --> O[Phase 17<br/>Reliability-aware framework synthesis]
-    O --> P[Phase 18<br/>Manuscript warning-layer writing]
-    P --> Q[Phase 19<br/>Manuscript structure consolidation]
-    Q --> R[Phase 20<br/>Manuscript draft assembly]
-    R --> S[Phase 21<br/>Evidence and figure/table alignment]
-    S --> T[Phase 22<br/>Full manuscript draft expansion]
-    T --> U[Phase 23<br/>Reliability-aware warning case study]
-    U --> V[Phase 24<br/>Physical consistency diagnostics]
-    V --> W[Phase 25<br/>Target-wet recall consistency]
-    W --> X[Phase 26<br/>Strong physics feasibility]
-    X --> Y[Phase 27<br/>Conservative volume response]
-    Y --> Z[Phase 28<br/>Volume-response loss diagnosis]
-    Z --> AA[Phase 29<br/>Tolerance-band volume pilot]
+flowchart TB
+    A["Foundation<br/>Baseline U-Net + TCN<br/>Phases 1-5"]:::foundation
+    B["Architecture Refinement<br/>Temporal gates / adaptive response<br/>Phases 6-11"]:::foundation
+    C["Reliability-Aware Warning Framework<br/>Diagnostics / risk mapping / warning rules<br/>Phases 12-17"]:::reliability
+    D["Manuscript + Application Layer<br/>Manuscript synthesis / case study prototype<br/>Phases 18-23"]:::reliability
+    E["Physical Consistency Deepening<br/>Failure modes / target-wet recall<br/>Phases 24-25"]:::physics
+    F["Strong Physics Feasibility<br/>Level 4 proxy supported<br/>Level 5 SWE/PINN not supported<br/>Phase 26"]:::physics
+    G["Volume-Response Loss Redesign<br/>Phase 27 mixed pilot<br/>Phase 28 failure diagnosis<br/>Phase 29 tolerance-band mixed pilot"]:::physics
+    H["Current Status<br/>Volume-response partially repaired<br/>Trade-off still unacceptable<br/>No seed123/seed202 or sweep"]:::current
 
-    A --> A1[Best-balanced mainline]
-    B --> B1[Freer selector<br/>not enough]
-    C --> C1[Strong difficult-case gain<br/>too aggressive]
-    D --> D1[Strongest static structured refinement]
-    E --> E1[Technically stable<br/>but not ultimately superior]
-    F --> F1[Active adaptive candidate before margin-aware refinement]
-    G --> G1[RMSE/MAE gains positioned<br/>mixed IoU diagnosed]
-    H --> H1[Margin-region wet/dry trade-off identified]
-    I --> I1[Boundary-band refinement confirmed<br/>seed123 / seed42 / seed202]
-    J --> J1[Reliability boundaries diagnosed<br/>boundary / depth / scenario failure modes]
-    K --> K1[Top failures visualized<br/>location2 repeated failure modes]
-    L --> L1[Confidence proxies diagnosed<br/>not calibrated uncertainty]
-    M --> M1[Deterministic screening labels<br/>scenario and pixel risk maps]
-    N --> N1[Warning-rule guidance<br/>deterministic operational labels]
-    O --> O1[Phase 12-16 synthesized<br/>manuscript and positioning narrative]
-    P --> P1[Manuscript-ready warning-layer section<br/>based on Phase 12-17]
-    Q --> Q1[Paper-ready outline and submission planning<br/>based on Phase 12-18]
-    R --> R1[First full manuscript draft skeleton<br/>based on Phase 18-19]
-    S --> S1[Claim-to-evidence alignment<br/>using existing outputs and figures]
-    T --> T1[Full academic draft expansion<br/>based on Phase 20-21]
-    U --> U1[Representative warning prototype<br/>using Phase 15, Phase 16, and Phase 10 map arrays]
-    V --> V1[Physical consistency risk linkage<br/>false-dry / contraction / peaks / connectivity / volume]
-    W --> W1[Diagnosis-driven refinement<br/>target-wet recall and wet-region preservation]
-    X --> X1[Level 4 conservation-proxy supported<br/>Level 5 SWE/PINN not supported]
-    Y --> Y1[Seed42 mixed pilot<br/>standard metrics improved<br/>volume-response objective not confirmed]
-    Z --> Z1[Failure diagnosis; dry/threshold-bin volume accumulation; tolerance-band redesign]
-    AA --> AA1[Tolerance-band pilot; volume partially repaired; trade-off unacceptable]
+    A --> B --> C --> D --> E --> F --> G --> H
+
+    classDef foundation fill:#e8f1ff,stroke:#3b6ea8,stroke-width:1px,color:#10233f
+    classDef reliability fill:#edf8f1,stroke:#3f8f5f,stroke-width:1px,color:#173824
+    classDef physics fill:#fff3df,stroke:#b77722,stroke-width:1px,color:#3d2608
+    classDef current fill:#f7e9ee,stroke:#a84b6b,stroke-width:2px,color:#3d1021
 ```
 
+Detailed phase-by-phase records are maintained in docs/experiment_index.md.
 
 ## Overview
 
