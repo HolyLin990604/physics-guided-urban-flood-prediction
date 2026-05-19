@@ -23,6 +23,7 @@
 - Phase 26 Strong Physics Constraint Feasibility Audit and Conservation-Proxy Diagnostics: audit of available physics inputs and conservation-proxy comparison of Phase 10 w20 versus Phase 25 target_wet_recall
 - Phase 27 Conservative Volume-Response Consistency: seed42 mixed pilot with standard-metric improvement but primary volume-response objective not confirmed
 - Phase 28 Volume-Response Loss Failure Diagnosis: diagnostic-only analysis explaining why the Phase 27 volume-response objective failed and why direct expansion should stop
+- Phase 29 Tolerance-Band Volume Consistency: seed42 mixed pilot with partial volume-response repair but unacceptable trade-off
 
 ## Phase 6
 
@@ -343,9 +344,35 @@
 - Core result: Phase 27 volume-bias worsening is dominated by `dry_or_threshold` depth-bin volume accumulation, not false-wet expansion or already-wet amplification.
 - Key evidence: `delta_volume_bias_total = +6974.12`, Phase 25 relative volume bias = `+0.00296825`, Phase 27 relative volume bias = `+0.0246616`, false-wet volume excess delta = `-184.071`, already-wet amplification = `+1396.20`, and `dry_or_threshold` contribution = `+5362.82`, about `76.9%` of total delta volume bias.
 - Decision: stop direct expansion of the Phase 27 underresponse-only loss.
-- Recommended next direction: tolerance-band volume consistency redesign, only after a new plan.
+- Historical next direction: tolerance-band volume consistency redesign, only after a new plan.
 - Guardrail: no `seed123` / `seed202` confirmation, no sweep, no strict conservation, no mass-conservation, no SWE/PINN claim.
 - Model status: diagnostic only; no training, architecture modification, loss modification, config modification, new confirmation run, or weight sweep was performed.
+
+## Phase 29
+
+- Plan: `docs/phase29_tolerance_band_volume_consistency_plan.md`
+- Loss/config:
+  - `utils/physics_losses.py`
+  - `configs/train_phase29_tolerance_band_volume_seed42_40e.json`
+- Comparison script: `scripts/compare_phase29_tolerance_band_volume_seed42.py`
+- Findings: `docs/phase29_seed42_tolerance_band_volume_findings.md`
+- Outputs: `analysis/phase29_tolerance_band_volume_consistency/`
+- Summary outputs:
+  - `phase29_seed42_by_step.csv`
+  - `phase29_seed42_by_run.csv`
+  - `phase29_seed42_delta_vs_phase25.csv`
+  - `phase29_seed42_delta_vs_phase27.csv`
+  - `phase29_seed42_depth_bin_decomposition.csv`
+  - `phase29_seed42_summary.json`
+  - `phase29_seed42_summary.md`
+- Status: seed42 mixed tolerance-band pilot complete
+- Core result: partial volume-response repair, unacceptable trade-off
+- Positive evidence versus Phase 27: aggregate absolute relative volume bias improved from `0.0246616` to `0.019464`, mean-step absolute relative volume bias improved from `0.257274` to `0.230447`, and `dry_or_threshold` contribution decreased from `0.137662` to `0.131428`
+- Negative evidence versus Phase 27: all listed standard metrics worsened, false-dry volume loss worsened from `5409.72` to `5964.83`, false-wet volume excess worsened from `7750.32` to `8289.77`, peak-depth underprediction worsened from `0.128045` to `0.134593`, and aggregate bias remains far from Phase 25 `0.00296825`
+- Seed42 test metrics: `RMSE = 0.0443854521`, `MAE = 0.0178462429`, `wet/dry IoU = 0.8016409529`, `rollout stability = 0.9895110601`, and `step RMSE std = 0.0106412431`
+- Decision: `remain_seed42_only_pending_revision`
+- Guardrail: no `seed123` / `seed202`, no tolerance or weight sweep, no strict conservation, no mass-conservation, no SWE/PINN claim.
+- Model status: no tolerance-band success claim; future loss redesign or training requires a new plan.
 
 ## Interpretation Order
 
@@ -374,18 +401,22 @@ For current repository interpretation, read the experiment trail in this order:
 21. `docs/phase26_strong_physics_constraint_feasibility_findings.md`
 22. `docs/phase27_seed42_volume_response_pilot_findings.md`
 23. `docs/phase28_volume_response_loss_diagnosis_findings.md`
-24. `docs/project_status.md`
+24. `docs/phase29_seed42_tolerance_band_volume_findings.md`
+25. `docs/project_status.md`
 
 ## Next Stage
 
-The next stage should build on the Phase 12 to Phase 28 reliability/applicability, screening, warning-rule, synthesis, manuscript-writing, manuscript-consolidation, manuscript-draft, evidence-alignment, full-draft expansion, warning case-study prototype, physical-consistency diagnostic, target-wet recall refinement, strong-physics feasibility audit, mixed conservative volume-response pilot, and volume-response failure diagnosis materials rather than reopening Phase 10 tuning.
+The next stage should build on the Phase 12 to Phase 29 reliability/applicability, screening, warning-rule, synthesis, manuscript-writing, manuscript-consolidation, manuscript-draft, evidence-alignment, full-draft expansion, warning case-study prototype, physical-consistency diagnostic, target-wet recall refinement, strong-physics feasibility audit, mixed conservative volume-response pilot, volume-response failure diagnosis, and mixed tolerance-band pilot materials rather than reopening Phase 10 tuning.
 
 Recommended next work:
 
 - analyze the remaining Phase 25 limitations, especially slight false-wet increase and non-uniform connectivity behavior
 - treat Phase 25 as a targeted target-wet recall and wet-region preservation refinement, not a complete hydrodynamic consistency solution
 - treat Phase 27 as a mixed seed42 pilot whose direct expansion should stop
-- use Phase 28 as the diagnostic basis for considering tolerance-band volume consistency only after a new plan
+- use Phase 28 as the diagnostic basis that motivated Phase 29, not as support for direct expansion of the Phase 27 loss
+- treat Phase 29 as partial volume-response repair with unacceptable trade-offs, not as tolerance-band success
+- require a new plan before any further loss redesign or training
+- do not run Phase 29 `seed123` / `seed202` confirmation or a tolerance/weight sweep
 - avoid a full SWE/PINN residual unless compatible velocity, flux, boundary, DEM, and source-sink information become available
 - consider calibrated uncertainty only if calibration data and evaluation design are added
 - keep the current Phase 10 setting fixed unless new evidence justifies changing it
