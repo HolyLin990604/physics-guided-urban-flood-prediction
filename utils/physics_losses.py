@@ -48,6 +48,12 @@ class PhysicsLossController:
             loss_fn=lambda cfg: self._target_wet_recall_consistency_loss(prediction, target, cfg),
         )
         total, metrics = self._apply_term(
+            name="tolerance_band_volume_consistency",
+            total=total,
+            metrics=metrics,
+            loss_fn=lambda cfg: self._tolerance_band_volume_consistency_loss(prediction, target, cfg),
+        )
+        total, metrics = self._apply_term(
             name="volume_response_consistency",
             total=total,
             metrics=metrics,
@@ -170,6 +176,41 @@ class PhysicsLossController:
         if reduction == "sum":
             return active_residual.sum()
         raise ValueError(f"Unsupported volume_response_consistency reduction '{reduction}'.")
+
+    @staticmethod
+    def _tolerance_band_volume_consistency_loss(
+        prediction: torch.Tensor,
+        target: torch.Tensor,
+        cfg: Dict,
+    ) -> torch.Tensor:
+        eps = float(cfg.get("eps", 1e-6))
+        tolerance = float(cfg.get("tolerance", 0.02))
+        under_weight = float(cfg.get("under_weight", 1.0))
+        over_weight = float(cfg.get("over_weight", 0.5))
+        min_target_volume = float(cfg.get("min_target_volume", 1e-6))
+        reduction = str(cfg.get("reduction", "mean")).lower()
+
+        pred_pos = prediction.clamp_min(0.0)
+        target_pos = target.to(device=prediction.device, dtype=prediction.dtype).clamp_min(0.0)
+
+        volume_dims = tuple(range(2, prediction.ndim))
+        pred_volume = pred_pos.sum(dim=volume_dims) if volume_dims else pred_pos
+        target_volume = target_pos.sum(dim=volume_dims) if volume_dims else target_pos
+
+        active_mask = target_volume > min_target_volume
+        relative_bias = (pred_volume - target_volume) / target_volume.clamp_min(eps)
+        under_excess = torch.relu((-relative_bias) - tolerance)
+        over_excess = torch.relu(relative_bias - tolerance)
+        residual = under_weight * under_excess + over_weight * over_excess
+
+        active_residual = residual[active_mask]
+        if active_residual.numel() == 0:
+            return prediction.new_zeros(())
+        if reduction == "mean":
+            return active_residual.mean()
+        if reduction == "sum":
+            return active_residual.sum()
+        raise ValueError(f"Unsupported tolerance_band_volume_consistency reduction '{reduction}'.")
 
     @staticmethod
     def _target_wet_boundary_band(target_wet: torch.Tensor, band_pixels: int) -> torch.Tensor:
