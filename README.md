@@ -443,47 +443,22 @@ The figures below are earlier-stage qualitative comparisons retained for visual 
 
 ```mermaid
 flowchart TD
-    A[Stage I<br/>Mainline and static refinement establishment] --> B[Stage II<br/>Adaptive pilot exploration]
-    B --> C[Stage III<br/>Adaptive candidate validation]
-    C --> D[Stage IV<br/>Interpretability diagnosis]
-    D --> E[Stage V<br/>Margin-aware refinement]
-    E --> F[Stage VI<br/>Reliability and applicability diagnosis]
-    F --> G[Stage VII<br/>Failure-case visual summary]
-    G --> H[Stage VIII<br/>Confidence proxy diagnosis]
-    H --> I[Stage IX<br/>Reliability screening and risk mapping]
-    I --> J[Stage X<br/>Warning-rule guidance and applicability boundary]
-    J --> K[Stage XI<br/>Reliability-aware warning framework synthesis]
-    K --> L[Stage XII<br/>Manuscript warning-layer writing]
-    L --> M[Stage XIII<br/>Manuscript structure consolidation]
-    M --> N[Stage XIV<br/>Manuscript draft assembly]
-    N --> O[Stage XV<br/>Manuscript evidence alignment]
-    O --> P[Stage XVI<br/>Manuscript full draft expansion]
-    P --> Q[Stage XVII<br/>Warning case-study prototype]
-    Q --> R[Stage XVIII<br/>Physical consistency diagnostics]
-    R --> S[Stage XIX<br/>Target-wet recall refinement]
-    S --> T[Next stage<br/>Focused limitation analysis]
+    A["Completed Mainline<br/>Rapid flood-depth prediction<br/>reliability-aware warning framework<br/>Phases 1-23"]:::completed
+    B["Physical Consistency Evidence<br/>Failure diagnosis<br/>target-wet recall<br/>physical proxy diagnostics<br/>Phases 24-25"]:::completed
+    C["Strong Physics Boundary<br/>Level 4 conservation-proxy diagnostics supported<br/>Level 5 SWE/PINN not supported<br/>Phase 26"]:::boundary
+    D["Volume-Response Loss Lessons<br/>Phase 27 underresponse-only mixed<br/>Phase 28 failure diagnosis<br/>Phase 29 tolerance-band mixed<br/>volume-response partially repaired<br/>trade-off remains unacceptable"]:::diagnosis
+    E["Current Decision<br/>Stop direct seed expansion<br/>no seed123 or seed202<br/>no weight or tolerance sweep"]:::current
+    F["Next Research Direction<br/>Redesign only with new plan<br/>dry-threshold guardrails<br/>stronger data needed for full physics"]:::current
 
-    A1[Phase 2-5<br/>- M3 f025 remains overall best-balanced mainline<br/>- Phase 3.3 af025 remains strongest static structured refinement] --> A
-    B1[Phase 6-7<br/>- adapt025 closed as negative/neutral<br/>- adapt010 promoted as active adaptive candidate] --> B
-    C1[Phase 8 Batch 2<br/>- consistent RMSE/MAE/loss gains<br/>- mixed IoU due to seed123<br/>- no favorable-case guardrail failure] --> C
-    D1[Phase 9<br/>- margin-region wet/dry trade-off diagnosed<br/>- no adaptive multiplier saturation found] --> D
-    E1[Phase 10<br/>- boundary-band refinement completed<br/>- w=2.0 confirmed on seed123 / seed42 / seed202] --> E
-    F1[Phase 12<br/>- reliability boundaries diagnosed<br/>- boundary / depth / scenario caution zones identified] --> F
-    G1[Phase 13<br/>- top failures visualized<br/>- repeated location2 failure modes explained] --> G
-    H1[Phase 14<br/>- confidence-margin risk proxy<br/>- weak cross-seed disagreement proxy] --> H
-    I1[Phase 15<br/>- deterministic scenario labels<br/>- pixel risk maps<br/>- known location2+r300y cases flagged] --> I
-    J1[Phase 16<br/>- warning-rule guidance<br/>- applicability boundary<br/>- high-risk cases preserved] --> J
-    K1[Phase 17<br/>- Phase 12-16 synthesis<br/>- manuscript and positioning support<br/>- no retraining or tuning] --> K
-    L1[Phase 18<br/>- manuscript-ready warning-layer material<br/>- based on Phase 12-17<br/>- no retraining or tuning] --> L
-    M1[Phase 19<br/>- paper-ready manuscript outline<br/>- submission consolidation<br/>- no retraining or tuning] --> M
-    N1[Phase 20<br/>- first full manuscript draft skeleton<br/>- based on Phase 18-19<br/>- no retraining or tuning] --> N
-    O1[Phase 21<br/>- claim-to-evidence alignment<br/>- figure/table planning<br/>- no new experiment] --> O
-    P1[Phase 22<br/>- full academic manuscript draft<br/>- based on Phase 20-21<br/>- no new experiment] --> P
-    Q1[Phase 23<br/>- representative warning case study<br/>- selected reliable / caution / high-risk cases<br/>- no retraining or new predictions] --> Q
-    R1[Phase 24<br/>- physical consistency linked to warning risk<br/>- false-dry / contraction / peak / connectivity / volume diagnostics<br/>- no retraining or new predictions] --> R
-    S1[Phase 25<br/>- target-wet recall consistency<br/>- three-seed positive candidate<br/>- false-dry and contraction reduced] --> S
-    T1[Future focus<br/>- false-wet and connectivity limitations<br/>- no full SWE/PINN residual without required physics inputs] --> T
+    A --> B --> C --> D --> E --> F
+
+    classDef completed fill:#e8f5e9,stroke:#2e7d32,color:#1b5e20
+    classDef boundary fill:#fff3e0,stroke:#ef6c00,color:#7a3b00
+    classDef diagnosis fill:#fce4ec,stroke:#ad1457,color:#6a0032
+    classDef current fill:#e3f2fd,stroke:#1565c0,color:#0d47a1
 ```
+
+Detailed implementation records and phase-by-phase evidence are maintained in docs/experiment_index.md.
 
 
 ## Documentation
