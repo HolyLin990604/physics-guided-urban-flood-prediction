@@ -22,6 +22,7 @@
 - Phase 25 Physics-Consistency Guided Surrogate Refinement: Target-Wet Recall Consistency: targeted model refinement to reduce false-dry behavior and wet-area contraction while preserving the fixed Phase 10 boundary-band settings
 - Phase 26 Strong Physics Constraint Feasibility Audit and Conservation-Proxy Diagnostics: audit of available physics inputs and conservation-proxy comparison of Phase 10 w20 versus Phase 25 target_wet_recall
 - Phase 27 Conservative Volume-Response Consistency: seed42 mixed pilot with standard-metric improvement but primary volume-response objective not confirmed
+- Phase 28 Volume-Response Loss Failure Diagnosis: diagnostic-only analysis explaining why the Phase 27 volume-response objective failed and why direct expansion should stop
 
 ## Phase 6
 
@@ -325,6 +326,27 @@
 - Decision: `remain_seed42_positive_only`
 - Guardrail: no `seed123` / `seed202` confirmation, no Phase 27 weight sweep, no SWE/PINN claim, no strict timestep-wise conservation claim, no full mass-conservation claim, and no strong physics success claim
 
+## Phase 28
+
+- Plan: `docs/phase28_volume_response_loss_diagnosis_plan.md`
+- Diagnostic script: `scripts/diagnose_phase28_volume_response_failure.py`
+- Findings: `docs/phase28_volume_response_loss_diagnosis_findings.md`
+- Outputs: `analysis/phase28_volume_response_loss_diagnosis/`
+- Summary outputs:
+  - `volume_bias_decomposition_by_step.csv`
+  - `volume_bias_depth_bin_decomposition.csv`
+  - `volume_bias_timestep_ranking.csv`
+  - `volume_bias_decomposition_summary.csv`
+  - `phase28_volume_response_failure_summary.json`
+  - `phase28_volume_response_failure_findings.md`
+- Status: volume-response loss failure diagnosis complete
+- Core result: Phase 27 volume-bias worsening is dominated by `dry_or_threshold` depth-bin volume accumulation, not false-wet expansion or already-wet amplification.
+- Key evidence: `delta_volume_bias_total = +6974.12`, Phase 25 relative volume bias = `+0.00296825`, Phase 27 relative volume bias = `+0.0246616`, false-wet volume excess delta = `-184.071`, already-wet amplification = `+1396.20`, and `dry_or_threshold` contribution = `+5362.82`, about `76.9%` of total delta volume bias.
+- Decision: stop direct expansion of the Phase 27 underresponse-only loss.
+- Recommended next direction: tolerance-band volume consistency redesign, only after a new plan.
+- Guardrail: no `seed123` / `seed202` confirmation, no sweep, no strict conservation, no mass-conservation, no SWE/PINN claim.
+- Model status: diagnostic only; no training, architecture modification, loss modification, config modification, new confirmation run, or weight sweep was performed.
+
 ## Interpretation Order
 
 For current repository interpretation, read the experiment trail in this order:
@@ -351,17 +373,19 @@ For current repository interpretation, read the experiment trail in this order:
 20. `docs/phase25_three_seed_target_wet_recall_synthesis_findings.md`
 21. `docs/phase26_strong_physics_constraint_feasibility_findings.md`
 22. `docs/phase27_seed42_volume_response_pilot_findings.md`
-23. `docs/project_status.md`
+23. `docs/phase28_volume_response_loss_diagnosis_findings.md`
+24. `docs/project_status.md`
 
 ## Next Stage
 
-The next stage should build on the Phase 12 to Phase 27 reliability/applicability, screening, warning-rule, synthesis, manuscript-writing, manuscript-consolidation, manuscript-draft, evidence-alignment, full-draft expansion, warning case-study prototype, physical-consistency diagnostic, target-wet recall refinement, strong-physics feasibility audit, and mixed conservative volume-response pilot materials rather than reopening Phase 10 tuning.
+The next stage should build on the Phase 12 to Phase 28 reliability/applicability, screening, warning-rule, synthesis, manuscript-writing, manuscript-consolidation, manuscript-draft, evidence-alignment, full-draft expansion, warning case-study prototype, physical-consistency diagnostic, target-wet recall refinement, strong-physics feasibility audit, mixed conservative volume-response pilot, and volume-response failure diagnosis materials rather than reopening Phase 10 tuning.
 
 Recommended next work:
 
 - analyze the remaining Phase 25 limitations, especially slight false-wet increase and non-uniform connectivity behavior
 - treat Phase 25 as a targeted target-wet recall and wet-region preservation refinement, not a complete hydrodynamic consistency solution
-- treat Phase 27 as a mixed seed42 pilot; do not extend it to `seed123` / `seed202` or a weight sweep without revised loss design
+- treat Phase 27 as a mixed seed42 pilot whose direct expansion should stop
+- use Phase 28 as the diagnostic basis for considering tolerance-band volume consistency only after a new plan
 - avoid a full SWE/PINN residual unless compatible velocity, flux, boundary, DEM, and source-sink information become available
 - consider calibrated uncertainty only if calibration data and evaluation design are added
 - keep the current Phase 10 setting fixed unless new evidence justifies changing it

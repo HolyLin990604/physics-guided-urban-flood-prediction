@@ -51,6 +51,7 @@ flowchart LR
     V --> W[Phase 25<br/>Target-wet recall consistency]
     W --> X[Phase 26<br/>Strong physics feasibility]
     X --> Y[Phase 27<br/>Conservative volume response]
+    Y --> Z[Phase 28<br/>Volume-response loss diagnosis]
 
     A --> A1[Best-balanced mainline]
     B --> B1[Freer selector<br/>not enough]
@@ -77,6 +78,7 @@ flowchart LR
     W --> W1[Diagnosis-driven refinement<br/>target-wet recall and wet-region preservation]
     X --> X1[Level 4 conservation-proxy supported<br/>Level 5 SWE/PINN not supported]
     Y --> Y1[Seed42 mixed pilot<br/>standard metrics improved<br/>volume-response objective not confirmed]
+    Z --> Z1[Failure diagnosis; dry/threshold-bin volume accumulation; tolerance-band redesign]
 ```
 
 
@@ -215,6 +217,12 @@ Phase 27 introduced a conservative `volume_response_consistency` loss and tested
 The Phase 27 seed42 result is a mixed pilot. Relative to the Phase 25 seed42 reference, it improved all standard test metrics: `RMSE = -0.00236602`, `MAE = -0.000654673`, `wet/dry IoU = +0.00892365`, `rollout stability = +0.000618097`, and `step RMSE std = -0.000631138`. It also improved several under-response-related conservation proxies, including reduced false-dry volume loss, wet-area contraction, peak-depth underprediction, false-wet rate, and false-wet volume excess.
 
 However, the primary conservative volume-response objective was not achieved. Aggregate absolute relative volume bias worsened by `+0.0216934`, mean-step absolute relative volume bias worsened by `+0.0170953`, and run-level aggregate relative volume bias moved from Phase 25 `+0.00296825` to Phase 27 `+0.0246616`. The result should therefore be interpreted as `seed42` standard-metric positive but volume-response objective not confirmed. Current decision: `remain_seed42_positive_only`; do not proceed to `seed123` / `seed202` confirmation, do not start a Phase 27 weight sweep, and do not claim strong physics success, strict mass conservation, or SWE/PINN support.
+
+Phase 28 diagnosed why the Phase 27 seed42 pilot failed the primary volume-response objective. See `docs/phase28_volume_response_loss_diagnosis_findings.md` and `analysis/phase28_volume_response_loss_diagnosis/phase28_volume_response_failure_findings.md`.
+
+Phase 28 is diagnostic only. It did not train a model, modify architecture, modify losses, modify configs, run `seed123` / `seed202`, or perform a Phase 27 weight sweep. The diagnosis found that the Phase 27 volume-bias worsening was not mainly caused by threshold-level false-wet expansion and was not primarily caused by already-wet amplification. The dominant source was `dry_or_threshold` target-depth-bin volume accumulation, suggesting sub-threshold or near-threshold low-depth mass accumulation.
+
+Key Phase 28 evidence: `delta_volume_bias_total = +6974.12`; Phase 25 relative volume bias was `+0.00296825`; Phase 27 relative volume bias was `+0.0246616`; false-wet volume excess delta was `-184.071`; already-wet amplification was `+1396.20`; and the `dry_or_threshold` contribution was `+5362.82`, about `76.9%` of total delta volume bias. The recommended next design direction is tolerance-band volume consistency, but only after a new plan. Phase 28 supports stopping direct expansion of the Phase 27 underresponse-only `volume_response_consistency` loss; it does not support strict conservation, full mass conservation, or SWE/PINN claims.
 
 Representative Phase 24 figures:
 
@@ -423,7 +431,7 @@ Representative Phase 25 figures:
 
 ## Historical Qualitative Examples
 
-The figures below are earlier-stage qualitative comparisons retained for visual reference. They are not the current primary evidence for the project state; the current project state is summarized above through the Phase 27 mixed seed42 conservative volume-response pilot.
+The figures below are earlier-stage qualitative comparisons retained for visual reference. They are not the current primary evidence for the project state; the current project state is summarized above through the Phase 28 volume-response loss failure diagnosis.
 
 <details>
 <summary>Expand earlier-stage qualitative flood-map examples</summary>
@@ -714,11 +722,12 @@ Generated figures and analysis outputs are organized under:
 - `analysis/phase25_target_wet_recall_comparison/figures/` for Phase 25 versus Phase 10 summary comparison figures
 - `analysis/phase26_strong_physics_constraint_feasibility/` for Phase 26 physics-input audit and conservation-proxy diagnostic outputs
 - `analysis/phase27_conservative_volume_response_consistency/` for Phase 27 seed42 conservative volume-response pilot outputs
+- `analysis/phase28_volume_response_loss_diagnosis/` for Phase 28 volume-response loss failure diagnosis outputs
 
 
 ## Current Project Status
 
-The repository has completed the main Phase 2-3 architecture comparison cycle, closed the Phase 6 `adapt025` pilot as negative/neutral, established Phase 7/8 `adapt010` as the active adaptive candidate before margin-aware refinement, completed Phase 9 interpretability diagnosis, completed the Phase 10 margin-aware refinement intervention, completed the Phase 12-16 reliability-aware warning layer, completed the Phase 17-22 manuscript synthesis and drafting sequence, completed the Phase 23 reliability-aware warning case-study prototype, completed Phase 24 physical-consistency deepening diagnostics, completed Phase 25 target-wet recall consistency refinement through three-seed synthesis, completed Phase 26 strong-physics feasibility audit and conservation-proxy diagnostics, and completed the Phase 27 seed42 conservative volume-response consistency pilot.
+The repository has completed the main Phase 2-3 architecture comparison cycle, closed the Phase 6 `adapt025` pilot as negative/neutral, established Phase 7/8 `adapt010` as the active adaptive candidate before margin-aware refinement, completed Phase 9 interpretability diagnosis, completed the Phase 10 margin-aware refinement intervention, completed the Phase 12-16 reliability-aware warning layer, completed the Phase 17-22 manuscript synthesis and drafting sequence, completed the Phase 23 reliability-aware warning case-study prototype, completed Phase 24 physical-consistency deepening diagnostics, completed Phase 25 target-wet recall consistency refinement through three-seed synthesis, completed Phase 26 strong-physics feasibility audit and conservation-proxy diagnostics, completed the Phase 27 seed42 conservative volume-response consistency pilot, and completed the Phase 28 volume-response loss failure diagnosis.
 
 Current project-level conclusions:
 
@@ -781,8 +790,13 @@ Current project-level conclusions:
 - **Phase 27 improved standard seed42 test metrics and several under-response-related proxies versus Phase 25 seed42**
 - **Phase 27 did not confirm the primary volume-response objective because aggregate and timestep-wise absolute relative volume bias worsened**
 - **Phase 27 decision: `remain_seed42_positive_only`; no `seed123` / `seed202` confirmation, no Phase 27 weight sweep, no strict conservation claim, and no SWE/PINN claim**
+- **Phase 28 completed diagnostic-only analysis of the Phase 27 volume-response objective failure**
+- **Phase 28 found that the Phase 27 volume-bias worsening was dominated by `dry_or_threshold` target-depth-bin volume accumulation rather than false-wet expansion or already-wet amplification**
+- **Phase 28 evidence: `delta_volume_bias_total = +6974.12`, false-wet volume excess delta = `-184.071`, already-wet amplification = `+1396.20`, and `dry_or_threshold` contribution = `+5362.82` or about `76.9%` of total delta volume bias**
+- **Phase 28 decision: stop direct expansion of the Phase 27 underresponse-only loss; consider tolerance-band volume consistency only after a new plan**
+- **Phase 28 is diagnostic only: no training, architecture change, loss change, config change, `seed123` / `seed202` confirmation, sweep, strict conservation claim, full mass-conservation claim, or SWE/PINN claim**
 
-At this stage, the project has moved from broad model tuning to rapid flood prediction with reliability diagnosis, failure-mode interpretation, confidence proxy diagnostics, spatial risk mapping, warning-rule guidance, manuscript drafting, representative warning-oriented case-study prototyping, physical-consistency diagnostics, diagnosis-driven target-wet recall refinement, strong-physics feasibility audit, conservation-proxy diagnostics, and a mixed seed42 conservative volume-response pilot. No broader Phase 10 boundary-weight sweep is justified.
+At this stage, the project has moved from broad model tuning to rapid flood prediction with reliability diagnosis, failure-mode interpretation, confidence proxy diagnostics, spatial risk mapping, warning-rule guidance, manuscript drafting, representative warning-oriented case-study prototyping, physical-consistency diagnostics, diagnosis-driven target-wet recall refinement, strong-physics feasibility audit, conservation-proxy diagnostics, a mixed seed42 conservative volume-response pilot, and diagnostic explanation of that pilot's volume-response failure. No broader Phase 10 boundary-weight sweep is justified.
 
 ## Representative Case Framing
 
@@ -792,7 +806,7 @@ Three representative cases continue to be useful for targeted comparison:
 - `seed202`: difficult-case reference where stronger structured refinement can show useful gains
 - `seed123`: repeatability reference for checking whether candidate behavior generalizes beyond the two anchor cases
 
-This framing motivated the Phase 6 Pilot A test, the Phase 7 conservative `adapt010` follow-up, the Phase 9 diagnosis, the Phase 10 margin-aware boundary-band refinement, the Phase 12 reliability/applicability diagnosis, the Phase 13 representative failure-case visual summary, the Phase 14 confidence proxy diagnosis, the Phase 15 reliability-screening layer, the Phase 16 warning-rule guidance layer, the Phase 17 reliability-aware framework synthesis, the Phase 19 manuscript-structure consolidation, the Phase 20 manuscript draft assembly, the Phase 21 manuscript evidence alignment, the Phase 22 manuscript full draft expansion, the Phase 23 warning case-study prototype, the Phase 24 physical-consistency diagnostics, the Phase 25 target-wet recall refinement, the Phase 26 strong-physics feasibility audit, and the Phase 27 seed42 conservative volume-response pilot.
+This framing motivated the Phase 6 Pilot A test, the Phase 7 conservative `adapt010` follow-up, the Phase 9 diagnosis, the Phase 10 margin-aware boundary-band refinement, the Phase 12 reliability/applicability diagnosis, the Phase 13 representative failure-case visual summary, the Phase 14 confidence proxy diagnosis, the Phase 15 reliability-screening layer, the Phase 16 warning-rule guidance layer, the Phase 17 reliability-aware framework synthesis, the Phase 19 manuscript-structure consolidation, the Phase 20 manuscript draft assembly, the Phase 21 manuscript evidence alignment, the Phase 22 manuscript full draft expansion, the Phase 23 warning case-study prototype, the Phase 24 physical-consistency diagnostics, the Phase 25 target-wet recall refinement, the Phase 26 strong-physics feasibility audit, the Phase 27 seed42 conservative volume-response pilot, and the Phase 28 volume-response loss failure diagnosis.
 
 
 ## Adaptive Candidate and Margin-Aware Refinement
@@ -858,7 +872,7 @@ Phase 25 keeps the Phase 10 boundary-band settings fixed and adds a targeted tar
 
 ## Future Work
 
-The next justified follow-up is not another Phase 10 boundary-weight sweep. The current Phase 10 boundary-band setting remains `boundary_band_pixels = 1` and `boundary_weight = 2.0`, with Phase 25 target-wet recall consistency as a strong three-seed positive candidate, Phase 26 conservation-proxy diagnostics as the current strong-physics feasibility boundary, and Phase 27 as a mixed seed42 pilot whose primary volume-response objective was not confirmed.
+The next justified follow-up is not another Phase 10 boundary-weight sweep. The current Phase 10 boundary-band setting remains `boundary_band_pixels = 1` and `boundary_weight = 2.0`, with Phase 25 target-wet recall consistency as a strong three-seed positive candidate, Phase 26 conservation-proxy diagnostics as the current strong-physics feasibility boundary, Phase 27 as a mixed seed42 pilot whose primary volume-response objective was not confirmed, and Phase 28 as the diagnostic explanation for why Phase 27 should not be directly expanded.
 
 Recommended next work:
 
@@ -866,12 +880,14 @@ Recommended next work:
 - treat Phase 25 as a targeted target-wet recall and wet-region preservation refinement, not as a complete physical-consistency solution
 - treat Phase 26 as conservation-proxy diagnostics and aggregate volume-response improvement evidence, not full conservation enforcement
 - treat Phase 27 as `seed42` standard-metric positive but volume-response objective not confirmed
-- do not proceed to Phase 27 `seed123` / `seed202` confirmation or a Phase 27 weight sweep without a revised loss design
+- do not proceed to Phase 27 `seed123` / `seed202` confirmation or a Phase 27 weight sweep
+- treat Phase 28 as diagnostic-only evidence that direct expansion of the Phase 27 underresponse-only loss should stop
+- consider tolerance-band volume consistency only after a new plan
 - do not recommend a full SWE/PINN residual unless compatible velocity, flux, boundary, DEM, and source-sink information become available
 - consider calibrated uncertainty only if calibration data and evaluation design are added
 - keep `boundary_weight = 1.5` only as a conservative rollback setting
 - avoid new boundary-weight sweeps unless a new diagnosis clearly justifies them
-- keep using the Phase 12/13/14/15/16/17 reliability, failure-case, confidence-proxy, screening, warning-rule, and synthesis findings, plus the Phase 18-22 manuscript materials, the Phase 23 warning case-study prototype, the Phase 24 physical-consistency diagnostics, the Phase 25 three-seed target-wet recall synthesis, the Phase 26 strong-physics feasibility audit, and the Phase 27 mixed seed42 pilot, to define where the current model is reliable and where caution is required
+- keep using the Phase 12/13/14/15/16/17 reliability, failure-case, confidence-proxy, screening, warning-rule, and synthesis findings, plus the Phase 18-22 manuscript materials, the Phase 23 warning case-study prototype, the Phase 24 physical-consistency diagnostics, the Phase 25 three-seed target-wet recall synthesis, the Phase 26 strong-physics feasibility audit, the Phase 27 mixed seed42 pilot, and the Phase 28 failure diagnosis, to define where the current model is reliable and where caution is required
 
 ## License
 
