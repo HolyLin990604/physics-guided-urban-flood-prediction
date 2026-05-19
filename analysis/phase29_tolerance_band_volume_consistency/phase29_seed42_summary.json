@@ -1,0 +1,781 @@
+{
+  "conclusion": {
+    "primary_volume_response_objective_improved_clearly": true,
+    "question_answers": {
+      "phase29_improved_aggregate_volume_response_relative_to_phase27": true,
+      "phase29_increased_false_wet_rate_or_volume_excess": true,
+      "phase29_preserved_standard_metrics_well_enough": false,
+      "phase29_reduced_dry_or_threshold_volume_accumulation_relative_to_phase27": true,
+      "phase29_remained_close_to_phase25_near_zero_aggregate_volume_bias": false,
+      "phase29_worsened_false_dry_volume_loss_relative_to_phase25_or_phase27": true
+    },
+    "recommendation": "remain_seed42_only_pending_revision",
+    "result_label": "mixed_result",
+    "standard_metric_losses_vs_phase27": [
+      "metrics_json_rmse",
+      "metrics_json_mae",
+      "metrics_json_wet_dry_iou",
+      "metrics_json_rollout_stability",
+      "metrics_json_step_rmse_std"
+    ]
+  },
+  "depth_bin_decomposition": [
+    {
+      "cell_count": 6603530,
+      "mean_step_predicted_volume_contribution": 0.15789910791669462,
+      "phase": "phase25",
+      "predicted_volume_contribution": 0.12400761772070013,
+      "predicted_volume_proxy": 39985.043872758746,
+      "seed": 42,
+      "step_count": 456,
+      "target_depth_bin": "dry_or_threshold",
+      "target_volume_contribution": 0.06245925507019085,
+      "target_volume_proxy": 20079.774384401448
+    },
+    {
+      "cell_count": 329739,
+      "mean_step_predicted_volume_contribution": 0.11359842242266095,
+      "phase": "phase25",
+      "predicted_volume_contribution": 0.09660165324435788,
+      "predicted_volume_proxy": 31148.258584052324,
+      "seed": 42,
+      "step_count": 456,
+      "target_depth_bin": "shallow",
+      "target_volume_contribution": 0.09338538581585154,
+      "target_volume_proxy": 30022.091615971178
+    },
+    {
+      "cell_count": 196519,
+      "mean_step_predicted_volume_contribution": 0.12462210556096064,
+      "phase": "phase25",
+      "predicted_volume_contribution": 0.11522132593150675,
+      "predicted_volume_proxy": 37151.989991657436,
+      "seed": 42,
+      "step_count": 456,
+      "target_depth_bin": "moderate",
+      "target_volume_contribution": 0.13172486069313985,
+      "target_volume_proxy": 42347.69499832392
+    },
+    {
+      "cell_count": 341316,
+      "mean_step_predicted_volume_contribution": 0.6038803640996814,
+      "phase": "phase25",
+      "predicted_volume_contribution": 0.6641694031034353,
+      "predicted_volume_proxy": 214154.9302386269,
+      "seed": 42,
+      "step_count": 456,
+      "target_depth_bin": "deep",
+      "target_volume_contribution": 0.7124304984208194,
+      "target_volume_proxy": 229036.41192615032
+    },
+    {
+      "cell_count": 6603530,
+      "mean_step_predicted_volume_contribution": 0.17654644908319964,
+      "phase": "phase27",
+      "predicted_volume_contribution": 0.13766207075068543,
+      "predicted_volume_proxy": 45347.86100016534,
+      "seed": 42,
+      "step_count": 456,
+      "target_depth_bin": "dry_or_threshold",
+      "target_volume_contribution": 0.06245925507019085,
+      "target_volume_proxy": 20079.774384401448
+    },
+    {
+      "cell_count": 329739,
+      "mean_step_predicted_volume_contribution": 0.10842675675935431,
+      "phase": "phase27",
+      "predicted_volume_contribution": 0.09550961565268343,
+      "predicted_volume_proxy": 31462.237573347986,
+      "seed": 42,
+      "step_count": 456,
+      "target_depth_bin": "shallow",
+      "target_volume_contribution": 0.09338538581585154,
+      "target_volume_proxy": 30022.091615971178
+    },
+    {
+      "cell_count": 196519,
+      "mean_step_predicted_volume_contribution": 0.12160310992913016,
+      "phase": "phase27",
+      "predicted_volume_contribution": 0.11449177776176739,
+      "predicted_volume_proxy": 37715.23408946395,
+      "seed": 42,
+      "step_count": 456,
+      "target_depth_bin": "moderate",
+      "target_volume_contribution": 0.13172486069313985,
+      "target_volume_proxy": 42347.69499832392
+    },
+    {
+      "cell_count": 341316,
+      "mean_step_predicted_volume_contribution": 0.5934236842283137,
+      "phase": "phase27",
+      "predicted_volume_contribution": 0.6523365358348637,
+      "predicted_volume_proxy": 214889.01329941303,
+      "seed": 42,
+      "step_count": 456,
+      "target_depth_bin": "deep",
+      "target_volume_contribution": 0.7124304984208194,
+      "target_volume_proxy": 229036.41192615032
+    },
+    {
+      "cell_count": 6603530,
+      "mean_step_predicted_volume_contribution": 0.16823844353018147,
+      "phase": "phase29",
+      "predicted_volume_contribution": 0.13142822256002926,
+      "predicted_volume_proxy": 43074.727354303,
+      "seed": 42,
+      "step_count": 456,
+      "target_depth_bin": "dry_or_threshold",
+      "target_volume_contribution": 0.06245925507019085,
+      "target_volume_proxy": 20079.774384401448
+    },
+    {
+      "cell_count": 329739,
+      "mean_step_predicted_volume_contribution": 0.11129554843068204,
+      "phase": "phase29",
+      "predicted_volume_contribution": 0.09536730926531294,
+      "predicted_volume_proxy": 31256.002440728247,
+      "seed": 42,
+      "step_count": 456,
+      "target_depth_bin": "shallow",
+      "target_volume_contribution": 0.09338538581585154,
+      "target_volume_proxy": 30022.091615971178
+    },
+    {
+      "cell_count": 196519,
+      "mean_step_predicted_volume_contribution": 0.12298795844817006,
+      "phase": "phase29",
+      "predicted_volume_contribution": 0.11449781826230379,
+      "predicted_volume_proxy": 37525.899751544,
+      "seed": 42,
+      "step_count": 456,
+      "target_depth_bin": "moderate",
+      "target_volume_contribution": 0.13172486069313985,
+      "target_volume_proxy": 42347.69499832392
+    },
+    {
+      "cell_count": 341316,
+      "mean_step_predicted_volume_contribution": 0.5974780495909641,
+      "phase": "phase29",
+      "predicted_volume_contribution": 0.6587066499123541,
+      "predicted_volume_proxy": 215886.73116599023,
+      "seed": 42,
+      "step_count": 456,
+      "target_depth_bin": "deep",
+      "target_volume_contribution": 0.7124304984208194,
+      "target_volume_proxy": 229036.41192615032
+    }
+  ],
+  "missing_or_error_files": [],
+  "phase27_minus_phase25_context_deltas": [
+    {
+      "comparison": "phase27_minus_phase25",
+      "delta": -0.0023660212755203247,
+      "metric": "metrics_json_rmse",
+      "phase25": 0.04474700261887751,
+      "phase27": 0.04238098134335719
+    },
+    {
+      "comparison": "phase27_minus_phase25",
+      "delta": -0.0006546732038259506,
+      "metric": "metrics_json_mae",
+      "phase25": 0.01793944482740603,
+      "phase27": 0.01728477162358008
+    },
+    {
+      "comparison": "phase27_minus_phase25",
+      "delta": 0.008923652924989423,
+      "metric": "metrics_json_wet_dry_iou",
+      "phase25": 0.8038777207073412,
+      "phase27": 0.8128013736323306
+    },
+    {
+      "comparison": "phase27_minus_phase25",
+      "delta": 0.0006180970292342103,
+      "metric": "metrics_json_rollout_stability",
+      "phase25": 0.989504199278982,
+      "phase27": 0.9901222963082162
+    },
+    {
+      "comparison": "phase27_minus_phase25",
+      "delta": -0.0006311378735852861,
+      "metric": "metrics_json_step_rmse_std",
+      "phase25": 0.010653742564548003,
+      "phase27": 0.010022604690962717
+    },
+    {
+      "comparison": "phase27_minus_phase25",
+      "delta": 0.021693398352173942,
+      "metric": "aggregate_relative_volume_bias",
+      "phase25": 0.0029682469613443413,
+      "phase27": 0.024661645313518284
+    },
+    {
+      "comparison": "phase27_minus_phase25",
+      "delta": 0.021693398352173942,
+      "metric": "aggregate_absolute_relative_volume_bias",
+      "phase25": 0.0029682469613443413,
+      "phase27": 0.024661645313518284
+    },
+    {
+      "comparison": "phase27_minus_phase25",
+      "delta": 0.06023242118107812,
+      "metric": "mean_step_relative_volume_bias",
+      "phase25": 0.03792784327929691,
+      "phase27": 0.09816026446037503
+    },
+    {
+      "comparison": "phase27_minus_phase25",
+      "delta": 0.01709525814960486,
+      "metric": "mean_step_absolute_relative_volume_bias",
+      "phase25": 0.24017909346343827,
+      "phase27": 0.25727435161304313
+    },
+    {
+      "comparison": "phase27_minus_phase25",
+      "delta": -0.0070702902576610105,
+      "metric": "false_dry_rate",
+      "phase25": 0.075987754358706,
+      "phase27": 0.06891746410104499
+    },
+    {
+      "comparison": "phase27_minus_phase25",
+      "delta": -809.610759600997,
+      "metric": "false_dry_volume_loss",
+      "phase25": 6219.331115406007,
+      "phase27": 5409.72035580501
+    },
+    {
+      "comparison": "phase27_minus_phase25",
+      "delta": -0.00034663278579790194,
+      "metric": "false_wet_rate",
+      "phase25": 0.01619664028178868,
+      "phase27": 0.01585000749599078
+    },
+    {
+      "comparison": "phase27_minus_phase25",
+      "delta": -184.07081075012684,
+      "metric": "false_wet_volume_excess",
+      "phase25": 7934.395590290427,
+      "phase27": 7750.3247795403
+    },
+    {
+      "comparison": "phase27_minus_phase25",
+      "delta": 0.0,
+      "metric": "wet_area_contraction",
+      "phase25": 0.0,
+      "phase27": 0.0
+    },
+    {
+      "comparison": "phase27_minus_phase25",
+      "delta": -0.011375982771840015,
+      "metric": "peak_depth_underprediction",
+      "phase25": 0.13942117544642665,
+      "phase27": 0.12804519267458664
+    },
+    {
+      "comparison": "phase27_minus_phase25",
+      "delta": -0.002280023134267263,
+      "metric": "rmse_from_maps",
+      "phase25": 0.045757406947082385,
+      "phase27": 0.04347738381281512
+    },
+    {
+      "comparison": "phase27_minus_phase25",
+      "delta": -0.0006546731407917304,
+      "metric": "mae_from_maps",
+      "phase25": 0.017939444064194555,
+      "phase27": 0.017284770923402824
+    }
+  ],
+  "phase29_minus_phase25_deltas": [
+    {
+      "comparison": "phase29_minus_phase25",
+      "delta": -0.0003615505013026682,
+      "higher_is_better": false,
+      "improved": true,
+      "lower_is_better": true,
+      "metric": "metrics_json_rmse",
+      "phase25": 0.04474700261887751,
+      "phase29": 0.044385452117574845
+    },
+    {
+      "comparison": "phase29_minus_phase25",
+      "delta": -9.320191058673558e-05,
+      "higher_is_better": false,
+      "improved": true,
+      "lower_is_better": true,
+      "metric": "metrics_json_mae",
+      "phase25": 0.01793944482740603,
+      "phase29": 0.017846242916819296
+    },
+    {
+      "comparison": "phase29_minus_phase25",
+      "delta": -0.0022367678190532425,
+      "higher_is_better": true,
+      "improved": false,
+      "lower_is_better": false,
+      "metric": "metrics_json_wet_dry_iou",
+      "phase25": 0.8038777207073412,
+      "phase29": 0.801640952888288
+    },
+    {
+      "comparison": "phase29_minus_phase25",
+      "delta": 6.86080832235092e-06,
+      "higher_is_better": true,
+      "improved": true,
+      "lower_is_better": false,
+      "metric": "metrics_json_rollout_stability",
+      "phase25": 0.989504199278982,
+      "phase29": 0.9895110600873044
+    },
+    {
+      "comparison": "phase29_minus_phase25",
+      "delta": -1.2499439579091026e-05,
+      "higher_is_better": false,
+      "improved": true,
+      "lower_is_better": true,
+      "metric": "metrics_json_step_rmse_std",
+      "phase25": 0.010653742564548003,
+      "phase29": 0.010641243124968912
+    },
+    {
+      "comparison": "phase29_minus_phase25",
+      "delta": 0.01649570579152388,
+      "higher_is_better": false,
+      "improved": false,
+      "lower_is_better": false,
+      "metric": "aggregate_relative_volume_bias",
+      "phase25": 0.0029682469613443413,
+      "phase29": 0.019463952752868222
+    },
+    {
+      "comparison": "phase29_minus_phase25",
+      "delta": 0.01649570579152388,
+      "higher_is_better": false,
+      "improved": false,
+      "lower_is_better": true,
+      "metric": "aggregate_absolute_relative_volume_bias",
+      "phase25": 0.0029682469613443413,
+      "phase29": 0.019463952752868222
+    },
+    {
+      "comparison": "phase29_minus_phase25",
+      "delta": 0.018826596760881935,
+      "higher_is_better": false,
+      "improved": false,
+      "lower_is_better": false,
+      "metric": "mean_step_relative_volume_bias",
+      "phase25": 0.03792784327929691,
+      "phase29": 0.05675444004017884
+    },
+    {
+      "comparison": "phase29_minus_phase25",
+      "delta": -0.009732231934408392,
+      "higher_is_better": false,
+      "improved": true,
+      "lower_is_better": true,
+      "metric": "mean_step_absolute_relative_volume_bias",
+      "phase25": 0.24017909346343827,
+      "phase29": 0.23044686152902988
+    },
+    {
+      "comparison": "phase29_minus_phase25",
+      "delta": -0.0019986767699354813,
+      "higher_is_better": false,
+      "improved": true,
+      "lower_is_better": true,
+      "metric": "false_dry_rate",
+      "phase25": 0.075987754358706,
+      "phase29": 0.07398907758877052
+    },
+    {
+      "comparison": "phase29_minus_phase25",
+      "delta": -254.49799345061183,
+      "higher_is_better": false,
+      "improved": true,
+      "lower_is_better": true,
+      "metric": "false_dry_volume_loss",
+      "phase25": 6219.331115406007,
+      "phase29": 5964.833121955395
+    },
+    {
+      "comparison": "phase29_minus_phase25",
+      "delta": 0.0007926063787095684,
+      "higher_is_better": false,
+      "improved": false,
+      "lower_is_better": true,
+      "metric": "false_wet_rate",
+      "phase25": 0.01619664028178868,
+      "phase29": 0.01698924666049825
+    },
+    {
+      "comparison": "phase29_minus_phase25",
+      "delta": 355.36945290863514,
+      "higher_is_better": false,
+      "improved": false,
+      "lower_is_better": true,
+      "metric": "false_wet_volume_excess",
+      "phase25": 7934.395590290427,
+      "phase29": 8289.765043199062
+    },
+    {
+      "comparison": "phase29_minus_phase25",
+      "delta": 0.0,
+      "higher_is_better": false,
+      "improved": false,
+      "lower_is_better": true,
+      "metric": "wet_area_contraction",
+      "phase25": 0.0,
+      "phase29": 0.0
+    },
+    {
+      "comparison": "phase29_minus_phase25",
+      "delta": -0.004827786955917096,
+      "higher_is_better": false,
+      "improved": true,
+      "lower_is_better": true,
+      "metric": "peak_depth_underprediction",
+      "phase25": 0.13942117544642665,
+      "phase29": 0.13459338849050956
+    },
+    {
+      "comparison": "phase29_minus_phase25",
+      "delta": -0.0004041037189820365,
+      "higher_is_better": false,
+      "improved": true,
+      "lower_is_better": true,
+      "metric": "rmse_from_maps",
+      "phase25": 0.045757406947082385,
+      "phase29": 0.04535330322810035
+    },
+    {
+      "comparison": "phase29_minus_phase25",
+      "delta": -9.320168070494836e-05,
+      "higher_is_better": false,
+      "improved": true,
+      "lower_is_better": true,
+      "metric": "mae_from_maps",
+      "phase25": 0.017939444064194555,
+      "phase29": 0.017846242383489606
+    }
+  ],
+  "phase29_minus_phase27_deltas": [
+    {
+      "comparison": "phase29_minus_phase27",
+      "delta": 0.0020044707742176565,
+      "higher_is_better": false,
+      "improved": false,
+      "lower_is_better": true,
+      "metric": "metrics_json_rmse",
+      "phase27": 0.04238098134335719,
+      "phase29": 0.044385452117574845
+    },
+    {
+      "comparison": "phase29_minus_phase27",
+      "delta": 0.000561471293239215,
+      "higher_is_better": false,
+      "improved": false,
+      "lower_is_better": true,
+      "metric": "metrics_json_mae",
+      "phase27": 0.01728477162358008,
+      "phase29": 0.017846242916819296
+    },
+    {
+      "comparison": "phase29_minus_phase27",
+      "delta": -0.011160420744042665,
+      "higher_is_better": true,
+      "improved": false,
+      "lower_is_better": false,
+      "metric": "metrics_json_wet_dry_iou",
+      "phase27": 0.8128013736323306,
+      "phase29": 0.801640952888288
+    },
+    {
+      "comparison": "phase29_minus_phase27",
+      "delta": -0.0006112362209118594,
+      "higher_is_better": true,
+      "improved": false,
+      "lower_is_better": false,
+      "metric": "metrics_json_rollout_stability",
+      "phase27": 0.9901222963082162,
+      "phase29": 0.9895110600873044
+    },
+    {
+      "comparison": "phase29_minus_phase27",
+      "delta": 0.000618638434006195,
+      "higher_is_better": false,
+      "improved": false,
+      "lower_is_better": true,
+      "metric": "metrics_json_step_rmse_std",
+      "phase27": 0.010022604690962717,
+      "phase29": 0.010641243124968912
+    },
+    {
+      "comparison": "phase29_minus_phase27",
+      "delta": -0.005197692560650061,
+      "higher_is_better": false,
+      "improved": false,
+      "lower_is_better": false,
+      "metric": "aggregate_relative_volume_bias",
+      "phase27": 0.024661645313518284,
+      "phase29": 0.019463952752868222
+    },
+    {
+      "comparison": "phase29_minus_phase27",
+      "delta": -0.005197692560650061,
+      "higher_is_better": false,
+      "improved": true,
+      "lower_is_better": true,
+      "metric": "aggregate_absolute_relative_volume_bias",
+      "phase27": 0.024661645313518284,
+      "phase29": 0.019463952752868222
+    },
+    {
+      "comparison": "phase29_minus_phase27",
+      "delta": -0.041405824420196184,
+      "higher_is_better": false,
+      "improved": false,
+      "lower_is_better": false,
+      "metric": "mean_step_relative_volume_bias",
+      "phase27": 0.09816026446037503,
+      "phase29": 0.05675444004017884
+    },
+    {
+      "comparison": "phase29_minus_phase27",
+      "delta": -0.02682749008401325,
+      "higher_is_better": false,
+      "improved": true,
+      "lower_is_better": true,
+      "metric": "mean_step_absolute_relative_volume_bias",
+      "phase27": 0.25727435161304313,
+      "phase29": 0.23044686152902988
+    },
+    {
+      "comparison": "phase29_minus_phase27",
+      "delta": 0.005071613487725529,
+      "higher_is_better": false,
+      "improved": false,
+      "lower_is_better": true,
+      "metric": "false_dry_rate",
+      "phase27": 0.06891746410104499,
+      "phase29": 0.07398907758877052
+    },
+    {
+      "comparison": "phase29_minus_phase27",
+      "delta": 555.1127661503851,
+      "higher_is_better": false,
+      "improved": false,
+      "lower_is_better": true,
+      "metric": "false_dry_volume_loss",
+      "phase27": 5409.72035580501,
+      "phase29": 5964.833121955395
+    },
+    {
+      "comparison": "phase29_minus_phase27",
+      "delta": 0.0011392391645074704,
+      "higher_is_better": false,
+      "improved": false,
+      "lower_is_better": true,
+      "metric": "false_wet_rate",
+      "phase27": 0.01585000749599078,
+      "phase29": 0.01698924666049825
+    },
+    {
+      "comparison": "phase29_minus_phase27",
+      "delta": 539.440263658762,
+      "higher_is_better": false,
+      "improved": false,
+      "lower_is_better": true,
+      "metric": "false_wet_volume_excess",
+      "phase27": 7750.3247795403,
+      "phase29": 8289.765043199062
+    },
+    {
+      "comparison": "phase29_minus_phase27",
+      "delta": 0.0,
+      "higher_is_better": false,
+      "improved": false,
+      "lower_is_better": true,
+      "metric": "wet_area_contraction",
+      "phase27": 0.0,
+      "phase29": 0.0
+    },
+    {
+      "comparison": "phase29_minus_phase27",
+      "delta": 0.006548195815922919,
+      "higher_is_better": false,
+      "improved": false,
+      "lower_is_better": true,
+      "metric": "peak_depth_underprediction",
+      "phase27": 0.12804519267458664,
+      "phase29": 0.13459338849050956
+    },
+    {
+      "comparison": "phase29_minus_phase27",
+      "delta": 0.0018759194152852265,
+      "higher_is_better": false,
+      "improved": false,
+      "lower_is_better": true,
+      "metric": "rmse_from_maps",
+      "phase27": 0.04347738381281512,
+      "phase29": 0.04535330322810035
+    },
+    {
+      "comparison": "phase29_minus_phase27",
+      "delta": 0.0005614714600867821,
+      "higher_is_better": false,
+      "improved": false,
+      "lower_is_better": true,
+      "metric": "mae_from_maps",
+      "phase27": 0.017284770923402824,
+      "phase29": 0.017846242383489606
+    }
+  ],
+  "processed_map_files": 57,
+  "run_level_aggregates": [
+    {
+      "aggregate_absolute_relative_volume_bias": 0.0029682469613443413,
+      "aggregate_relative_volume_bias": 0.0029682469613443413,
+      "false_dry_rate": 0.075987754358706,
+      "false_dry_volume_loss": 6219.331115406007,
+      "false_wet_rate": 0.01619664028178868,
+      "false_wet_volume_excess": 7934.395590290427,
+      "mae_from_maps": 0.017939444064194555,
+      "mean_step_absolute_relative_volume_bias": 0.24017909346343827,
+      "mean_step_relative_volume_bias": 0.03792784327929691,
+      "mean_step_wet_area_contraction": 0.042322365124942626,
+      "metrics_json_mae": 0.01793944482740603,
+      "metrics_json_rmse": 0.04474700261887751,
+      "metrics_json_rollout_stability": 0.989504199278982,
+      "metrics_json_step_rmse_std": 0.010653742564548003,
+      "metrics_json_wet_dry_iou": 0.8038777207073412,
+      "peak_depth_underprediction": 0.13942117544642665,
+      "phase": "phase25",
+      "pixel_count": 7471104,
+      "rmse_from_maps": 0.045757406947082385,
+      "run_dir": "runs/phase25_target_wet_recall_seed42_40e",
+      "run_name": "phase25_target_wet_recall_seed42_40e",
+      "seed": 42,
+      "step_count": 456,
+      "sum_abs_error": 134027.4523057802,
+      "sum_false_dry_count": 65925,
+      "sum_false_wet_count": 106955,
+      "sum_prediction_volume_proxy": 322440.2226870954,
+      "sum_prediction_wet_area": 908604,
+      "sum_sq_error": 15642.55145947188,
+      "sum_target_dry_area": 6603530,
+      "sum_target_volume_proxy": 321485.9729248464,
+      "sum_target_wet_area": 867574,
+      "volume_bias": 954.2497622490046,
+      "wet_area_contraction": 0.0
+    },
+    {
+      "aggregate_absolute_relative_volume_bias": 0.024661645313518284,
+      "aggregate_relative_volume_bias": 0.024661645313518284,
+      "false_dry_rate": 0.06891746410104499,
+      "false_dry_volume_loss": 5409.72035580501,
+      "false_wet_rate": 0.01585000749599078,
+      "false_wet_volume_excess": 7750.3247795403,
+      "mae_from_maps": 0.017284770923402824,
+      "mean_step_absolute_relative_volume_bias": 0.25727435161304313,
+      "mean_step_relative_volume_bias": 0.09816026446037503,
+      "mean_step_wet_area_contraction": 0.036059331027171126,
+      "metrics_json_mae": 0.01728477162358008,
+      "metrics_json_rmse": 0.04238098134335719,
+      "metrics_json_rollout_stability": 0.9901222963082162,
+      "metrics_json_step_rmse_std": 0.010022604690962717,
+      "metrics_json_wet_dry_iou": 0.8128013736323306,
+      "peak_depth_underprediction": 0.12804519267458664,
+      "phase": "phase27",
+      "pixel_count": 7471104,
+      "rmse_from_maps": 0.04347738381281512,
+      "run_dir": "runs/phase27_volume_response_seed42_40e",
+      "run_name": "phase27_volume_response_seed42_40e",
+      "seed": 42,
+      "step_count": 456,
+      "sum_abs_error": 129136.32118491853,
+      "sum_false_dry_count": 59791,
+      "sum_false_wet_count": 104666,
+      "sum_prediction_volume_proxy": 329414.3459623903,
+      "sum_prediction_wet_area": 912449,
+      "sum_sq_error": 14122.500159280225,
+      "sum_target_dry_area": 6603530,
+      "sum_target_volume_proxy": 321485.9729248464,
+      "sum_target_wet_area": 867574,
+      "volume_bias": 7928.3730375439045,
+      "wet_area_contraction": 0.0
+    },
+    {
+      "aggregate_absolute_relative_volume_bias": 0.019463952752868222,
+      "aggregate_relative_volume_bias": 0.019463952752868222,
+      "false_dry_rate": 0.07398907758877052,
+      "false_dry_volume_loss": 5964.833121955395,
+      "false_wet_rate": 0.01698924666049825,
+      "false_wet_volume_excess": 8289.765043199062,
+      "mae_from_maps": 0.017846242383489606,
+      "mean_step_absolute_relative_volume_bias": 0.23044686152902988,
+      "mean_step_relative_volume_bias": 0.05675444004017884,
+      "mean_step_wet_area_contraction": 0.03835366432071754,
+      "metrics_json_mae": 0.017846242916819296,
+      "metrics_json_rmse": 0.044385452117574845,
+      "metrics_json_rollout_stability": 0.9895110600873044,
+      "metrics_json_step_rmse_std": 0.010641243124968912,
+      "metrics_json_wet_dry_iou": 0.801640952888288,
+      "peak_depth_underprediction": 0.13459338849050956,
+      "phase": "phase29",
+      "pixel_count": 7471104,
+      "rmse_from_maps": 0.04535330322810035,
+      "run_dir": "runs/phase29_tolerance_band_volume_seed42_40e",
+      "run_name": "phase29_tolerance_band_volume_seed42_40e",
+      "seed": 42,
+      "step_count": 456,
+      "sum_abs_error": 133331.13285625874,
+      "sum_false_dry_count": 64191,
+      "sum_false_wet_count": 112189,
+      "sum_prediction_volume_proxy": 327743.3607125655,
+      "sum_prediction_wet_area": 915572,
+      "sum_sq_error": 15367.479031352657,
+      "sum_target_dry_area": 6603530,
+      "sum_target_volume_proxy": 321485.9729248464,
+      "sum_target_wet_area": 867574,
+      "volume_bias": 6257.387787719083,
+      "wet_area_contraction": 0.0
+    }
+  ],
+  "scope": {
+    "diagnostic_only": true,
+    "eps": 1e-12,
+    "note": "Reads only existing evaluation_test/test_batch_*/forecast_maps.npz and metrics.json files.",
+    "output_dir": "analysis/phase29_tolerance_band_volume_consistency",
+    "runs": {
+      "phase25": "runs/phase25_target_wet_recall_seed42_40e",
+      "phase27": "runs/phase27_volume_response_seed42_40e",
+      "phase29": "runs/phase29_tolerance_band_volume_seed42_40e"
+    },
+    "threshold_m": 0.05
+  },
+  "standard_metrics": {
+    "phase25": {
+      "mae": 0.01793944482740603,
+      "rmse": 0.04474700261887751,
+      "rollout_stability": 0.989504199278982,
+      "step_rmse_std": 0.010653742564548003,
+      "wet_dry_iou": 0.8038777207073412
+    },
+    "phase27": {
+      "mae": 0.01728477162358008,
+      "rmse": 0.04238098134335719,
+      "rollout_stability": 0.9901222963082162,
+      "step_rmse_std": 0.010022604690962717,
+      "wet_dry_iou": 0.8128013736323306
+    },
+    "phase29": {
+      "mae": 0.017846242916819296,
+      "rmse": 0.044385452117574845,
+      "rollout_stability": 0.9895110600873044,
+      "step_rmse_std": 0.010641243124968912,
+      "wet_dry_iou": 0.801640952888288
+    }
+  },
+  "step_record_count": 1368
+}
