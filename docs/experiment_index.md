@@ -25,6 +25,7 @@
 - Phase 28 Volume-Response Loss Failure Diagnosis: diagnostic-only analysis explaining why the Phase 27 volume-response objective failed and why direct expansion should stop
 - Phase 29 Tolerance-Band Volume Consistency: seed42 mixed pilot with partial volume-response repair but unacceptable trade-off
 - Phase 30 Strong Physics Boundary Synthesis: documentation-only synthesis defining the current Level 4 conservation-proxy / physical-consistency-guided surrogate boundary
+- Phase 31 Physics Input Recovery Readiness: diagnostic-only recovery and verification of Level 4+ static-map/domain/boundary/masked diagnostic support; Level 5 remains unsupported
 
 ## Phase 6
 
@@ -384,6 +385,37 @@
 - Decision: pause Phase 27/29 seed expansion and sweeps; prefer manuscript / README / research narrative consolidation next
 - Guardrails: no training, no loss change, no `seed123` / `seed202`, no sweep, no strict conservation, no SWE/PINN, and no full hydrodynamic closure claim
 
+## Phase 31
+
+- Plan: `docs/phase31_physics_input_recovery_readiness_plan.md`
+- Findings: `docs/phase31_physics_input_recovery_readiness_findings.md`
+- Scripts:
+  - `scripts/audit_phase31_dataset_physics_inputs.py`
+  - `scripts/inspect_phase31_static_maps.py`
+  - `scripts/build_phase31_domain_boundary_masks.py`
+  - `scripts/analyze_phase31_masked_physical_errors.py`
+- Outputs: `analysis/phase31_physics_input_recovery_readiness/`
+- Key output files:
+  - `physics_input_inventory.md`
+  - `physics_input_inventory.json`
+  - `static_map_inspection.md`
+  - `static_map_inspection.json`
+  - static-map inspection CSVs
+  - `domain_boundary_mask_inspection.md`
+  - `domain_boundary_mask_inspection.json`
+  - domain-boundary mask CSV
+  - `masked_physical_error_findings.md`
+  - masked physical error JSON
+  - masked physical error CSVs
+  - `figures/`
+- Status: Level 4+ physics input recovery and masked diagnostic readiness complete
+- Core result: Level 4+ static-map/domain/boundary/masked diagnostics are supported; Level 5 is unsupported
+- Evidence: raw flood/rain/static arrays are available; `absolute_DEM.npy`, `impervious.npy`, and `manhole.npy` are `128 x 128`; `absolute_DEM < 99` supports valid-domain masks; valid-domain, invalid/high, boundary-ring, and interior masks can be constructed; sample-to-location mapping was recovered from adjacent `summary.json` `metadata.location`
+- Masked diagnostic result: Phase 29 improves valid-domain masked relative volume-bias proxy versus Phase 27 (`0.0169359` to `0.0115344`) but worsens valid-domain `RMSE`, `MAE`, false-dry, false-wet, false-dry volume-loss proxy, and false-wet volume-excess proxy
+- Decision: Phase 32 should be plan-first as Domain-/Boundary-Aware Physical Consistency Design; no immediate training or loss change
+- Guardrails: no strict conservation, no full mass conservation, no SWE/PINN, no hydrodynamic closure, no Phase 29 success claim, no `seed123` / `seed202` expansion from Phase 29
+- Model status: diagnostic only; no retraining, architecture modification, loss modification, config modification, seed expansion, or sweep was performed
+
 ## Interpretation Order
 
 For current repository interpretation, read the experiment trail in this order:
@@ -413,11 +445,12 @@ For current repository interpretation, read the experiment trail in this order:
 23. `docs/phase28_volume_response_loss_diagnosis_findings.md`
 24. `docs/phase29_seed42_tolerance_band_volume_findings.md`
 25. `docs/phase30_strong_physics_boundary_synthesis.md`
-26. `docs/project_status.md`
+26. `docs/phase31_physics_input_recovery_readiness_findings.md`
+27. `docs/project_status.md`
 
 ## Next Stage
 
-The next stage should build on the Phase 12 to Phase 30 reliability/applicability, screening, warning-rule, synthesis, manuscript-writing, manuscript-consolidation, manuscript-draft, evidence-alignment, full-draft expansion, warning case-study prototype, physical-consistency diagnostic, target-wet recall refinement, strong-physics feasibility audit, mixed conservative volume-response pilot, volume-response failure diagnosis, mixed tolerance-band pilot, and strong-physics boundary synthesis materials rather than reopening Phase 10 tuning or immediately starting another training phase.
+The next stage should build on the Phase 12 to Phase 31 reliability/applicability, screening, warning-rule, synthesis, manuscript-writing, manuscript-consolidation, manuscript-draft, evidence-alignment, full-draft expansion, warning case-study prototype, physical-consistency diagnostic, target-wet recall refinement, strong-physics feasibility audit, mixed conservative volume-response pilot, volume-response failure diagnosis, mixed tolerance-band pilot, strong-physics boundary synthesis, and physics input recovery readiness materials rather than reopening Phase 10 tuning or immediately starting another training phase.
 
 Recommended next work:
 
@@ -427,10 +460,11 @@ Recommended next work:
 - use Phase 28 as the diagnostic basis that motivated Phase 29, not as support for direct expansion of the Phase 27 loss
 - treat Phase 29 as partial volume-response repair with unacceptable trade-offs, not as tolerance-band success
 - treat Phase 30 as the current Level 4 conservation-proxy / physical-consistency-guided surrogate boundary, not as Level 5 strong physics
-- require a new plan before any further loss redesign or training
+- treat Phase 31 as Level 4+ physics input recovery and masked diagnostic readiness, not as Level 5 strong physics
+- make Phase 32 a plan-first Domain-/Boundary-Aware Physical Consistency Design phase before any further loss redesign or training
 - do not run Phase 29 `seed123` / `seed202` confirmation or a tolerance/weight sweep
 - do not run Phase 27 or Phase 29 `seed123` / `seed202` confirmation
-- prioritize manuscript / README / research narrative consolidation next
+- prioritize Phase 32 planning before any training or loss change
 - avoid a full SWE/PINN residual unless compatible velocity, flux, boundary, DEM, and source-sink information become available
 - consider calibrated uncertainty only if calibration data and evaluation design are added
 - keep the current Phase 10 setting fixed unless new evidence justifies changing it
