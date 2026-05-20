@@ -29,6 +29,7 @@ The repository should currently be interpreted as follows:
 - Phase 28 completed volume-response loss failure diagnosis for the Phase 27 seed42 pilot.
 - Phase 29 completed a seed42 tolerance-band volume consistency pilot with mixed results.
 - Phase 30 completed strong-physics boundary synthesis and current-position consolidation.
+- Phase 31 completed physics input recovery readiness diagnostics, confirming Level 4+ structured physical proxy diagnostic support while keeping Level 5 unsupported.
 
 The current Phase 10 conclusion is that boundary-band weighted wet/dry consistency refinement has passed test-facing confirmation on the three key project seeds: `seed123`, `seed42`, and `seed202`.
 
@@ -89,7 +90,13 @@ Phase 29 seed42 test metrics were `RMSE = 0.0443854521`, `MAE = 0.0178462429`, `
 
 The current Phase 30 conclusion is that the project has reached a Level 4 conservation-proxy / physical-consistency-guided surrogate position. This supports reliability-aware warning support, physical-consistency diagnosis, conservation-proxy evaluation, failure-mode interpretation, and applicability-boundary communication. It does not support strict mass conservation, full hydrodynamic closure, SWE/PINN residual consistency, or Level 5 strong physics. Phase 30 is documentation-only synthesis, not a model improvement, training run, loss change, or new evaluation result.
 
-The current project position after Phase 30 is rapid flood prediction with reliability diagnosis, failure-mode interpretation, confidence proxy diagnostics, spatial risk mapping, deterministic warning-rule guidance, manuscript-ready synthesis, manuscript drafting, representative case-specific warning interpretation, physical-consistency diagnosis, diagnosis-driven target-wet recall refinement, strong-physics feasibility audit, conservation-proxy diagnostics, documented mixed Phase 27/29 volume-response pilots, and explicit Level 4 / not Level 5 strong-physics boundary communication. Later work should prioritize manuscript / README / research narrative consolidation rather than immediate training. Phase 27 and Phase 29 should remain documented mixed pilots; do not continue their seed expansion, do not run `seed123` or `seed202` for Phase 27/29, do not perform tolerance or weight sweeps, and do not immediately design another loss without a new plan. A full SWE/PINN residual is not recommended unless compatible velocity, flux, boundary, DEM, and source-sink information become available.
+The current Phase 31 conclusion is that Level 4+ structured physical proxy diagnostics are supported. Phase 31 recovered and verified shape-compatible static physical context and masks: raw flood/rain/static arrays are available; `absolute_DEM.npy`, `impervious.npy`, and `manhole.npy` are available at `128 x 128`; train/test geodata are consistent; `DEM = 100` is likely a high/invalid/no-data candidate; `absolute_DEM < 99` supports valid-domain mask construction; valid-domain, invalid/high, boundary-ring, and interior masks can be constructed; sample-to-location mapping for forecast maps was recovered from adjacent `summary.json` `metadata.location`; and masked physical diagnostics are fully supported.
+
+Phase 31 does not support Level 5. The repository still lacks aligned velocity/flux fields, boundary/source-sink aligned fields, explicit `dx/dy`, full hydrodynamic state variables, and non-inferred `dt`. It should not claim strict conservation, full mass conservation, SWE/PINN residual consistency, or full hydrodynamic closure.
+
+Phase 31 masked diagnostics reinforce that Phase 29 is mixed rather than successful. Relative to Phase 27, Phase 29 improves valid-domain masked relative volume-bias proxy from `0.0169359` to `0.0115344`, but worsens valid-domain `RMSE`, `MAE`, `false_dry_rate`, `false_wet_rate`, `false_dry_volume_loss_proxy`, and `false_wet_volume_excess_proxy`. The Phase 29 false-dry rate is highest over `manhole_nonzero_valid` (`0.131298`), and the Phase 29 false-wet rate is highest over `high_impervious_valid` (`0.0239894`).
+
+The current project position after Phase 31 is rapid flood prediction with reliability diagnosis, failure-mode interpretation, confidence proxy diagnostics, spatial risk mapping, deterministic warning-rule guidance, manuscript-ready synthesis, manuscript drafting, representative case-specific warning interpretation, physical-consistency diagnosis, diagnosis-driven target-wet recall refinement, strong-physics feasibility audit, conservation-proxy diagnostics, documented mixed Phase 27/29 volume-response pilots, Phase 30 boundary synthesis, and Phase 31 Level 4+ physics input recovery readiness. Later technical work should be Phase 32 Domain-/Boundary-Aware Physical Consistency Design planning, not immediate training, immediate loss change, Phase 27/29 seed expansion, or tolerance/weight sweeps. A full SWE/PINN residual is not recommended unless compatible velocity, flux, boundary, grid-spacing, and source-sink information become available.
 
 No additional Phase 10 boundary-weight sweep, Phase 10 boundary-parameter tuning, traffic-impact modeling, invented references, unsupported claims, or new uncertainty claim was performed. The current Phase 10 boundary-band setting remains `boundary_band_pixels = 1` and `boundary_weight = 2.0`.
 
@@ -460,6 +467,7 @@ When reading the repository:
 - read Phase 28 as diagnostic-only failure analysis explaining why Phase 27 should not be directly expanded
 - read Phase 29 as a mixed seed42 tolerance-band pilot: volume response was partially repaired, but the trade-off is not acceptable for confirmation
 - read Phase 30 as documentation-only boundary synthesis: Level 4 conservation-proxy / physical-consistency-guided surrogate support is the current limit, while Level 5 SWE/PINN, strict mass conservation, and full hydrodynamic closure are not supported
+- read Phase 31 as diagnostic-only physics input recovery readiness: Level 4+ static-map/domain/boundary/masked diagnostics are supported, while Level 5 remains unsupported
 
 ## Key Documents
 
@@ -509,4 +517,6 @@ When reading the repository:
 - `docs/phase29_seed42_tolerance_band_volume_findings.md`
 - `docs/phase30_strong_physics_boundary_synthesis_plan.md`
 - `docs/phase30_strong_physics_boundary_synthesis.md`
+- `docs/phase31_physics_input_recovery_readiness_plan.md`
+- `docs/phase31_physics_input_recovery_readiness_findings.md`
 - `docs/experiment_index.md`
