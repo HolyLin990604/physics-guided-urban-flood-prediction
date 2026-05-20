@@ -28,6 +28,7 @@ The repository should currently be interpreted as follows:
 - Phase 27 completed a seed42 conservative volume-response consistency pilot with mixed results.
 - Phase 28 completed volume-response loss failure diagnosis for the Phase 27 seed42 pilot.
 - Phase 29 completed a seed42 tolerance-band volume consistency pilot with mixed results.
+- Phase 30 completed strong-physics boundary synthesis and current-position consolidation.
 
 The current Phase 10 conclusion is that boundary-band weighted wet/dry consistency refinement has passed test-facing confirmation on the three key project seeds: `seed123`, `seed42`, and `seed202`.
 
@@ -86,7 +87,9 @@ The current Phase 29 conclusion is that the mixed tolerance-band seed42 pilot pa
 
 Phase 29 seed42 test metrics were `RMSE = 0.0443854521`, `MAE = 0.0178462429`, `wet/dry IoU = 0.8016409529`, `rollout stability = 0.9895110601`, and `step RMSE std = 0.0106412431`. The current decision is `remain_seed42_only_pending_revision`: do not run `seed123` or `seed202`, do not perform a tolerance or weight sweep, do not claim tolerance-band success, and do not claim strict conservation, full mass conservation, or SWE/PINN support. Future work requires a new plan before any further loss redesign or training.
 
-The current project position after Phase 29 is rapid flood prediction with reliability diagnosis, failure-mode interpretation, confidence proxy diagnostics, spatial risk mapping, deterministic warning-rule guidance, manuscript-ready synthesis, manuscript drafting, representative case-specific warning interpretation, physical-consistency diagnosis, diagnosis-driven target-wet recall refinement, strong-physics feasibility audit, conservation-proxy diagnostics, a mixed seed42 conservative volume-response pilot, diagnostic explanation of that pilot's volume-response failure, and a mixed seed42 tolerance-band follow-up whose trade-off is not acceptable for confirmation. Later work should focus on the remaining Phase 25 limitations, especially slight false-wet increase and non-uniform connectivity behavior, while treating Phase 26 as conservation-proxy diagnostics rather than full conservation enforcement, Phase 27 as standard-metric positive but volume-response objective not confirmed, Phase 28 as the reason not to directly expand the Phase 27 underresponse-only loss, and Phase 29 as partial repair that requires revision before any further training. A full SWE/PINN residual is not recommended unless compatible velocity, flux, boundary, DEM, and source-sink information become available.
+The current Phase 30 conclusion is that the project has reached a Level 4 conservation-proxy / physical-consistency-guided surrogate position. This supports reliability-aware warning support, physical-consistency diagnosis, conservation-proxy evaluation, failure-mode interpretation, and applicability-boundary communication. It does not support strict mass conservation, full hydrodynamic closure, SWE/PINN residual consistency, or Level 5 strong physics. Phase 30 is documentation-only synthesis, not a model improvement, training run, loss change, or new evaluation result.
+
+The current project position after Phase 30 is rapid flood prediction with reliability diagnosis, failure-mode interpretation, confidence proxy diagnostics, spatial risk mapping, deterministic warning-rule guidance, manuscript-ready synthesis, manuscript drafting, representative case-specific warning interpretation, physical-consistency diagnosis, diagnosis-driven target-wet recall refinement, strong-physics feasibility audit, conservation-proxy diagnostics, documented mixed Phase 27/29 volume-response pilots, and explicit Level 4 / not Level 5 strong-physics boundary communication. Later work should prioritize manuscript / README / research narrative consolidation rather than immediate training. Phase 27 and Phase 29 should remain documented mixed pilots; do not continue their seed expansion, do not run `seed123` or `seed202` for Phase 27/29, do not perform tolerance or weight sweeps, and do not immediately design another loss without a new plan. A full SWE/PINN residual is not recommended unless compatible velocity, flux, boundary, DEM, and source-sink information become available.
 
 No additional Phase 10 boundary-weight sweep, Phase 10 boundary-parameter tuning, traffic-impact modeling, invented references, unsupported claims, or new uncertainty claim was performed. The current Phase 10 boundary-band setting remains `boundary_band_pixels = 1` and `boundary_weight = 2.0`.
 
@@ -456,6 +459,7 @@ When reading the repository:
 - read Phase 27 as a mixed seed42 conservative volume-response pilot: standard metrics improved, but the primary volume-response objective was not confirmed
 - read Phase 28 as diagnostic-only failure analysis explaining why Phase 27 should not be directly expanded
 - read Phase 29 as a mixed seed42 tolerance-band pilot: volume response was partially repaired, but the trade-off is not acceptable for confirmation
+- read Phase 30 as documentation-only boundary synthesis: Level 4 conservation-proxy / physical-consistency-guided surrogate support is the current limit, while Level 5 SWE/PINN, strict mass conservation, and full hydrodynamic closure are not supported
 
 ## Key Documents
 
@@ -503,4 +507,6 @@ When reading the repository:
 - `docs/phase28_volume_response_loss_diagnosis_findings.md`
 - `docs/phase29_tolerance_band_volume_consistency_plan.md`
 - `docs/phase29_seed42_tolerance_band_volume_findings.md`
+- `docs/phase30_strong_physics_boundary_synthesis_plan.md`
+- `docs/phase30_strong_physics_boundary_synthesis.md`
 - `docs/experiment_index.md`

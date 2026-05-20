@@ -24,6 +24,7 @@
 - Phase 27 Conservative Volume-Response Consistency: seed42 mixed pilot with standard-metric improvement but primary volume-response objective not confirmed
 - Phase 28 Volume-Response Loss Failure Diagnosis: diagnostic-only analysis explaining why the Phase 27 volume-response objective failed and why direct expansion should stop
 - Phase 29 Tolerance-Band Volume Consistency: seed42 mixed pilot with partial volume-response repair but unacceptable trade-off
+- Phase 30 Strong Physics Boundary Synthesis: documentation-only synthesis defining the current Level 4 conservation-proxy / physical-consistency-guided surrogate boundary
 
 ## Phase 6
 
@@ -374,6 +375,15 @@
 - Guardrail: no `seed123` / `seed202`, no tolerance or weight sweep, no strict conservation, no mass-conservation, no SWE/PINN claim.
 - Model status: no tolerance-band success claim; future loss redesign or training requires a new plan.
 
+## Phase 30
+
+- Plan: `docs/phase30_strong_physics_boundary_synthesis_plan.md`
+- Synthesis: `docs/phase30_strong_physics_boundary_synthesis.md`
+- Status: strong-physics boundary synthesis complete
+- Core result: Level 4 conservation-proxy / physical-consistency-guided surrogate; Level 5 SWE/PINN is not supported
+- Decision: pause Phase 27/29 seed expansion and sweeps; prefer manuscript / README / research narrative consolidation next
+- Guardrails: no training, no loss change, no `seed123` / `seed202`, no sweep, no strict conservation, no SWE/PINN, and no full hydrodynamic closure claim
+
 ## Interpretation Order
 
 For current repository interpretation, read the experiment trail in this order:
@@ -402,11 +412,12 @@ For current repository interpretation, read the experiment trail in this order:
 22. `docs/phase27_seed42_volume_response_pilot_findings.md`
 23. `docs/phase28_volume_response_loss_diagnosis_findings.md`
 24. `docs/phase29_seed42_tolerance_band_volume_findings.md`
-25. `docs/project_status.md`
+25. `docs/phase30_strong_physics_boundary_synthesis.md`
+26. `docs/project_status.md`
 
 ## Next Stage
 
-The next stage should build on the Phase 12 to Phase 29 reliability/applicability, screening, warning-rule, synthesis, manuscript-writing, manuscript-consolidation, manuscript-draft, evidence-alignment, full-draft expansion, warning case-study prototype, physical-consistency diagnostic, target-wet recall refinement, strong-physics feasibility audit, mixed conservative volume-response pilot, volume-response failure diagnosis, and mixed tolerance-band pilot materials rather than reopening Phase 10 tuning.
+The next stage should build on the Phase 12 to Phase 30 reliability/applicability, screening, warning-rule, synthesis, manuscript-writing, manuscript-consolidation, manuscript-draft, evidence-alignment, full-draft expansion, warning case-study prototype, physical-consistency diagnostic, target-wet recall refinement, strong-physics feasibility audit, mixed conservative volume-response pilot, volume-response failure diagnosis, mixed tolerance-band pilot, and strong-physics boundary synthesis materials rather than reopening Phase 10 tuning or immediately starting another training phase.
 
 Recommended next work:
 
@@ -415,8 +426,11 @@ Recommended next work:
 - treat Phase 27 as a mixed seed42 pilot whose direct expansion should stop
 - use Phase 28 as the diagnostic basis that motivated Phase 29, not as support for direct expansion of the Phase 27 loss
 - treat Phase 29 as partial volume-response repair with unacceptable trade-offs, not as tolerance-band success
+- treat Phase 30 as the current Level 4 conservation-proxy / physical-consistency-guided surrogate boundary, not as Level 5 strong physics
 - require a new plan before any further loss redesign or training
 - do not run Phase 29 `seed123` / `seed202` confirmation or a tolerance/weight sweep
+- do not run Phase 27 or Phase 29 `seed123` / `seed202` confirmation
+- prioritize manuscript / README / research narrative consolidation next
 - avoid a full SWE/PINN residual unless compatible velocity, flux, boundary, DEM, and source-sink information become available
 - consider calibrated uncertainty only if calibration data and evaluation design are added
 - keep the current Phase 10 setting fixed unless new evidence justifies changing it
