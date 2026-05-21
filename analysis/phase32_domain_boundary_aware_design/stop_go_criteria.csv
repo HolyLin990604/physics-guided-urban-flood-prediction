@@ -1,0 +1,13 @@
+criterion_id,criterion,status_now,required_for_seed42_pilot,failure_if_not_met,evidence_source
+SG01,Phase 32 remains design/diagnostic-only before training.,met_design_formalized,yes,Remain diagnostic-only; do not train.,docs/phase32_domain_boundary_aware_design.md
+SG02,The future objective targets one diagnosed failure mode.,not_met_no_future_objective_selected,yes,No seed42 pilot.,docs/phase32_domain_boundary_aware_design.md; Phase 31 masked findings
+SG03,Target region and mask definitions are fixed before training.,partially_met_design_masks_defined,yes,No seed42 pilot.,Phase 31 static-mask recovery and Phase 32 design
+SG04,All standard and masked guardrail metrics are fixed before training.,met_metric_framework_defined_thresholds_not_fixed,yes,No seed42 pilot.,guardrail_metrics.csv
+SG05,Baseline comparisons are fixed before training.,partially_met_phase27_phase29_masked_baselines_available,yes,No seed42 pilot.,masked_physical_error_delta_phase29_vs_phase27.csv
+SG06,Acceptance and rejection thresholds are written before training.,not_met_thresholds_not_declared,yes,No seed42 pilot.,Phase 32 design requires predeclared tolerances
+SG07,The design avoids repeating the Phase 29 tolerance-band trade-off.,met_as_design_guardrail_not_yet_tested,yes,No seed42 pilot; Phase 29 should not be continued directly.,Phase 31 masked findings; Phase 32 design
+SG08,"No model architecture, loss, or training-config changes occur in Phase 32A.",met_this_script_is_design_only,yes,Revert to design review before any training code work.,scripts/design_phase32_domain_boundary_guardrails.py
+SG09,"No seed123, seed202, or sweep execution is included.",met_this_script_runs_no_training,yes,Stop expanded runs; seed42 pilot review only.,Phase 32 guardrails
+SG10,All claims stay at Level 4+ proxy level.,met,yes,No pilot and no success claim.,docs/phase31_physics_input_recovery_readiness_findings.md; Phase 32 design
+SG11,"No strict conservation, full mass conservation, SWE/PINN, or hydrodynamic-closure claim is made.",met,yes,No pilot and revise claims.,Phase 31/32 Level boundary
+SG12,Current Phase 32 decision is design_ready_no_training_yet.,design_ready_no_training_yet,yes,Training remains unjustified.,docs/phase32_domain_boundary_aware_design.md
