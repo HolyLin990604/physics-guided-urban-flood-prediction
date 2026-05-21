@@ -1,0 +1,68 @@
+{
+  "claim_boundary": "Level 4+ proxy diagnostics supported; Level 5 remains unsupported.",
+  "current_decision": "design_ready_no_training_yet",
+  "design_only_guardrails": {
+    "does_not_claim_full_hydrodynamic_closure": true,
+    "does_not_claim_full_mass_conservation": true,
+    "does_not_claim_strict_conservation": true,
+    "does_not_claim_swe_pinn": true,
+    "does_not_modify_losses": true,
+    "does_not_modify_model_architecture": true,
+    "does_not_modify_training_configs": true,
+    "does_not_perform_sweeps": true,
+    "does_not_run_seed123_or_seed202": true,
+    "does_not_train": true,
+    "keeps_claims_level4_plus_proxy": true
+  },
+  "generated_at_utc": "2026-05-21T02:37:18.777698+00:00",
+  "guardrail_groups": [
+    "boundary_ring",
+    "dry_threshold",
+    "high_impervious_valid",
+    "level_boundary",
+    "manhole_nonzero_valid",
+    "standard",
+    "valid_domain"
+  ],
+  "guardrail_metrics_count": 20,
+  "input_sources": {
+    "phase31_delta_csv": "analysis/phase31_physics_input_recovery_readiness/masked_physical_error_delta_phase29_vs_phase27.csv",
+    "phase31_findings": "docs/phase31_physics_input_recovery_readiness_findings.md",
+    "phase31_masked_findings": "analysis/phase31_physics_input_recovery_readiness/masked_physical_error_findings.md",
+    "phase32_design": "docs/phase32_domain_boundary_aware_design.md",
+    "phase32_plan": "docs/phase32_domain_boundary_aware_physical_consistency_plan.md"
+  },
+  "phase": 32,
+  "phase31_delta_rows_read": 78,
+  "required_summary_statements": [
+    "Phase 32 has a design and guardrail framework.",
+    "No training is currently justified.",
+    "A future seed42 pilot would require all guardrails and baseline comparisons to be fixed before training.",
+    "Phase 29 should not be continued directly.",
+    "Level 5 remains unsupported."
+  ],
+  "script": "scripts/design_phase32_domain_boundary_guardrails.py",
+  "source_text_checks": {
+    "phase31_findings": {
+      "contains_level4_plus": true,
+      "contains_level5": true,
+      "contains_no_training": false
+    },
+    "phase31_masked_findings": {
+      "contains_level4_plus": true,
+      "contains_level5": true,
+      "contains_no_training": false
+    },
+    "phase32_design": {
+      "contains_level4_plus": true,
+      "contains_level5": true,
+      "contains_no_training": false
+    },
+    "phase32_plan": {
+      "contains_level4_plus": true,
+      "contains_level5": true,
+      "contains_no_training": true
+    }
+  },
+  "stop_go_criteria_count": 12
+}
