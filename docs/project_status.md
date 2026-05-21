@@ -30,6 +30,7 @@ The repository should currently be interpreted as follows:
 - Phase 29 completed a seed42 tolerance-band volume consistency pilot with mixed results.
 - Phase 30 completed strong-physics boundary synthesis and current-position consolidation.
 - Phase 31 completed physics input recovery readiness diagnostics, confirming Level 4+ structured physical proxy diagnostic support while keeping Level 5 unsupported.
+- Phase 32 completed plan-first domain-/boundary-aware physical consistency design guardrails, confirming `design_ready_no_training_yet` while keeping the work design/diagnostic-only.
 
 The current Phase 10 conclusion is that boundary-band weighted wet/dry consistency refinement has passed test-facing confirmation on the three key project seeds: `seed123`, `seed42`, and `seed202`.
 
@@ -96,7 +97,11 @@ Phase 31 does not support Level 5. The repository still lacks aligned velocity/f
 
 Phase 31 masked diagnostics reinforce that Phase 29 is mixed rather than successful. Relative to Phase 27, Phase 29 improves valid-domain masked relative volume-bias proxy from `0.0169359` to `0.0115344`, but worsens valid-domain `RMSE`, `MAE`, `false_dry_rate`, `false_wet_rate`, `false_dry_volume_loss_proxy`, and `false_wet_volume_excess_proxy`. The Phase 29 false-dry rate is highest over `manhole_nonzero_valid` (`0.131298`), and the Phase 29 false-wet rate is highest over `high_impervious_valid` (`0.0239894`).
 
-The current project position after Phase 31 is rapid flood prediction with reliability diagnosis, failure-mode interpretation, confidence proxy diagnostics, spatial risk mapping, deterministic warning-rule guidance, manuscript-ready synthesis, manuscript drafting, representative case-specific warning interpretation, physical-consistency diagnosis, diagnosis-driven target-wet recall refinement, strong-physics feasibility audit, conservation-proxy diagnostics, documented mixed Phase 27/29 volume-response pilots, Phase 30 boundary synthesis, and Phase 31 Level 4+ physics input recovery readiness. Later technical work should be Phase 32 Domain-/Boundary-Aware Physical Consistency Design planning, not immediate training, immediate loss change, Phase 27/29 seed expansion, or tolerance/weight sweeps. A full SWE/PINN residual is not recommended unless compatible velocity, flux, boundary, grid-spacing, and source-sink information become available.
+The current Phase 32 conclusion is that a plan-first Level 4+ domain-/boundary-aware physical consistency design has been formalized from Phase 31 recovered masks and masked diagnostics. Phase 32 defines 20 guardrail metrics and 12 stop/go criteria across standard, valid-domain, boundary-ring, high-impervious-valid, manhole-nonzero-valid, dry-threshold, and level-boundary groups. It does not train a model, modify losses, modify configs, or alter model architecture. The current decision is `design_ready_no_training_yet`.
+
+Phase 32 does not justify immediate `seed42` training, immediate loss modification, `seed123` / `seed202` confirmation, or a tolerance/weight sweep. Any future pilot work should fix the target objective, baseline comparisons, acceptance/rejection thresholds, and all guardrails before training.
+
+The current project position after Phase 32 is rapid flood prediction with reliability diagnosis, failure-mode interpretation, confidence proxy diagnostics, spatial risk mapping, deterministic warning-rule guidance, manuscript-ready synthesis, manuscript drafting, representative case-specific warning interpretation, physical-consistency diagnosis, diagnosis-driven target-wet recall refinement, strong-physics feasibility audit, conservation-proxy diagnostics, documented mixed Phase 27/29 volume-response pilots, Phase 30 boundary synthesis, Phase 31 Level 4+ physics input recovery readiness, and Phase 32 Level 4+ domain-/boundary-aware design guardrails. The project supports Level 4+ proxy diagnostics and conservative design planning only. It still does not support strict conservation, full mass conservation, SWE/PINN residual consistency, full hydrodynamic closure, or Level 5 strong physics. A full SWE/PINN residual is not recommended unless compatible velocity, flux, boundary, grid-spacing, and source-sink information become available.
 
 No additional Phase 10 boundary-weight sweep, Phase 10 boundary-parameter tuning, traffic-impact modeling, invented references, unsupported claims, or new uncertainty claim was performed. The current Phase 10 boundary-band setting remains `boundary_band_pixels = 1` and `boundary_weight = 2.0`.
 
@@ -468,6 +473,7 @@ When reading the repository:
 - read Phase 29 as a mixed seed42 tolerance-band pilot: volume response was partially repaired, but the trade-off is not acceptable for confirmation
 - read Phase 30 as documentation-only boundary synthesis: Level 4 conservation-proxy / physical-consistency-guided surrogate support is the current limit, while Level 5 SWE/PINN, strict mass conservation, and full hydrodynamic closure are not supported
 - read Phase 31 as diagnostic-only physics input recovery readiness: Level 4+ static-map/domain/boundary/masked diagnostics are supported, while Level 5 remains unsupported
+- read Phase 32 as design/diagnostic-only domain-/boundary-aware physical consistency guardrails: Level 4+ proxy diagnostics are formalized for possible future pilot design, while Level 5 remains unsupported
 
 ## Key Documents
 
@@ -519,4 +525,7 @@ When reading the repository:
 - `docs/phase30_strong_physics_boundary_synthesis.md`
 - `docs/phase31_physics_input_recovery_readiness_plan.md`
 - `docs/phase31_physics_input_recovery_readiness_findings.md`
+- `docs/phase32_domain_boundary_aware_physical_consistency_plan.md`
+- `docs/phase32_domain_boundary_aware_design.md`
+- `docs/phase32_domain_boundary_aware_physical_consistency_findings.md`
 - `docs/experiment_index.md`
