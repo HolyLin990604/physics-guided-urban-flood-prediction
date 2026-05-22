@@ -1,0 +1,16 @@
+criterion_id,criterion,status,met,evidence_source,notes
+RC01,diagnosed_failure_mode_defined,not_met_no_future_objective_selected,no,docs/phase32_domain_boundary_aware_design.md; Phase 31 masked findings,"Candidate diagnosed failure modes exist, but no single future objective is selected."
+RC02,target_region_fixed,partially_met_design_masks_defined,partial,Phase 31 static-mask recovery and Phase 32 design,"Recovered masks exist, but the selected pilot target region is not fixed."
+RC03,baseline_comparisons_fixed,partially_met_phase27_phase29_masked_baselines_available,partial,masked_physical_error_delta_phase29_vs_phase27.csv,Phase 27 and Phase 29 masked baselines are available; full Phase 25/27/29 acceptance and rejection comparisons are not written.
+RC04,acceptance_thresholds_fixed,not_met_thresholds_not_declared,no,Phase 32 design requires predeclared tolerances,"Acceptance thresholds remain undeclared, so training is not authorized."
+RC05,rejection_thresholds_fixed,not_met_thresholds_not_declared,no,Phase 32 design requires predeclared tolerances,"Rejection thresholds remain undeclared, including hard rejection for repeating the Phase 29 trade-off."
+RC06,standard_guardrails_defined,met,yes,analysis/phase32_domain_boundary_aware_design/guardrail_metrics.csv,Standard guardrail metric group is defined; numeric thresholds are still separate readiness blockers.
+RC07,valid_domain_guardrails_defined,met,yes,analysis/phase32_domain_boundary_aware_design/guardrail_metrics.csv,Valid-domain masked guardrails are defined at Level 4+ proxy scope.
+RC08,boundary_ring_guardrails_defined,met,yes,analysis/phase32_domain_boundary_aware_design/guardrail_metrics.csv,Boundary-ring guardrails are defined without claiming boundary flux closure.
+RC09,high_impervious_guardrails_defined,met,yes,analysis/phase32_domain_boundary_aware_design/guardrail_metrics.csv,High-impervious guardrails are defined as static-proxy diagnostics.
+RC10,manhole_guardrails_defined,met,yes,analysis/phase32_domain_boundary_aware_design/guardrail_metrics.csv,Manhole-region guardrails are defined as sparse-indicator proxy diagnostics.
+RC11,dry_threshold_guardrails_defined,met,yes,analysis/phase32_domain_boundary_aware_design/guardrail_metrics.csv,"Dry-threshold guardrails are defined, but exact threshold acceptance/rejection values remain unset."
+RC12,level_boundary_guardrails_defined,met,yes,Phase 31/32 Level boundary,The reviewed materials preserve the Level 4+ / Level 5 boundary.
+RC13,avoids_phase27_underresponse_only_failure,met_as_design_guardrail_not_yet_tested,yes,docs/phase33_seed42_pilot_readiness_review_plan.md,"The option set targets false-dry, false-wet, and dry-threshold failure modes rather than underresponse only."
+RC14,avoids_phase29_tolerance_band_tradeoff,met_as_design_guardrail_not_yet_tested,yes,Phase 31 masked findings; Phase 32 design,"The review rejects optimizing volume proxy alone because Phase 29 worsened RMSE, MAE, false-dry, false-wet, false-dry volume-loss, and false-wet volume-excess."
+RC15,level4_plus_scope_preserved,met,yes,docs/phase31_physics_input_recovery_readiness_findings.md; Phase 32 design,Conclusions are limited to Level 4+ masked physical proxy diagnostics.

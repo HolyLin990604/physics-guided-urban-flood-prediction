@@ -1,0 +1,90 @@
+{
+  "critical_blockers": [
+    "acceptance_thresholds_fixed",
+    "rejection_thresholds_fixed",
+    "full Phase 25/27/29 baseline acceptance/rejection comparisons",
+    "single pilot objective and target region not formally selected"
+  ],
+  "design_only_guardrails": {
+    "does_not_claim_full_hydrodynamic_closure": true,
+    "does_not_claim_full_mass_conservation": true,
+    "does_not_claim_phase29_success": true,
+    "does_not_claim_strict_conservation": true,
+    "does_not_claim_swe_pinn": true,
+    "does_not_modify_losses": true,
+    "does_not_modify_model_architecture": true,
+    "does_not_modify_training_configs": true,
+    "does_not_perform_sweeps": true,
+    "does_not_run_seed123_or_seed202": true,
+    "does_not_train": true,
+    "keeps_claims_level4_plus_proxy": true
+  },
+  "final_decision": "pilot_design_ready_but_training_not_started",
+  "generated_at_utc": "2026-05-22T07:29:35.173289+00:00",
+  "input_sources": {
+    "phase31_delta_csv": "analysis/phase31_physics_input_recovery_readiness/masked_physical_error_delta_phase29_vs_phase27.csv",
+    "phase31_masked_findings": "analysis/phase31_physics_input_recovery_readiness/masked_physical_error_findings.md",
+    "phase31_masked_summary": "analysis/phase31_physics_input_recovery_readiness/masked_physical_error_summary.json",
+    "phase32_design": "docs/phase32_domain_boundary_aware_design.md",
+    "phase32_design_summary": "analysis/phase32_domain_boundary_aware_design/design_summary.json",
+    "phase32_findings": "docs/phase32_domain_boundary_aware_physical_consistency_findings.md",
+    "phase32_guardrail_metrics": "analysis/phase32_domain_boundary_aware_design/guardrail_metrics.csv",
+    "phase32_stop_go_criteria": "analysis/phase32_domain_boundary_aware_design/stop_go_criteria.csv",
+    "phase33_plan": "docs/phase33_seed42_pilot_readiness_review_plan.md"
+  },
+  "level_boundary": "All conclusions remain Level 4+ proxy diagnostics. This review does not claim strict conservation, full mass conservation, SWE/PINN, or full hydrodynamic closure.",
+  "phase": 33,
+  "phase29_interpretation": {
+    "conclusion": "No future pilot should optimize volume proxy alone.",
+    "valid_domain_false_dry_volume_loss_worsened": true,
+    "valid_domain_false_dry_worsened": true,
+    "valid_domain_false_wet_volume_excess_worsened": true,
+    "valid_domain_false_wet_worsened": true,
+    "valid_domain_mae_worsened": true,
+    "valid_domain_relative_volume_bias_proxy_improved": true,
+    "valid_domain_rmse_worsened": true
+  },
+  "phase31_delta_rows_read": 78,
+  "phase32_guardrail_metrics_read": 20,
+  "phase32_prior_decision": "design_ready_no_training_yet",
+  "phase32_stop_go_criteria_read": 12,
+  "pilot_options_evaluated": 5,
+  "purpose": "diagnostic-only seed42 pilot readiness review",
+  "readiness_criteria_evaluated": 15,
+  "recommended_option": "manhole_nonzero_false_dry_guardrail",
+  "script": "scripts/review_phase33_seed42_pilot_readiness.py",
+  "source_text_checks": {
+    "phase31_masked_findings": {
+      "contains_level4_plus": true,
+      "contains_no_strict_conservation": false,
+      "contains_no_swe_pinn": true,
+      "contains_no_training": false
+    },
+    "phase32_design": {
+      "contains_level4_plus": true,
+      "contains_no_strict_conservation": true,
+      "contains_no_swe_pinn": true,
+      "contains_no_training": false
+    },
+    "phase32_findings": {
+      "contains_level4_plus": true,
+      "contains_no_strict_conservation": true,
+      "contains_no_swe_pinn": true,
+      "contains_no_training": true
+    },
+    "phase33_plan": {
+      "contains_level4_plus": true,
+      "contains_no_strict_conservation": true,
+      "contains_no_swe_pinn": true,
+      "contains_no_training": true
+    }
+  },
+  "training_authorized": false,
+  "unmet_or_partial_readiness_criteria": [
+    "diagnosed_failure_mode_defined",
+    "target_region_fixed",
+    "baseline_comparisons_fixed",
+    "acceptance_thresholds_fixed",
+    "rejection_thresholds_fixed"
+  ]
+}
