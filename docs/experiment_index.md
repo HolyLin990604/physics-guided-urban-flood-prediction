@@ -27,6 +27,7 @@
 - Phase 30 Strong Physics Boundary Synthesis: documentation-only synthesis defining the current Level 4 conservation-proxy / physical-consistency-guided surrogate boundary
 - Phase 31 Physics Input Recovery Readiness: diagnostic-only recovery and verification of Level 4+ static-map/domain/boundary/masked diagnostic support; Level 5 remains unsupported
 - Phase 32 Domain-/Boundary-Aware Physical Consistency Design: design/diagnostic-only Level 4+ guardrail framework with decision `design_ready_no_training_yet`
+- Phase 33 Seed42 Pilot Readiness Review: diagnostic/readiness-review complete with decision `pilot_design_ready_but_training_not_started` and `training_authorized = false`
 
 ## Phase 6
 
@@ -440,6 +441,25 @@
 - Level boundary: Level 4+ proxy diagnostics supported; Level 5 remains unsupported
 - Model status: design/diagnostic only; no training, architecture modification, loss modification, config modification, seed expansion, or sweep was performed
 
+## Phase 33
+
+- Plan: `docs/phase33_seed42_pilot_readiness_review_plan.md`
+- Script: `scripts/review_phase33_seed42_pilot_readiness.py`
+- Findings: `docs/phase33_seed42_pilot_readiness_review_findings.md`
+- Outputs: `analysis/phase33_seed42_pilot_readiness/`
+- Key output files:
+  - `pilot_option_scores.csv`
+  - `readiness_criteria_status.csv`
+  - `phase33_readiness_summary.json`
+  - `phase33_readiness_summary.md`
+- Status: diagnostic/readiness-review complete
+- Core result: `manhole_nonzero_false_dry_guardrail` is the strongest future candidate, but `training_authorized = false`
+- Decision: `pilot_design_ready_but_training_not_started`
+- Evidence: 5 pilot options and 15 readiness criteria were reviewed
+- Blocking criteria: numeric acceptance thresholds, numeric rejection thresholds, and full Phase 25 / Phase 27 / Phase 29 baseline acceptance/rejection criteria are not fixed
+- Guardrails: no training, no `seed123` / `seed202`, no sweep, no Phase 29 continuation, no strict conservation, no full mass conservation, no SWE/PINN, and no hydrodynamic closure
+- Model status: diagnostic/readiness-review only; no training, architecture modification, loss modification, config modification, seed expansion, sweep, or Phase 29 continuation was performed
+
 ## Interpretation Order
 
 For current repository interpretation, read the experiment trail in this order:
@@ -471,11 +491,12 @@ For current repository interpretation, read the experiment trail in this order:
 25. `docs/phase30_strong_physics_boundary_synthesis.md`
 26. `docs/phase31_physics_input_recovery_readiness_findings.md`
 27. `docs/phase32_domain_boundary_aware_physical_consistency_findings.md`
-28. `docs/project_status.md`
+28. `docs/phase33_seed42_pilot_readiness_review_findings.md`
+29. `docs/project_status.md`
 
 ## Next Stage
 
-The next stage should build on the Phase 12 to Phase 32 reliability/applicability, screening, warning-rule, synthesis, manuscript-writing, manuscript-consolidation, manuscript-draft, evidence-alignment, full-draft expansion, warning case-study prototype, physical-consistency diagnostic, target-wet recall refinement, strong-physics feasibility audit, mixed conservative volume-response pilot, volume-response failure diagnosis, mixed tolerance-band pilot, strong-physics boundary synthesis, physics input recovery readiness, and domain-/boundary-aware design guardrail materials rather than reopening Phase 10 tuning or immediately starting another training phase.
+The next stage should build on the Phase 12 to Phase 33 reliability/applicability, screening, warning-rule, synthesis, manuscript-writing, manuscript-consolidation, manuscript-draft, evidence-alignment, full-draft expansion, warning case-study prototype, physical-consistency diagnostic, target-wet recall refinement, strong-physics feasibility audit, mixed conservative volume-response pilot, volume-response failure diagnosis, mixed tolerance-band pilot, strong-physics boundary synthesis, physics input recovery readiness, domain-/boundary-aware design guardrail, and seed42 pilot-readiness materials rather than reopening Phase 10 tuning or immediately starting another training phase.
 
 Recommended next work:
 
@@ -488,9 +509,12 @@ Recommended next work:
 - treat Phase 31 as Level 4+ physics input recovery and masked diagnostic readiness, not as Level 5 strong physics
 - treat Phase 32 as design/diagnostic-only Level 4+ domain-/boundary-aware physical consistency guardrails, not as model improvement
 - keep the Phase 32 decision as `design_ready_no_training_yet`
-- require target objective, baseline comparisons, acceptance/rejection thresholds, and all guardrails to be fixed before any future pilot training
+- treat Phase 33 as diagnostic/readiness-review only, not as pilot success or training authorization
+- keep the Phase 33 decision as `pilot_design_ready_but_training_not_started` and `training_authorized = false`
+- require numeric acceptance thresholds, numeric rejection thresholds, and full Phase 25 / Phase 27 / Phase 29 baseline acceptance/rejection criteria to be fixed before any future seed42 pilot training
 - do not run Phase 29 `seed123` / `seed202` confirmation or a tolerance/weight sweep
 - do not run Phase 27 or Phase 29 `seed123` / `seed202` confirmation
+- do not run seed42 training until the Phase 33 blocking criteria are fixed
 - avoid a full SWE/PINN residual unless compatible velocity, flux, boundary, DEM, and source-sink information become available
 - consider calibrated uncertainty only if calibration data and evaluation design are added
 - keep the current Phase 10 setting fixed unless new evidence justifies changing it

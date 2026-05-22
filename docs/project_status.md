@@ -31,6 +31,7 @@ The repository should currently be interpreted as follows:
 - Phase 30 completed strong-physics boundary synthesis and current-position consolidation.
 - Phase 31 completed physics input recovery readiness diagnostics, confirming Level 4+ structured physical proxy diagnostic support while keeping Level 5 unsupported.
 - Phase 32 completed plan-first domain-/boundary-aware physical consistency design guardrails, confirming `design_ready_no_training_yet` while keeping the work design/diagnostic-only.
+- Phase 33 completed diagnostic-only seed42 pilot readiness review under the Phase 32 guardrail framework, confirming `pilot_design_ready_but_training_not_started` with `training_authorized = false`.
 
 The current Phase 10 conclusion is that boundary-band weighted wet/dry consistency refinement has passed test-facing confirmation on the three key project seeds: `seed123`, `seed42`, and `seed202`.
 
@@ -101,9 +102,11 @@ The current Phase 32 conclusion is that a plan-first Level 4+ domain-/boundary-a
 
 Phase 32 does not justify immediate `seed42` training, immediate loss modification, `seed123` / `seed202` confirmation, or a tolerance/weight sweep. Any future pilot work should fix the target objective, baseline comparisons, acceptance/rejection thresholds, and all guardrails before training.
 
-The current project position after Phase 32 is rapid flood prediction with reliability diagnosis, failure-mode interpretation, confidence proxy diagnostics, spatial risk mapping, deterministic warning-rule guidance, manuscript-ready synthesis, manuscript drafting, representative case-specific warning interpretation, physical-consistency diagnosis, diagnosis-driven target-wet recall refinement, strong-physics feasibility audit, conservation-proxy diagnostics, documented mixed Phase 27/29 volume-response pilots, Phase 30 boundary synthesis, Phase 31 Level 4+ physics input recovery readiness, and Phase 32 Level 4+ domain-/boundary-aware design guardrails. The project supports Level 4+ proxy diagnostics and conservative design planning only. It still does not support strict conservation, full mass conservation, SWE/PINN residual consistency, full hydrodynamic closure, or Level 5 strong physics. A full SWE/PINN residual is not recommended unless compatible velocity, flux, boundary, grid-spacing, and source-sink information become available.
+The current Phase 33 conclusion is that seed42 pilot design is ready for future consideration but training has not started and is not authorized. Phase 33 reviewed 5 pilot options and 15 readiness criteria. The strongest future candidate is `manhole_nonzero_false_dry_guardrail`, because `manhole_nonzero_valid` had the highest Phase 29 false-dry rate. However, numeric acceptance thresholds, numeric rejection thresholds, and full Phase 25 / Phase 27 / Phase 29 baseline acceptance/rejection criteria are not fixed.
 
-No additional Phase 10 boundary-weight sweep, Phase 10 boundary-parameter tuning, traffic-impact modeling, invented references, unsupported claims, or new uncertainty claim was performed. The current Phase 10 boundary-band setting remains `boundary_band_pixels = 1` and `boundary_weight = 2.0`.
+The current project position after Phase 33 is rapid flood prediction with reliability diagnosis, failure-mode interpretation, confidence proxy diagnostics, spatial risk mapping, deterministic warning-rule guidance, manuscript-ready synthesis, manuscript drafting, representative case-specific warning interpretation, physical-consistency diagnosis, diagnosis-driven target-wet recall refinement, strong-physics feasibility audit, conservation-proxy diagnostics, documented mixed Phase 27/29 volume-response pilots, Phase 30 boundary synthesis, Phase 31 Level 4+ physics input recovery readiness, Phase 32 Level 4+ domain-/boundary-aware design guardrails, and Phase 33 diagnostic seed42 pilot-readiness review. The project supports Level 4+ proxy diagnostics and conservative readiness planning only. It still does not support strict conservation, full mass conservation, SWE/PINN residual consistency, full hydrodynamic closure, or Level 5 strong physics. A full SWE/PINN residual is not recommended unless compatible velocity, flux, boundary, grid-spacing, and source-sink information become available.
+
+No additional training is authorized. No additional Phase 10 boundary-weight sweep, Phase 10 boundary-parameter tuning, `seed42` training, `seed123` / `seed202` training, Phase 29 continuation, tolerance/weight sweep, loss modification, config modification, architecture modification, traffic-impact modeling, invented references, unsupported claims, or new uncertainty claim was performed. The current Phase 10 boundary-band setting remains `boundary_band_pixels = 1` and `boundary_weight = 2.0`. Next technical work, if any, should fix numeric thresholds and Phase 25 / Phase 27 / Phase 29 baseline acceptance/rejection criteria before any seed42 pilot.
 
 ## Meaning Of Each Reference
 
@@ -474,6 +477,7 @@ When reading the repository:
 - read Phase 30 as documentation-only boundary synthesis: Level 4 conservation-proxy / physical-consistency-guided surrogate support is the current limit, while Level 5 SWE/PINN, strict mass conservation, and full hydrodynamic closure are not supported
 - read Phase 31 as diagnostic-only physics input recovery readiness: Level 4+ static-map/domain/boundary/masked diagnostics are supported, while Level 5 remains unsupported
 - read Phase 32 as design/diagnostic-only domain-/boundary-aware physical consistency guardrails: Level 4+ proxy diagnostics are formalized for possible future pilot design, while Level 5 remains unsupported
+- read Phase 33 as diagnostic-only seed42 pilot readiness review: `manhole_nonzero_false_dry_guardrail` is the strongest future candidate, but `training_authorized = false`
 
 ## Key Documents
 
@@ -528,4 +532,6 @@ When reading the repository:
 - `docs/phase32_domain_boundary_aware_physical_consistency_plan.md`
 - `docs/phase32_domain_boundary_aware_design.md`
 - `docs/phase32_domain_boundary_aware_physical_consistency_findings.md`
+- `docs/phase33_seed42_pilot_readiness_review_plan.md`
+- `docs/phase33_seed42_pilot_readiness_review_findings.md`
 - `docs/experiment_index.md`
