@@ -28,6 +28,7 @@
 - Phase 31 Physics Input Recovery Readiness: diagnostic-only recovery and verification of Level 4+ static-map/domain/boundary/masked diagnostic support; Level 5 remains unsupported
 - Phase 32 Domain-/Boundary-Aware Physical Consistency Design: design/diagnostic-only Level 4+ guardrail framework with decision `design_ready_no_training_yet`
 - Phase 33 Seed42 Pilot Readiness Review: diagnostic/readiness-review complete with decision `pilot_design_ready_but_training_not_started` and `training_authorized = false`
+- Phase 34 Pilot Threshold Formalization: threshold-formalization complete with decision `thresholds_formalized_training_still_blocked` and `training_authorized = false`
 
 ## Phase 6
 
@@ -460,6 +461,33 @@
 - Guardrails: no training, no `seed123` / `seed202`, no sweep, no Phase 29 continuation, no strict conservation, no full mass conservation, no SWE/PINN, and no hydrodynamic closure
 - Model status: diagnostic/readiness-review only; no training, architecture modification, loss modification, config modification, seed expansion, sweep, or Phase 29 continuation was performed
 
+## Phase 34
+
+- Plan: `docs/phase34_pilot_threshold_formalization_plan.md`
+- Script: `scripts/formalize_phase34_pilot_thresholds.py`
+- Findings: `docs/phase34_pilot_threshold_formalization_findings.md`
+- Outputs: `analysis/phase34_pilot_thresholds/`
+- Key output files:
+  - `baseline_metric_table.csv`
+  - `acceptance_thresholds.csv`
+  - `rejection_thresholds.csv`
+  - `threshold_readiness_status.csv`
+  - `phase34_threshold_summary.json`
+  - `phase34_threshold_summary.md`
+- Status: threshold formalization complete
+- Core result: baseline, acceptance, and rejection thresholds fixed for future `manhole_nonzero_false_dry_guardrail` pilot
+- Evidence: 23 baseline metric rows, 14 acceptance threshold rows, 9 rejection threshold rows, and 7 readiness rows were formalized
+- Candidate: `manhole_nonzero_false_dry_guardrail`
+- Target: `manhole_nonzero_valid` `false_dry_rate`
+- AT01 threshold: Phase 27 = `0.1172229713`, Phase 29 = `0.131297982994`, threshold = `0.1172229713`; the target metric must be below Phase 29 and no higher than Phase 27
+- RT01 rejection rule: reject the Phase 29 trade-off pattern if absolute relative volume-bias proxy improves while RMSE, MAE, false-dry rate, and false-wet rate all worsen versus Phase 27
+- AT13: volume-bias proxy improvement is conditional and not sufficient alone
+- AT14 / RT09: preserve the Level 4+ proxy claim boundary
+- Decision: `thresholds_formalized_training_still_blocked`
+- Next allowed step: `pilot_implementation_plan`
+- Guardrails: no training, no `seed42` run, no `seed123` / `seed202`, no sweep, no Phase 29 continuation, no loss modification, no config modification, no architecture modification, no strict conservation, no full mass conservation, no SWE/PINN, no hydrodynamic closure
+- Model status: threshold-formalization only; no training, architecture modification, loss modification, config modification, seed expansion, sweep, or Phase 29 continuation was performed
+
 ## Interpretation Order
 
 For current repository interpretation, read the experiment trail in this order:
@@ -492,11 +520,12 @@ For current repository interpretation, read the experiment trail in this order:
 26. `docs/phase31_physics_input_recovery_readiness_findings.md`
 27. `docs/phase32_domain_boundary_aware_physical_consistency_findings.md`
 28. `docs/phase33_seed42_pilot_readiness_review_findings.md`
-29. `docs/project_status.md`
+29. `docs/phase34_pilot_threshold_formalization_findings.md`
+30. `docs/project_status.md`
 
 ## Next Stage
 
-The next stage should build on the Phase 12 to Phase 33 reliability/applicability, screening, warning-rule, synthesis, manuscript-writing, manuscript-consolidation, manuscript-draft, evidence-alignment, full-draft expansion, warning case-study prototype, physical-consistency diagnostic, target-wet recall refinement, strong-physics feasibility audit, mixed conservative volume-response pilot, volume-response failure diagnosis, mixed tolerance-band pilot, strong-physics boundary synthesis, physics input recovery readiness, domain-/boundary-aware design guardrail, and seed42 pilot-readiness materials rather than reopening Phase 10 tuning or immediately starting another training phase.
+The next stage should build on the Phase 12 to Phase 34 reliability/applicability, screening, warning-rule, synthesis, manuscript-writing, manuscript-consolidation, manuscript-draft, evidence-alignment, full-draft expansion, warning case-study prototype, physical-consistency diagnostic, target-wet recall refinement, strong-physics feasibility audit, mixed conservative volume-response pilot, volume-response failure diagnosis, mixed tolerance-band pilot, strong-physics boundary synthesis, physics input recovery readiness, domain-/boundary-aware design guardrail, seed42 pilot-readiness, and pilot-threshold formalization materials rather than reopening Phase 10 tuning or immediately starting another training phase.
 
 Recommended next work:
 
@@ -511,10 +540,12 @@ Recommended next work:
 - keep the Phase 32 decision as `design_ready_no_training_yet`
 - treat Phase 33 as diagnostic/readiness-review only, not as pilot success or training authorization
 - keep the Phase 33 decision as `pilot_design_ready_but_training_not_started` and `training_authorized = false`
-- require numeric acceptance thresholds, numeric rejection thresholds, and full Phase 25 / Phase 27 / Phase 29 baseline acceptance/rejection criteria to be fixed before any future seed42 pilot training
+- treat Phase 34 as threshold-formalization only, not as pilot success or training authorization
+- keep the Phase 34 decision as `thresholds_formalized_training_still_blocked` and `training_authorized = false`
+- use `pilot_implementation_plan` as the next allowed step before any future seed42 pilot training
 - do not run Phase 29 `seed123` / `seed202` confirmation or a tolerance/weight sweep
 - do not run Phase 27 or Phase 29 `seed123` / `seed202` confirmation
-- do not run seed42 training until the Phase 33 blocking criteria are fixed
+- do not run seed42 training from Phase 34 threshold formalization alone
 - avoid a full SWE/PINN residual unless compatible velocity, flux, boundary, DEM, and source-sink information become available
 - consider calibrated uncertainty only if calibration data and evaluation design are added
 - keep the current Phase 10 setting fixed unless new evidence justifies changing it
