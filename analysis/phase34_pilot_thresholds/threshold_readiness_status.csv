@@ -1,0 +1,8 @@
+criterion,status,evidence,blocker,next_required_action
+baseline_metric_table_generated,met,23 Phase 25/27/29 baseline metric rows fixed,none,Use fixed baselines in a future pilot implementation plan.
+single_future_candidate_locked_for_thresholds,met,candidate=manhole_nonzero_false_dry_guardrail; region=manhole_nonzero_valid; metric=false_dry_rate,none,Do not train; translate this into a separate implementation plan first.
+acceptance_thresholds_fixed,met_pre_pilot_thresholds_formalized,14 acceptance thresholds generated,training still blocked,Review thresholds in the future pilot implementation plan.
+rejection_thresholds_fixed,met_pre_pilot_thresholds_formalized,9 hard rejection rules generated,training still blocked,Carry rejection rules forward unchanged unless explicitly revised.
+phase29_tradeoff_rejection_rule_written,met,RT01 rejects volume-bias proxy improvement with concurrent RMSE/MAE/false-dry/false-wet worsening.,none,Do not claim Phase 29 success.
+level4_plus_scope_preserved,met,Acceptance and rejection rules include mandatory Level 4+ proxy claim boundary.,none,Keep all future pilot wording at proxy-diagnostic scope.
+phase34_training_authorization,not_authorized,Phase 33 prior decision=pilot_design_ready_but_training_not_started; Phase 34 decision=thresholds_formalized_training_still_blocked,Phase 34 is threshold formalization only.,pilot_implementation_plan
