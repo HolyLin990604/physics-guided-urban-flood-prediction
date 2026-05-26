@@ -29,6 +29,7 @@
 - Phase 32 Domain-/Boundary-Aware Physical Consistency Design: design/diagnostic-only Level 4+ guardrail framework with decision `design_ready_no_training_yet`
 - Phase 33 Seed42 Pilot Readiness Review: diagnostic/readiness-review complete with decision `pilot_design_ready_but_training_not_started` and `training_authorized = false`
 - Phase 34 Pilot Threshold Formalization: threshold-formalization complete with decision `thresholds_formalized_training_still_blocked` and `training_authorized = false`
+- Phase 35 Manhole False-Dry Guardrail Pilot Plan: pilot implementation plan complete with status `implementation_plan_ready_code_next` and `training_authorized = false`
 
 ## Phase 6
 
@@ -488,6 +489,22 @@
 - Guardrails: no training, no `seed42` run, no `seed123` / `seed202`, no sweep, no Phase 29 continuation, no loss modification, no config modification, no architecture modification, no strict conservation, no full mass conservation, no SWE/PINN, no hydrodynamic closure
 - Model status: threshold-formalization only; no training, architecture modification, loss modification, config modification, seed expansion, sweep, or Phase 29 continuation was performed
 
+## Phase 35
+
+- Plan: `docs/phase35_manhole_false_dry_guardrail_pilot_plan.md`
+- Status: pilot implementation plan complete
+- Decision: `implementation_plan_ready_code_next`
+- Current authorization: `training_authorized = false`
+- Candidate: `manhole_nonzero_false_dry_guardrail`
+- Target region: `manhole_nonzero_valid`
+- Target metric: `false_dry_rate`
+- Key threshold: AT01 `false_dry_rate` threshold = `0.1172229713`
+- Core result: Phase 35 translates the Phase 34 thresholds into a conservative implementation plan for review only
+- Implementation status: no losses implemented; no configs created; no model code modified; no training run performed
+- Next allowed step: code/smoke-test implementation phase, not training
+- Guardrails: no training, no `seed42` run, no `seed123` / `seed202`, no sweep, no Phase 29 continuation, no strict conservation, no full mass conservation, no SWE/PINN, no hydrodynamic closure, and Level 4+ proxy scope only
+- Model status: planning-only; any later code/smoke-test phase must still keep training blocked unless separately authorized
+
 ## Interpretation Order
 
 For current repository interpretation, read the experiment trail in this order:
@@ -521,11 +538,12 @@ For current repository interpretation, read the experiment trail in this order:
 27. `docs/phase32_domain_boundary_aware_physical_consistency_findings.md`
 28. `docs/phase33_seed42_pilot_readiness_review_findings.md`
 29. `docs/phase34_pilot_threshold_formalization_findings.md`
-30. `docs/project_status.md`
+30. `docs/phase35_manhole_false_dry_guardrail_pilot_plan.md`
+31. `docs/project_status.md`
 
 ## Next Stage
 
-The next stage should build on the Phase 12 to Phase 34 reliability/applicability, screening, warning-rule, synthesis, manuscript-writing, manuscript-consolidation, manuscript-draft, evidence-alignment, full-draft expansion, warning case-study prototype, physical-consistency diagnostic, target-wet recall refinement, strong-physics feasibility audit, mixed conservative volume-response pilot, volume-response failure diagnosis, mixed tolerance-band pilot, strong-physics boundary synthesis, physics input recovery readiness, domain-/boundary-aware design guardrail, seed42 pilot-readiness, and pilot-threshold formalization materials rather than reopening Phase 10 tuning or immediately starting another training phase.
+The next stage should build on the Phase 12 to Phase 35 reliability/applicability, screening, warning-rule, synthesis, manuscript-writing, manuscript-consolidation, manuscript-draft, evidence-alignment, full-draft expansion, warning case-study prototype, physical-consistency diagnostic, target-wet recall refinement, strong-physics feasibility audit, mixed conservative volume-response pilot, volume-response failure diagnosis, mixed tolerance-band pilot, strong-physics boundary synthesis, physics input recovery readiness, domain-/boundary-aware design guardrail, seed42 pilot-readiness, pilot-threshold formalization, and manhole false-dry guardrail pilot-planning materials rather than reopening Phase 10 tuning or immediately starting another training phase.
 
 Recommended next work:
 
@@ -542,10 +560,12 @@ Recommended next work:
 - keep the Phase 33 decision as `pilot_design_ready_but_training_not_started` and `training_authorized = false`
 - treat Phase 34 as threshold-formalization only, not as pilot success or training authorization
 - keep the Phase 34 decision as `thresholds_formalized_training_still_blocked` and `training_authorized = false`
-- use `pilot_implementation_plan` as the next allowed step before any future seed42 pilot training
+- treat Phase 35 as pilot implementation planning only, not as loss implementation, config creation, model-code modification, or training authorization
+- keep the Phase 35 status as `implementation_plan_ready_code_next` and `training_authorized = false`
+- use code/smoke-test implementation as the next allowed step, not training
 - do not run Phase 29 `seed123` / `seed202` confirmation or a tolerance/weight sweep
 - do not run Phase 27 or Phase 29 `seed123` / `seed202` confirmation
-- do not run seed42 training from Phase 34 threshold formalization alone
+- do not run seed42 training from Phase 34 threshold formalization or Phase 35 planning alone
 - avoid a full SWE/PINN residual unless compatible velocity, flux, boundary, DEM, and source-sink information become available
 - consider calibrated uncertainty only if calibration data and evaluation design are added
 - keep the current Phase 10 setting fixed unless new evidence justifies changing it

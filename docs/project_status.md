@@ -33,6 +33,7 @@ The repository should currently be interpreted as follows:
 - Phase 32 completed plan-first domain-/boundary-aware physical consistency design guardrails, confirming `design_ready_no_training_yet` while keeping the work design/diagnostic-only.
 - Phase 33 completed diagnostic-only seed42 pilot readiness review under the Phase 32 guardrail framework, confirming `pilot_design_ready_but_training_not_started` with `training_authorized = false`.
 - Phase 34 completed threshold-formalization only for a possible future `manhole_nonzero_false_dry_guardrail` seed42 pilot, confirming `thresholds_formalized_training_still_blocked` with `training_authorized = false`.
+- Phase 35 completed a pilot implementation plan only for `manhole_nonzero_false_dry_guardrail`, confirming `implementation_plan_ready_code_next` with `training_authorized = false`.
 
 The current Phase 10 conclusion is that boundary-band weighted wet/dry consistency refinement has passed test-facing confirmation on the three key project seeds: `seed123`, `seed42`, and `seed202`.
 
@@ -109,9 +110,11 @@ The current Phase 34 conclusion is that baseline, acceptance, and rejection thre
 
 Phase 34 AT01 targets `manhole_nonzero_valid` `false_dry_rate` and requires it to be below Phase 29 and no higher than Phase 27: Phase 27 = `0.1172229713`, Phase 29 = `0.131297982994`, and threshold = `0.1172229713`. RT01 rejects the Phase 29 trade-off pattern where absolute relative volume-bias proxy improves while RMSE, MAE, false-dry rate, and false-wet rate all worsen versus Phase 27. AT13 keeps volume-bias proxy improvement conditional and insufficient alone; AT14 / RT09 preserve the Level 4+ proxy claim boundary.
 
-The current project position after Phase 34 is rapid flood prediction with reliability diagnosis, failure-mode interpretation, confidence proxy diagnostics, spatial risk mapping, deterministic warning-rule guidance, manuscript-ready synthesis, manuscript drafting, representative case-specific warning interpretation, physical-consistency diagnosis, diagnosis-driven target-wet recall refinement, strong-physics feasibility audit, conservation-proxy diagnostics, documented mixed Phase 27/29 volume-response pilots, Phase 30 boundary synthesis, Phase 31 Level 4+ physics input recovery readiness, Phase 32 Level 4+ domain-/boundary-aware design guardrails, Phase 33 diagnostic seed42 pilot-readiness review, and Phase 34 pilot threshold formalization. The project supports Level 4+ proxy diagnostics and conservative readiness planning only. It still does not support strict conservation, full mass conservation, SWE/PINN residual consistency, full hydrodynamic closure, or Level 5 strong physics. A full SWE/PINN residual is not recommended unless compatible velocity, flux, boundary, grid-spacing, and source-sink information become available.
+The current Phase 35 conclusion is that a pilot implementation plan has been completed for the possible future `manhole_nonzero_false_dry_guardrail` candidate, but no implementation or training has been performed. Phase 35 is plan-only: it does not implement losses, create configs, modify model code, run `seed42`, run `seed123` / `seed202`, perform a sweep, or continue Phase 29. The candidate remains `manhole_nonzero_false_dry_guardrail`; the target region is `manhole_nonzero_valid`; the target metric is `false_dry_rate`; the key AT01 threshold remains `0.1172229713`; `training_authorized = false`; and the next allowed step is a code/smoke-test implementation phase, not training.
 
-No additional training is authorized. No additional Phase 10 boundary-weight sweep, Phase 10 boundary-parameter tuning, `seed42` training, `seed123` / `seed202` training, Phase 29 continuation, tolerance/weight sweep, loss modification, config modification, architecture modification, traffic-impact modeling, invented references, unsupported claims, or new uncertainty claim was performed. The current Phase 10 boundary-band setting remains `boundary_band_pixels = 1` and `boundary_weight = 2.0`. Next technical work, if any, should be a Phase 35 pilot implementation plan, not training.
+The current project position after Phase 35 is rapid flood prediction with reliability diagnosis, failure-mode interpretation, confidence proxy diagnostics, spatial risk mapping, deterministic warning-rule guidance, manuscript-ready synthesis, manuscript drafting, representative case-specific warning interpretation, physical-consistency diagnosis, diagnosis-driven target-wet recall refinement, strong-physics feasibility audit, conservation-proxy diagnostics, documented mixed Phase 27/29 volume-response pilots, Phase 30 boundary synthesis, Phase 31 Level 4+ physics input recovery readiness, Phase 32 Level 4+ domain-/boundary-aware design guardrails, Phase 33 diagnostic seed42 pilot-readiness review, Phase 34 pilot threshold formalization, and Phase 35 pilot implementation planning. The project supports Level 4+ proxy diagnostics and conservative readiness planning only. It still does not support strict conservation, full mass conservation, SWE/PINN residual consistency, full hydrodynamic closure, or Level 5 strong physics. A full SWE/PINN residual is not recommended unless compatible velocity, flux, boundary, grid-spacing, and source-sink information become available.
+
+No additional training is authorized. No additional Phase 10 boundary-weight sweep, Phase 10 boundary-parameter tuning, `seed42` training, `seed123` / `seed202` training, Phase 29 continuation, tolerance/weight sweep, traffic-impact modeling, invented references, unsupported claims, or new uncertainty claim was performed. The current Phase 10 boundary-band setting remains `boundary_band_pixels = 1` and `boundary_weight = 2.0`. Phase 36 may implement code and smoke tests for the Phase 35 plan, but it must not run training unless training is separately authorized.
 
 ## Meaning Of Each Reference
 
@@ -484,6 +487,7 @@ When reading the repository:
 - read Phase 32 as design/diagnostic-only domain-/boundary-aware physical consistency guardrails: Level 4+ proxy diagnostics are formalized for possible future pilot design, while Level 5 remains unsupported
 - read Phase 33 as diagnostic-only seed42 pilot readiness review: `manhole_nonzero_false_dry_guardrail` is the strongest future candidate, but `training_authorized = false`
 - read Phase 34 as threshold-formalization only: baseline, acceptance, and rejection thresholds are fixed for a possible future `manhole_nonzero_false_dry_guardrail` pilot, but `training_authorized = false`
+- read Phase 35 as pilot implementation planning only: the candidate is `manhole_nonzero_false_dry_guardrail`, the target is `manhole_nonzero_valid` `false_dry_rate`, and `training_authorized = false`
 
 ## Key Documents
 
@@ -540,4 +544,7 @@ When reading the repository:
 - `docs/phase32_domain_boundary_aware_physical_consistency_findings.md`
 - `docs/phase33_seed42_pilot_readiness_review_plan.md`
 - `docs/phase33_seed42_pilot_readiness_review_findings.md`
+- `docs/phase34_pilot_threshold_formalization_plan.md`
+- `docs/phase34_pilot_threshold_formalization_findings.md`
+- `docs/phase35_manhole_false_dry_guardrail_pilot_plan.md`
 - `docs/experiment_index.md`
