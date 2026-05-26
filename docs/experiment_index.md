@@ -30,6 +30,7 @@
 - Phase 33 Seed42 Pilot Readiness Review: diagnostic/readiness-review complete with decision `pilot_design_ready_but_training_not_started` and `training_authorized = false`
 - Phase 34 Pilot Threshold Formalization: threshold-formalization complete with decision `thresholds_formalized_training_still_blocked` and `training_authorized = false`
 - Phase 35 Manhole False-Dry Guardrail Pilot Plan: pilot implementation plan complete with status `implementation_plan_ready_code_next` and `training_authorized = false`
+- Phase 36 Manhole False-Dry Guardrail Code Smoke: code/smoke-test implementation complete with decision `code_smoke_ready_training_still_blocked`, `training_authorized = false`, and `training_executed = false`
 
 ## Phase 6
 
@@ -505,6 +506,27 @@
 - Guardrails: no training, no `seed42` run, no `seed123` / `seed202`, no sweep, no Phase 29 continuation, no strict conservation, no full mass conservation, no SWE/PINN, no hydrodynamic closure, and Level 4+ proxy scope only
 - Model status: planning-only; any later code/smoke-test phase must still keep training blocked unless separately authorized
 
+## Phase 36
+
+- Plan: `docs/phase36_manhole_false_dry_guardrail_code_smoke_plan.md`
+- Findings: `docs/phase36_manhole_false_dry_guardrail_code_smoke_findings.md`
+- Loss/code: `utils/physics_losses.py`
+- Config draft: `configs/train_phase36_manhole_false_dry_guardrail_seed42_40e.json`
+- Guardrail checker: `scripts/check_phase36_pilot_guardrails.py`
+- Outputs: `analysis/phase36_manhole_false_dry_guardrail_code_smoke/`
+- Key output files:
+  - `guardrail_checker_dry_run.json`
+  - `guardrail_checker_dry_run.md`
+  - `smoke_test_summary.json`
+  - `smoke_test_summary.md`
+- Status: code/smoke-test complete; training blocked
+- Core result: config-gated `manhole_nonzero_false_dry_guardrail` code path and guardrail checker smoke-tested
+- Decision: `code_smoke_ready_training_still_blocked`
+- Smoke-test evidence: `config_loaded = true`; `loss_smoke_passed = true`; `guardrail_checker_dry_run_passed = true`; `training_authorized = false`; `training_executed = false`; `seed42_run_executed = false`; `seed123_seed202_executed = false`
+- Guardrail checker dry-run evidence: `candidate = manhole_nonzero_false_dry_guardrail`; `claim_scope = Level 4+ static-map-aware proxy diagnostics only`; `training_authorized = false`; `training_result_available = false`; `decision = no_training_result_guardrail_check_dry_run`; `status = dry_run_passed`; `acceptance_threshold_count = 14`; `rejection_threshold_count = 9`; `baseline_metric_count = 23`; `acceptance_structure_ready = true`; `rejection_structure_ready = true`
+- Guardrails: no training, no seed42 run, no seed123/seed202, no sweep, no Phase 29 continuation, no strict conservation, no SWE/PINN, no hydrodynamic closure
+- Model status: code/smoke-test only; no pilot success claim and no training authorization
+
 ## Interpretation Order
 
 For current repository interpretation, read the experiment trail in this order:
@@ -539,11 +561,12 @@ For current repository interpretation, read the experiment trail in this order:
 28. `docs/phase33_seed42_pilot_readiness_review_findings.md`
 29. `docs/phase34_pilot_threshold_formalization_findings.md`
 30. `docs/phase35_manhole_false_dry_guardrail_pilot_plan.md`
-31. `docs/project_status.md`
+31. `docs/phase36_manhole_false_dry_guardrail_code_smoke_findings.md`
+32. `docs/project_status.md`
 
 ## Next Stage
 
-The next stage should build on the Phase 12 to Phase 35 reliability/applicability, screening, warning-rule, synthesis, manuscript-writing, manuscript-consolidation, manuscript-draft, evidence-alignment, full-draft expansion, warning case-study prototype, physical-consistency diagnostic, target-wet recall refinement, strong-physics feasibility audit, mixed conservative volume-response pilot, volume-response failure diagnosis, mixed tolerance-band pilot, strong-physics boundary synthesis, physics input recovery readiness, domain-/boundary-aware design guardrail, seed42 pilot-readiness, pilot-threshold formalization, and manhole false-dry guardrail pilot-planning materials rather than reopening Phase 10 tuning or immediately starting another training phase.
+The next stage should build on the Phase 12 to Phase 36 reliability/applicability, screening, warning-rule, synthesis, manuscript-writing, manuscript-consolidation, manuscript-draft, evidence-alignment, full-draft expansion, warning case-study prototype, physical-consistency diagnostic, target-wet recall refinement, strong-physics feasibility audit, mixed conservative volume-response pilot, volume-response failure diagnosis, mixed tolerance-band pilot, strong-physics boundary synthesis, physics input recovery readiness, domain-/boundary-aware design guardrail, seed42 pilot-readiness, pilot-threshold formalization, manhole false-dry guardrail pilot-planning, and code/smoke-test implementation materials rather than reopening Phase 10 tuning or immediately starting another training phase.
 
 Recommended next work:
 
@@ -562,7 +585,9 @@ Recommended next work:
 - keep the Phase 34 decision as `thresholds_formalized_training_still_blocked` and `training_authorized = false`
 - treat Phase 35 as pilot implementation planning only, not as loss implementation, config creation, model-code modification, or training authorization
 - keep the Phase 35 status as `implementation_plan_ready_code_next` and `training_authorized = false`
-- use code/smoke-test implementation as the next allowed step, not training
+- treat Phase 36 as code/smoke-test implementation only, not as pilot success or training authorization
+- keep the Phase 36 decision as `code_smoke_ready_training_still_blocked`, with `training_authorized = false` and `training_executed = false`
+- require explicit seed42 training authorization review before any run
 - do not run Phase 29 `seed123` / `seed202` confirmation or a tolerance/weight sweep
 - do not run Phase 27 or Phase 29 `seed123` / `seed202` confirmation
 - do not run seed42 training from Phase 34 threshold formalization or Phase 35 planning alone
