@@ -1,0 +1,44 @@
+{
+  "config_load_status": {
+    "error": null,
+    "passed": true,
+    "path": "configs\\train_phase36_manhole_false_dry_guardrail_seed42_40e.json"
+  },
+  "decision": "code_smoke_ready_training_still_blocked",
+  "files_changed": [
+    "utils/physics_losses.py",
+    "configs/train_phase36_manhole_false_dry_guardrail_seed42_40e.json",
+    "scripts/check_phase36_pilot_guardrails.py",
+    "analysis/phase36_manhole_false_dry_guardrail_code_smoke/guardrail_checker_dry_run.json",
+    "analysis/phase36_manhole_false_dry_guardrail_code_smoke/guardrail_checker_dry_run.md",
+    "analysis/phase36_manhole_false_dry_guardrail_code_smoke/smoke_test_summary.json",
+    "analysis/phase36_manhole_false_dry_guardrail_code_smoke/smoke_test_summary.md"
+  ],
+  "guardrail_checker_dry_run_status": {
+    "decision": "no_training_result_guardrail_check_dry_run",
+    "error": null,
+    "passed": true,
+    "path": "analysis\\phase36_manhole_false_dry_guardrail_code_smoke\\guardrail_checker_dry_run.json"
+  },
+  "loss_smoke_status": {
+    "disabled_raw_value": 0.0,
+    "disabled_weighted_value": 0.0,
+    "enabled_metric_present": true,
+    "enabled_raw_value": 0.8540381193161011,
+    "enabled_weighted_value": 0.0042701903730630875,
+    "passed": true,
+    "weighted_value_finite": true
+  },
+  "phase": 36,
+  "seed123_seed202_executed": false,
+  "seed42_run_executed": false,
+  "sweep_executed": false,
+  "syntax_check": {
+    "bytecode_written": false,
+    "errors": [],
+    "passed": true
+  },
+  "training_authorized": false,
+  "training_executed": false,
+  "training_output_dir_exists": false
+}
