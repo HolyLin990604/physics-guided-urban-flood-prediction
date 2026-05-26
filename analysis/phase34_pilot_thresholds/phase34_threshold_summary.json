@@ -1,0 +1,74 @@
+{
+  "acceptance_thresholds_count": 14,
+  "baseline_metrics_count": 23,
+  "candidate": "manhole_nonzero_false_dry_guardrail",
+  "decision": "thresholds_formalized_training_still_blocked",
+  "design_only_guardrails": {
+    "does_not_authorize_training_directly": true,
+    "does_not_claim_full_mass_conservation": true,
+    "does_not_claim_hydrodynamic_closure": true,
+    "does_not_claim_phase29_success": true,
+    "does_not_claim_strict_conservation": true,
+    "does_not_claim_swe_pinn": true,
+    "does_not_continue_phase29": true,
+    "does_not_modify_losses": true,
+    "does_not_modify_model_architecture": true,
+    "does_not_modify_training_configs": true,
+    "does_not_perform_sweeps": true,
+    "does_not_run_seed123_or_seed202": true,
+    "does_not_run_seed42": true,
+    "does_not_train": true,
+    "keeps_claims_level4_plus_proxy": true
+  },
+  "generated_at_utc": "2026-05-26T02:38:36.047425+00:00",
+  "input_row_counts": {
+    "phase31_delta": 78,
+    "phase31_masked_by_region": 18,
+    "phase32_guardrail_metrics": 20,
+    "phase32_stop_go_criteria": 12,
+    "phase33_readiness_criteria": 15
+  },
+  "input_sources": {
+    "phase25_standard": "runs/phase25_target_wet_recall_seed42_40e/evaluation_test/metrics.json",
+    "phase27_standard": "runs/phase27_volume_response_seed42_40e/evaluation_test/metrics.json",
+    "phase29_standard": "runs/phase29_tolerance_band_volume_seed42_40e/evaluation_test/metrics.json",
+    "phase31_by_phase": "analysis/phase31_physics_input_recovery_readiness/masked_physical_error_by_phase.csv",
+    "phase31_by_region": "analysis/phase31_physics_input_recovery_readiness/masked_physical_error_by_region.csv",
+    "phase31_delta": "analysis/phase31_physics_input_recovery_readiness/masked_physical_error_delta_phase29_vs_phase27.csv",
+    "phase31_summary": "analysis/phase31_physics_input_recovery_readiness/masked_physical_error_summary.json",
+    "phase32_guardrails": "analysis/phase32_domain_boundary_aware_design/guardrail_metrics.csv",
+    "phase32_stop_go": "analysis/phase32_domain_boundary_aware_design/stop_go_criteria.csv",
+    "phase33_readiness": "analysis/phase33_seed42_pilot_readiness/readiness_criteria_status.csv",
+    "phase33_summary": "analysis/phase33_seed42_pilot_readiness/phase33_readiness_summary.json",
+    "phase34_plan": "docs/phase34_pilot_threshold_formalization_plan.md"
+  },
+  "level_boundary": "All conclusions remain Level 4+ proxy diagnostics. This script does not claim strict conservation, full mass conservation, SWE/PINN behavior, or hydrodynamic closure.",
+  "next_allowed_step": "pilot_implementation_plan",
+  "phase": 34,
+  "phase31_processed": {
+    "by_phase_rows": 3,
+    "by_region_rows": 18,
+    "phases": [
+      "phase25",
+      "phase27",
+      "phase29"
+    ],
+    "regions": [
+      "valid_domain",
+      "interior",
+      "boundary_ring",
+      "high_impervious_valid",
+      "manhole_nonzero_valid",
+      "invalid_or_high"
+    ]
+  },
+  "phase33_prior_decision": "pilot_design_ready_but_training_not_started",
+  "phase33_training_authorized": false,
+  "purpose": "diagnostic-only pilot threshold formalization",
+  "readiness_criteria_count": 7,
+  "rejection_thresholds_count": 9,
+  "script": "scripts/formalize_phase34_pilot_thresholds.py",
+  "target_metric": "false_dry_rate",
+  "target_region": "manhole_nonzero_valid",
+  "training_authorized": false
+}
