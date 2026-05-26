@@ -48,6 +48,14 @@ class PhysicsLossController:
             loss_fn=lambda cfg: self._target_wet_recall_consistency_loss(prediction, target, cfg),
         )
         total, metrics = self._apply_term(
+            name="manhole_nonzero_false_dry_guardrail",
+            total=total,
+            metrics=metrics,
+            loss_fn=lambda cfg: self._manhole_nonzero_false_dry_guardrail_loss(
+                prediction, target, batch["static_maps"], cfg
+            ),
+        )
+        total, metrics = self._apply_term(
             name="tolerance_band_volume_consistency",
             total=total,
             metrics=metrics,
@@ -133,6 +141,56 @@ class PhysicsLossController:
         pred_wet_prob = torch.sigmoid((prediction - threshold) / max(temperature, eps))
         penalty = (1.0 - pred_wet_prob).pow(2) * target_wet
         return penalty.sum() / target_wet.sum().clamp_min(eps)
+
+    @staticmethod
+    def _manhole_nonzero_false_dry_guardrail_loss(
+        prediction: torch.Tensor,
+        target: torch.Tensor,
+        static_maps: torch.Tensor,
+        cfg: Dict,
+    ) -> torch.Tensor:
+        """
+        Level 4+ static-map-aware proxy guidance for manhole-region false-dry behavior.
+
+        By default the region is only `manhole > 0` from the static map. If
+        `use_valid_domain_mask` is enabled, this also applies the established DEM
+        valid-domain proxy (`dem < dem_valid_threshold`) from the same static stack.
+        """
+
+        manhole_channel = int(cfg.get("manhole_channel", 2))
+        wet_threshold = float(cfg.get("wet_threshold", cfg.get("threshold", 0.05)))
+        prediction_threshold = float(cfg.get("prediction_threshold", wet_threshold))
+        temperature = float(cfg.get("temperature", 0.02))
+        eps = float(cfg.get("eps", 1e-6))
+        use_valid_domain_mask = bool(cfg.get("use_valid_domain_mask", False))
+        dem_channel = int(cfg.get("dem_channel", 0))
+        dem_valid_threshold = float(cfg.get("dem_valid_threshold", 99.0))
+
+        static_maps = static_maps.to(device=prediction.device, dtype=prediction.dtype)
+        if static_maps.ndim != 4:
+            raise ValueError(f"Expected static_maps shape [B, C, H, W], got {tuple(static_maps.shape)}.")
+        if manhole_channel < 0 or manhole_channel >= static_maps.shape[1]:
+            raise ValueError(
+                f"manhole_channel={manhole_channel} is outside static_maps channel count {static_maps.shape[1]}."
+            )
+
+        manhole_mask = static_maps[:, manhole_channel] > 0.0
+        if use_valid_domain_mask:
+            if dem_channel < 0 or dem_channel >= static_maps.shape[1]:
+                raise ValueError(f"dem_channel={dem_channel} is outside static_maps channel count {static_maps.shape[1]}.")
+            dem = static_maps[:, dem_channel]
+            manhole_mask = manhole_mask & torch.isfinite(dem) & (dem < dem_valid_threshold)
+
+        target_wet = target.to(device=prediction.device, dtype=prediction.dtype) > wet_threshold
+        region_mask = manhole_mask.unsqueeze(1).unsqueeze(2)
+        active_mask = (region_mask & target_wet).to(dtype=prediction.dtype)
+        active_count = active_mask.sum()
+        if active_count.detach().item() <= 0:
+            return prediction.new_zeros(())
+
+        pred_wet_prob = torch.sigmoid((prediction - prediction_threshold) / max(temperature, eps))
+        penalty = (1.0 - pred_wet_prob).pow(2) * active_mask
+        return penalty.sum() / active_count.clamp_min(eps)
 
     @staticmethod
     def _volume_response_consistency_loss(

@@ -1,0 +1,250 @@
+{
+  "candidate": "manhole_nonzero_false_dry_guardrail",
+  "claim_scope": "Level 4+ static-map-aware proxy diagnostics only",
+  "decision": "no_training_result_guardrail_check_dry_run",
+  "expected_metrics_path": "runs\\phase36_manhole_false_dry_guardrail_seed42_40e\\evaluation_test\\metrics.json",
+  "future_check_plan": {
+    "acceptance_checks": [
+      {
+        "metric_group": "manhole_nonzero_target",
+        "metric_name": "false_dry_rate",
+        "region": "manhole_nonzero_valid",
+        "status": "pending_training_result",
+        "threshold_id": "AT01"
+      },
+      {
+        "metric_group": "valid_domain_masked",
+        "metric_name": "rmse",
+        "region": "valid_domain",
+        "status": "pending_training_result",
+        "threshold_id": "AT02"
+      },
+      {
+        "metric_group": "valid_domain_masked",
+        "metric_name": "mae",
+        "region": "valid_domain",
+        "status": "pending_training_result",
+        "threshold_id": "AT03"
+      },
+      {
+        "metric_group": "valid_domain_masked",
+        "metric_name": "false_dry_rate",
+        "region": "valid_domain",
+        "status": "pending_training_result",
+        "threshold_id": "AT04"
+      },
+      {
+        "metric_group": "valid_domain_masked",
+        "metric_name": "false_wet_rate",
+        "region": "valid_domain",
+        "status": "pending_training_result",
+        "threshold_id": "AT05"
+      },
+      {
+        "metric_group": "guardrail_masked",
+        "metric_name": "false_wet_rate",
+        "region": "high_impervious_valid",
+        "status": "pending_training_result",
+        "threshold_id": "AT06"
+      },
+      {
+        "metric_group": "guardrail_masked",
+        "metric_name": "false_dry_rate",
+        "region": "boundary_ring",
+        "status": "pending_training_result",
+        "threshold_id": "AT07"
+      },
+      {
+        "metric_group": "standard",
+        "metric_name": "rmse",
+        "region": "all_evaluated_cells",
+        "status": "pending_training_result",
+        "threshold_id": "AT08"
+      },
+      {
+        "metric_group": "standard",
+        "metric_name": "mae",
+        "region": "all_evaluated_cells",
+        "status": "pending_training_result",
+        "threshold_id": "AT09"
+      },
+      {
+        "metric_group": "standard",
+        "metric_name": "wet_dry_iou",
+        "region": "all_evaluated_cells",
+        "status": "pending_training_result",
+        "threshold_id": "AT10"
+      },
+      {
+        "metric_group": "standard",
+        "metric_name": "rollout_stability",
+        "region": "all_evaluated_cells",
+        "status": "pending_training_result",
+        "threshold_id": "AT11"
+      },
+      {
+        "metric_group": "standard",
+        "metric_name": "step_rmse_std",
+        "region": "all_evaluated_cells",
+        "status": "pending_training_result",
+        "threshold_id": "AT12"
+      },
+      {
+        "metric_group": "valid_domain_masked",
+        "metric_name": "absolute_relative_volume_bias_proxy",
+        "region": "valid_domain",
+        "status": "pending_training_result",
+        "threshold_id": "AT13"
+      },
+      {
+        "metric_group": "level_boundary",
+        "metric_name": "claim_scope",
+        "region": "all_outputs",
+        "status": "pending_training_result",
+        "threshold_id": "AT14"
+      }
+    ],
+    "rejection_checks": [
+      {
+        "rejection_id": "RT01",
+        "rejection_rule": "phase29_tradeoff_pattern",
+        "status": "pending_training_result",
+        "trigger_metric_name": "absolute_relative_volume_bias_proxy_plus_error_metrics",
+        "trigger_region": "valid_domain"
+      },
+      {
+        "rejection_id": "RT02",
+        "rejection_rule": "target_metric_worsens_under_targeted_pilot",
+        "status": "pending_training_result",
+        "trigger_metric_name": "false_dry_rate",
+        "trigger_region": "manhole_nonzero_valid"
+      },
+      {
+        "rejection_id": "RT03",
+        "rejection_rule": "high_impervious_false_wet_substantial_worsening",
+        "status": "pending_training_result",
+        "trigger_metric_name": "false_wet_rate",
+        "trigger_region": "high_impervious_valid"
+      },
+      {
+        "rejection_id": "RT04",
+        "rejection_rule": "boundary_ring_false_dry_substantial_worsening",
+        "status": "pending_training_result",
+        "trigger_metric_name": "false_dry_rate",
+        "trigger_region": "boundary_ring"
+      },
+      {
+        "rejection_id": "RT05",
+        "rejection_rule": "standard_rmse_or_mae_worsens_beyond_tolerance",
+        "status": "pending_training_result",
+        "trigger_metric_name": "rmse_or_mae",
+        "trigger_region": "all_evaluated_cells"
+      },
+      {
+        "rejection_id": "RT06",
+        "rejection_rule": "wet_dry_iou_declines_beyond_tolerance",
+        "status": "pending_training_result",
+        "trigger_metric_name": "wet_dry_iou",
+        "trigger_region": "all_evaluated_cells"
+      },
+      {
+        "rejection_id": "RT07",
+        "rejection_rule": "valid_domain_error_worsens_beyond_acceptance_tolerance",
+        "status": "pending_training_result",
+        "trigger_metric_name": "rmse_or_mae",
+        "trigger_region": "valid_domain"
+      },
+      {
+        "rejection_id": "RT08",
+        "rejection_rule": "requires_seed_expansion_or_sweep_to_interpret",
+        "status": "pending_training_result",
+        "trigger_metric_name": "interpretability",
+        "trigger_region": "seed42_only"
+      },
+      {
+        "rejection_id": "RT09",
+        "rejection_rule": "claim_exceeds_level4_plus_proxy_scope",
+        "status": "pending_training_result",
+        "trigger_metric_name": "claim_scope",
+        "trigger_region": "all_outputs"
+      }
+    ]
+  },
+  "generated_at_utc": "2026-05-26T08:03:33.860262+00:00",
+  "notes": [
+    "No Phase 36 training result was found, as expected for code-smoke scope.",
+    "AT01-AT14 and RT01-RT09 are loaded and staged for a future result check.",
+    "This checker does not authorize training."
+  ],
+  "phase": 36,
+  "run_root": "runs\\phase36_manhole_false_dry_guardrail_seed42_40e",
+  "status": "dry_run_passed",
+  "threshold_inputs": {
+    "acceptance_thresholds": "analysis\\phase34_pilot_thresholds\\acceptance_thresholds.csv",
+    "baseline_metric_table": "analysis\\phase34_pilot_thresholds\\baseline_metric_table.csv",
+    "rejection_thresholds": "analysis\\phase34_pilot_thresholds\\rejection_thresholds.csv"
+  },
+  "threshold_summary": {
+    "acceptance_ids": [
+      "AT01",
+      "AT02",
+      "AT03",
+      "AT04",
+      "AT05",
+      "AT06",
+      "AT07",
+      "AT08",
+      "AT09",
+      "AT10",
+      "AT11",
+      "AT12",
+      "AT13",
+      "AT14"
+    ],
+    "acceptance_structure_ready": true,
+    "acceptance_threshold_count": 14,
+    "baseline_metric_count": 23,
+    "expected_acceptance_ids": [
+      "AT01",
+      "AT02",
+      "AT03",
+      "AT04",
+      "AT05",
+      "AT06",
+      "AT07",
+      "AT08",
+      "AT09",
+      "AT10",
+      "AT11",
+      "AT12",
+      "AT13",
+      "AT14"
+    ],
+    "expected_rejection_ids": [
+      "RT01",
+      "RT02",
+      "RT03",
+      "RT04",
+      "RT05",
+      "RT06",
+      "RT07",
+      "RT08",
+      "RT09"
+    ],
+    "rejection_ids": [
+      "RT01",
+      "RT02",
+      "RT03",
+      "RT04",
+      "RT05",
+      "RT06",
+      "RT07",
+      "RT08",
+      "RT09"
+    ],
+    "rejection_structure_ready": true,
+    "rejection_threshold_count": 9
+  },
+  "training_authorized": false,
+  "training_result_available": false
+}
