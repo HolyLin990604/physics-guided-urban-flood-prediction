@@ -34,7 +34,7 @@ flowchart TB
     E["Physical Consistency Deepening<br/>Failure modes / target-wet recall<br/>Phases 24-25"]:::physics
     F["Strong Physics Feasibility<br/>Level 4 proxy supported<br/>Level 5 SWE/PINN not supported<br/>Phase 26"]:::physics
     G["Volume-Response Loss Redesign<br/>Phase 27 mixed pilot<br/>Phase 28 failure diagnosis<br/>Phase 29 tolerance-band mixed pilot"]:::physics
-    H["Current Status<br/>Phase 34 thresholds<br/>Phase 35 pilot plan<br/>Phase 36 code smoke<br/>Level 4+ diagnostics supported<br/>Level 5 SWE/PINN not supported"]:::current
+    H["Current Status<br/>Phase 35 pilot plan<br/>Phase 36 code smoke<br/>Phase 37 seed42 authorization<br/>Level 4+ diagnostics supported<br/>Level 5 SWE/PINN not supported"]:::current
 
     A --> B --> C --> D --> E --> F --> G --> H
 
@@ -216,7 +216,9 @@ The Phase 34 target is `manhole_nonzero_valid` `false_dry_rate`. AT01 requires t
 
 Phase 35 completes a pilot implementation plan only for the possible future `manhole_nonzero_false_dry_guardrail` candidate. See [Phase 35 pilot plan](docs/phase35_manhole_false_dry_guardrail_pilot_plan.md). It does not implement losses, create configs, modify model code, or run training. The target region remains `manhole_nonzero_valid`; the target metric remains `false_dry_rate`; the key AT01 false-dry threshold remains `0.1172229713`; `training_authorized = false`; and the next allowed step is a code/smoke-test implementation phase, not training. Guardrails remain: no training, no `seed42`, no `seed123` / `seed202`, no sweep, no Phase 29 continuation, no strict conservation, no full mass conservation, no SWE/PINN, no hydrodynamic closure, and Level 4+ proxy claims only.
 
-Phase 36 implements and smoke-tests the config-gated `manhole_nonzero_false_dry_guardrail` code path and guardrail checker only. See [Phase 36 findings](docs/phase36_manhole_false_dry_guardrail_code_smoke_findings.md), [Phase 36 plan](docs/phase36_manhole_false_dry_guardrail_code_smoke_plan.md), [smoke-test summary](analysis/phase36_manhole_false_dry_guardrail_code_smoke/smoke_test_summary.md), and [guardrail checker dry run](analysis/phase36_manhole_false_dry_guardrail_code_smoke/guardrail_checker_dry_run.md). Implemented artifacts are `utils/physics_losses.py`, `configs/train_phase36_manhole_false_dry_guardrail_seed42_40e.json`, and `scripts/check_phase36_pilot_guardrails.py`. Smoke evidence records `config_loaded = true`, `loss_smoke_passed = true`, `guardrail_checker_dry_run_passed = true`, `training_authorized = false`, `training_executed = false`, and `decision = code_smoke_ready_training_still_blocked`. Phase 36 did not run `seed42`, did not run `seed123` / `seed202`, and did not execute training. The next step should be explicit training authorization review, not automatic training.
+Phase 36 implements and smoke-tests the config-gated `manhole_nonzero_false_dry_guardrail` code path and guardrail checker only. See [Phase 36 findings](docs/phase36_manhole_false_dry_guardrail_code_smoke_findings.md), [Phase 36 plan](docs/phase36_manhole_false_dry_guardrail_code_smoke_plan.md), [smoke-test summary](analysis/phase36_manhole_false_dry_guardrail_code_smoke/smoke_test_summary.md), and [guardrail checker dry run](analysis/phase36_manhole_false_dry_guardrail_code_smoke/guardrail_checker_dry_run.md). Implemented artifacts are `utils/physics_losses.py`, `configs/train_phase36_manhole_false_dry_guardrail_seed42_40e.json`, and `scripts/check_phase36_pilot_guardrails.py`. Smoke evidence records `config_loaded = true`, `loss_smoke_passed = true`, `guardrail_checker_dry_run_passed = true`, `training_authorized = false`, `training_executed = false`, and `decision = code_smoke_ready_training_still_blocked`. Phase 36 did not run `seed42`, did not run `seed123` / `seed202`, and did not execute training. At the Phase 36 boundary, the required next step was explicit training authorization review rather than automatic training.
+
+Phase 37 completes a diagnostic **seed42 training authorization review**. See [Phase 37 findings](docs/phase37_seed42_training_authorization_review_findings.md), [authorization summary](analysis/phase37_seed42_training_authorization/training_authorization_summary.md), and [authorization checklist](analysis/phase37_seed42_training_authorization/authorization_checklist.csv). Required checks passed `18 / 18`; `decision = seed42_training_authorized_next_phase`; `training_authorized_next_phase = true`; and `training_executed = false`. Phase 37 itself did not train, did not run `seed42`, did not run `seed123` / `seed202`, and did not execute a sweep. The next phase may run only the reviewed seed42 config: `configs/train_phase36_manhole_false_dry_guardrail_seed42_40e.json`. After training, the next phase must evaluate the model and run the Phase 36 guardrail checker; any RT01-RT09 trigger rejects the result. No `seed123` / `seed202` or sweep is allowed before seed42 passes. Claims remain Level 4+ proxy scoped.
 
 Representative Phase 24 figures:
 
@@ -469,10 +471,10 @@ The figures below are earlier-stage qualitative comparisons retained for visual 
 flowchart TD
     A["Completed Mainline<br/>Rapid flood-depth prediction<br/>reliability-aware warning framework<br/>Phases 1-23"]:::completed
     B["Physical Consistency Evidence<br/>Failure diagnosis<br/>target-wet recall<br/>physical proxy diagnostics<br/>Phases 24-25"]:::completed
-    C["Strong Physics Boundary<br/>Level 4+ proxy diagnostics supported<br/>Level 5 SWE/PINN not supported<br/>Phases 26 + 30-36"]:::boundary
+    C["Strong Physics Boundary<br/>Level 4+ proxy diagnostics supported<br/>Level 5 SWE/PINN not supported<br/>Phases 26 + 30-37"]:::boundary
     D["Volume-Response Loss Lessons<br/>Phase 27 underresponse-only mixed<br/>Phase 28 failure diagnosis<br/>Phase 29 tolerance-band mixed<br/>volume-response partially repaired<br/>trade-off remains unacceptable"]:::diagnosis
-    E["Current Decision<br/>code_smoke_ready_training_still_blocked<br/>training_authorized = false<br/>training_executed = false<br/>no seed42, seed123, or seed202"]:::current
-    F["Next Research Direction<br/>training authorization review<br/>not automatic training"]:::current
+    E["Current Decision<br/>seed42_training_authorized_next_phase<br/>training_authorized_next_phase = true<br/>training_executed = false<br/>required checks 18 / 18"]:::current
+    F["Next Research Direction<br/>run only reviewed seed42 config<br/>then evaluate + guardrail check"]:::current
 
     A --> B --> C --> D --> E --> F
 
@@ -528,6 +530,8 @@ For the current staged experiment record, see:
 - `docs/phase30_strong_physics_boundary_synthesis.md`
 - `docs/phase34_pilot_threshold_formalization_findings.md`
 - `docs/phase35_manhole_false_dry_guardrail_pilot_plan.md`
+- `docs/phase36_manhole_false_dry_guardrail_code_smoke_findings.md`
+- `docs/phase37_seed42_training_authorization_review_findings.md`
 
 
 ## Dataset
@@ -706,11 +710,12 @@ Generated figures and analysis outputs are organized under:
 - `analysis/phase32_domain_boundary_aware_design/` for Phase 32 domain-/boundary-aware physical-consistency design guardrail outputs
 - `analysis/phase33_seed42_pilot_readiness/` for Phase 33 seed42 pilot readiness-review outputs
 - `analysis/phase34_pilot_thresholds/` for Phase 34 pilot threshold-formalization outputs
+- `analysis/phase37_seed42_training_authorization/` for Phase 37 seed42 training authorization review outputs
 
 
 ## Current Project Status
 
-The repository has completed the main Phase 2-3 architecture comparison cycle, closed the Phase 6 `adapt025` pilot as negative/neutral, established Phase 7/8 `adapt010` as the active adaptive candidate before margin-aware refinement, completed Phase 9 interpretability diagnosis, completed the Phase 10 margin-aware refinement intervention, completed the Phase 12-16 reliability-aware warning layer, completed the Phase 17-22 manuscript synthesis and drafting sequence, completed the Phase 23 reliability-aware warning case-study prototype, completed Phase 24 physical-consistency deepening diagnostics, completed Phase 25 target-wet recall consistency refinement through three-seed synthesis, completed Phase 26 strong-physics feasibility audit and conservation-proxy diagnostics, completed the Phase 27 seed42 conservative volume-response consistency pilot, completed the Phase 28 volume-response loss failure diagnosis, completed the Phase 29 seed42 tolerance-band volume consistency pilot, completed the Phase 30 strong-physics boundary synthesis, completed Phase 31 physics input recovery readiness diagnostics, completed Phase 32 domain-/boundary-aware physical consistency design guardrails, completed Phase 33 seed42 pilot readiness review, completed Phase 34 pilot threshold formalization, completed Phase 35 manhole false-dry guardrail pilot planning, and completed Phase 36 manhole false-dry guardrail code/smoke-test implementation.
+The repository has completed the main Phase 2-3 architecture comparison cycle, closed the Phase 6 `adapt025` pilot as negative/neutral, established Phase 7/8 `adapt010` as the active adaptive candidate before margin-aware refinement, completed Phase 9 interpretability diagnosis, completed the Phase 10 margin-aware refinement intervention, completed the Phase 12-16 reliability-aware warning layer, completed the Phase 17-22 manuscript synthesis and drafting sequence, completed the Phase 23 reliability-aware warning case-study prototype, completed Phase 24 physical-consistency deepening diagnostics, completed Phase 25 target-wet recall consistency refinement through three-seed synthesis, completed Phase 26 strong-physics feasibility audit and conservation-proxy diagnostics, completed the Phase 27 seed42 conservative volume-response consistency pilot, completed the Phase 28 volume-response loss failure diagnosis, completed the Phase 29 seed42 tolerance-band volume consistency pilot, completed the Phase 30 strong-physics boundary synthesis, completed Phase 31 physics input recovery readiness diagnostics, completed Phase 32 domain-/boundary-aware physical consistency design guardrails, completed Phase 33 seed42 pilot readiness review, completed Phase 34 pilot threshold formalization, completed Phase 35 manhole false-dry guardrail pilot planning, completed Phase 36 manhole false-dry guardrail code/smoke-test implementation, and completed Phase 37 seed42 training authorization review.
 
 Current project-level conclusions:
 
@@ -812,9 +817,13 @@ Current project-level conclusions:
 - **Phase 36 implemented and smoke-tested the config-gated `manhole_nonzero_false_dry_guardrail` code path and guardrail checker**
 - **Current Phase 36 decision: `code_smoke_ready_training_still_blocked`; `training_authorized = false`; `training_executed = false`**
 - **Phase 36 did not run `seed42`, `seed123`, or `seed202`, and did not claim pilot success**
-- **Next step is explicit seed42 training authorization review, not automatic training**
+- **Phase 37 completed diagnostic seed42 training authorization review**
+- **Current Phase 37 decision: `seed42_training_authorized_next_phase`; `training_authorized_next_phase = true`; `training_executed = false`; required checks passed `18 / 18`**
+- **Phase 37 did not train; the next phase may run only `configs/train_phase36_manhole_false_dry_guardrail_seed42_40e.json`**
+- **After seed42 training, the next phase must evaluate the model and run the Phase 36 guardrail checker; any RT01-RT09 trigger rejects the result**
+- **No `seed123` / `seed202` or sweep is allowed before seed42 passes**
 
-At this stage, the project has moved from broad model tuning to rapid flood prediction with reliability diagnosis, failure-mode interpretation, confidence proxy diagnostics, spatial risk mapping, warning-rule guidance, manuscript drafting, representative warning-oriented case-study prototyping, physical-consistency diagnostics, diagnosis-driven target-wet recall refinement, strong-physics feasibility audit, conservation-proxy diagnostics, documented mixed Phase 27/29 volume-response pilots, Phase 30 boundary synthesis, Phase 31 Level 4+ physics input recovery readiness, Phase 32 Level 4+ domain-/boundary-aware design guardrails, Phase 33 diagnostic pilot-readiness review, Phase 34 threshold formalization, Phase 35 pilot implementation planning, and Phase 36 code/smoke-test implementation. The current position is Level 4+ structured physical proxy diagnostic and conservative readiness planning, not Level 5 strong physics. No broader Phase 10 boundary-weight sweep, Phase 27/29 seed expansion, tolerance/weight sweep, immediate training, or training authorization is justified.
+At this stage, the project has moved from broad model tuning to rapid flood prediction with reliability diagnosis, failure-mode interpretation, confidence proxy diagnostics, spatial risk mapping, warning-rule guidance, manuscript drafting, representative warning-oriented case-study prototyping, physical-consistency diagnostics, diagnosis-driven target-wet recall refinement, strong-physics feasibility audit, conservation-proxy diagnostics, documented mixed Phase 27/29 volume-response pilots, Phase 30 boundary synthesis, Phase 31 Level 4+ physics input recovery readiness, Phase 32 Level 4+ domain-/boundary-aware design guardrails, Phase 33 diagnostic pilot-readiness review, Phase 34 threshold formalization, Phase 35 pilot implementation planning, Phase 36 code/smoke-test implementation, and Phase 37 seed42 training authorization review. The current position is Level 4+ structured physical proxy diagnostic and conservative readiness planning, not Level 5 strong physics. The next phase is authorized only for the reviewed seed42 config and must evaluate plus run the Phase 36 guardrail checker after training.
 
 ## Representative Case Framing
 
@@ -824,7 +833,7 @@ Three representative cases continue to be useful for targeted comparison:
 - `seed202`: difficult-case reference where stronger structured refinement can show useful gains
 - `seed123`: repeatability reference for checking whether candidate behavior generalizes beyond the two anchor cases
 
-This framing motivated the Phase 6 Pilot A test, the Phase 7 conservative `adapt010` follow-up, the Phase 9 diagnosis, the Phase 10 margin-aware boundary-band refinement, the Phase 12 reliability/applicability diagnosis, the Phase 13 representative failure-case visual summary, the Phase 14 confidence proxy diagnosis, the Phase 15 reliability-screening layer, the Phase 16 warning-rule guidance layer, the Phase 17 reliability-aware framework synthesis, the Phase 19 manuscript-structure consolidation, the Phase 20 manuscript draft assembly, the Phase 21 manuscript evidence alignment, the Phase 22 manuscript full draft expansion, the Phase 23 warning case-study prototype, the Phase 24 physical-consistency diagnostics, the Phase 25 target-wet recall refinement, the Phase 26 strong-physics feasibility audit, the Phase 27 seed42 conservative volume-response pilot, the Phase 28 volume-response loss failure diagnosis, the Phase 29 seed42 tolerance-band volume consistency pilot, the Phase 30 strong-physics boundary synthesis, the Phase 31 physics input recovery readiness diagnostics, the Phase 32 domain-/boundary-aware physical consistency design, the Phase 33 seed42 pilot readiness review, the Phase 34 pilot threshold formalization, the Phase 35 manhole false-dry guardrail pilot plan, and the Phase 36 manhole false-dry guardrail code/smoke-test implementation.
+This framing motivated the Phase 6 Pilot A test, the Phase 7 conservative `adapt010` follow-up, the Phase 9 diagnosis, the Phase 10 margin-aware boundary-band refinement, the Phase 12 reliability/applicability diagnosis, the Phase 13 representative failure-case visual summary, the Phase 14 confidence proxy diagnosis, the Phase 15 reliability-screening layer, the Phase 16 warning-rule guidance layer, the Phase 17 reliability-aware framework synthesis, the Phase 19 manuscript-structure consolidation, the Phase 20 manuscript draft assembly, the Phase 21 manuscript evidence alignment, the Phase 22 manuscript full draft expansion, the Phase 23 warning case-study prototype, the Phase 24 physical-consistency diagnostics, the Phase 25 target-wet recall refinement, the Phase 26 strong-physics feasibility audit, the Phase 27 seed42 conservative volume-response pilot, the Phase 28 volume-response loss failure diagnosis, the Phase 29 seed42 tolerance-band volume consistency pilot, the Phase 30 strong-physics boundary synthesis, the Phase 31 physics input recovery readiness diagnostics, the Phase 32 domain-/boundary-aware physical consistency design, the Phase 33 seed42 pilot readiness review, the Phase 34 pilot threshold formalization, the Phase 35 manhole false-dry guardrail pilot plan, the Phase 36 manhole false-dry guardrail code/smoke-test implementation, and the Phase 37 seed42 training authorization review.
 
 
 ## Adaptive Candidate and Margin-Aware Refinement
@@ -890,7 +899,7 @@ Phase 25 keeps the Phase 10 boundary-band settings fixed and adds a targeted tar
 
 ## Future Work
 
-The next justified follow-up is an explicit seed42 training authorization review for the Phase 36 code/smoke-ready candidate, not another Phase 10 boundary-weight sweep, immediate volume-response loss redesign, or automatic training run. The current Phase 10 boundary-band setting remains `boundary_band_pixels = 1` and `boundary_weight = 2.0`, with Phase 25 target-wet recall consistency as a strong three-seed positive candidate, Phase 26 conservation-proxy diagnostics, Phase 30 synthesis, Phase 31 input recovery readiness, Phase 32 design guardrails, Phase 33 readiness review, Phase 34 threshold formalization, Phase 35 pilot planning, and Phase 36 code/smoke-test implementation as the current Level 4+ strong-physics feasibility boundary, Phase 27 as a mixed seed42 pilot whose primary volume-response objective was not confirmed, Phase 28 as the diagnostic explanation for why Phase 27 should not be directly expanded, and Phase 29 as a mixed tolerance-band seed42 pilot whose trade-off is not acceptable for confirmation.
+The next justified follow-up is constrained seed42 training in the next phase using only `configs/train_phase36_manhole_false_dry_guardrail_seed42_40e.json`, followed by model evaluation and the Phase 36 guardrail checker. Phase 37 authorized that next-phase seed42 run after `18 / 18` required checks passed, but Phase 37 itself did not train. The current Phase 10 boundary-band setting remains `boundary_band_pixels = 1` and `boundary_weight = 2.0`, with Phase 25 target-wet recall consistency as a strong three-seed positive candidate, Phase 26 conservation-proxy diagnostics, Phase 30 synthesis, Phase 31 input recovery readiness, Phase 32 design guardrails, Phase 33 readiness review, Phase 34 threshold formalization, Phase 35 pilot planning, Phase 36 code/smoke-test implementation, and Phase 37 authorization review as the current Level 4+ strong-physics feasibility boundary, Phase 27 as a mixed seed42 pilot whose primary volume-response objective was not confirmed, Phase 28 as the diagnostic explanation for why Phase 27 should not be directly expanded, and Phase 29 as a mixed tolerance-band seed42 pilot whose trade-off is not acceptable for confirmation.
 
 Recommended next work:
 
@@ -915,7 +924,11 @@ Recommended next work:
 - keep the Phase 35 status as `implementation_plan_ready_code_next`, with `training_authorized = false`
 - treat Phase 36 as code/smoke-test implementation only, not pilot success or training authorization
 - keep the Phase 36 decision as `code_smoke_ready_training_still_blocked`, with `training_authorized = false` and `training_executed = false`
-- require explicit seed42 training authorization review before any run
+- treat Phase 37 as diagnostic authorization review only, not training or pilot success
+- keep the Phase 37 decision as `seed42_training_authorized_next_phase`, with `training_authorized_next_phase = true`, `training_executed = false`, and required checks passed `18 / 18`
+- run only `configs/train_phase36_manhole_false_dry_guardrail_seed42_40e.json` in the next phase, then evaluate and run the Phase 36 guardrail checker
+- reject the result if any RT01-RT09 trigger fires
+- do not run `seed123` / `seed202` or any sweep before seed42 passes
 - do not recommend a full SWE/PINN residual unless compatible velocity, flux, boundary, DEM, and source-sink information become available
 - consider calibrated uncertainty only if calibration data and evaluation design are added
 - keep `boundary_weight = 1.5` only as a conservative rollback setting
