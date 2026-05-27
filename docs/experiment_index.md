@@ -32,6 +32,7 @@
 - Phase 35 Manhole False-Dry Guardrail Pilot Plan: pilot implementation plan complete with status `implementation_plan_ready_code_next` and `training_authorized = false`
 - Phase 36 Manhole False-Dry Guardrail Code Smoke: code/smoke-test implementation complete with decision `code_smoke_ready_training_still_blocked`, `training_authorized = false`, and `training_executed = false`
 - Phase 37 Seed42 Training Authorization Review: diagnostic authorization review complete with decision `seed42_training_authorized_next_phase`, `training_authorized_next_phase = true`, `training_executed = false`, and required checks passed `18 / 18`
+- Phase 38 Seed42 Pilot Training and Guardrail Evaluation: single authorized seed42 pilot trained, test-evaluated, guardrail-evaluated, and rejected with decision `seed42_pilot_rejected`
 
 ## Phase 6
 
@@ -548,6 +549,31 @@
 - Guardrails: Phase 37 did not train; next phase may run only the reviewed seed42 config; after training, evaluate and run the Phase 36 guardrail checker; any RT01-RT09 trigger rejects the result; no seed123/seed202; no sweep; no Phase 29 continuation; no strict conservation / SWE/PINN / hydrodynamic closure claims; Level 4+ proxy scope only
 - Model status: diagnostic authorization review only; no pilot success claim and no training result claim
 
+## Phase 38
+
+- Plan: `docs/phase38_seed42_pilot_training_guardrail_evaluation_plan.md`
+- Guardrail evaluator: `scripts/evaluate_phase38_seed42_guardrails.py`
+- Findings: `docs/phase38_seed42_pilot_training_guardrail_evaluation_findings.md`
+- Run output: `runs/phase36_manhole_false_dry_guardrail_seed42_40e/`
+- Evaluation metrics: `runs/phase36_manhole_false_dry_guardrail_seed42_40e/evaluation_test/metrics.json`
+- Outputs: `analysis/phase38_seed42_pilot_training_guardrail_evaluation/`
+- Key output files:
+  - `phase38_standard_metric_check.csv`
+  - `phase38_acceptance_check.csv`
+  - `phase38_rejection_check.csv`
+  - `phase38_guardrail_decision.json`
+  - `phase38_guardrail_decision.md`
+- Status: seed42 pilot trained, evaluated, and rejected
+- Decision: `seed42_pilot_rejected`
+- Training/evaluation status: training completed; test evaluation completed; guardrail evaluation completed
+- Test metrics: `RMSE = 0.04456830142359985`, `MAE = 0.01795931400633172`, `wet_dry_iou = 0.8068740587485465`, `rollout_stability = 0.9899644569346779`, and `step_rmse_std = 0.01018835528214511`
+- Guardrail counts: standard checks passed `2`, standard checks failed `3`, acceptance checks passed `6`, acceptance checks failed `8`, acceptance checks not evaluated `0`, rejection rules triggered `3`, and rejection rules not evaluated `0`
+- Failed checks: AT02 valid-domain RMSE, AT03 valid-domain MAE, AT04 valid-domain false_dry_rate, AT06 high_impervious_valid false_wet_rate, AT07 boundary_ring false_dry_rate, AT08 standard RMSE, AT09 standard MAE, and AT10 standard wet_dry_iou
+- Triggered rejection rules: RT01 `phase29_tradeoff_pattern`, RT05 `standard_rmse_or_mae_worsens_beyond_tolerance`, and RT07 `valid_domain_error_worsens_beyond_acceptance_tolerance`
+- Interpretation: useful negative evidence, not a training execution failure; the `manhole_nonzero_false_dry_guardrail` design is not accepted
+- Guardrails: no seed123/seed202 expansion; no sweep; no Phase 29 continuation; no post-hoc loss/config rescue; no pilot success claim; no strict conservation / SWE/PINN / hydrodynamic closure claims; Level 4+ proxy scope only
+- Model status: rejected seed42 pilot; next technical work should diagnose the trade-off before proposing another loss
+
 ## Interpretation Order
 
 For current repository interpretation, read the experiment trail in this order:
@@ -584,11 +610,12 @@ For current repository interpretation, read the experiment trail in this order:
 30. `docs/phase35_manhole_false_dry_guardrail_pilot_plan.md`
 31. `docs/phase36_manhole_false_dry_guardrail_code_smoke_findings.md`
 32. `docs/phase37_seed42_training_authorization_review_findings.md`
-33. `docs/project_status.md`
+33. `docs/phase38_seed42_pilot_training_guardrail_evaluation_findings.md`
+34. `docs/project_status.md`
 
 ## Next Stage
 
-The next stage should build on the Phase 12 to Phase 37 reliability/applicability, screening, warning-rule, synthesis, manuscript-writing, manuscript-consolidation, manuscript-draft, evidence-alignment, full-draft expansion, warning case-study prototype, physical-consistency diagnostic, target-wet recall refinement, strong-physics feasibility audit, mixed conservative volume-response pilot, volume-response failure diagnosis, mixed tolerance-band pilot, strong-physics boundary synthesis, physics input recovery readiness, domain-/boundary-aware design guardrail, seed42 pilot-readiness, pilot-threshold formalization, manhole false-dry guardrail pilot-planning, code/smoke-test implementation, and seed42 training authorization review materials rather than reopening Phase 10 tuning or starting an unreviewed training phase.
+The next stage should build on the Phase 12 to Phase 38 reliability/applicability, screening, warning-rule, synthesis, manuscript-writing, manuscript-consolidation, manuscript-draft, evidence-alignment, full-draft expansion, warning case-study prototype, physical-consistency diagnostic, target-wet recall refinement, strong-physics feasibility audit, mixed conservative volume-response pilot, volume-response failure diagnosis, mixed tolerance-band pilot, strong-physics boundary synthesis, physics input recovery readiness, domain-/boundary-aware design guardrail, seed42 pilot-readiness, pilot-threshold formalization, manhole false-dry guardrail pilot-planning, code/smoke-test implementation, seed42 training authorization review, and rejected Phase 38 seed42 pilot materials rather than reopening Phase 10 tuning, expanding seeds, starting a sweep, or rescuing the rejected pilot post hoc.
 
 Recommended next work:
 
@@ -611,12 +638,13 @@ Recommended next work:
 - keep the Phase 36 decision as `code_smoke_ready_training_still_blocked`, with `training_authorized = false` and `training_executed = false`
 - treat Phase 37 as diagnostic authorization review only, not as pilot success or a training result
 - keep the Phase 37 decision as `seed42_training_authorized_next_phase`, with `training_authorized_next_phase = true`, `training_executed = false`, and required checks passed `18 / 18`
-- next phase may run only `configs/train_phase36_manhole_false_dry_guardrail_seed42_40e.json`
-- after training, evaluate and run the Phase 36 guardrail checker
-- reject the result if any RT01-RT09 trigger fires
+- treat Phase 38 as completed seed42 pilot training, completed test evaluation, completed guardrail evaluation, and a rejected pilot
+- keep the Phase 38 decision as `seed42_pilot_rejected`
+- treat Phase 38 as useful negative evidence, not a training execution failure
+- diagnose the Phase 38 trade-off/failure pattern before proposing another loss
 - do not run Phase 29 `seed123` / `seed202` confirmation or a tolerance/weight sweep
 - do not run Phase 27 or Phase 29 `seed123` / `seed202` confirmation
-- do not run `seed123` / `seed202` or any sweep before seed42 passes
+- do not run Phase 38 `seed123` / `seed202` expansion, any sweep, Phase 29 continuation, or post-hoc loss/config rescue
 - avoid a full SWE/PINN residual unless compatible velocity, flux, boundary, DEM, and source-sink information become available
 - consider calibrated uncertainty only if calibration data and evaluation design are added
 - keep the current Phase 10 setting fixed unless new evidence justifies changing it
