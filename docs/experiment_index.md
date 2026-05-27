@@ -31,6 +31,7 @@
 - Phase 34 Pilot Threshold Formalization: threshold-formalization complete with decision `thresholds_formalized_training_still_blocked` and `training_authorized = false`
 - Phase 35 Manhole False-Dry Guardrail Pilot Plan: pilot implementation plan complete with status `implementation_plan_ready_code_next` and `training_authorized = false`
 - Phase 36 Manhole False-Dry Guardrail Code Smoke: code/smoke-test implementation complete with decision `code_smoke_ready_training_still_blocked`, `training_authorized = false`, and `training_executed = false`
+- Phase 37 Seed42 Training Authorization Review: diagnostic authorization review complete with decision `seed42_training_authorized_next_phase`, `training_authorized_next_phase = true`, `training_executed = false`, and required checks passed `18 / 18`
 
 ## Phase 6
 
@@ -527,6 +528,26 @@
 - Guardrails: no training, no seed42 run, no seed123/seed202, no sweep, no Phase 29 continuation, no strict conservation, no SWE/PINN, no hydrodynamic closure
 - Model status: code/smoke-test only; no pilot success claim and no training authorization
 
+## Phase 37
+
+- Plan: `docs/phase37_seed42_training_authorization_review_plan.md`
+- Script: `scripts/review_phase37_seed42_training_authorization.py`
+- Findings: `docs/phase37_seed42_training_authorization_review_findings.md`
+- Outputs: `analysis/phase37_seed42_training_authorization/`
+- Key output files:
+  - `authorization_checklist.csv`
+  - `training_authorization_summary.json`
+  - `training_authorization_summary.md`
+- Status: authorization review complete
+- Core result: seed42 training authorized for next phase only
+- Decision: `seed42_training_authorized_next_phase`
+- Required checks passed: `18 / 18`
+- Authorization: `training_authorized_next_phase = true`; `training_executed = false`; `seed42_run_executed = false`; `seed123_seed202_executed = false`
+- Reviewed command: `python scripts/train_model.py --config configs/train_phase36_manhole_false_dry_guardrail_seed42_40e.json`
+- Reviewed config: `configs/train_phase36_manhole_false_dry_guardrail_seed42_40e.json`
+- Guardrails: Phase 37 did not train; next phase may run only the reviewed seed42 config; after training, evaluate and run the Phase 36 guardrail checker; any RT01-RT09 trigger rejects the result; no seed123/seed202; no sweep; no Phase 29 continuation; no strict conservation / SWE/PINN / hydrodynamic closure claims; Level 4+ proxy scope only
+- Model status: diagnostic authorization review only; no pilot success claim and no training result claim
+
 ## Interpretation Order
 
 For current repository interpretation, read the experiment trail in this order:
@@ -562,11 +583,12 @@ For current repository interpretation, read the experiment trail in this order:
 29. `docs/phase34_pilot_threshold_formalization_findings.md`
 30. `docs/phase35_manhole_false_dry_guardrail_pilot_plan.md`
 31. `docs/phase36_manhole_false_dry_guardrail_code_smoke_findings.md`
-32. `docs/project_status.md`
+32. `docs/phase37_seed42_training_authorization_review_findings.md`
+33. `docs/project_status.md`
 
 ## Next Stage
 
-The next stage should build on the Phase 12 to Phase 36 reliability/applicability, screening, warning-rule, synthesis, manuscript-writing, manuscript-consolidation, manuscript-draft, evidence-alignment, full-draft expansion, warning case-study prototype, physical-consistency diagnostic, target-wet recall refinement, strong-physics feasibility audit, mixed conservative volume-response pilot, volume-response failure diagnosis, mixed tolerance-band pilot, strong-physics boundary synthesis, physics input recovery readiness, domain-/boundary-aware design guardrail, seed42 pilot-readiness, pilot-threshold formalization, manhole false-dry guardrail pilot-planning, and code/smoke-test implementation materials rather than reopening Phase 10 tuning or immediately starting another training phase.
+The next stage should build on the Phase 12 to Phase 37 reliability/applicability, screening, warning-rule, synthesis, manuscript-writing, manuscript-consolidation, manuscript-draft, evidence-alignment, full-draft expansion, warning case-study prototype, physical-consistency diagnostic, target-wet recall refinement, strong-physics feasibility audit, mixed conservative volume-response pilot, volume-response failure diagnosis, mixed tolerance-band pilot, strong-physics boundary synthesis, physics input recovery readiness, domain-/boundary-aware design guardrail, seed42 pilot-readiness, pilot-threshold formalization, manhole false-dry guardrail pilot-planning, code/smoke-test implementation, and seed42 training authorization review materials rather than reopening Phase 10 tuning or starting an unreviewed training phase.
 
 Recommended next work:
 
@@ -587,10 +609,14 @@ Recommended next work:
 - keep the Phase 35 status as `implementation_plan_ready_code_next` and `training_authorized = false`
 - treat Phase 36 as code/smoke-test implementation only, not as pilot success or training authorization
 - keep the Phase 36 decision as `code_smoke_ready_training_still_blocked`, with `training_authorized = false` and `training_executed = false`
-- require explicit seed42 training authorization review before any run
+- treat Phase 37 as diagnostic authorization review only, not as pilot success or a training result
+- keep the Phase 37 decision as `seed42_training_authorized_next_phase`, with `training_authorized_next_phase = true`, `training_executed = false`, and required checks passed `18 / 18`
+- next phase may run only `configs/train_phase36_manhole_false_dry_guardrail_seed42_40e.json`
+- after training, evaluate and run the Phase 36 guardrail checker
+- reject the result if any RT01-RT09 trigger fires
 - do not run Phase 29 `seed123` / `seed202` confirmation or a tolerance/weight sweep
 - do not run Phase 27 or Phase 29 `seed123` / `seed202` confirmation
-- do not run seed42 training from Phase 34 threshold formalization or Phase 35 planning alone
+- do not run `seed123` / `seed202` or any sweep before seed42 passes
 - avoid a full SWE/PINN residual unless compatible velocity, flux, boundary, DEM, and source-sink information become available
 - consider calibrated uncertainty only if calibration data and evaluation design are added
 - keep the current Phase 10 setting fixed unless new evidence justifies changing it
