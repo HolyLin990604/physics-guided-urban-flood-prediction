@@ -1,0 +1,20 @@
+scenario_or_batch,rmse,mae,wet_dry_iou,false_dry_rate,false_wet_rate,sample_count,timestep_count,limitation_note
+test_batch_0000,0.0387288492821,0.0193457577386,0.858096366509,0.0474374150555,0.023193519485,2,12,Phase38 per-batch aggregate only; no per-batch Phase25/Phase27/Phase29 baseline available.
+test_batch_0001,0.0404035596409,0.0196466929169,0.851747589052,0.0496641373305,0.022632743901,2,12,Phase38 per-batch aggregate only; no per-batch Phase25/Phase27/Phase29 baseline available.
+test_batch_0002,0.0383434337,0.0185211334208,0.863576257336,0.0243235076882,0.0231773986644,2,12,Phase38 per-batch aggregate only; no per-batch Phase25/Phase27/Phase29 baseline available.
+test_batch_0003,0.0484504629177,0.0227266494062,0.854883397319,0.0845994199505,0.0167300738878,2,12,Phase38 per-batch aggregate only; no per-batch Phase25/Phase27/Phase29 baseline available.
+test_batch_0004,0.0426652790176,0.0209753328562,0.826789169552,0.0657563993872,0.0268050787925,2,12,Phase38 per-batch aggregate only; no per-batch Phase25/Phase27/Phase29 baseline available.
+test_batch_0005,0.0453223286047,0.0212684895976,0.85905744754,0.0476829677537,0.0217208186585,2,12,Phase38 per-batch aggregate only; no per-batch Phase25/Phase27/Phase29 baseline available.
+test_batch_0006,0.0511610591531,0.0140306715312,0.775673018754,0.1346437761,0.00741795193081,2,12,Phase38 per-batch aggregate only; no per-batch Phase25/Phase27/Phase29 baseline available.
+test_batch_0007,0.0533337830926,0.0142495247835,0.74687654118,0.171015418301,0.00649081321002,2,12,Phase38 per-batch aggregate only; no per-batch Phase25/Phase27/Phase29 baseline available.
+test_batch_0008,0.0341152358797,0.0123656280089,0.777892867712,0.119086186673,0.00631739374868,2,12,Phase38 per-batch aggregate only; no per-batch Phase25/Phase27/Phase29 baseline available.
+test_batch_0009,0.0696157260037,0.0199688270682,0.661986521181,0.133267971568,0.0242227627606,2,12,Phase38 per-batch aggregate only; no per-batch Phase25/Phase27/Phase29 baseline available.
+test_batch_0010,0.0261120468736,0.0114977413963,0.718473005641,0.0315660851266,0.0135408272455,2,12,Phase38 per-batch aggregate only; no per-batch Phase25/Phase27/Phase29 baseline available.
+test_batch_0011,0.0590083104081,0.0155986341156,0.693734804563,0.215074696348,0.00840397524805,2,12,Phase38 per-batch aggregate only; no per-batch Phase25/Phase27/Phase29 baseline available.
+test_batch_0012,0.0443639215984,0.013830847726,0.79402998159,0.106446998471,0.00681337362546,2,12,Phase38 per-batch aggregate only; no per-batch Phase25/Phase27/Phase29 baseline available.
+test_batch_0013,0.037638088764,0.0180861935077,0.840327121598,0.0490963912541,0.0203798721228,2,12,Phase38 per-batch aggregate only; no per-batch Phase25/Phase27/Phase29 baseline available.
+test_batch_0014,0.0391369717318,0.0187008911846,0.836772950549,0.0636119959599,0.0179351070429,2,12,Phase38 per-batch aggregate only; no per-batch Phase25/Phase27/Phase29 baseline available.
+test_batch_0015,0.036921289827,0.0177333628091,0.869453812386,0.0294847528917,0.0159894233161,2,12,Phase38 per-batch aggregate only; no per-batch Phase25/Phase27/Phase29 baseline available.
+test_batch_0016,0.0486963270009,0.0214853357014,0.82903195606,0.0968262872491,0.015733173041,2,12,Phase38 per-batch aggregate only; no per-batch Phase25/Phase27/Phase29 baseline available.
+test_batch_0017,0.045407609406,0.0206683078952,0.815881578525,0.087435128486,0.0195509126623,2,12,Phase38 per-batch aggregate only; no per-batch Phase25/Phase27/Phase29 baseline available.
+test_batch_0018,0.0473734270434,0.0205269354312,0.856299562604,0.0425637661279,0.0173249930741,2,12,Phase38 per-batch aggregate only; no per-batch Phase25/Phase27/Phase29 baseline available.
