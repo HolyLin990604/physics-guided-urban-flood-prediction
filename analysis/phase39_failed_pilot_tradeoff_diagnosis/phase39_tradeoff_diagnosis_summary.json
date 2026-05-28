@@ -1,0 +1,180 @@
+{
+  "comparison_rows": 13,
+  "failed_acceptance_components": [
+    {
+      "acceptance_id": "AT02",
+      "delta_to_threshold": 0.0012858468786087762,
+      "diagnostic_interpretation": "Valid-domain RMSE exceeded the Phase 27 plus tolerance guardrail, indicating broader depth-error degradation.",
+      "direction": "lower_or_equal",
+      "metric_group": "valid_domain_masked",
+      "metric_name": "rmse",
+      "observed": 0.04829019611370878,
+      "region": "valid_domain",
+      "status": "fail",
+      "threshold": 0.0470043492351
+    },
+    {
+      "acceptance_id": "AT03",
+      "delta_to_threshold": 0.00039204607205062594,
+      "diagnostic_interpretation": "Valid-domain MAE exceeded the Phase 27 plus tolerance guardrail, so aggregate valid-cell error worsened.",
+      "direction": "lower_or_equal",
+      "metric_group": "valid_domain_masked",
+      "metric_name": "mae",
+      "observed": 0.019128691368550627,
+      "region": "valid_domain",
+      "status": "fail",
+      "threshold": 0.0187366452965
+    },
+    {
+      "acceptance_id": "AT04",
+      "delta_to_threshold": 0.002950756938358029,
+      "diagnostic_interpretation": "Valid-domain false-dry rate exceeded the Phase 27 guardrail, repeating the dry-miss concern outside the target-only view.",
+      "direction": "lower_or_equal",
+      "metric_group": "valid_domain_masked",
+      "metric_name": "false_dry_rate",
+      "observed": 0.07186822103935803,
+      "region": "valid_domain",
+      "status": "fail",
+      "threshold": 0.068917464101
+    },
+    {
+      "acceptance_id": "AT06",
+      "delta_to_threshold": 0.00042178956358317893,
+      "diagnostic_interpretation": "High-impervious valid false-wet rate exceeded its regional tolerance, indicating the pilot introduced wet overprediction in a guardrail region.",
+      "direction": "lower_or_equal",
+      "metric_group": "guardrail_masked",
+      "metric_name": "false_wet_rate",
+      "observed": 0.02312646181978318,
+      "region": "high_impervious_valid",
+      "status": "fail",
+      "threshold": 0.0227046722562
+    },
+    {
+      "acceptance_id": "AT07",
+      "delta_to_threshold": 0.004289585043885685,
+      "diagnostic_interpretation": "Boundary-ring false-dry rate exceeded its tolerance, consistent with a boundary-sensitive trade-off rather than a clean target improvement.",
+      "direction": "lower_or_equal",
+      "metric_group": "guardrail_masked",
+      "metric_name": "false_dry_rate",
+      "observed": 0.09205456956988568,
+      "region": "boundary_ring",
+      "status": "fail",
+      "threshold": 0.087764984526
+    },
+    {
+      "acceptance_id": "AT08",
+      "delta_to_threshold": 0.0013397004533998447,
+      "diagnostic_interpretation": "Standard RMSE failed the global quality guardrail.",
+      "direction": "lower_or_equal",
+      "metric_group": "standard",
+      "metric_name": "rmse",
+      "observed": 0.04456830142359985,
+      "region": "all_evaluated_cells",
+      "status": "fail",
+      "threshold": 0.0432286009702
+    },
+    {
+      "acceptance_id": "AT09",
+      "delta_to_threshold": 0.0003288469502317204,
+      "diagnostic_interpretation": "Standard MAE failed the global quality guardrail.",
+      "direction": "lower_or_equal",
+      "metric_group": "standard",
+      "metric_name": "mae",
+      "observed": 0.01795931400633172,
+      "region": "all_evaluated_cells",
+      "status": "fail",
+      "threshold": 0.0176304670561
+    },
+    {
+      "acceptance_id": "AT10",
+      "delta_to_threshold": 0.000927314883453545,
+      "diagnostic_interpretation": "Standard wet/dry IoU fell below the required floor, indicating wet/dry classification quality was not maintained.",
+      "direction": "higher_or_equal",
+      "metric_group": "standard",
+      "metric_name": "wet_dry_iou",
+      "observed": 0.8068740587485465,
+      "region": "all_evaluated_cells",
+      "status": "fail",
+      "threshold": 0.807801373632
+    }
+  ],
+  "failed_acceptance_count": 8,
+  "final_decision": "seed42_pilot_rejected",
+  "generated_at_utc": "2026-05-28T02:14:33.707765+00:00",
+  "guardrails": {
+    "level4_plus_proxy_scope_only": true,
+    "no_config_modification": true,
+    "no_loss_modification": true,
+    "no_phase38_relabel": true,
+    "no_seed123": true,
+    "no_seed202": true,
+    "no_seed42_training_again": true,
+    "no_sweep": true,
+    "no_threshold_changes": true,
+    "no_training": true
+  },
+  "input_sources": {
+    "evaluation_dir": "runs/phase36_manhole_false_dry_guardrail_seed42_40e/evaluation_test",
+    "phase31_dir": "analysis/phase31_physics_input_recovery_readiness",
+    "phase34_acceptance_thresholds": "analysis/phase34_pilot_thresholds/acceptance_thresholds.csv",
+    "phase34_baseline_metric_table": "analysis/phase34_pilot_thresholds/baseline_metric_table.csv",
+    "phase34_rejection_thresholds": "analysis/phase34_pilot_thresholds/rejection_thresholds.csv",
+    "phase34_threshold_summary": "analysis/phase34_pilot_thresholds/phase34_threshold_summary.json",
+    "phase38_acceptance_check": "analysis/phase38_seed42_pilot_training_guardrail_evaluation/phase38_acceptance_check.csv",
+    "phase38_guardrail_decision_json": "analysis/phase38_seed42_pilot_training_guardrail_evaluation/phase38_guardrail_decision.json",
+    "phase38_guardrail_decision_md": "analysis/phase38_seed42_pilot_training_guardrail_evaluation/phase38_guardrail_decision.md",
+    "phase38_rejection_check": "analysis/phase38_seed42_pilot_training_guardrail_evaluation/phase38_rejection_check.csv",
+    "phase38_standard_metric_check": "analysis/phase38_seed42_pilot_training_guardrail_evaluation/phase38_standard_metric_check.csv"
+  },
+  "key_diagnosis": {
+    "do_not_expand_or_rescue": "The result should not be expanded to seed123/seed202 or rescued by sweep/post-hoc edits.",
+    "guardrail_result": "The current manhole_nonzero_false_dry_guardrail did not pass broader Level 4+ guardrails.",
+    "rt01": "RT01 indicates a Phase29-like trade-off pattern."
+  },
+  "missing_optional_inputs": [
+    "Per-batch/scenario Phase25/Phase27/Phase29 baselines are unavailable; scenario summary is Phase38-only."
+  ],
+  "next_recommended_step": "failed-pilot diagnosis / design review, not training",
+  "phase": 39,
+  "phase38_recorded_final_decision": "seed42_pilot_rejected",
+  "phase39_decision": "tradeoff_diagnosis_completed_with_missing_optional_inputs",
+  "region_rows": 5,
+  "scenario_rows": 19,
+  "script": "scripts/diagnose_phase39_failed_pilot_tradeoffs.py",
+  "triggered_rejection_count": 3,
+  "triggered_rejection_rules": [
+    {
+      "diagnostic_interpretation": "The result matches the Phase 29-like pattern: valid-domain volume-bias proxy improves while multiple error metrics worsen versus Phase 27.",
+      "observed": "candidate={'absolute_relative_volume_bias_proxy': 0.009734633876527184, 'rmse': 0.04829019611370878, 'mae': 0.019128691368550627, 'false_dry_rate': 0.07186822103935803, 'false_wet_rate': 0.018617591273413805}; phase27={'absolute_relative_volume_bias_proxy': 0.0169359188921, 'rmse': 0.0460826953285, 'mae': 0.0183692600946, 'false_dry_rate': 0.068917464101, 'false_wet_rate': 0.0181922750833}",
+      "rejection_id": "RT01",
+      "rule": "phase29_tradeoff_pattern",
+      "status": "triggered",
+      "threshold_or_condition": "absolute relative volume-bias proxy improves while RMSE, MAE, false-dry rate, and false-wet rate all worsen versus Phase 27",
+      "trigger_metric_group": "multi_metric",
+      "trigger_metric_name": "absolute_relative_volume_bias_proxy_plus_error_metrics",
+      "trigger_region": "valid_domain"
+    },
+    {
+      "diagnostic_interpretation": "At least one standard global error metric exceeded the hard rejection tolerance, so the pilot cannot be treated as a localized-only change.",
+      "observed": "rmse=0.0445683014236 threshold=0.0445000304105; mae=0.0179593140063 threshold=0.0181490102048",
+      "rejection_id": "RT05",
+      "rule": "standard_rmse_or_mae_worsens_beyond_tolerance",
+      "status": "triggered",
+      "threshold_or_condition": "standard RMSE > 0.0445000304105 or standard MAE > 0.0181490102048",
+      "trigger_metric_group": "standard",
+      "trigger_metric_name": "rmse_or_mae",
+      "trigger_region": "all_evaluated_cells"
+    },
+    {
+      "diagnostic_interpretation": "Valid-domain RMSE or MAE exceeded the acceptance tolerance, blocking expansion despite target-region improvement.",
+      "observed": "valid rmse=0.0482901961137; valid mae=0.0191286913686",
+      "rejection_id": "RT07",
+      "rule": "valid_domain_error_worsens_beyond_acceptance_tolerance",
+      "status": "triggered",
+      "threshold_or_condition": "valid RMSE > 0.0470043492351 or valid MAE > 0.0187366452965",
+      "trigger_metric_group": "valid_domain_masked",
+      "trigger_metric_name": "rmse_or_mae",
+      "trigger_region": "valid_domain"
+    }
+  ]
+}
