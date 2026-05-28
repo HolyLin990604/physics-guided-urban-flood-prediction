@@ -34,6 +34,7 @@
 - Phase 37 Seed42 Training Authorization Review: diagnostic authorization review complete with decision `seed42_training_authorized_next_phase`, `training_authorized_next_phase = true`, `training_executed = false`, and required checks passed `18 / 18`
 - Phase 38 Seed42 Pilot Training and Guardrail Evaluation: single authorized seed42 pilot trained, test-evaluated, guardrail-evaluated, and rejected with decision `seed42_pilot_rejected`
 - Phase 39 Failed Pilot Trade-off Diagnosis: diagnostic-only analysis complete with decision `tradeoff_diagnosis_completed_with_missing_optional_inputs`; Phase 38 remains `seed42_pilot_rejected`
+- Phase 40 Failed Pilot Design Review and Next-Constraint Decision: design-review complete with decision `pause_loss_redesign_move_to_swe_data_readiness`, `training_authorized = false`, and next recommended phase `phase41_swe_data_readiness_audit`
 
 ## Phase 6
 
@@ -598,7 +599,31 @@
 - Missing optional inputs: per-batch/scenario Phase25/Phase27/Phase29 baselines are unavailable, so scenario diagnostics are Phase38-only
 - Interpretation: useful negative evidence, not a training or evaluation failure
 - Guardrails: no training; no seed123/seed202 expansion; no sweep; no Phase 29 continuation; no post-hoc rescue; no pilot success claim; no strict conservation / SWE/PINN / hydrodynamic closure claims
-- Model status: rejected pilot diagnosed; next technical work should be failed-pilot design review and diagnosis consolidation rather than additional training
+- Model status: rejected pilot diagnosed; Phase 40 later completed the failed-pilot design review and next-constraint decision before any further technical work
+
+## Phase 40
+
+- Plan: `docs/phase40_failed_pilot_design_review_next_constraint_plan.md`
+- Script: `scripts/review_phase40_next_constraint_decision.py`
+- Findings: `docs/phase40_failed_pilot_design_review_next_constraint_findings.md`
+- Outputs: `analysis/phase40_failed_pilot_design_review/`
+- Key output files:
+  - `next_constraint_options.csv`
+  - `decision_criteria_matrix.csv`
+  - `phase40_next_constraint_decision.json`
+  - `phase40_next_constraint_decision.md`
+- Status: failed-pilot design review and next-constraint decision complete
+- Decision: `pause_loss_redesign_move_to_swe_data_readiness`
+- Next recommended phase: `phase41_swe_data_readiness_audit`
+- Guardrails:
+  - no training
+  - no seed123/seed202 expansion
+  - no sweep
+  - no Phase38 rescue
+  - no loss/config/model edits
+  - no strict conservation / SWE/PINN / hydrodynamic closure claims
+  - no Level 5 support claim
+- Model status: proxy-loss redesign paused after repeated trade-off evidence from Phase 27, Phase 29, and Phase 38; next work should be a no-training SWE data readiness audit
 
 ## Interpretation Order
 
@@ -638,11 +663,12 @@ For current repository interpretation, read the experiment trail in this order:
 32. `docs/phase37_seed42_training_authorization_review_findings.md`
 33. `docs/phase38_seed42_pilot_training_guardrail_evaluation_findings.md`
 34. `docs/phase39_failed_pilot_tradeoff_diagnosis_findings.md`
-35. `docs/project_status.md`
+35. `docs/phase40_failed_pilot_design_review_next_constraint_findings.md`
+36. `docs/project_status.md`
 
 ## Next Stage
 
-The next stage should build on the Phase 12 to Phase 39 reliability/applicability, screening, warning-rule, synthesis, manuscript-writing, manuscript-consolidation, manuscript-draft, evidence-alignment, full-draft expansion, warning case-study prototype, physical-consistency diagnostic, target-wet recall refinement, strong-physics feasibility audit, mixed conservative volume-response pilot, volume-response failure diagnosis, mixed tolerance-band pilot, strong-physics boundary synthesis, physics input recovery readiness, domain-/boundary-aware design guardrail, seed42 pilot-readiness, pilot-threshold formalization, manhole false-dry guardrail pilot-planning, code/smoke-test implementation, seed42 training authorization review, rejected Phase 38 seed42 pilot, and Phase 39 failed-pilot diagnosis materials rather than reopening Phase 10 tuning, expanding seeds, starting a sweep, or rescuing the rejected pilot post hoc.
+The next stage should build on the Phase 12 to Phase 40 reliability/applicability, screening, warning-rule, synthesis, manuscript-writing, manuscript-consolidation, manuscript-draft, evidence-alignment, full-draft expansion, warning case-study prototype, physical-consistency diagnostic, target-wet recall refinement, strong-physics feasibility audit, mixed conservative volume-response pilot, volume-response failure diagnosis, mixed tolerance-band pilot, strong-physics boundary synthesis, physics input recovery readiness, domain-/boundary-aware design guardrail, seed42 pilot-readiness, pilot-threshold formalization, manhole false-dry guardrail pilot-planning, code/smoke-test implementation, seed42 training authorization review, rejected Phase 38 seed42 pilot, Phase 39 failed-pilot diagnosis, and Phase 40 next-constraint decision materials rather than reopening Phase 10 tuning, expanding seeds, starting a sweep, further proxy-loss redesign, or rescuing the rejected pilot post hoc.
 
 Recommended next work:
 
@@ -670,7 +696,10 @@ Recommended next work:
 - treat Phase 38 as useful negative evidence, not a training execution failure
 - treat Phase 39 as diagnostic-only failed-pilot trade-off analysis, with decision `tradeoff_diagnosis_completed_with_missing_optional_inputs`
 - treat the Phase 38 negative result as diagnosed: narrow target-proxy improvement did not preserve broader Level 4+ guardrails
-- prioritize failed-pilot design review and diagnosis consolidation before proposing another loss
+- treat Phase 40 as failed-pilot design review and next-constraint decision, with decision `pause_loss_redesign_move_to_swe_data_readiness`
+- keep `training_authorized = false` and next recommended phase `phase41_swe_data_readiness_audit`
+- pause proxy-loss redesign after repeated trade-off evidence from Phase 27, Phase 29, and Phase 38
+- prioritize a no-training SWE data readiness audit before any SWE/PINN or hydrodynamic-closure direction
 - do not run Phase 29 `seed123` / `seed202` confirmation or a tolerance/weight sweep
 - do not run Phase 27 or Phase 29 `seed123` / `seed202` confirmation
 - do not run Phase 38 `seed123` / `seed202` expansion, any sweep, Phase 29 continuation, or post-hoc loss/config rescue
