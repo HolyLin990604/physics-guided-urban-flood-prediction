@@ -1,0 +1,97 @@
+{
+  "config_edit_authorized": false,
+  "criteria_rows": 13,
+  "decision_rationale": [
+    "Phase38 remains seed42_pilot_rejected.",
+    "Phase39 diagnosed a Phase29-like trade-off pattern through RT01.",
+    "The manhole_nonzero_false_dry_guardrail improved a narrow target proxy but failed broader valid-domain, regional guardrail, and standard checks.",
+    "Immediate seed expansion, sweeps, and Phase38 rescue are blocked because they would reinterpret a rejected pilot rather than address the diagnosed mechanism.",
+    "The highest-priority conservative direction is a no-training data-readiness audit for future residual-style physical constraints."
+  ],
+  "evidence_contradictions": [],
+  "failed_acceptance_count": 8,
+  "failed_acceptance_ids": [
+    "AT02",
+    "AT03",
+    "AT04",
+    "AT06",
+    "AT07",
+    "AT08",
+    "AT09",
+    "AT10"
+  ],
+  "final_decision_candidate": "pause_loss_redesign_move_to_swe_data_readiness",
+  "full_mass_conservation_claim_authorized": false,
+  "generated_at_utc": "2026-05-28T08:57:46.169260+00:00",
+  "hydrodynamic_closure_claim_authorized": false,
+  "input_sources": {
+    "failed_acceptance_components": "analysis/phase39_failed_pilot_tradeoff_diagnosis/failed_acceptance_components.csv",
+    "phase38_decision_json": "analysis/phase38_seed42_pilot_training_guardrail_evaluation/phase38_guardrail_decision.json",
+    "phase38_decision_md": "analysis/phase38_seed42_pilot_training_guardrail_evaluation/phase38_guardrail_decision.md",
+    "phase38_vs_baselines_metric_comparison": "analysis/phase39_failed_pilot_tradeoff_diagnosis/phase38_vs_baselines_metric_comparison.csv",
+    "phase39_findings": "docs/phase39_failed_pilot_tradeoff_diagnosis_findings.md",
+    "phase39_summary_json": "analysis/phase39_failed_pilot_tradeoff_diagnosis/phase39_tradeoff_diagnosis_summary.json",
+    "phase39_summary_md": "analysis/phase39_failed_pilot_tradeoff_diagnosis/phase39_tradeoff_diagnosis_summary.md",
+    "phase40_plan": "docs/phase40_failed_pilot_design_review_next_constraint_plan.md",
+    "region_tradeoff_summary": "analysis/phase39_failed_pilot_tradeoff_diagnosis/region_tradeoff_summary.csv",
+    "triggered_rejection_rules": "analysis/phase39_failed_pilot_tradeoff_diagnosis/triggered_rejection_rules.csv"
+  },
+  "level5_claim_authorized": false,
+  "level_boundary": "Phase40 remains Level 4+ diagnostic/design review. It makes no strict conservation, full mass conservation, SWE/PINN, hydrodynamic closure, Level 5 support, or pilot success claim.",
+  "loss_edit_authorized": false,
+  "model_architecture_edit_authorized": false,
+  "next_recommended_phase": "SWE data-readiness audit only: check velocity/flux, dx/dy, dt, boundary/source-sink, pump/gate operations, and hydrodynamic state variable availability without SWE/PINN or Level 5 claims.",
+  "option_scores": {
+    "consolidate_negative_result_no_new_training": 76,
+    "decision_deferred_pending_more_evidence": 35,
+    "pause_loss_redesign_move_to_swe_data_readiness": 88,
+    "redesign_level4_proxy_constraint_plan_first": 60
+  },
+  "options_evaluated": 4,
+  "phase": 40,
+  "phase29_continuation_authorized": false,
+  "phase38_decision": "seed42_pilot_rejected",
+  "phase38_recorded_final_decision": "seed42_pilot_rejected",
+  "phase38_rescue_authorized": false,
+  "phase39_interpretation": "Phase29-like trade-off: narrow manhole_nonzero false-dry proxy improved while broader valid-domain, regional guardrail, and standard checks failed.",
+  "phase39_recorded_decision": "tradeoff_diagnosis_completed_with_missing_optional_inputs",
+  "pilot_success_claim_authorized": false,
+  "region_tradeoff_regions": [
+    "all_evaluated_cells",
+    "boundary_ring",
+    "high_impervious_valid",
+    "manhole_nonzero_valid",
+    "valid_domain"
+  ],
+  "required_next_phase": "phase41_swe_data_readiness_audit",
+  "script": "scripts/review_phase40_next_constraint_decision.py",
+  "seed123_authorized": false,
+  "seed202_authorized": false,
+  "seed42_rerun_authorized": false,
+  "strict_conservation_claim_authorized": false,
+  "swe_claim_authorized": false,
+  "swe_readiness_data_needs": [
+    "velocity_or_flux_fields",
+    "dx_dy_grid_spacing",
+    "dt_time_step",
+    "boundary_conditions",
+    "source_sink_terms",
+    "pump_gate_operations",
+    "hydrodynamic_state_variables"
+  ],
+  "sweep_authorized": false,
+  "target_proxy_improved": true,
+  "training_authorized": false,
+  "triggered_rejection_count": 3,
+  "triggered_rejection_ids": [
+    "RT01",
+    "RT05",
+    "RT07"
+  ],
+  "wording_checks": {
+    "contains_level4_plus": true,
+    "contains_no_swe_claim_boundary": true,
+    "contains_no_training_guardrail": true,
+    "contains_seed42_pilot_rejected": true
+  }
+}

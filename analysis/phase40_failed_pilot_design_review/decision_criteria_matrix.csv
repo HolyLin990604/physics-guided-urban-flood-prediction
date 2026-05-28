@@ -1,0 +1,14 @@
+criterion_id,criterion,option_a_redesign_level4_proxy,option_b_swe_data_readiness,option_c_consolidate_negative_result,option_d_decision_deferred,evidence_source,review_note
+DC01,respects_phase38_rejection,yes,yes,yes,yes_if_deferred,phase38_guardrail_decision.json; phase39_tradeoff_diagnosis_summary.json,Phase38 remains seed42_pilot_rejected.
+DC02,avoids_seed_expansion,yes,yes,yes,yes,Phase40 plan; Phase39 guardrails,seed123 and seed202 remain unauthorized.
+DC03,avoids_sweep,yes,yes,yes,yes,Phase40 plan; Phase39 guardrails,Sweeps remain unauthorized.
+DC04,avoids_posthoc_rescue,yes,yes,yes,yes,Phase40 plan; triggered rejection rules,"The Phase38 result cannot be relabeled, rescued, or accepted post hoc."
+DC05,addresses_phase29_like_tradeoff,yes,yes,yes_as_negative_evidence,partial,triggered_rejection_rules.csv,RT01 identifies a Phase29-like trade-off pattern.
+DC06,reduces_risk_of_narrow_proxy_error_transfer,partial,yes,yes_by_stopping,partial,failed_acceptance_components.csv; region_tradeoff_summary.csv,"The narrow target proxy improved while valid-domain, boundary, high-impervious, and standard checks failed."
+DC07,advances_toward_level5,no_directly_level4_plus_only,yes_data_readiness_only,no,no,Phase40 plan,"Only data-readiness work can move toward future residual constraints, without claiming Level 5 support."
+DC08,requires_new_data,no_immediate,yes_audit_availability,no,unknown,Phase40 plan,"SWE-readiness means checking availability, not implementing residuals."
+DC09,requires_training_now,no,no,no,no,Phase40 guardrails,All acceptable Phase40 decisions block immediate training.
+DC10,preserves_level4_plus_scope,yes,yes_no_swe_claim,yes,yes,Phase38/39/40 claim-boundary text,"No strict conservation, full mass conservation, SWE/PINN, hydrodynamic closure, or Level 5 claim is allowed."
+DC11,scientific_value,medium,high,medium_high,low_unless_inputs_contradict,Phase39 diagnosis,Scientific value is highest when the next step uses the negative evidence to reduce repeated proxy trade-off risk.
+DC12,implementation_risk,medium,low_medium,low,low,Phase40 option review,Risk is lower when the next phase is audit/documentation rather than implementation.
+DC13,recommended_priority,medium_low,high,medium,low,computed decision matrix,Priority reflects conservative decision policy and available evidence.
