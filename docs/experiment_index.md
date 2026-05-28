@@ -33,6 +33,7 @@
 - Phase 36 Manhole False-Dry Guardrail Code Smoke: code/smoke-test implementation complete with decision `code_smoke_ready_training_still_blocked`, `training_authorized = false`, and `training_executed = false`
 - Phase 37 Seed42 Training Authorization Review: diagnostic authorization review complete with decision `seed42_training_authorized_next_phase`, `training_authorized_next_phase = true`, `training_executed = false`, and required checks passed `18 / 18`
 - Phase 38 Seed42 Pilot Training and Guardrail Evaluation: single authorized seed42 pilot trained, test-evaluated, guardrail-evaluated, and rejected with decision `seed42_pilot_rejected`
+- Phase 39 Failed Pilot Trade-off Diagnosis: diagnostic-only analysis complete with decision `tradeoff_diagnosis_completed_with_missing_optional_inputs`; Phase 38 remains `seed42_pilot_rejected`
 
 ## Phase 6
 
@@ -572,7 +573,32 @@
 - Triggered rejection rules: RT01 `phase29_tradeoff_pattern`, RT05 `standard_rmse_or_mae_worsens_beyond_tolerance`, and RT07 `valid_domain_error_worsens_beyond_acceptance_tolerance`
 - Interpretation: useful negative evidence, not a training execution failure; the `manhole_nonzero_false_dry_guardrail` design is not accepted
 - Guardrails: no seed123/seed202 expansion; no sweep; no Phase 29 continuation; no post-hoc loss/config rescue; no pilot success claim; no strict conservation / SWE/PINN / hydrodynamic closure claims; Level 4+ proxy scope only
-- Model status: rejected seed42 pilot; next technical work should diagnose the trade-off before proposing another loss
+- Model status: rejected seed42 pilot; Phase 39 later diagnosed the trade-off before any further design work
+
+## Phase 39
+
+- Plan: `docs/phase39_failed_pilot_tradeoff_diagnosis_plan.md`
+- Script: `scripts/diagnose_phase39_failed_pilot_tradeoffs.py`
+- Findings: `docs/phase39_failed_pilot_tradeoff_diagnosis_findings.md`
+- Outputs: `analysis/phase39_failed_pilot_tradeoff_diagnosis/`
+- Key output files:
+  - `failed_acceptance_components.csv`
+  - `triggered_rejection_rules.csv`
+  - `phase38_vs_baselines_metric_comparison.csv`
+  - `region_tradeoff_summary.csv`
+  - `scenario_tradeoff_summary.csv`
+  - `phase39_tradeoff_diagnosis_summary.json`
+  - `phase39_tradeoff_diagnosis_summary.md`
+- Status: diagnostic-only trade-off diagnosis complete
+- Decision: `tradeoff_diagnosis_completed_with_missing_optional_inputs`
+- Phase 38 status: remains `seed42_pilot_rejected`
+- Diagnostic counts: `failed_acceptance_count = 8`, `triggered_rejection_count = 3`, `comparison_rows = 13`, `region_rows = 5`, and `scenario_rows = 19`
+- Main diagnosis: the current `manhole_nonzero_false_dry_guardrail` improved a narrow `manhole_nonzero_valid` false-dry proxy, but did not preserve broader valid-domain, regional guardrail, and standard metrics
+- Rejection interpretation: RT01 indicates a Phase29-like trade-off pattern; RT05 and RT07 confirm unacceptable standard and valid-domain error behavior
+- Missing optional inputs: per-batch/scenario Phase25/Phase27/Phase29 baselines are unavailable, so scenario diagnostics are Phase38-only
+- Interpretation: useful negative evidence, not a training or evaluation failure
+- Guardrails: no training; no seed123/seed202 expansion; no sweep; no Phase 29 continuation; no post-hoc rescue; no pilot success claim; no strict conservation / SWE/PINN / hydrodynamic closure claims
+- Model status: rejected pilot diagnosed; next technical work should be failed-pilot design review and diagnosis consolidation rather than additional training
 
 ## Interpretation Order
 
@@ -611,11 +637,12 @@ For current repository interpretation, read the experiment trail in this order:
 31. `docs/phase36_manhole_false_dry_guardrail_code_smoke_findings.md`
 32. `docs/phase37_seed42_training_authorization_review_findings.md`
 33. `docs/phase38_seed42_pilot_training_guardrail_evaluation_findings.md`
-34. `docs/project_status.md`
+34. `docs/phase39_failed_pilot_tradeoff_diagnosis_findings.md`
+35. `docs/project_status.md`
 
 ## Next Stage
 
-The next stage should build on the Phase 12 to Phase 38 reliability/applicability, screening, warning-rule, synthesis, manuscript-writing, manuscript-consolidation, manuscript-draft, evidence-alignment, full-draft expansion, warning case-study prototype, physical-consistency diagnostic, target-wet recall refinement, strong-physics feasibility audit, mixed conservative volume-response pilot, volume-response failure diagnosis, mixed tolerance-band pilot, strong-physics boundary synthesis, physics input recovery readiness, domain-/boundary-aware design guardrail, seed42 pilot-readiness, pilot-threshold formalization, manhole false-dry guardrail pilot-planning, code/smoke-test implementation, seed42 training authorization review, and rejected Phase 38 seed42 pilot materials rather than reopening Phase 10 tuning, expanding seeds, starting a sweep, or rescuing the rejected pilot post hoc.
+The next stage should build on the Phase 12 to Phase 39 reliability/applicability, screening, warning-rule, synthesis, manuscript-writing, manuscript-consolidation, manuscript-draft, evidence-alignment, full-draft expansion, warning case-study prototype, physical-consistency diagnostic, target-wet recall refinement, strong-physics feasibility audit, mixed conservative volume-response pilot, volume-response failure diagnosis, mixed tolerance-band pilot, strong-physics boundary synthesis, physics input recovery readiness, domain-/boundary-aware design guardrail, seed42 pilot-readiness, pilot-threshold formalization, manhole false-dry guardrail pilot-planning, code/smoke-test implementation, seed42 training authorization review, rejected Phase 38 seed42 pilot, and Phase 39 failed-pilot diagnosis materials rather than reopening Phase 10 tuning, expanding seeds, starting a sweep, or rescuing the rejected pilot post hoc.
 
 Recommended next work:
 
@@ -641,7 +668,9 @@ Recommended next work:
 - treat Phase 38 as completed seed42 pilot training, completed test evaluation, completed guardrail evaluation, and a rejected pilot
 - keep the Phase 38 decision as `seed42_pilot_rejected`
 - treat Phase 38 as useful negative evidence, not a training execution failure
-- diagnose the Phase 38 trade-off/failure pattern before proposing another loss
+- treat Phase 39 as diagnostic-only failed-pilot trade-off analysis, with decision `tradeoff_diagnosis_completed_with_missing_optional_inputs`
+- treat the Phase 38 negative result as diagnosed: narrow target-proxy improvement did not preserve broader Level 4+ guardrails
+- prioritize failed-pilot design review and diagnosis consolidation before proposing another loss
 - do not run Phase 29 `seed123` / `seed202` confirmation or a tolerance/weight sweep
 - do not run Phase 27 or Phase 29 `seed123` / `seed202` confirmation
 - do not run Phase 38 `seed123` / `seed202` expansion, any sweep, Phase 29 continuation, or post-hoc loss/config rescue
