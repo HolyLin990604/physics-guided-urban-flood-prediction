@@ -1,0 +1,646 @@
+{
+  "audit_scope": {
+    "config_referenced_paths": [
+      {
+        "config_file": "configs/ablation_non_negativity.json",
+        "exists": true,
+        "field": "dataset.dataset_config_path",
+        "is_dir": false,
+        "is_file": true,
+        "resolved_path": "C:\\Users\\39053\\Documents\\New project\\configs\\urbanflood24_lite_adapter.json",
+        "value": "C:\\Users\\39053\\Documents\\New project\\configs\\urbanflood24_lite_adapter.json"
+      },
+      {
+        "config_file": "configs/ablation_non_negativity.json",
+        "exists": false,
+        "field": "output.root",
+        "is_dir": false,
+        "is_file": false,
+        "resolved_path": "C:\\Users\\39053\\Documents\\New project\\runs\\ablation_non_negativity",
+        "value": "C:\\Users\\39053\\Documents\\New project\\runs\\ablation_non_negativity"
+      },
+      {
+        "config_file": "configs/ablation_rainfall_only_debug.json",
+        "exists": true,
+        "field": "dataset.dataset_config_path",
+        "is_dir": false,
+        "is_file": true,
+        "resolved_path": "C:\\Users\\39053\\Documents\\New project\\configs\\urbanflood24_lite_adapter.json",
+        "value": "C:\\Users\\39053\\Documents\\New project\\configs\\urbanflood24_lite_adapter.json"
+      },
+      {
+        "config_file": "configs/ablation_rainfall_only_debug.json",
+        "exists": true,
+        "field": "output.root",
+        "is_dir": true,
+        "is_file": false,
+        "resolved_path": "C:\\Users\\39053\\Documents\\New project\\runs\\ablation_rainfall_only_debug",
+        "value": "C:\\Users\\39053\\Documents\\New project\\runs\\ablation_rainfall_only_debug"
+      },
+      {
+        "config_file": "configs/ablation_rainfall_topography_continuity.json",
+        "exists": true,
+        "field": "dataset.dataset_config_path",
+        "is_dir": false,
+        "is_file": true,
+        "resolved_path": "C:\\Users\\39053\\Documents\\New project\\configs\\urbanflood24_lite_adapter.json",
+        "value": "C:\\Users\\39053\\Documents\\New project\\configs\\urbanflood24_lite_adapter.json"
+      },
+      {
+        "config_file": "configs/ablation_rainfall_topography_continuity.json",
+        "exists": false,
+        "field": "output.root",
+        "is_dir": false,
+        "is_file": false,
+        "resolved_path": "C:\\Users\\39053\\Documents\\New project\\runs\\ablation_rain_topo_cont",
+        "value": "C:\\Users\\39053\\Documents\\New project\\runs\\ablation_rain_topo_cont"
+      },
+      {
+        "config_file": "configs/ablation_topography_only_debug.json",
+        "exists": true,
+        "field": "dataset.dataset_config_path",
+        "is_dir": false,
+        "is_file": true,
+        "resolved_path": "C:\\Users\\39053\\Documents\\New project\\configs\\urbanflood24_lite_adapter.json",
+        "value": "C:\\Users\\39053\\Documents\\New project\\configs\\urbanflood24_lite_adapter.json"
+      },
+      {
+        "config_file": "configs/ablation_topography_only_debug.json",
+        "exists": true,
+        "field": "output.root",
+        "is_dir": true,
+        "is_file": false,
+        "resolved_path": "C:\\Users\\39053\\Documents\\New project\\runs\\ablation_topography_only_debug",
+        "value": "C:\\Users\\39053\\Documents\\New project\\runs\\ablation_topography_only_debug"
+      },
+      {
+        "config_file": "configs/ablation_wet_dry.json",
+        "exists": true,
+        "field": "dataset.dataset_config_path",
+        "is_dir": false,
+        "is_file": true,
+        "resolved_path": "C:\\Users\\39053\\Documents\\New project\\configs\\urbanflood24_lite_adapter.json",
+        "value": "C:\\Users\\39053\\Documents\\New project\\configs\\urbanflood24_lite_adapter.json"
+      },
+      {
+        "config_file": "configs/ablation_wet_dry.json",
+        "exists": false,
+        "field": "output.root",
+        "is_dir": false,
+        "is_file": false,
+        "resolved_path": "C:\\Users\\39053\\Documents\\New project\\runs\\ablation_wet_dry",
+        "value": "C:\\Users\\39053\\Documents\\New project\\runs\\ablation_wet_dry"
+      },
+      {
+        "config_file": "configs/train_baseline.json",
+        "exists": true,
+        "field": "dataset.dataset_config_path",
+        "is_dir": false,
+        "is_file": true,
+        "resolved_path": "C:\\Users\\39053\\Documents\\New project\\configs\\urbanflood24_lite_adapter.json",
+        "value": "C:\\Users\\39053\\Documents\\New project\\configs\\urbanflood24_lite_adapter.json"
+      },
+      {
+        "config_file": "configs/train_baseline.json",
+        "exists": true,
+        "field": "output.root",
+        "is_dir": true,
+        "is_file": false,
+        "resolved_path": "C:\\Users\\39053\\Documents\\New project\\runs\\baseline_unet_tcn",
+        "value": "C:\\Users\\39053\\Documents\\New project\\runs\\baseline_unet_tcn"
+      },
+      {
+        "config_file": "configs/train_baseline_20epoch.json",
+        "exists": true,
+        "field": "dataset.dataset_config_path",
+        "is_dir": false,
+        "is_file": true,
+        "resolved_path": "C:\\Users\\39053\\Documents\\New project\\configs\\urbanflood24_lite_adapter.json",
+        "value": "C:\\Users\\39053\\Documents\\New project\\configs\\urbanflood24_lite_adapter.json"
+      },
+      {
+        "config_file": "configs/train_baseline_20epoch.json",
+        "exists": true,
+        "field": "output.root",
+        "is_dir": true,
+        "is_file": false,
+        "resolved_path": "C:\\Users\\39053\\Documents\\New project\\runs\\baseline_20epoch",
+        "value": "C:\\Users\\39053\\Documents\\New project\\runs\\baseline_20epoch"
+      },
+      {
+        "config_file": "configs/train_baseline_5epoch.json",
+        "exists": true,
+        "field": "dataset.dataset_config_path",
+        "is_dir": false,
+        "is_file": true,
+        "resolved_path": "C:\\Users\\39053\\Documents\\New project\\configs\\urbanflood24_lite_adapter.json",
+        "value": "C:\\Users\\39053\\Documents\\New project\\configs\\urbanflood24_lite_adapter.json"
+      },
+      {
+        "config_file": "configs/train_baseline_5epoch.json",
+        "exists": true,
+        "field": "output.root",
+        "is_dir": true,
+        "is_file": false,
+        "resolved_path": "C:\\Users\\39053\\Documents\\New project\\runs\\baseline_5epoch",
+        "value": "C:\\Users\\39053\\Documents\\New project\\runs\\baseline_5epoch"
+      },
+      {
+        "config_file": "configs/train_baseline_debug.json",
+        "exists": true,
+        "field": "dataset.dataset_config_path",
+        "is_dir": false,
+        "is_file": true,
+        "resolved_path": "C:\\Users\\39053\\Documents\\New project\\configs\\urbanflood24_lite_adapter.json",
+        "value": "C:\\Users\\39053\\Documents\\New project\\configs\\urbanflood24_lite_adapter.json"
+      },
+      {
+        "config_file": "configs/train_baseline_debug.json",
+        "exists": true,
+        "field": "output.root",
+        "is_dir": true,
+        "is_file": false,
+        "resolved_path": "C:\\Users\\39053\\Documents\\New project\\runs\\baseline_unet_tcn",
+        "value": "C:\\Users\\39053\\Documents\\New project\\runs\\baseline_unet_tcn"
+      },
+      {
+        "config_file": "configs/train_phase10_margin_aware_boundary_band_seed123_40e.json",
+        "exists": true,
+        "field": "dataset.dataset_config_path",
+        "is_dir": false,
+        "is_file": true,
+        "resolved_path": "C:\\Users\\39053\\Documents\\physics-guided-urban-flood-prediction\\configs\\urbanflood24_lite_adapter.json",
+        "value": "configs/urbanflood24_lite_adapter.json"
+      },
+      {
+        "config_file": "configs/train_phase10_margin_aware_boundary_band_seed123_40e.json",
+        "exists": true,
+        "field": "output.root",
+        "is_dir": true,
+        "is_file": false,
+        "resolved_path": "C:\\Users\\39053\\Documents\\physics-guided-urban-flood-prediction\\runs\\phase10_margin_aware_boundary_band_seed123_40e",
+        "value": "runs/phase10_margin_aware_boundary_band_seed123_40e"
+      },
+      {
+        "config_file": "configs/train_phase10_margin_aware_boundary_band_seed202_40e.json",
+        "exists": true,
+        "field": "dataset.dataset_config_path",
+        "is_dir": false,
+        "is_file": true,
+        "resolved_path": "C:\\Users\\39053\\Documents\\physics-guided-urban-flood-prediction\\configs\\urbanflood24_lite_adapter.json",
+        "value": "configs/urbanflood24_lite_adapter.json"
+      },
+      {
+        "config_file": "configs/train_phase10_margin_aware_boundary_band_seed202_40e.json",
+        "exists": true,
+        "field": "output.root",
+        "is_dir": true,
+        "is_file": false,
+        "resolved_path": "C:\\Users\\39053\\Documents\\physics-guided-urban-flood-prediction\\runs\\phase10_margin_aware_boundary_band_seed202_40e",
+        "value": "runs/phase10_margin_aware_boundary_band_seed202_40e"
+      },
+      {
+        "config_file": "configs/train_phase10_margin_aware_boundary_band_seed42_40e.json",
+        "exists": true,
+        "field": "dataset.dataset_config_path",
+        "is_dir": false,
+        "is_file": true,
+        "resolved_path": "C:\\Users\\39053\\Documents\\physics-guided-urban-flood-prediction\\configs\\urbanflood24_lite_adapter.json",
+        "value": "configs/urbanflood24_lite_adapter.json"
+      },
+      {
+        "config_file": "configs/train_phase10_margin_aware_boundary_band_seed42_40e.json",
+        "exists": true,
+        "field": "output.root",
+        "is_dir": true,
+        "is_file": false,
+        "resolved_path": "C:\\Users\\39053\\Documents\\physics-guided-urban-flood-prediction\\runs\\phase10_margin_aware_boundary_band_seed42_40e",
+        "value": "runs/phase10_margin_aware_boundary_band_seed42_40e"
+      },
+      {
+        "config_file": "configs/train_phase25_target_wet_recall_seed123_40e.json",
+        "exists": true,
+        "field": "dataset.dataset_config_path",
+        "is_dir": false,
+        "is_file": true,
+        "resolved_path": "C:\\Users\\39053\\Documents\\physics-guided-urban-flood-prediction\\configs\\urbanflood24_lite_adapter.json",
+        "value": "configs/urbanflood24_lite_adapter.json"
+      },
+      {
+        "config_file": "configs/train_phase25_target_wet_recall_seed123_40e.json",
+        "exists": true,
+        "field": "output.root",
+        "is_dir": true,
+        "is_file": false,
+        "resolved_path": "C:\\Users\\39053\\Documents\\physics-guided-urban-flood-prediction\\runs\\phase25_target_wet_recall_seed123_40e",
+        "value": "runs/phase25_target_wet_recall_seed123_40e"
+      },
+      {
+        "config_file": "configs/train_phase25_target_wet_recall_seed202_40e.json",
+        "exists": true,
+        "field": "dataset.dataset_config_path",
+        "is_dir": false,
+        "is_file": true,
+        "resolved_path": "C:\\Users\\39053\\Documents\\physics-guided-urban-flood-prediction\\configs\\urbanflood24_lite_adapter.json",
+        "value": "configs/urbanflood24_lite_adapter.json"
+      },
+      {
+        "config_file": "configs/train_phase25_target_wet_recall_seed202_40e.json",
+        "exists": true,
+        "field": "output.root",
+        "is_dir": true,
+        "is_file": false,
+        "resolved_path": "C:\\Users\\39053\\Documents\\physics-guided-urban-flood-prediction\\runs\\phase25_target_wet_recall_seed202_40e",
+        "value": "runs/phase25_target_wet_recall_seed202_40e"
+      },
+      {
+        "config_file": "configs/train_phase25_target_wet_recall_seed42_40e.json",
+        "exists": true,
+        "field": "dataset.dataset_config_path",
+        "is_dir": false,
+        "is_file": true,
+        "resolved_path": "C:\\Users\\39053\\Documents\\physics-guided-urban-flood-prediction\\configs\\urbanflood24_lite_adapter.json",
+        "value": "configs/urbanflood24_lite_adapter.json"
+      },
+      {
+        "config_file": "configs/train_phase25_target_wet_recall_seed42_40e.json",
+        "exists": true,
+        "field": "output.root",
+        "is_dir": true,
+        "is_file": false,
+        "resolved_path": "C:\\Users\\39053\\Documents\\physics-guided-urban-flood-prediction\\runs\\phase25_target_wet_recall_seed42_40e",
+        "value": "runs/phase25_target_wet_recall_seed42_40e"
+      },
+      {
+        "config_file": "configs/train_phase27_volume_response_seed42_40e.json",
+        "exists": true,
+        "field": "dataset.dataset_config_path",
+        "is_dir": false,
+        "is_file": true,
+        "resolved_path": "C:\\Users\\39053\\Documents\\physics-guided-urban-flood-prediction\\configs\\urbanflood24_lite_adapter.json",
+        "value": "configs/urbanflood24_lite_adapter.json"
+      },
+      {
+        "config_file": "configs/train_phase27_volume_response_seed42_40e.json",
+        "exists": true,
+        "field": "output.root",
+        "is_dir": true,
+        "is_file": false,
+        "resolved_path": "C:\\Users\\39053\\Documents\\physics-guided-urban-flood-prediction\\runs\\phase27_volume_response_seed42_40e",
+        "value": "runs/phase27_volume_response_seed42_40e"
+      },
+      {
+        "config_file": "configs/train_phase29_tolerance_band_volume_seed42_40e.json",
+        "exists": true,
+        "field": "dataset.dataset_config_path",
+        "is_dir": false,
+        "is_file": true,
+        "resolved_path": "C:\\Users\\39053\\Documents\\physics-guided-urban-flood-prediction\\configs\\urbanflood24_lite_adapter.json",
+        "value": "configs/urbanflood24_lite_adapter.json"
+      },
+      {
+        "config_file": "configs/train_phase29_tolerance_band_volume_seed42_40e.json",
+        "exists": true,
+        "field": "output.root",
+        "is_dir": true,
+        "is_file": false,
+        "resolved_path": "C:\\Users\\39053\\Documents\\physics-guided-urban-flood-prediction\\runs\\phase29_tolerance_band_volume_seed42_40e",
+        "value": "runs/phase29_tolerance_band_volume_seed42_40e"
+      },
+      {
+        "config_file": "configs/train_phase36_manhole_false_dry_guardrail_seed42_40e.json",
+        "exists": true,
+        "field": "dataset.dataset_config_path",
+        "is_dir": false,
+        "is_file": true,
+        "resolved_path": "C:\\Users\\39053\\Documents\\physics-guided-urban-flood-prediction\\configs\\urbanflood24_lite_adapter.json",
+        "value": "configs/urbanflood24_lite_adapter.json"
+      },
+      {
+        "config_file": "configs/train_phase36_manhole_false_dry_guardrail_seed42_40e.json",
+        "exists": true,
+        "field": "output.root",
+        "is_dir": true,
+        "is_file": false,
+        "resolved_path": "C:\\Users\\39053\\Documents\\physics-guided-urban-flood-prediction\\runs\\phase36_manhole_false_dry_guardrail_seed42_40e",
+        "value": "runs/phase36_manhole_false_dry_guardrail_seed42_40e"
+      },
+      {
+        "config_file": "configs/train_stage2b_phase1.json",
+        "exists": true,
+        "field": "dataset.dataset_config_path",
+        "is_dir": false,
+        "is_file": true,
+        "resolved_path": "C:\\Users\\39053\\Documents\\New project\\configs\\urbanflood24_lite_adapter.json",
+        "value": "C:\\Users\\39053\\Documents\\New project\\configs\\urbanflood24_lite_adapter.json"
+      },
+      {
+        "config_file": "configs/train_stage2b_phase1.json",
+        "exists": true,
+        "field": "output.root",
+        "is_dir": true,
+        "is_file": false,
+        "resolved_path": "C:\\Users\\39053\\Documents\\New project\\runs\\stage2b_phase1",
+        "value": "C:\\Users\\39053\\Documents\\New project\\runs\\stage2b_phase1"
+      },
+      {
+        "config_file": "configs/train_stage2b_phase1_20epoch.json",
+        "exists": true,
+        "field": "dataset.dataset_config_path",
+        "is_dir": false,
+        "is_file": true,
+        "resolved_path": "C:\\Users\\39053\\Documents\\New project\\configs\\urbanflood24_lite_adapter.json",
+        "value": "C:\\Users\\39053\\Documents\\New project\\configs\\urbanflood24_lite_adapter.json"
+      },
+      {
+        "config_file": "configs/train_stage2b_phase1_20epoch.json",
+        "exists": true,
+        "field": "output.root",
+        "is_dir": true,
+        "is_file": false,
+        "resolved_path": "C:\\Users\\39053\\Documents\\New project\\runs\\stage2b_phase1_20epoch",
+        "value": "C:\\Users\\39053\\Documents\\New project\\runs\\stage2b_phase1_20epoch"
+      },
+      {
+        "config_file": "configs/train_stage2b_phase1_5epoch.json",
+        "exists": true,
+        "field": "dataset.dataset_config_path",
+        "is_dir": false,
+        "is_file": true,
+        "resolved_path": "C:\\Users\\39053\\Documents\\New project\\configs\\urbanflood24_lite_adapter.json",
+        "value": "C:\\Users\\39053\\Documents\\New project\\configs\\urbanflood24_lite_adapter.json"
+      },
+      {
+        "config_file": "configs/train_stage2b_phase1_5epoch.json",
+        "exists": true,
+        "field": "output.root",
+        "is_dir": true,
+        "is_file": false,
+        "resolved_path": "C:\\Users\\39053\\Documents\\New project\\runs\\stage2b_phase1_5epoch",
+        "value": "C:\\Users\\39053\\Documents\\New project\\runs\\stage2b_phase1_5epoch"
+      },
+      {
+        "config_file": "configs/train_stage2b_phase1_debug.json",
+        "exists": true,
+        "field": "dataset.dataset_config_path",
+        "is_dir": false,
+        "is_file": true,
+        "resolved_path": "C:\\Users\\39053\\Documents\\New project\\configs\\urbanflood24_lite_adapter.json",
+        "value": "C:\\Users\\39053\\Documents\\New project\\configs\\urbanflood24_lite_adapter.json"
+      },
+      {
+        "config_file": "configs/train_stage2b_phase1_debug.json",
+        "exists": true,
+        "field": "output.root",
+        "is_dir": true,
+        "is_file": false,
+        "resolved_path": "C:\\Users\\39053\\Documents\\New project\\runs\\stage2b_phase1_debug_regionavg",
+        "value": "C:\\Users\\39053\\Documents\\New project\\runs\\stage2b_phase1_debug_regionavg"
+      },
+      {
+        "config_file": "configs/train_stage2b_phase2.json",
+        "exists": true,
+        "field": "dataset.dataset_config_path",
+        "is_dir": false,
+        "is_file": true,
+        "resolved_path": "C:\\Users\\39053\\Documents\\New project\\configs\\urbanflood24_lite_adapter.json",
+        "value": "C:\\Users\\39053\\Documents\\New project\\configs\\urbanflood24_lite_adapter.json"
+      },
+      {
+        "config_file": "configs/train_stage2b_phase2.json",
+        "exists": false,
+        "field": "output.root",
+        "is_dir": false,
+        "is_file": false,
+        "resolved_path": "C:\\Users\\39053\\Documents\\New project\\runs\\stage2b_phase2",
+        "value": "C:\\Users\\39053\\Documents\\New project\\runs\\stage2b_phase2"
+      },
+      {
+        "config_file": "configs/train_stage2b_phase2_debug.json",
+        "exists": true,
+        "field": "dataset.dataset_config_path",
+        "is_dir": false,
+        "is_file": true,
+        "resolved_path": "C:\\Users\\39053\\Documents\\New project\\configs\\urbanflood24_lite_adapter.json",
+        "value": "C:\\Users\\39053\\Documents\\New project\\configs\\urbanflood24_lite_adapter.json"
+      },
+      {
+        "config_file": "configs/train_stage2b_phase2_debug.json",
+        "exists": true,
+        "field": "output.root",
+        "is_dir": true,
+        "is_file": false,
+        "resolved_path": "C:\\Users\\39053\\Documents\\New project\\runs\\stage2b_phase2_debug",
+        "value": "C:\\Users\\39053\\Documents\\New project\\runs\\stage2b_phase2_debug"
+      },
+      {
+        "config_file": "configs/train_stage2b_phase3.json",
+        "exists": true,
+        "field": "dataset.dataset_config_path",
+        "is_dir": false,
+        "is_file": true,
+        "resolved_path": "C:\\Users\\39053\\Documents\\New project\\configs\\urbanflood24_lite_adapter.json",
+        "value": "C:\\Users\\39053\\Documents\\New project\\configs\\urbanflood24_lite_adapter.json"
+      },
+      {
+        "config_file": "configs/train_stage2b_phase3.json",
+        "exists": false,
+        "field": "output.root",
+        "is_dir": false,
+        "is_file": false,
+        "resolved_path": "C:\\Users\\39053\\Documents\\New project\\runs\\stage2b_phase3",
+        "value": "C:\\Users\\39053\\Documents\\New project\\runs\\stage2b_phase3"
+      },
+      {
+        "config_file": "configs/urbanflood24_lite_adapter.json",
+        "exists": true,
+        "field": "dataset_root",
+        "is_dir": true,
+        "is_file": false,
+        "resolved_path": "E:\\BaiduNetdiskDownload\\urbanflood24_lite_release\\urbanflood24_lite",
+        "value": "E:\\BaiduNetdiskDownload\\urbanflood24_lite_release\\urbanflood24_lite"
+      }
+    ],
+    "dataset_files_inspected": 90,
+    "dataset_roots_inspected": [
+      "E:\\BaiduNetdiskDownload\\urbanflood24_lite_release\\urbanflood24_lite"
+    ],
+    "repository_files_inspected": 12113,
+    "repository_root": "C:\\Users\\39053\\Documents\\physics-guided-urban-flood-prediction",
+    "repository_roots_inspected": [
+      "configs",
+      "datasets",
+      "scripts",
+      "analysis/phase31_physics_input_recovery_readiness",
+      "analysis/phase26_strong_physics_constraint_feasibility",
+      "runs",
+      "docs",
+      "utils",
+      "trainers",
+      "models",
+      "README.md"
+    ]
+  },
+  "categories_evaluated": 10,
+  "categories_missing": [],
+  "categories_supported": [
+    "source_sink_terms",
+    "hydrodynamic_state_variables",
+    "rainfall_source_alignment",
+    "DEM/static_elevation_alignment",
+    "valid_domain_and_boundary_masks"
+  ],
+  "categories_uncertain": [
+    "velocity_or_flux_fields",
+    "dx_dy_grid_spacing",
+    "dt_time_step",
+    "boundary_conditions",
+    "pump_gate_operations"
+  ],
+  "category_status": {
+    "DEM/static_elevation_alignment": "present_aligned",
+    "boundary_conditions": "uncertain_external_export_needed",
+    "dt_time_step": "uncertain_external_export_needed",
+    "dx_dy_grid_spacing": "uncertain_external_export_needed",
+    "hydrodynamic_state_variables": "partial",
+    "pump_gate_operations": "uncertain_external_export_needed",
+    "rainfall_source_alignment": "present_aligned",
+    "source_sink_terms": "partial",
+    "valid_domain_and_boundary_masks": "present_aligned",
+    "velocity_or_flux_fields": "uncertain_external_export_needed"
+  },
+  "dataset_alignment_evidence": {
+    "dem_grid_128x128": true,
+    "flood_grid_128x128": true,
+    "flood_present": true,
+    "flood_shapes": {
+      "[36, 128, 128]": 31,
+      "[48, 128, 128]": 5
+    },
+    "paired_event_examples": [
+      {
+        "event_dir": "E:\\BaiduNetdiskDownload\\urbanflood24_lite_release\\urbanflood24_lite\\test\\flood\\location1\\r100y_p0.5_d3h",
+        "flood_shape": "[36, 128, 128]",
+        "rainfall_shape": "[18]"
+      },
+      {
+        "event_dir": "E:\\BaiduNetdiskDownload\\urbanflood24_lite_release\\urbanflood24_lite\\test\\flood\\location1\\r200y_p0.5_d3h",
+        "flood_shape": "[36, 128, 128]",
+        "rainfall_shape": "[18]"
+      },
+      {
+        "event_dir": "E:\\BaiduNetdiskDownload\\urbanflood24_lite_release\\urbanflood24_lite\\test\\flood\\location1\\r300y_p0.6_d3h",
+        "flood_shape": "[36, 128, 128]",
+        "rainfall_shape": "[18]"
+      },
+      {
+        "event_dir": "E:\\BaiduNetdiskDownload\\urbanflood24_lite_release\\urbanflood24_lite\\test\\flood\\location1\\r300y_p0.8_d3h",
+        "flood_shape": "[36, 128, 128]",
+        "rainfall_shape": "[18]"
+      },
+      {
+        "event_dir": "E:\\BaiduNetdiskDownload\\urbanflood24_lite_release\\urbanflood24_lite\\test\\flood\\location2\\r100y_p0.5_d3h",
+        "flood_shape": "[36, 128, 128]",
+        "rainfall_shape": "[18]"
+      },
+      {
+        "event_dir": "E:\\BaiduNetdiskDownload\\urbanflood24_lite_release\\urbanflood24_lite\\test\\flood\\location2\\r200y_p0.5_d3h",
+        "flood_shape": "[36, 128, 128]",
+        "rainfall_shape": "[18]"
+      },
+      {
+        "event_dir": "E:\\BaiduNetdiskDownload\\urbanflood24_lite_release\\urbanflood24_lite\\test\\flood\\location2\\r300y_p0.6_d3h",
+        "flood_shape": "[48, 128, 128]",
+        "rainfall_shape": "[18]"
+      },
+      {
+        "event_dir": "E:\\BaiduNetdiskDownload\\urbanflood24_lite_release\\urbanflood24_lite\\test\\flood\\location2\\r300y_p0.8_d3h",
+        "flood_shape": "[36, 128, 128]",
+        "rainfall_shape": "[18]"
+      },
+      {
+        "event_dir": "E:\\BaiduNetdiskDownload\\urbanflood24_lite_release\\urbanflood24_lite\\test\\flood\\location3\\r100y_p0.5_d3h",
+        "flood_shape": "[36, 128, 128]",
+        "rainfall_shape": "[18]"
+      },
+      {
+        "event_dir": "E:\\BaiduNetdiskDownload\\urbanflood24_lite_release\\urbanflood24_lite\\test\\flood\\location3\\r200y_p0.5_d3h",
+        "flood_shape": "[36, 128, 128]",
+        "rainfall_shape": "[18]"
+      },
+      {
+        "event_dir": "E:\\BaiduNetdiskDownload\\urbanflood24_lite_release\\urbanflood24_lite\\test\\flood\\location3\\r300y_p0.6_d3h",
+        "flood_shape": "[36, 128, 128]",
+        "rainfall_shape": "[18]"
+      },
+      {
+        "event_dir": "E:\\BaiduNetdiskDownload\\urbanflood24_lite_release\\urbanflood24_lite\\test\\flood\\location3\\r300y_p0.8_d3h",
+        "flood_shape": "[36, 128, 128]",
+        "rainfall_shape": "[18]"
+      },
+      {
+        "event_dir": "E:\\BaiduNetdiskDownload\\urbanflood24_lite_release\\urbanflood24_lite\\train\\flood\\location1\\r100y_p0.6_d3h",
+        "flood_shape": "[36, 128, 128]",
+        "rainfall_shape": "[18]"
+      },
+      {
+        "event_dir": "E:\\BaiduNetdiskDownload\\urbanflood24_lite_release\\urbanflood24_lite\\train\\flood\\location1\\r100y_p0.7_d3h",
+        "flood_shape": "[36, 128, 128]",
+        "rainfall_shape": "[18]"
+      },
+      {
+        "event_dir": "E:\\BaiduNetdiskDownload\\urbanflood24_lite_release\\urbanflood24_lite\\train\\flood\\location1\\r200y_p0.3_d3h",
+        "flood_shape": "[36, 128, 128]",
+        "rainfall_shape": "[18]"
+      },
+      {
+        "event_dir": "E:\\BaiduNetdiskDownload\\urbanflood24_lite_release\\urbanflood24_lite\\train\\flood\\location1\\r300y_p0.4_d3h",
+        "flood_shape": "[36, 128, 128]",
+        "rainfall_shape": "[18]"
+      },
+      {
+        "event_dir": "E:\\BaiduNetdiskDownload\\urbanflood24_lite_release\\urbanflood24_lite\\train\\flood\\location1\\r300y_p0.9_d3h",
+        "flood_shape": "[36, 128, 128]",
+        "rainfall_shape": "[18]"
+      },
+      {
+        "event_dir": "E:\\BaiduNetdiskDownload\\urbanflood24_lite_release\\urbanflood24_lite\\train\\flood\\location1\\r500y_p0.4_d3h",
+        "flood_shape": "[36, 128, 128]",
+        "rainfall_shape": "[18]"
+      },
+      {
+        "event_dir": "E:\\BaiduNetdiskDownload\\urbanflood24_lite_release\\urbanflood24_lite\\train\\flood\\location1\\r500y_p0.6_d3h",
+        "flood_shape": "[36, 128, 128]",
+        "rainfall_shape": "[18]"
+      },
+      {
+        "event_dir": "E:\\BaiduNetdiskDownload\\urbanflood24_lite_release\\urbanflood24_lite\\train\\flood\\location1\\r500y_p0.9_d3h",
+        "flood_shape": "[36, 128, 128]",
+        "rainfall_shape": "[18]"
+      }
+    ],
+    "paired_flood_rainfall_events": 36,
+    "rainfall_present": true,
+    "rainfall_shapes": {
+      "[18]": 36
+    },
+    "static_grid_128x128": true,
+    "static_present": true
+  },
+  "external_hydrodynamic_model_export_needed": true,
+  "guardrail_note": "No training, seed runs, sweeps, loss/config/model edits, SWE residual implementation, PINN implementation, strict conservation claim, full mass conservation claim, hydrodynamic closure claim, or Level 5 support claim was made.",
+  "level4_proxy_supported": true,
+  "level5_blocking_categories": [
+    "velocity_or_flux_fields",
+    "dx_dy_grid_spacing",
+    "dt_time_step",
+    "boundary_conditions",
+    "source_sink_terms",
+    "hydrodynamic_state_variables"
+  ],
+  "level5_supported": false,
+  "next_recommended_action": "Recover or export hydrodynamic model fields: velocity/flux, dx/dy, dt, boundary conditions, and complete source/sink terms.",
+  "phase31_mask_summary_available": true,
+  "phase31_static_summary_available": true,
+  "readiness_decision": "readiness_uncertain_requires_external_data_export"
+}
