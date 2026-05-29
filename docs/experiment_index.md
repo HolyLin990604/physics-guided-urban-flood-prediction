@@ -35,6 +35,7 @@
 - Phase 38 Seed42 Pilot Training and Guardrail Evaluation: single authorized seed42 pilot trained, test-evaluated, guardrail-evaluated, and rejected with decision `seed42_pilot_rejected`
 - Phase 39 Failed Pilot Trade-off Diagnosis: diagnostic-only analysis complete with decision `tradeoff_diagnosis_completed_with_missing_optional_inputs`; Phase 38 remains `seed42_pilot_rejected`
 - Phase 40 Failed Pilot Design Review and Next-Constraint Decision: design-review complete with decision `pause_loss_redesign_move_to_swe_data_readiness`, `training_authorized = false`, and next recommended phase `phase41_swe_data_readiness_audit`
+- Phase 41 SWE Data Readiness Audit: no-training audit complete with decision `readiness_uncertain_requires_external_data_export`, `level5_supported = false`, `external_hydrodynamic_model_export_needed = true`, and `level4_proxy_supported = true`
 
 ## Phase 6
 
@@ -623,7 +624,37 @@
   - no loss/config/model edits
   - no strict conservation / SWE/PINN / hydrodynamic closure claims
   - no Level 5 support claim
-- Model status: proxy-loss redesign paused after repeated trade-off evidence from Phase 27, Phase 29, and Phase 38; next work should be a no-training SWE data readiness audit
+- Model status: proxy-loss redesign paused after repeated trade-off evidence from Phase 27, Phase 29, and Phase 38; the no-training SWE data readiness audit was completed in Phase 41
+
+## Phase 41
+
+- Plan: `docs/phase41_swe_data_readiness_audit_plan.md`
+- Script: `scripts/audit_phase41_swe_data_readiness.py`
+- Findings: `docs/phase41_swe_data_readiness_audit_findings.md`
+- Outputs: `analysis/phase41_swe_data_readiness_audit/`
+- Key output files:
+  - `swe_required_data_inventory.csv`
+  - `repository_search_summary.csv`
+  - `dataset_field_inventory.csv`
+  - `swe_readiness_matrix.csv`
+  - `missing_swe_inputs.csv`
+  - `phase41_swe_data_readiness_summary.json`
+  - `phase41_swe_data_readiness_summary.md`
+- Status: no-training SWE data readiness audit complete
+- Decision: `readiness_uncertain_requires_external_data_export`
+- Summary: `categories_evaluated = 10`; `categories_supported = 5`; `level5_supported = false`; `external_hydrodynamic_model_export_needed = true`; `level4_proxy_supported = true`
+- Interpretation: current evidence supports Level 4+ proxy diagnostics and data recovery only. Level 5 SWE/PINN residual constraints are not currently supported.
+- Missing or uncertain SWE-critical categories: velocity or flux fields, `dx/dy` grid spacing, `dt` time step, boundary conditions, pump/gate operations, complete source/sink terms, and complete hydrodynamic state variables.
+- Guardrails:
+  - no training
+  - no seed runs
+  - no sweeps
+  - no loss/config/model edits
+  - no SWE residual implementation
+  - no PINN implementation
+  - no strict conservation / full mass conservation / hydrodynamic closure claims
+  - no Level 5 support claim
+- Model status: SWE data readiness has been audited; next work should be external hydrodynamic model export / metadata recovery planning, not training or SWE loss implementation
 
 ## Interpretation Order
 
@@ -664,11 +695,12 @@ For current repository interpretation, read the experiment trail in this order:
 33. `docs/phase38_seed42_pilot_training_guardrail_evaluation_findings.md`
 34. `docs/phase39_failed_pilot_tradeoff_diagnosis_findings.md`
 35. `docs/phase40_failed_pilot_design_review_next_constraint_findings.md`
-36. `docs/project_status.md`
+36. `docs/phase41_swe_data_readiness_audit_findings.md`
+37. `docs/project_status.md`
 
 ## Next Stage
 
-The next stage should build on the Phase 12 to Phase 40 reliability/applicability, screening, warning-rule, synthesis, manuscript-writing, manuscript-consolidation, manuscript-draft, evidence-alignment, full-draft expansion, warning case-study prototype, physical-consistency diagnostic, target-wet recall refinement, strong-physics feasibility audit, mixed conservative volume-response pilot, volume-response failure diagnosis, mixed tolerance-band pilot, strong-physics boundary synthesis, physics input recovery readiness, domain-/boundary-aware design guardrail, seed42 pilot-readiness, pilot-threshold formalization, manhole false-dry guardrail pilot-planning, code/smoke-test implementation, seed42 training authorization review, rejected Phase 38 seed42 pilot, Phase 39 failed-pilot diagnosis, and Phase 40 next-constraint decision materials rather than reopening Phase 10 tuning, expanding seeds, starting a sweep, further proxy-loss redesign, or rescuing the rejected pilot post hoc.
+The next stage should build on the Phase 12 to Phase 41 reliability/applicability, screening, warning-rule, synthesis, manuscript-writing, manuscript-consolidation, manuscript-draft, evidence-alignment, full-draft expansion, warning case-study prototype, physical-consistency diagnostic, target-wet recall refinement, strong-physics feasibility audit, mixed conservative volume-response pilot, volume-response failure diagnosis, mixed tolerance-band pilot, strong-physics boundary synthesis, physics input recovery readiness, domain-/boundary-aware design guardrail, seed42 pilot-readiness, pilot-threshold formalization, manhole false-dry guardrail pilot-planning, code/smoke-test implementation, seed42 training authorization review, rejected Phase 38 seed42 pilot, Phase 39 failed-pilot diagnosis, Phase 40 next-constraint decision, and Phase 41 SWE data readiness audit materials rather than reopening Phase 10 tuning, expanding seeds, starting a sweep, further proxy-loss redesign, implementing SWE residuals, or rescuing the rejected pilot post hoc.
 
 Recommended next work:
 
@@ -697,13 +729,14 @@ Recommended next work:
 - treat Phase 39 as diagnostic-only failed-pilot trade-off analysis, with decision `tradeoff_diagnosis_completed_with_missing_optional_inputs`
 - treat the Phase 38 negative result as diagnosed: narrow target-proxy improvement did not preserve broader Level 4+ guardrails
 - treat Phase 40 as failed-pilot design review and next-constraint decision, with decision `pause_loss_redesign_move_to_swe_data_readiness`
-- keep `training_authorized = false` and next recommended phase `phase41_swe_data_readiness_audit`
 - pause proxy-loss redesign after repeated trade-off evidence from Phase 27, Phase 29, and Phase 38
-- prioritize a no-training SWE data readiness audit before any SWE/PINN or hydrodynamic-closure direction
+- treat Phase 41 as a completed no-training SWE data readiness audit, with decision `readiness_uncertain_requires_external_data_export`
+- keep `level5_supported = false`, `external_hydrodynamic_model_export_needed = true`, and `level4_proxy_supported = true`
+- prioritize external hydrodynamic model export / metadata recovery planning before any SWE/PINN or hydrodynamic-closure direction
 - do not run Phase 29 `seed123` / `seed202` confirmation or a tolerance/weight sweep
 - do not run Phase 27 or Phase 29 `seed123` / `seed202` confirmation
 - do not run Phase 38 `seed123` / `seed202` expansion, any sweep, Phase 29 continuation, or post-hoc loss/config rescue
-- avoid a full SWE/PINN residual unless compatible velocity, flux, boundary, DEM, and source-sink information become available
+- do not implement SWE residuals, PINN losses, strict conservation, full mass conservation, hydrodynamic closure, or Level 5 support unless compatible velocity/flux fields, `dx/dy`, `dt`, boundary conditions, pump/gate operations, complete source/sink terms, and complete hydrodynamic state variables are recovered and aligned
 - consider calibrated uncertainty only if calibration data and evaluation design are added
 - keep the current Phase 10 setting fixed unless new evidence justifies changing it
 - avoid broader boundary-weight sweeps
