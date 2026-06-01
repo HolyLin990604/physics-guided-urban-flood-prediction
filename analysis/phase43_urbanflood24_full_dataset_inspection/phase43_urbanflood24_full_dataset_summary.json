@@ -1,0 +1,64 @@
+{
+  "dataset_path": "E:\\BaiduNetdiskDownload\\urbanflood24\\urbanflood24",
+  "dataset_path_exists": true,
+  "decision_candidates": [
+    "full_dataset_level5_ready",
+    "full_dataset_level4_plus_only",
+    "full_dataset_readiness_uncertain_needs_metadata",
+    "inspection_incomplete_dataset_path_issue"
+  ],
+  "full_mass_conservation_claim_authorized": false,
+  "generated_at_utc": "2026-06-01T08:30:33.236376+00:00",
+  "hydrodynamic_closure_claim_authorized": false,
+  "level4_plus_supported": true,
+  "level5_blocking_fields": [
+    "velocity_u_v",
+    "flux_qx_qy",
+    "dx_dy_grid_spacing",
+    "dt_time_step",
+    "boundary_conditions",
+    "source_sink_terms",
+    "pump_gate_operations",
+    "valid_domain_mask",
+    "boundary_mask",
+    "coordinate_reference_or_grid_metadata",
+    "units_and_scaling",
+    "scenario_metadata",
+    "time_axis_metadata"
+  ],
+  "level5_supported": false,
+  "locations_found": [
+    "location1",
+    "location2",
+    "location3"
+  ],
+  "loss_config_model_edits_authorized": false,
+  "next_recommended_action": "Use the dataset for Level 4+ proxy diagnostics only and recover/export explicit velocity or flux, boundary/source-sink, pump/gate, dx/dy, dt, CRS/grid, units, scenario, and time-axis metadata before any Level 5 review.",
+  "phase": 43,
+  "pinn_implementation_authorized": false,
+  "required_fields_absent_count": 9,
+  "required_fields_present_count": 3,
+  "required_fields_uncertain_count": 4,
+  "sampled_arrays_count": 54,
+  "scenarios_count_by_split_location": {
+    "test/location1": 16,
+    "test/location2": 16,
+    "test/location3": 16,
+    "train/location1": 40,
+    "train/location2": 40,
+    "train/location3": 40
+  },
+  "script": "scripts/inspect_phase43_urbanflood24_full_dataset.py",
+  "seed_runs_authorized": false,
+  "selected_decision": "full_dataset_readiness_uncertain_needs_metadata",
+  "splits_found": [
+    "test",
+    "train"
+  ],
+  "strict_conservation_claim_authorized": false,
+  "swe_residual_implementation_authorized": false,
+  "sweeps_authorized": false,
+  "total_dirs": 186,
+  "total_files": 354,
+  "training_authorized": false
+}
