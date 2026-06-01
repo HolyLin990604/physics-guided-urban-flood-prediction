@@ -37,6 +37,7 @@
 - Phase 40 Failed Pilot Design Review and Next-Constraint Decision: design-review complete with decision `pause_loss_redesign_move_to_swe_data_readiness`, `training_authorized = false`, and next recommended phase `phase41_swe_data_readiness_audit`
 - Phase 41 SWE Data Readiness Audit: no-training audit complete with decision `readiness_uncertain_requires_external_data_export`, `level5_supported = false`, `external_hydrodynamic_model_export_needed = true`, and `level4_proxy_supported = true`
 - Phase 42 Hydrodynamic Export Requirement Specification: no-training requirement specification complete with decision `export_contract_ready_for_dataset_inspection` and `training_authorized = false`
+- Phase 43 UrbanFlood24 Full Dataset Inspection: no-training inspection complete with decision `full_dataset_readiness_uncertain_needs_metadata`, `level5_supported = false`, `level4_plus_supported = true`, and `training_authorized = false`
 
 ## Phase 6
 
@@ -688,6 +689,36 @@
   - no Level 5 support claim
 - Model status: export/data-contract specification only; next work is dataset inspection or hydrodynamic export request, not training or SWE loss implementation
 
+## Phase 43
+
+- Plan: `docs/phase43_urbanflood24_full_dataset_inspection_plan.md`
+- Script: `scripts/inspect_phase43_urbanflood24_full_dataset.py`
+- Findings: `docs/phase43_urbanflood24_full_dataset_inspection_findings.md`
+- Outputs: `analysis/phase43_urbanflood24_full_dataset_inspection/`
+- Key output files:
+  - `full_dataset_file_inventory.csv`
+  - `field_keyword_search_results.csv`
+  - `sample_array_shape_inventory.csv`
+  - `phase42_contract_compliance_matrix.csv`
+  - `level5_readiness_assessment.csv`
+  - `phase43_urbanflood24_full_dataset_summary.json`
+  - `phase43_urbanflood24_full_dataset_summary.md`
+- Status: no-training UrbanFlood24 full dataset inspection complete
+- Decision: `full_dataset_readiness_uncertain_needs_metadata`
+- Summary: `level5_supported = false`; `level4_plus_supported = true`; `training_authorized = false`; `total_files = 354`; `total_dirs = 186`; `sampled_arrays_count = 54`
+- Interpretation: UrbanFlood24 full supports higher-resolution Level 4+ proxy diagnostics, but direct Level 5 SWE/PINN readiness remains unsupported because required velocity/flux, grid/time, boundary/source-sink, pump/gate, CRS/grid, units, scenario, and time-axis metadata are absent or uncertain.
+- Next work: metadata recovery, documentation search, author-side clarification, and/or InfoWorks ICM, MIKE+, or equivalent hydrodynamic export request.
+- Guardrails:
+  - no training
+  - no seed runs
+  - no sweeps
+  - no loss/config/model edits
+  - no SWE residual implementation
+  - no PINN implementation
+  - no strict conservation / full mass conservation / hydrodynamic closure claims
+  - no Level 5 support claim
+- Model status: full dataset inspection only; next work is metadata recovery or hydrodynamic export request, not training or SWE loss implementation
+
 ## Interpretation Order
 
 For current repository interpretation, read the experiment trail in this order:
@@ -729,11 +760,12 @@ For current repository interpretation, read the experiment trail in this order:
 35. `docs/phase40_failed_pilot_design_review_next_constraint_findings.md`
 36. `docs/phase41_swe_data_readiness_audit_findings.md`
 37. `docs/phase42_hydrodynamic_export_requirement_specification_findings.md`
-38. `docs/project_status.md`
+38. `docs/phase43_urbanflood24_full_dataset_inspection_findings.md`
+39. `docs/project_status.md`
 
 ## Next Stage
 
-The next stage should build on the Phase 12 to Phase 42 reliability/applicability, screening, warning-rule, synthesis, manuscript-writing, manuscript-consolidation, manuscript-draft, evidence-alignment, full-draft expansion, warning case-study prototype, physical-consistency diagnostic, target-wet recall refinement, strong-physics feasibility audit, mixed conservative volume-response pilot, volume-response failure diagnosis, mixed tolerance-band pilot, strong-physics boundary synthesis, physics input recovery readiness, domain-/boundary-aware design guardrail, seed42 pilot-readiness, pilot-threshold formalization, manhole false-dry guardrail pilot-planning, code/smoke-test implementation, seed42 training authorization review, rejected Phase 38 seed42 pilot, Phase 39 failed-pilot diagnosis, Phase 40 next-constraint decision, Phase 41 SWE data readiness audit, and Phase 42 hydrodynamic export requirement specification materials rather than reopening Phase 10 tuning, expanding seeds, starting a sweep, further proxy-loss redesign, implementing SWE residuals, or rescuing the rejected pilot post hoc.
+The next stage should build on the Phase 12 to Phase 43 reliability/applicability, screening, warning-rule, synthesis, manuscript-writing, manuscript-consolidation, manuscript-draft, evidence-alignment, full-draft expansion, warning case-study prototype, physical-consistency diagnostic, target-wet recall refinement, strong-physics feasibility audit, mixed conservative volume-response pilot, volume-response failure diagnosis, mixed tolerance-band pilot, strong-physics boundary synthesis, physics input recovery readiness, domain-/boundary-aware design guardrail, seed42 pilot-readiness, pilot-threshold formalization, manhole false-dry guardrail pilot-planning, code/smoke-test implementation, seed42 training authorization review, rejected Phase 38 seed42 pilot, Phase 39 failed-pilot diagnosis, Phase 40 next-constraint decision, Phase 41 SWE data readiness audit, Phase 42 hydrodynamic export requirement specification, and Phase 43 UrbanFlood24 full dataset inspection materials rather than reopening Phase 10 tuning, expanding seeds, starting a sweep, further proxy-loss redesign, implementing SWE residuals, or rescuing the rejected pilot post hoc.
 
 Recommended next work:
 
@@ -767,7 +799,9 @@ Recommended next work:
 - keep `level5_supported = false`, `external_hydrodynamic_model_export_needed = true`, and `level4_proxy_supported = true`
 - treat Phase 42 as a completed no-training hydrodynamic export requirement specification, with decision `export_contract_ready_for_dataset_inspection` and `training_authorized = false`
 - use Phase 42 counts conservatively: `required_fields_count = 16`, `minimum_contract_items = 10`, `urbanflood24_checklist_items = 10`, and `icm_mike_checklist_items = 13`
-- prioritize UrbanFlood24 full dataset inspection and/or request/export of fields from InfoWorks ICM, MIKE+, or an equivalent hydrodynamic source before any SWE/PINN or hydrodynamic-closure direction
+- treat Phase 43 as a completed no-training UrbanFlood24 full dataset inspection, with decision `full_dataset_readiness_uncertain_needs_metadata`, `level5_supported = false`, `level4_plus_supported = true`, and `training_authorized = false`
+- use Phase 43 counts conservatively: `total_files = 354`, `total_dirs = 186`, and `sampled_arrays_count = 54`
+- prioritize metadata recovery, documentation search, author-side clarification, and/or request/export of fields from InfoWorks ICM, MIKE+, or an equivalent hydrodynamic source before any SWE/PINN or hydrodynamic-closure direction
 - do not run Phase 29 `seed123` / `seed202` confirmation or a tolerance/weight sweep
 - do not run Phase 27 or Phase 29 `seed123` / `seed202` confirmation
 - do not run Phase 38 `seed123` / `seed202` expansion, any sweep, Phase 29 continuation, or post-hoc loss/config rescue
