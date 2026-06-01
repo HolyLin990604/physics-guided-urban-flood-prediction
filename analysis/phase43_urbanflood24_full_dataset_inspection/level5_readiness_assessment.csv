@@ -1,0 +1,5 @@
+decision_candidate,selected,reason
+full_dataset_level5_ready,false,All Phase 42 Level 5 fields are directly present and aligned.
+full_dataset_level4_plus_only,false,"Depth/rainfall/static-map evidence is present, but SWE-critical velocity/flux/boundary/source-sink/grid/time metadata are absent."
+full_dataset_readiness_uncertain_needs_metadata,true,"Some metadata-like or keyword evidence exists, but it is not sufficient to claim aligned Level 5 SWE fields."
+inspection_incomplete_dataset_path_issue,false,The requested dataset path does not exist or could not be inventoried.
