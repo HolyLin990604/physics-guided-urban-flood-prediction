@@ -36,6 +36,7 @@
 - Phase 39 Failed Pilot Trade-off Diagnosis: diagnostic-only analysis complete with decision `tradeoff_diagnosis_completed_with_missing_optional_inputs`; Phase 38 remains `seed42_pilot_rejected`
 - Phase 40 Failed Pilot Design Review and Next-Constraint Decision: design-review complete with decision `pause_loss_redesign_move_to_swe_data_readiness`, `training_authorized = false`, and next recommended phase `phase41_swe_data_readiness_audit`
 - Phase 41 SWE Data Readiness Audit: no-training audit complete with decision `readiness_uncertain_requires_external_data_export`, `level5_supported = false`, `external_hydrodynamic_model_export_needed = true`, and `level4_proxy_supported = true`
+- Phase 42 Hydrodynamic Export Requirement Specification: no-training requirement specification complete with decision `export_contract_ready_for_dataset_inspection` and `training_authorized = false`
 
 ## Phase 6
 
@@ -656,6 +657,37 @@
   - no Level 5 support claim
 - Model status: SWE data readiness has been audited; next work should be external hydrodynamic model export / metadata recovery planning, not training or SWE loss implementation
 
+## Phase 42
+
+- Plan: `docs/phase42_hydrodynamic_export_requirement_specification_plan.md`
+- Script: `scripts/specify_phase42_hydrodynamic_export_requirements.py`
+- Findings: `docs/phase42_hydrodynamic_export_requirement_specification_findings.md`
+- Outputs: `analysis/phase42_hydrodynamic_export_requirements/`
+- Key output files:
+  - `required_hydrodynamic_fields.csv`
+  - `field_unit_shape_time_requirements.csv`
+  - `swe_residual_minimum_data_contract.csv`
+  - `export_priority_table.csv`
+  - `urbanflood24_full_inspection_checklist.csv`
+  - `icm_mike_export_checklist.csv`
+  - `phase42_export_requirement_summary.json`
+  - `phase42_export_requirement_summary.md`
+- Status: no-training hydrodynamic export requirement specification complete
+- Decision: `export_contract_ready_for_dataset_inspection`
+- Summary: `training_authorized = false`; `required_fields_count = 16`; `minimum_contract_items = 10`; `urbanflood24_checklist_items = 10`; `icm_mike_checklist_items = 13`
+- Interpretation: Phase 42 creates a formal hydrodynamic export/data contract for future dataset inspection and external export requests. It does not claim Level 5 support.
+- Next work: inspect the UrbanFlood24 full dataset if available and/or request or export fields from InfoWorks ICM, MIKE+, or an equivalent hydrodynamic source.
+- Guardrails:
+  - no training
+  - no seed runs
+  - no sweeps
+  - no loss/config/model edits
+  - no SWE residual implementation
+  - no PINN implementation
+  - no strict conservation / full mass conservation / hydrodynamic closure claims
+  - no Level 5 support claim
+- Model status: export/data-contract specification only; next work is dataset inspection or hydrodynamic export request, not training or SWE loss implementation
+
 ## Interpretation Order
 
 For current repository interpretation, read the experiment trail in this order:
@@ -696,11 +728,12 @@ For current repository interpretation, read the experiment trail in this order:
 34. `docs/phase39_failed_pilot_tradeoff_diagnosis_findings.md`
 35. `docs/phase40_failed_pilot_design_review_next_constraint_findings.md`
 36. `docs/phase41_swe_data_readiness_audit_findings.md`
-37. `docs/project_status.md`
+37. `docs/phase42_hydrodynamic_export_requirement_specification_findings.md`
+38. `docs/project_status.md`
 
 ## Next Stage
 
-The next stage should build on the Phase 12 to Phase 41 reliability/applicability, screening, warning-rule, synthesis, manuscript-writing, manuscript-consolidation, manuscript-draft, evidence-alignment, full-draft expansion, warning case-study prototype, physical-consistency diagnostic, target-wet recall refinement, strong-physics feasibility audit, mixed conservative volume-response pilot, volume-response failure diagnosis, mixed tolerance-band pilot, strong-physics boundary synthesis, physics input recovery readiness, domain-/boundary-aware design guardrail, seed42 pilot-readiness, pilot-threshold formalization, manhole false-dry guardrail pilot-planning, code/smoke-test implementation, seed42 training authorization review, rejected Phase 38 seed42 pilot, Phase 39 failed-pilot diagnosis, Phase 40 next-constraint decision, and Phase 41 SWE data readiness audit materials rather than reopening Phase 10 tuning, expanding seeds, starting a sweep, further proxy-loss redesign, implementing SWE residuals, or rescuing the rejected pilot post hoc.
+The next stage should build on the Phase 12 to Phase 42 reliability/applicability, screening, warning-rule, synthesis, manuscript-writing, manuscript-consolidation, manuscript-draft, evidence-alignment, full-draft expansion, warning case-study prototype, physical-consistency diagnostic, target-wet recall refinement, strong-physics feasibility audit, mixed conservative volume-response pilot, volume-response failure diagnosis, mixed tolerance-band pilot, strong-physics boundary synthesis, physics input recovery readiness, domain-/boundary-aware design guardrail, seed42 pilot-readiness, pilot-threshold formalization, manhole false-dry guardrail pilot-planning, code/smoke-test implementation, seed42 training authorization review, rejected Phase 38 seed42 pilot, Phase 39 failed-pilot diagnosis, Phase 40 next-constraint decision, Phase 41 SWE data readiness audit, and Phase 42 hydrodynamic export requirement specification materials rather than reopening Phase 10 tuning, expanding seeds, starting a sweep, further proxy-loss redesign, implementing SWE residuals, or rescuing the rejected pilot post hoc.
 
 Recommended next work:
 
@@ -732,7 +765,9 @@ Recommended next work:
 - pause proxy-loss redesign after repeated trade-off evidence from Phase 27, Phase 29, and Phase 38
 - treat Phase 41 as a completed no-training SWE data readiness audit, with decision `readiness_uncertain_requires_external_data_export`
 - keep `level5_supported = false`, `external_hydrodynamic_model_export_needed = true`, and `level4_proxy_supported = true`
-- prioritize external hydrodynamic model export / metadata recovery planning before any SWE/PINN or hydrodynamic-closure direction
+- treat Phase 42 as a completed no-training hydrodynamic export requirement specification, with decision `export_contract_ready_for_dataset_inspection` and `training_authorized = false`
+- use Phase 42 counts conservatively: `required_fields_count = 16`, `minimum_contract_items = 10`, `urbanflood24_checklist_items = 10`, and `icm_mike_checklist_items = 13`
+- prioritize UrbanFlood24 full dataset inspection and/or request/export of fields from InfoWorks ICM, MIKE+, or an equivalent hydrodynamic source before any SWE/PINN or hydrodynamic-closure direction
 - do not run Phase 29 `seed123` / `seed202` confirmation or a tolerance/weight sweep
 - do not run Phase 27 or Phase 29 `seed123` / `seed202` confirmation
 - do not run Phase 38 `seed123` / `seed202` expansion, any sweep, Phase 29 continuation, or post-hoc loss/config rescue
