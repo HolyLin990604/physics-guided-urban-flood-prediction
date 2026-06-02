@@ -39,6 +39,7 @@
 - Phase 42 Hydrodynamic Export Requirement Specification: no-training requirement specification complete with decision `export_contract_ready_for_dataset_inspection` and `training_authorized = false`
 - Phase 43 UrbanFlood24 Full Dataset Inspection: no-training inspection complete with decision `full_dataset_readiness_uncertain_needs_metadata`, `level5_supported = false`, `level4_plus_supported = true`, and `training_authorized = false`
 - Phase 44 UrbanFlood24 Full Level 4+ Replanning: no-training replanning complete; short-term Level 5/SWE/PINN claims are frozen, and future work uses UrbanFlood24 full for Level 4+ proxy modeling, reliability diagnostics, and warning framework extension
+- Phase 45 Full Dataset Indexing and Lightweight Adapter Preparation: no-training full dataset indexing complete with decision `indexing_ready_for_dataloader_smoke`, `scenario_count_total = 168`, `static_index_rows = 6`, `warning_count = 0`, `training_authorized = false`, `level4_plus_supported = true`, and `level5_supported = false`
 
 ## Phase 6
 
@@ -737,6 +738,32 @@
   - no Level 5 support claim
 - Model status: replanning only; future work is high-resolution Level 4+ proxy modeling, reliability diagnostics, and warning framework extension using the already downloaded UrbanFlood24 full dataset
 
+## Phase 45
+
+- Plan: `docs/phase45_full_dataset_indexing_lightweight_adapter_plan.md`
+- Script: `scripts/build_phase45_full_dataset_index.py`
+- Findings: `docs/phase45_full_dataset_indexing_lightweight_adapter_findings.md`
+- Outputs: `analysis/phase45_full_dataset_indexing/`
+- Key output files:
+  - `scenario_index.csv`
+  - `static_geodata_index.csv`
+  - `dataset_index_summary.json`
+  - `dataset_index_summary.md`
+  - `adapter_design_notes.md`
+- Status: no-training full dataset indexing complete
+- Decision: `indexing_ready_for_dataloader_smoke`
+- Next phase: Phase 46 dataloader smoke test and downsample/tiling feasibility
+- Guardrails:
+  - no training
+  - no seed runs
+  - no sweeps
+  - no loss/config/model edits
+  - no SWE residual implementation
+  - no PINN implementation
+  - no strict conservation / full mass conservation / hydrodynamic closure claims
+  - no Level 5 support claim
+- Model status: indexing and lightweight adapter preparation only; UrbanFlood24 full has a reproducible machine-readable index, but training remains unauthorized until Phase 46 dataloader smoke tests pass
+
 ## Interpretation Order
 
 For current repository interpretation, read the experiment trail in this order:
@@ -780,11 +807,12 @@ For current repository interpretation, read the experiment trail in this order:
 37. `docs/phase42_hydrodynamic_export_requirement_specification_findings.md`
 38. `docs/phase43_urbanflood24_full_dataset_inspection_findings.md`
 39. `docs/phase44_urbanflood24_full_level4plus_replanning.md`
-40. `docs/project_status.md`
+40. `docs/phase45_full_dataset_indexing_lightweight_adapter_findings.md`
+41. `docs/project_status.md`
 
 ## Next Stage
 
-The next stage should build on the Phase 12 to Phase 44 reliability/applicability, screening, warning-rule, synthesis, manuscript-writing, manuscript-consolidation, manuscript-draft, evidence-alignment, full-draft expansion, warning case-study prototype, physical-consistency diagnostic, target-wet recall refinement, strong-physics feasibility audit, mixed conservative volume-response pilot, volume-response failure diagnosis, mixed tolerance-band pilot, strong-physics boundary synthesis, physics input recovery readiness, domain-/boundary-aware design guardrail, seed42 pilot-readiness, pilot-threshold formalization, manhole false-dry guardrail pilot-planning, code/smoke-test implementation, seed42 training authorization review, rejected Phase 38 seed42 pilot, Phase 39 failed-pilot diagnosis, Phase 40 next-constraint decision, Phase 41 SWE data readiness audit, Phase 42 hydrodynamic export requirement specification, Phase 43 UrbanFlood24 full dataset inspection, and Phase 44 UrbanFlood24 full Level 4+ replanning materials rather than reopening Phase 10 tuning, expanding seeds, starting a sweep, further proxy-loss redesign, implementing SWE residuals, implementing PINN components, or rescuing the rejected pilot post hoc.
+The next stage should build on the Phase 12 to Phase 45 reliability/applicability, screening, warning-rule, synthesis, manuscript-writing, manuscript-consolidation, manuscript-draft, evidence-alignment, full-draft expansion, warning case-study prototype, physical-consistency diagnostic, target-wet recall refinement, strong-physics feasibility audit, mixed conservative volume-response pilot, volume-response failure diagnosis, mixed tolerance-band pilot, strong-physics boundary synthesis, physics input recovery readiness, domain-/boundary-aware design guardrail, seed42 pilot-readiness, pilot-threshold formalization, manhole false-dry guardrail pilot-planning, code/smoke-test implementation, seed42 training authorization review, rejected Phase 38 seed42 pilot, Phase 39 failed-pilot diagnosis, Phase 40 next-constraint decision, Phase 41 SWE data readiness audit, Phase 42 hydrodynamic export requirement specification, Phase 43 UrbanFlood24 full dataset inspection, Phase 44 UrbanFlood24 full Level 4+ replanning, and Phase 45 full dataset indexing materials rather than reopening Phase 10 tuning, expanding seeds, starting a sweep, further proxy-loss redesign, implementing SWE residuals, implementing PINN components, or rescuing the rejected pilot post hoc.
 
 Recommended next work:
 
@@ -822,8 +850,11 @@ Recommended next work:
 - use Phase 43 counts conservatively: `total_files = 354`, `total_dirs = 186`, and `sampled_arrays_count = 54`
 - treat Phase 44 as completed no-training UrbanFlood24 full Level 4+ replanning, not as training, SWE/PINN implementation, strict conservation, full mass conservation, hydrodynamic closure, or Level 5 support
 - freeze short-term Level 5/SWE/PINN claims and proceed with the UrbanFlood24 full Level 4+ route
-- prioritize Phase 45 full dataset indexing and lightweight adapter work, then Phase 46 dataloader smoke test and downsample/tiling feasibility checks
-- begin training only after Phase 45 indexing and Phase 46 dataloader smoke tests establish a viable data path
+- treat Phase 45 as completed no-training full dataset indexing and lightweight adapter preparation, with decision `indexing_ready_for_dataloader_smoke`
+- use Phase 45 counts conservatively: `scenario_count_total = 168`, train scenarios = 120, test scenarios = 48, `static_index_rows = 6`, `warning_count = 0`, `level4_plus_supported = true`, and `level5_supported = false`
+- require Phase 46 to handle variable flood sequence lengths and rainfall lengths before any training path is considered
+- prioritize Phase 46 dataloader smoke test and downsample/tiling feasibility checks
+- begin training only after Phase 46 dataloader smoke tests establish a viable data path
 - do not run Phase 29 `seed123` / `seed202` confirmation or a tolerance/weight sweep
 - do not run Phase 27 or Phase 29 `seed123` / `seed202` confirmation
 - do not run Phase 38 `seed123` / `seed202` expansion, any sweep, Phase 29 continuation, or post-hoc loss/config rescue
