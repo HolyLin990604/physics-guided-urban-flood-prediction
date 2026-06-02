@@ -1,0 +1,63 @@
+{
+  "best_test_rmse": 0.01109213042097205,
+  "created_utc": "2026-06-02T08:14:34.382944+00:00",
+  "epochs": 10,
+  "level5_supported": false,
+  "memory": {
+    "cuda_max_allocated_mb": 943.69091796875,
+    "cuda_max_reserved_mb": 1246.0,
+    "runtime_seconds": 1728.6204045,
+    "tracemalloc_current_mb": 5.632207870483398,
+    "tracemalloc_peak_mb": 51.47302722930908
+  },
+  "no_swe_pinn": true,
+  "outputs": {
+    "metrics_csv": "C:/Users/39053/Documents/physics-guided-urban-flood-prediction/runs/phase47_full_downsample128_baseline_seed42_10e/metrics.csv",
+    "metrics_json": "C:/Users/39053/Documents/physics-guided-urban-flood-prediction/runs/phase47_full_downsample128_baseline_seed42_10e/metrics.json",
+    "phase47_training_summary_json": "C:/Users/39053/Documents/physics-guided-urban-flood-prediction/analysis/phase47_controlled_downsample_baseline/phase47_training_summary.json",
+    "phase47_training_summary_md": "C:/Users/39053/Documents/physics-guided-urban-flood-prediction/analysis/phase47_controlled_downsample_baseline/phase47_training_summary.md",
+    "runtime_memory_notes_md": "C:/Users/39053/Documents/physics-guided-urban-flood-prediction/runs/phase47_full_downsample128_baseline_seed42_10e/runtime_memory_notes.md",
+    "training_config_snapshot_json": "C:/Users/39053/Documents/physics-guided-urban-flood-prediction/runs/phase47_full_downsample128_baseline_seed42_10e/training_config_snapshot.json"
+  },
+  "phase": 47,
+  "resolution": 128,
+  "seed": 42,
+  "selected_decision": "phase47_controlled_128_downsample_seed42_pilot_completed",
+  "test_dataset": {
+    "flood_shape_counts": {
+      "(360, 1, 500, 500)": 43,
+      "(480, 1, 500, 500)": 5
+    },
+    "input_steps": 12,
+    "max_windows_per_scenario": 8,
+    "pred_steps": 12,
+    "rainfall_length_counts": {
+      "180": 30,
+      "360": 18
+    },
+    "resolution": 128,
+    "sample_count": 384,
+    "scenario_count": 48,
+    "split": "test",
+    "stride": 24
+  },
+  "train_dataset": {
+    "flood_shape_counts": {
+      "(360, 1, 500, 500)": 110,
+      "(480, 1, 500, 500)": 10
+    },
+    "input_steps": 12,
+    "max_windows_per_scenario": 8,
+    "pred_steps": 12,
+    "rainfall_length_counts": {
+      "180": 78,
+      "360": 42
+    },
+    "resolution": 128,
+    "sample_count": 960,
+    "scenario_count": 120,
+    "split": "train",
+    "stride": 24
+  },
+  "training_scope": "controlled_128_downsample_seed42_pilot"
+}
