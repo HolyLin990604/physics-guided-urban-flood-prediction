@@ -1,0 +1,2 @@
+batch_id,sample_ids,batch_size,smoke_window,downsample_size,flood_window_batch_shape,static_stack_batch_shape,rainfall_summary_batch_shape,success,notes
+batch_001,"01_train_location1_G1135_intensity_117,02_train_location2_r300y_p0.2_d3h",2,2,128,"(2, 2, 1, 128, 128)","(2, 3, 128, 128)","(2, 3)",True,

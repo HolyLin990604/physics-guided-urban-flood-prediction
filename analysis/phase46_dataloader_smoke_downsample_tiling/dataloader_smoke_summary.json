@@ -1,0 +1,181 @@
+{
+  "batch_smoke_passed": true,
+  "created_utc": "2026-06-02T06:49:58.083038+00:00",
+  "downsample_128_passed": true,
+  "downsample_256_passed": true,
+  "flood_shape_counts": {
+    "(360, 1, 500, 500)": 153,
+    "(480, 1, 500, 500)": 15
+  },
+  "input_indexes": {
+    "scenario_index_csv": "C:/Users/39053/Documents/physics-guided-urban-flood-prediction/analysis/phase45_full_dataset_indexing/scenario_index.csv",
+    "static_geodata_index_csv": "C:/Users/39053/Documents/physics-guided-urban-flood-prediction/analysis/phase45_full_dataset_indexing/static_geodata_index.csv"
+  },
+  "level4_plus_supported": true,
+  "level5_supported": false,
+  "memory_safe": true,
+  "next_recommended_action": "Review Phase 46 evidence, then prepare a separate Phase 47 downsample baseline plan before any training authorization.",
+  "outputs": {
+    "batch_smoke_checks_csv": "C:/Users/39053/Documents/physics-guided-urban-flood-prediction/analysis/phase46_dataloader_smoke_downsample_tiling/batch_smoke_checks.csv",
+    "dataloader_smoke_summary_json": "C:/Users/39053/Documents/physics-guided-urban-flood-prediction/analysis/phase46_dataloader_smoke_downsample_tiling/dataloader_smoke_summary.json",
+    "dataloader_smoke_summary_md": "C:/Users/39053/Documents/physics-guided-urban-flood-prediction/analysis/phase46_dataloader_smoke_downsample_tiling/dataloader_smoke_summary.md",
+    "downsample_feasibility_checks_csv": "C:/Users/39053/Documents/physics-guided-urban-flood-prediction/analysis/phase46_dataloader_smoke_downsample_tiling/downsample_feasibility_checks.csv",
+    "memory_safety_notes_md": "C:/Users/39053/Documents/physics-guided-urban-flood-prediction/analysis/phase46_dataloader_smoke_downsample_tiling/memory_safety_notes.md",
+    "output_dir": "C:/Users/39053/Documents/physics-guided-urban-flood-prediction/analysis/phase46_dataloader_smoke_downsample_tiling",
+    "sample_shape_checks_csv": "C:/Users/39053/Documents/physics-guided-urban-flood-prediction/analysis/phase46_dataloader_smoke_downsample_tiling/sample_shape_checks.csv",
+    "tile_feasibility_checks_csv": "C:/Users/39053/Documents/physics-guided-urban-flood-prediction/analysis/phase46_dataloader_smoke_downsample_tiling/tile_feasibility_checks.csv"
+  },
+  "rainfall_length_counts": {
+    "180": 108,
+    "360": 60
+  },
+  "representative_samples_count": 11,
+  "representative_selection_reasons": [
+    {
+      "flood_shape": "(360, 1, 500, 500)",
+      "location": "location1",
+      "rainfall_length": "360",
+      "sample_id": "01_train_location1_G1135_intensity_117",
+      "scenario": "G1135_intensity_117",
+      "scenario_type": "measured",
+      "selection_reason": "cover_split_train",
+      "split": "train"
+    },
+    {
+      "flood_shape": "(360, 1, 500, 500)",
+      "location": "location1",
+      "rainfall_length": "360",
+      "sample_id": "02_test_location1_G1135_intensity_103",
+      "scenario": "G1135_intensity_103",
+      "scenario_type": "measured",
+      "selection_reason": "cover_split_test",
+      "split": "test"
+    },
+    {
+      "flood_shape": "(360, 1, 500, 500)",
+      "location": "location1",
+      "rainfall_length": "360",
+      "sample_id": "03_train_location1_G1135_intensity_155",
+      "scenario": "G1135_intensity_155",
+      "scenario_type": "measured",
+      "selection_reason": "cover_location_location1",
+      "split": "train"
+    },
+    {
+      "flood_shape": "(360, 1, 500, 500)",
+      "location": "location2",
+      "rainfall_length": "360",
+      "sample_id": "04_train_location2_G1135_intensity_117",
+      "scenario": "G1135_intensity_117",
+      "scenario_type": "measured",
+      "selection_reason": "cover_location_location2",
+      "split": "train"
+    },
+    {
+      "flood_shape": "(360, 1, 500, 500)",
+      "location": "location3",
+      "rainfall_length": "360",
+      "sample_id": "05_train_location3_G1135_intensity_117",
+      "scenario": "G1135_intensity_117",
+      "scenario_type": "measured",
+      "selection_reason": "cover_location_location3",
+      "split": "train"
+    },
+    {
+      "flood_shape": "(360, 1, 500, 500)",
+      "location": "location1",
+      "rainfall_length": "180",
+      "sample_id": "06_train_location1_r100y_p0.1_d3h",
+      "scenario": "r100y_p0.1_d3h",
+      "scenario_type": "design",
+      "selection_reason": "cover_scenario_type_design",
+      "split": "train"
+    },
+    {
+      "flood_shape": "(360, 1, 500, 500)",
+      "location": "location1",
+      "rainfall_length": "360",
+      "sample_id": "07_train_location1_G1135_intensity_156",
+      "scenario": "G1135_intensity_156",
+      "scenario_type": "measured",
+      "selection_reason": "cover_scenario_type_measured",
+      "split": "train"
+    },
+    {
+      "flood_shape": "(360, 1, 500, 500)",
+      "location": "location1",
+      "rainfall_length": "360",
+      "sample_id": "08_train_location1_G1135_intensity_163",
+      "scenario": "G1135_intensity_163",
+      "scenario_type": "measured",
+      "selection_reason": "cover_flood_shape_360_1_500_500",
+      "split": "train"
+    },
+    {
+      "flood_shape": "(480, 1, 500, 500)",
+      "location": "location2",
+      "rainfall_length": "180",
+      "sample_id": "09_train_location2_r300y_p0.2_d3h",
+      "scenario": "r300y_p0.2_d3h",
+      "scenario_type": "design",
+      "selection_reason": "cover_flood_shape_480_1_500_500",
+      "split": "train"
+    },
+    {
+      "flood_shape": "(360, 1, 500, 500)",
+      "location": "location1",
+      "rainfall_length": "180",
+      "sample_id": "10_train_location1_r100y_p0.2_d3h",
+      "scenario": "r100y_p0.2_d3h",
+      "scenario_type": "design",
+      "selection_reason": "cover_rainfall_length_180",
+      "split": "train"
+    },
+    {
+      "flood_shape": "(360, 1, 500, 500)",
+      "location": "location1",
+      "rainfall_length": "360",
+      "sample_id": "11_train_location1_G1135_intensity_179",
+      "scenario": "G1135_intensity_179",
+      "scenario_type": "measured",
+      "selection_reason": "cover_rainfall_length_360",
+      "split": "train"
+    }
+  ],
+  "sample_shape_checks_passed": true,
+  "scenario_count_by_location": {
+    "test/location1": 16,
+    "test/location2": 16,
+    "test/location3": 16,
+    "train/location1": 40,
+    "train/location2": 40,
+    "train/location3": 40
+  },
+  "scenario_count_by_split": {
+    "test": 48,
+    "train": 120
+  },
+  "scenario_count_total": 168,
+  "scenario_index_loaded": true,
+  "scenario_type_counts": {
+    "design": 108,
+    "measured": 60
+  },
+  "selected_decision": "dataloader_smoke_ready_for_downsample_baseline",
+  "selected_decision_candidates": [
+    "dataloader_smoke_ready_for_downsample_baseline",
+    "dataloader_smoke_passed_with_warnings",
+    "dataloader_smoke_blocked_by_shape_or_memory_issue",
+    "dataloader_smoke_blocked_by_index_issue"
+  ],
+  "smoke_window": 2,
+  "static_coverage_status_counts": {
+    "complete_500x500": 6
+  },
+  "static_index_loaded": true,
+  "static_index_rows": 6,
+  "tile_checks_passed": true,
+  "training_authorized": false,
+  "warning_count": 0,
+  "warnings": []
+}
