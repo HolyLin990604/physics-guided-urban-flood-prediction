@@ -1,0 +1,58 @@
+{
+  "created_utc": "2026-06-02T02:45:13.512230+00:00",
+  "dataset_root": "E:/BaiduNetdiskDownload/urbanflood24/urbanflood24",
+  "dataset_root_exists": true,
+  "dtype_counts": {
+    "float64": 354
+  },
+  "flood_shape_counts": {
+    "(360, 1, 500, 500)": 153,
+    "(480, 1, 500, 500)": 15
+  },
+  "level4_plus_supported": true,
+  "level5_supported": false,
+  "missing_flood_count": 0,
+  "missing_rainfall_count": 0,
+  "missing_static_count": 0,
+  "next_recommended_action": "Phase 46 dataloader smoke test and downsample/tiling feasibility",
+  "outputs": {
+    "adapter_design_notes_md": "C:/Users/39053/Documents/physics-guided-urban-flood-prediction/analysis/phase45_full_dataset_indexing/adapter_design_notes.md",
+    "dataset_index_summary_json": "C:/Users/39053/Documents/physics-guided-urban-flood-prediction/analysis/phase45_full_dataset_indexing/dataset_index_summary.json",
+    "dataset_index_summary_md": "C:/Users/39053/Documents/physics-guided-urban-flood-prediction/analysis/phase45_full_dataset_indexing/dataset_index_summary.md",
+    "scenario_index_csv": "C:/Users/39053/Documents/physics-guided-urban-flood-prediction/analysis/phase45_full_dataset_indexing/scenario_index.csv",
+    "static_geodata_index_csv": "C:/Users/39053/Documents/physics-guided-urban-flood-prediction/analysis/phase45_full_dataset_indexing/static_geodata_index.csv"
+  },
+  "path_style": "absolute_forward_slash",
+  "rainfall_length_counts": {
+    "180": 108,
+    "360": 60
+  },
+  "rainfall_shape_counts": {
+    "(180,)": 108,
+    "(360,)": 60
+  },
+  "scenario_count_by_location": {
+    "test/location1": 16,
+    "test/location2": 16,
+    "test/location3": 16,
+    "train/location1": 40,
+    "train/location2": 40,
+    "train/location3": 40
+  },
+  "scenario_count_by_split": {
+    "test": 48,
+    "train": 120
+  },
+  "scenario_count_total": 168,
+  "scenario_type_counts": {
+    "design": 108,
+    "measured": 60
+  },
+  "selected_decision": "indexing_ready_for_dataloader_smoke",
+  "static_coverage_status_counts": {
+    "complete_500x500": 6
+  },
+  "static_index_rows": 6,
+  "training_authorized": false,
+  "warning_count": 0
+}
