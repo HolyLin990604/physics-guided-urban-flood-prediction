@@ -1,0 +1,22 @@
+{
+  "checkpoint_found": true,
+  "checkpoint_path": "C:/Users/39053/Documents/physics-guided-urban-flood-prediction/runs/phase47_full_downsample128_baseline_seed42_10e/checkpoints/best.pt",
+  "config_path": "C:/Users/39053/Documents/physics-guided-urban-flood-prediction/configs/train_phase47_full_downsample128_seed42_10e.json",
+  "config_valid": true,
+  "created_utc": "2026-06-04T07:40:42.892842+00:00",
+  "diagnostics_executed": true,
+  "evaluated_split": "test",
+  "level5_supported": false,
+  "no_swe_pinn": true,
+  "no_training": true,
+  "notes": [
+    "No-training Phase 48 diagnostic pass completed on the Phase 45 test split."
+  ],
+  "phase": 48,
+  "phase47_artifacts": {
+    "analysis/phase47_controlled_downsample_baseline/metrics.csv": true,
+    "analysis/phase47_controlled_downsample_baseline/metrics.json": true,
+    "analysis/phase47_controlled_downsample_baseline/phase47_training_summary.json": true
+  },
+  "selected_decision": "phase48_diagnostics_ready_for_warning_framework_extension"
+}
