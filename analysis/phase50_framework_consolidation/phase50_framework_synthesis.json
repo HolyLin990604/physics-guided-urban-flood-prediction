@@ -1,0 +1,43 @@
+{
+  "claim_boundary_summary": "The chain supports a paper-ready Level 4+ full-dataset proxy modeling and diagnostic-warning framework. It does not support Level 5, SWE residual/PINN claims, strict conservation, full mass conservation, hydrodynamic closure, calibrated probability warning labels, or final production readiness.",
+  "created_utc": "2026-06-05T07:58:33.568627+00:00",
+  "decision_candidates": [
+    "phase50_framework_synthesis_ready_for_paper_outline",
+    "phase50_framework_synthesis_ready_for_reviewed_expansion_decision",
+    "phase50_framework_synthesis_incomplete_missing_phase_artifacts",
+    "phase50_framework_synthesis_deferred"
+  ],
+  "evidence_chain_summary": [
+    "Phase 43 inspected the UrbanFlood24 full dataset and supported only a conservative Level 4+ route.",
+    "Phase 44 froze short-term Level 5/SWE/PINN claims and redirected the work to full-dataset proxy modeling.",
+    "Phase 45 indexed 168 scenarios with 120 train and 48 test scenarios.",
+    "Phase 46 confirmed memory-safe dataloader, downsample, tiling, and batch-smoke feasibility without training.",
+    "Phase 47 completed one controlled 128x128 seed42 10e baseline with bounded test metrics.",
+    "Phase 48 added no-training reliability and physical proxy diagnostics across 48 scenarios and 384 windows.",
+    "Phase 49 converted diagnostics into conservative warning labels and action categories."
+  ],
+  "full_mass_conservation_supported": false,
+  "hydrodynamic_closure_supported": false,
+  "level4_plus_route_supported": true,
+  "level5_supported": false,
+  "no_model_loss_config_changes": true,
+  "no_new_seeds": true,
+  "no_swe_pinn": true,
+  "no_sweeps": true,
+  "no_training": true,
+  "outputs_written": [
+    "analysis/phase50_framework_consolidation/phase50_evidence_chain_table.csv",
+    "analysis/phase50_framework_consolidation/phase50_key_metrics_summary.csv",
+    "analysis/phase50_framework_consolidation/phase50_claim_boundary_table.csv",
+    "analysis/phase50_framework_consolidation/phase50_recommended_next_steps.csv",
+    "analysis/phase50_framework_consolidation/phase50_framework_synthesis.json",
+    "analysis/phase50_framework_consolidation/phase50_framework_synthesis.md",
+    "analysis/phase50_framework_consolidation/phase50_paper_ready_contribution_outline.md"
+  ],
+  "phase": 50,
+  "phases_synthesized": "43-49",
+  "recommended_next_action": "Use the Phase 50 synthesis for a paper-ready contribution outline and proceed only to a reviewed Phase 51 expansion decision.",
+  "selected_decision": "phase50_framework_synthesis_ready_for_paper_outline",
+  "strict_conservation_supported": false,
+  "warning_labels_are_probabilities": false
+}

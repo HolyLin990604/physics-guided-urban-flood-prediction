@@ -1,0 +1,51 @@
+source_phase,metric_group,metric,value,interpretation
+43,dataset_inventory,total_files,354,UrbanFlood24 full dataset file inventory.
+43,dataset_inventory,total_dirs,186,UrbanFlood24 full dataset directory inventory.
+43,dataset_inventory,sampled_arrays_count,54,Sampled array inspection count.
+43,dataset_inventory,level4_plus_supported,true,Conservative Level 4+ route can proceed.
+43,dataset_inventory,level5_supported,false,Level 5 is not supported.
+45,indexing,scenario_count_total,168,Indexed full dataset scenarios.
+45,indexing,train_scenarios,120,Indexed training scenarios.
+45,indexing,test_scenarios,48,Indexed test scenarios.
+45,indexing,static_index_rows,6,Static map index rows.
+45,indexing,warning_count,0,No pre-existing warning labels in indexing phase.
+45,shape_distribution,"flood_shape_(360,1,500,500)",153,Flood tensor shape count.
+45,shape_distribution,"flood_shape_(480,1,500,500)",15,Flood tensor shape count.
+45,shape_distribution,rainfall_length_180,108,Rainfall sequence length count.
+45,shape_distribution,rainfall_length_360,60,Rainfall sequence length count.
+46,dataloader_feasibility,scenario_index_loaded,true,Scenario index was readable.
+46,dataloader_feasibility,static_index_loaded,true,Static index was readable.
+46,dataloader_feasibility,representative_samples_count,11,Representative smoke samples checked.
+46,dataloader_feasibility,downsample_128_passed,true,128x128 downsample path passed.
+46,dataloader_feasibility,downsample_256_passed,true,256x256 downsample path passed as feasibility only.
+46,dataloader_feasibility,tile_checks_passed,true,Tile checks passed.
+46,dataloader_feasibility,batch_smoke_passed,true,Batch smoke check passed.
+46,dataloader_feasibility,memory_safe,true,Feasibility checks were memory safe.
+47,controlled_baseline,seed,42,Single controlled baseline seed.
+47,controlled_baseline,resolution,128,Downsample resolution.
+47,controlled_baseline,epochs,10,Controlled short baseline duration.
+47,controlled_baseline,train_samples,960,Training samples used by the baseline.
+47,controlled_baseline,test_samples,384,Test samples used by the baseline.
+47,controlled_baseline,best_test_rmse,0.01109213042097205,Best test RMSE from the controlled baseline.
+47,controlled_baseline,test_mae,0.00525291082279485,Test MAE from the controlled baseline.
+47,controlled_baseline,test_wet_dry_iou,0.8255524213115374,Wet/dry IoU from the controlled baseline.
+47,controlled_baseline,test_rollout_stability,0.998722607580324,Rollout stability from the controlled baseline.
+47,controlled_baseline,no_swe_pinn,true,No SWE/PINN components were used.
+47,controlled_baseline,level5_supported,false,Level 5 remains unsupported.
+48,diagnostics,evaluated_scenarios,48,Test scenarios evaluated by diagnostics.
+48,diagnostics,evaluated_windows,384,Evaluation windows checked.
+48,diagnostics,mean_rmse,0.012037189189155709,Mean diagnostic RMSE.
+48,diagnostics,mean_mae,0.005252910632811514,Mean diagnostic MAE.
+48,diagnostics,mean_wet_dry_iou,0.863043953275997,Mean diagnostic wet/dry IoU.
+48,diagnostics,mean_false_dry_rate,0.0911363765964386,Mean diagnostic false-dry rate.
+48,diagnostics,mean_false_wet_rate,0.003937674554837349,Mean diagnostic false-wet rate.
+48,diagnostics,mean_absolute_relative_volume_bias_proxy,0.021456503649973275,Mean physical proxy volume-bias diagnostic.
+48,diagnostics,warning_level_reliable,1,Reliable diagnostic screening labels.
+48,diagnostics,warning_level_caution,12,Caution diagnostic screening labels.
+48,diagnostics,warning_level_high-risk,35,High-risk diagnostic screening labels.
+49,warning_framework,scenario_count,48,Scenarios covered by warning framework.
+49,warning_framework,warning_level_reliable,1,Reliable warning labels.
+49,warning_framework,warning_level_caution,12,Caution warning labels.
+49,warning_framework,warning_level_high-risk,35,High-risk warning labels.
+49,warning_framework,high_risk_case_count,35,Cases requiring review or supplemental evidence.
+49,warning_framework,warning_labels_are_probabilities,false,Warning labels are not calibrated probabilities.
