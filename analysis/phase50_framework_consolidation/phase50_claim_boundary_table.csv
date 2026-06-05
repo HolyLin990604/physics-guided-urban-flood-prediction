@@ -1,0 +1,12 @@
+claim_status,claim,evidence_basis,boundary_or_caveat
+supported,Level 4+ full-dataset proxy modeling route,"Phases 43-49 establish dataset inspection, indexing, dataloader feasibility, controlled 128x128 baseline, diagnostics, and warning extension.",A proxy modeling route is supported; this is not Level 5 or production hydrodynamic validation.
+supported,128x128 full-dataset controlled baseline viability,"Phase 47 seed42 10e baseline completed with test RMSE, MAE, wet/dry IoU, and rollout stability metrics.",Single-seed short-run evidence only; longer run or replication requires review.
+supported,Reliability and physical proxy diagnostics,"Phase 48 evaluated 48 scenarios and 384 windows with error, wet/dry, false dry/wet, and volume-bias proxy metrics.","Diagnostics are post hoc screening metrics, not strict conservation or hydrodynamic closure."
+supported,Conservative warning framework extension,Phase 49 mapped Phase 48 labels into reliable/caution/high-risk action categories.,"Labels are conservative diagnostic screening labels, not calibrated probabilities."
+not_supported,Level 5,Phase 43 and Phase 47 explicitly keep level5_supported=false; Phase 44 froze short-term Level 5 claims.,Do not claim Level 5.
+not_supported,SWE residual/PINN,Phase 44 froze SWE/PINN claims and Phase 47 records no_swe_pinn=true.,Do not implement or claim SWE residuals or PINN in Phase 50.
+not_supported,Strict conservation,Evidence uses proxy diagnostics only and does not solve or enforce conservation laws.,Do not claim strict conservation.
+not_supported,Full mass conservation,"Phase 48 reports a volume-bias proxy, not a closed mass balance audit.",Do not claim full mass conservation.
+not_supported,Hydrodynamic closure,No hydrodynamic governing-equation closure was implemented or validated in Phases 43-50.,Do not claim hydrodynamic closure.
+not_supported,Calibrated probability warning labels,Phases 48 and 49 state warning labels are conservative diagnostic screening labels.,Do not interpret warning labels as probabilities or event likelihoods.
+not_supported,Final production readiness,"The chain is paper-ready synthesis and reviewed-expansion preparation, not deployment validation.",Do not claim final production readiness.

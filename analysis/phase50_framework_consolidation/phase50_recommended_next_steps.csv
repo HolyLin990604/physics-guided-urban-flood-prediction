@@ -1,0 +1,7 @@
+priority,next_step,allowed,rationale,guardrails
+1,Phase 51 reviewed expansion decision,allowed,A review gate should decide whether evidence justifies any controlled expansion.,No uncontrolled training; preserve Level 4+ boundary; require explicit decision record.
+2,128x128 seed42 longer run review,allowed_after_review,The single 10e baseline supports viability but not duration sensitivity.,Review diagnostics first; keep same model/loss/config family unless separately authorized; no Level 5 claims.
+3,128x128 seed replication only after review,allowed_after_review,Replication can test seed robustness after the Phase 47/48/49 evidence is reviewed.,No sweep expansion; predefine seeds and stopping rules; report failures and warning labels conservatively.
+4,256x256 pilot only after explicit authorization,not_allowed_without_explicit_authorization,Phase 46 showed feasibility only; no 256x256 training evidence exists.,"Require written authorization, resource check, and bounded pilot protocol before any run."
+5,Warning-framework case reporting,allowed,High-risk and caution cases should be summarized for paper and review use.,"State labels are conservative diagnostic screening labels, not probabilities; include diagnostic drivers."
+6,Paper-ready manuscript outline,allowed,The evidence chain supports a framework contribution outline under conservative claims.,"Avoid Level 5, SWE/PINN, conservation, hydrodynamic closure, calibrated probability, and production-readiness claims."
