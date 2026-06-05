@@ -44,6 +44,7 @@
 - Phase 47 Controlled Full-Dataset Downsample Baseline: controlled UrbanFlood24 full-dataset `128 x 128` downsample `seed42` 10e baseline complete with decision `phase47_controlled_128_downsample_seed42_pilot_completed`, `train_samples = 960`, `test_samples = 384`, `best_test_rmse = 0.01109213042097205`, `test_mae = 0.00525291082279485`, `test_wet_dry_iou = 0.8255524213115374`, `test_rollout_stability = 0.998722607580324`, `test_step_rmse_std = 0.0012824604989987165`, `no_swe_pinn = true`, and `level5_supported = false`
 - Phase 48 Full-Dataset Reliability and Physical Proxy Diagnostics: no-training diagnostics complete with decision `phase48_diagnostics_ready_for_warning_framework_extension`, `checkpoint_found = true`, `evaluated_scenarios = 48`, `evaluated_windows = 384`, `mean_rmse = 0.012037189189155709`, `mean_mae = 0.005252910632811514`, `mean_wet_dry_iou = 0.863043953275997`, warning counts of 1 reliable, 12 caution, and 35 high-risk, `no_training = true`, `no_swe_pinn = true`, and `level5_supported = false`
 - Phase 49 Full-Dataset Warning Framework Extension: no-training warning framework extension complete with decision `phase49_warning_framework_completed_with_conservative_labels`, `scenario_count = 48`, warning counts of 1 reliable, 12 caution, and 35 high-risk, `high_risk_case_count = 35`, `no_training = true`, and `warning_labels_are_probabilities = false`
+- Phase 50 Framework Consolidation and Paper-Ready Evidence Synthesis: no-training synthesis complete with decision `phase50_framework_synthesis_ready_for_paper_outline`, `phases_synthesized = 43-49`, `level4_plus_route_supported = true`, `level5_supported = false`, `no_training = true`, `no_swe_pinn = true`, and `warning_labels_are_probabilities = false`
 
 ## Phase 6
 
@@ -882,7 +883,7 @@
 - Summary: `input_files_found = true`; `scenario_count = 48`; `warning_level_counts = reliable 1, caution 12, high-risk 35`; `high_risk_case_count = 35`; `no_training = true`; `warning_labels_are_probabilities = false`
 - Action mapping: `reliable -> normal_use_with_standard_monitoring`; `caution -> use_with_caution_and_review_diagnostics`; `high-risk -> high_risk_requires_review_or_supplemental_evidence`
 - Interpretation: Phase 49 converted Phase 48 diagnostic labels into scenario-level warning actions. Warning labels are conservative diagnostic screening labels, not calibrated probabilities, and the high-risk count reflects conservative screening sensitivity rather than poor overall model skill.
-- Next phase: Phase 50 framework consolidation / paper-ready evidence synthesis or reviewed expansion-decision phase
+- Follow-up: completed by Phase 50 framework consolidation and paper-ready evidence synthesis
 - Guardrails:
   - no training
   - no seed expansion
@@ -896,6 +897,42 @@
   - no Level 5 support claim
   - no calibrated probability claim
 - Model status: Phase 49 supports conservative case reporting and diagnostic screening only; it does not authorize uncontrolled training expansion, production readiness claims, SWE/PINN claims, or Level 5 support claims.
+
+## Phase 50
+
+- Plan: `docs/phase50_framework_consolidation_paper_ready_evidence_synthesis_plan.md`
+- Script: `scripts/synthesize_phase50_full_dataset_evidence.py`
+- Findings: `docs/phase50_framework_consolidation_paper_ready_evidence_synthesis_findings.md`
+- Outputs: `analysis/phase50_framework_consolidation/`
+- Key output files:
+  - `phase50_evidence_chain_table.csv`
+  - `phase50_key_metrics_summary.csv`
+  - `phase50_claim_boundary_table.csv`
+  - `phase50_recommended_next_steps.csv`
+  - `phase50_framework_synthesis.json`
+  - `phase50_framework_synthesis.md`
+  - `phase50_paper_ready_contribution_outline.md`
+- Status: no-training framework consolidation and paper-ready full-dataset evidence synthesis complete
+- Decision: `phase50_framework_synthesis_ready_for_paper_outline`
+- Summary: `phases_synthesized = 43-49`; `level4_plus_route_supported = true`; `level5_supported = false`; `no_training = true`; `no_swe_pinn = true`; `warning_labels_are_probabilities = false`
+- Evidence chain: dataset inspection -> full dataset indexing -> dataloader feasibility -> controlled `128 x 128` baseline -> reliability diagnostics -> warning framework -> evidence synthesis
+- Interpretation: Phase 50 consolidates the UrbanFlood24 full-dataset Level 4+ route for paper-outline use. It does not establish Level 5, SWE/PINN, strict conservation, full mass conservation, hydrodynamic closure, calibrated probabilities, final production readiness, or uncontrolled training expansion.
+- Next phase: Phase 51 reviewed expansion decision
+- Guardrails:
+  - no training
+  - no new seeds
+  - no sweeps
+  - no `256 x 256`, tile, multiscale, or full-`500 x 500` expansion
+  - no new loss redesign
+  - no model/loss/config edits
+  - no SWE residual implementation
+  - no PINN implementation
+  - no strict conservation / full mass conservation / hydrodynamic closure claims
+  - no Level 5 support claim
+  - no calibrated probability claim
+  - no final production-readiness claim
+  - no uncontrolled training expansion
+- Model status: Phase 50 supports paper-ready Level 4+ evidence synthesis and a reviewed Phase 51 expansion decision only.
 
 ## Interpretation Order
 
@@ -945,11 +982,12 @@ For current repository interpretation, read the experiment trail in this order:
 42. `docs/phase47_controlled_full_dataset_downsample_baseline_findings.md`
 43. `docs/phase48_full_dataset_reliability_physical_proxy_diagnostics_findings.md`
 44. `docs/phase49_full_dataset_warning_framework_extension_findings.md`
-45. `docs/project_status.md`
+45. `docs/phase50_framework_consolidation_paper_ready_evidence_synthesis_findings.md`
+46. `docs/project_status.md`
 
 ## Next Stage
 
-The next stage should build on the Phase 12 to Phase 49 reliability/applicability, screening, warning-rule, synthesis, manuscript-writing, manuscript-consolidation, manuscript-draft, evidence-alignment, full-draft expansion, warning case-study prototype, physical-consistency diagnostic, target-wet recall refinement, strong-physics feasibility audit, mixed conservative volume-response pilot, volume-response failure diagnosis, mixed tolerance-band pilot, strong-physics boundary synthesis, physics input recovery readiness, domain-/boundary-aware design guardrail, seed42 pilot-readiness, pilot-threshold formalization, manhole false-dry guardrail pilot-planning, code/smoke-test implementation, seed42 training authorization review, rejected Phase 38 seed42 pilot, Phase 39 failed-pilot diagnosis, Phase 40 next-constraint decision, Phase 41 SWE data readiness audit, Phase 42 hydrodynamic export requirement specification, Phase 43 UrbanFlood24 full dataset inspection, Phase 44 UrbanFlood24 full Level 4+ replanning, Phase 45 full dataset indexing, Phase 46 dataloader smoke/downsample/tiling feasibility, Phase 47 controlled full-dataset `128 x 128` baseline materials, Phase 48 full-dataset reliability and physical proxy diagnostics, and Phase 49 warning framework extension rather than reopening Phase 10 tuning, expanding seeds, starting a sweep, further proxy-loss redesign, implementing SWE residuals, implementing PINN components, or rescuing the rejected pilot post hoc.
+The next stage should build on the Phase 12 to Phase 50 reliability/applicability, screening, warning-rule, synthesis, manuscript-writing, manuscript-consolidation, manuscript-draft, evidence-alignment, full-draft expansion, warning case-study prototype, physical-consistency diagnostic, target-wet recall refinement, strong-physics feasibility audit, mixed conservative volume-response pilot, volume-response failure diagnosis, mixed tolerance-band pilot, strong-physics boundary synthesis, physics input recovery readiness, domain-/boundary-aware design guardrail, seed42 pilot-readiness, pilot-threshold formalization, manhole false-dry guardrail pilot-planning, code/smoke-test implementation, seed42 training authorization review, rejected Phase 38 seed42 pilot, Phase 39 failed-pilot diagnosis, Phase 40 next-constraint decision, Phase 41 SWE data readiness audit, Phase 42 hydrodynamic export requirement specification, Phase 43 UrbanFlood24 full dataset inspection, Phase 44 UrbanFlood24 full Level 4+ replanning, Phase 45 full dataset indexing, Phase 46 dataloader smoke/downsample/tiling feasibility, Phase 47 controlled full-dataset `128 x 128` baseline materials, Phase 48 full-dataset reliability and physical proxy diagnostics, Phase 49 warning framework extension, and Phase 50 paper-ready evidence synthesis rather than reopening Phase 10 tuning, expanding seeds, starting a sweep, further proxy-loss redesign, implementing SWE residuals, implementing PINN components, or rescuing the rejected pilot post hoc.
 
 Recommended next work:
 
@@ -999,9 +1037,11 @@ Recommended next work:
 - treat Phase 48 warning labels as conservative diagnostic screening labels, not calibrated probabilities; the reliable 1, caution 12, high-risk 35 split is not proof of poor overall model skill
 - treat Phase 49 as completed no-training full-dataset warning framework extension, with decision `phase49_warning_framework_completed_with_conservative_labels`, `scenario_count = 48`, `warning_level_counts = reliable 1, caution 12, high-risk 35`, `high_risk_case_count = 35`, `no_training = true`, and `warning_labels_are_probabilities = false`
 - treat Phase 49 warning actions as conservative diagnostic screening actions, not calibrated probabilities; use `reliable -> normal_use_with_standard_monitoring`, `caution -> use_with_caution_and_review_diagnostics`, and `high-risk -> high_risk_requires_review_or_supplemental_evidence`
-- do not claim SWE/PINN support, strict conservation, full mass conservation, or hydrodynamic closure from Phase 47, Phase 48, or Phase 49
-- do not expand to `seed123` / `seed202`, `256 x 256`, tile, multiscale, full `500 x 500`, sweeps, or new loss redesign without diagnostics and a reviewed expansion-decision phase
-- make the next step Phase 50 framework consolidation / paper-ready evidence synthesis or a reviewed expansion-decision phase, not immediate training expansion
+- treat Phase 50 as completed no-training framework consolidation and paper-ready full-dataset evidence synthesis, with decision `phase50_framework_synthesis_ready_for_paper_outline`, `phases_synthesized = 43-49`, `level4_plus_route_supported = true`, `level5_supported = false`, `no_training = true`, `no_swe_pinn = true`, and `warning_labels_are_probabilities = false`
+- treat the Phase 50 evidence chain as paper-ready Level 4+ support only: dataset inspection -> full dataset indexing -> dataloader feasibility -> controlled `128 x 128` baseline -> reliability diagnostics -> warning framework -> evidence synthesis
+- do not claim SWE/PINN support, strict conservation, full mass conservation, or hydrodynamic closure from Phase 47, Phase 48, Phase 49, or Phase 50
+- do not expand to `seed123` / `seed202`, `256 x 256`, tile, multiscale, full `500 x 500`, sweeps, or new loss redesign without a reviewed expansion-decision phase
+- make the next step Phase 51 reviewed expansion decision, not immediate training expansion
 - do not run Phase 29 `seed123` / `seed202` confirmation or a tolerance/weight sweep
 - do not run Phase 27 or Phase 29 `seed123` / `seed202` confirmation
 - do not run Phase 38 `seed123` / `seed202` expansion, any sweep, Phase 29 continuation, or post-hoc loss/config rescue
