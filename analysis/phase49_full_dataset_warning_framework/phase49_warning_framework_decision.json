@@ -1,0 +1,25 @@
+{
+  "created_utc": "2026-06-05T06:37:39.796682+00:00",
+  "decision_candidates": [
+    "phase49_warning_framework_ready_for_case_reporting",
+    "phase49_warning_framework_completed_with_conservative_labels",
+    "phase49_warning_framework_blocked_by_missing_phase48_inputs",
+    "phase49_warning_framework_deferred"
+  ],
+  "decision_rationale": "Required Phase 48 inputs were present, labels were preserved, warning actions and diagnostic failure drivers were generated, and outputs remain conservative no-training screening artifacts.",
+  "high_risk_case_count": 35,
+  "input_files_found": true,
+  "level5_supported": false,
+  "next_recommended_action": "Use Phase 49 outputs for conservative case reporting and diagnostic screening, with manual review for high-risk cases and no probability interpretation.",
+  "no_swe_pinn": true,
+  "no_training": true,
+  "phase": 49,
+  "scenario_count": 48,
+  "selected_decision": "phase49_warning_framework_completed_with_conservative_labels",
+  "warning_labels_are_probabilities": false,
+  "warning_level_counts": {
+    "caution": 12,
+    "high-risk": 35,
+    "reliable": 1
+  }
+}

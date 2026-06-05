@@ -1,0 +1,63 @@
+{
+  "created_utc": "2026-06-05T06:37:39.796682+00:00",
+  "failure_driver_thresholds": {
+    "absolute_relative_volume_bias_high_risk_min": 0.03289761075806039,
+    "absolute_relative_volume_bias_reliable_max": 0.025945133712967482,
+    "false_dry_high_risk_min": 0.10899738867191781,
+    "false_dry_reliable_max": 0.10486495261130992,
+    "false_wet_high_risk_min": 0.004857974484292498,
+    "false_wet_reliable_max": 0.00442259846859298,
+    "rmse_high_risk_min": 0.013702530495076255,
+    "rmse_reliable_max": 0.011004068821235263,
+    "wet_dry_iou_high_risk_max": 0.8365939659875213,
+    "wet_dry_iou_reliable_min": 0.8860657485849278
+  },
+  "high_risk_case_count": 35,
+  "hydrodynamic_closure_claimed": false,
+  "input_files": {
+    "location_type_summary": "analysis\\phase48_full_dataset_reliability_physical_proxy\\location_type_summary.csv",
+    "peak_depth_timing_metrics": "analysis\\phase48_full_dataset_reliability_physical_proxy\\peak_depth_timing_metrics.csv",
+    "phase48_reliability_summary_json": "analysis\\phase48_full_dataset_reliability_physical_proxy\\phase48_reliability_summary.json",
+    "phase48_reliability_summary_md": "analysis\\phase48_full_dataset_reliability_physical_proxy\\phase48_reliability_summary.md",
+    "reliability_warning_levels": "analysis\\phase48_full_dataset_reliability_physical_proxy\\reliability_warning_levels.csv",
+    "scenario_reliability_metrics": "analysis\\phase48_full_dataset_reliability_physical_proxy\\scenario_reliability_metrics.csv",
+    "volume_response_proxy_metrics": "analysis\\phase48_full_dataset_reliability_physical_proxy\\volume_response_proxy_metrics.csv",
+    "wet_dry_error_metrics": "analysis\\phase48_full_dataset_reliability_physical_proxy\\wet_dry_error_metrics.csv"
+  },
+  "input_files_found": true,
+  "level5_supported": false,
+  "location_type_rows": 6,
+  "next_recommended_action": "Use Phase 49 outputs for conservative case reporting and diagnostic screening, with manual review for high-risk cases and no probability interpretation.",
+  "no_swe_pinn": true,
+  "no_training": true,
+  "outputs": {
+    "high_risk_case_review_list_csv": "analysis\\phase49_full_dataset_warning_framework\\high_risk_case_review_list.csv",
+    "location_type_warning_summary_csv": "analysis\\phase49_full_dataset_warning_framework\\location_type_warning_summary.csv",
+    "phase49_warning_framework_decision_json": "analysis\\phase49_full_dataset_warning_framework\\phase49_warning_framework_decision.json",
+    "scenario_warning_framework_csv": "analysis\\phase49_full_dataset_warning_framework\\scenario_warning_framework.csv",
+    "warning_framework_summary_json": "analysis\\phase49_full_dataset_warning_framework\\warning_framework_summary.json",
+    "warning_framework_summary_md": "analysis\\phase49_full_dataset_warning_framework\\warning_framework_summary.md",
+    "warning_message_templates_md": "analysis\\phase49_full_dataset_warning_framework\\warning_message_templates.md",
+    "warning_rule_table_csv": "analysis\\phase49_full_dataset_warning_framework\\warning_rule_table.csv"
+  },
+  "phase": 49,
+  "phase47_final_production_model_claimed": false,
+  "phase48_labels_preserved": true,
+  "pinn_used": false,
+  "scenario_count": 48,
+  "selected_decision": "phase49_warning_framework_completed_with_conservative_labels",
+  "source_phase48_decision": "phase48_diagnostics_ready_for_warning_framework_extension",
+  "source_phase48_warning_level_counts": {
+    "caution": 12,
+    "high-risk": 35,
+    "reliable": 1
+  },
+  "strict_conservation_claimed": false,
+  "swe_residual_used": false,
+  "warning_labels_are_probabilities": false,
+  "warning_level_counts": {
+    "caution": 12,
+    "high-risk": 35,
+    "reliable": 1
+  }
+}

@@ -43,6 +43,7 @@
 - Phase 46 Dataloader Smoke, Downsample, and Tiling Feasibility: no-training dataloader smoke test complete with decision `dataloader_smoke_ready_for_downsample_baseline`, `scenario_index_loaded = true`, `static_index_loaded = true`, `representative_samples_count = 11`, `downsample_128_passed = true`, `downsample_256_passed = true`, `tile_checks_passed = true`, `batch_smoke_passed = true`, `memory_safe = true`, `training_authorized = false`, `level4_plus_supported = true`, and `level5_supported = false`
 - Phase 47 Controlled Full-Dataset Downsample Baseline: controlled UrbanFlood24 full-dataset `128 x 128` downsample `seed42` 10e baseline complete with decision `phase47_controlled_128_downsample_seed42_pilot_completed`, `train_samples = 960`, `test_samples = 384`, `best_test_rmse = 0.01109213042097205`, `test_mae = 0.00525291082279485`, `test_wet_dry_iou = 0.8255524213115374`, `test_rollout_stability = 0.998722607580324`, `test_step_rmse_std = 0.0012824604989987165`, `no_swe_pinn = true`, and `level5_supported = false`
 - Phase 48 Full-Dataset Reliability and Physical Proxy Diagnostics: no-training diagnostics complete with decision `phase48_diagnostics_ready_for_warning_framework_extension`, `checkpoint_found = true`, `evaluated_scenarios = 48`, `evaluated_windows = 384`, `mean_rmse = 0.012037189189155709`, `mean_mae = 0.005252910632811514`, `mean_wet_dry_iou = 0.863043953275997`, warning counts of 1 reliable, 12 caution, and 35 high-risk, `no_training = true`, `no_swe_pinn = true`, and `level5_supported = false`
+- Phase 49 Full-Dataset Warning Framework Extension: no-training warning framework extension complete with decision `phase49_warning_framework_completed_with_conservative_labels`, `scenario_count = 48`, warning counts of 1 reliable, 12 caution, and 35 high-risk, `high_risk_case_count = 35`, `no_training = true`, and `warning_labels_are_probabilities = false`
 
 ## Phase 6
 
@@ -848,7 +849,7 @@
 - Decision: `phase48_diagnostics_ready_for_warning_framework_extension`
 - Summary: `checkpoint_found = true`; `diagnostics_executed = true`; `evaluated_split = test`; `evaluated_scenarios = 48`; `evaluated_windows = 384`; `mean_rmse = 0.012037189189155709`; `mean_mae = 0.005252910632811514`; `mean_wet_dry_iou = 0.863043953275997`; `mean_false_dry_rate = 0.0911363765964386`; `mean_false_wet_rate = 0.003937674554837349`; `mean_absolute_relative_volume_bias_proxy = 0.021456503649973275`; `warning_level_counts = reliable 1, caution 12, high-risk 35`; `no_training = true`; `no_swe_pinn = true`; `level5_supported = false`
 - Interpretation: warning labels are conservative diagnostic screening labels, not calibrated probabilities; the high-risk count should not be interpreted as poor overall model skill
-- Next phase: Phase 49 full-dataset warning-framework extension
+- Follow-up: completed by Phase 49 full-dataset warning-framework extension
 - Guardrails:
   - no training
   - no seed expansion
@@ -859,7 +860,42 @@
   - no PINN implementation
   - no strict conservation / full mass conservation / hydrodynamic closure claims
   - no Level 5 support claim
-- Model status: Phase 48 supports conservative Phase 49 warning-framework extension only; it does not authorize uncontrolled training expansion
+- Model status: Phase 48 provided the diagnostic inputs for completed Phase 49 warning-framework extension; it does not authorize uncontrolled training expansion
+
+## Phase 49
+
+- Plan: `docs/phase49_full_dataset_warning_framework_extension_plan.md`
+- Script: `scripts/build_phase49_warning_framework.py`
+- Findings: `docs/phase49_full_dataset_warning_framework_extension_findings.md`
+- Outputs: `analysis/phase49_full_dataset_warning_framework/`
+- Key output files:
+  - `warning_framework_summary.json`
+  - `warning_framework_summary.md`
+  - `scenario_warning_framework.csv`
+  - `location_type_warning_summary.csv`
+  - `warning_rule_table.csv`
+  - `warning_message_templates.md`
+  - `high_risk_case_review_list.csv`
+  - `phase49_warning_framework_decision.json`
+- Status: no-training full-dataset warning framework extension complete
+- Decision: `phase49_warning_framework_completed_with_conservative_labels`
+- Summary: `input_files_found = true`; `scenario_count = 48`; `warning_level_counts = reliable 1, caution 12, high-risk 35`; `high_risk_case_count = 35`; `no_training = true`; `warning_labels_are_probabilities = false`
+- Action mapping: `reliable -> normal_use_with_standard_monitoring`; `caution -> use_with_caution_and_review_diagnostics`; `high-risk -> high_risk_requires_review_or_supplemental_evidence`
+- Interpretation: Phase 49 converted Phase 48 diagnostic labels into scenario-level warning actions. Warning labels are conservative diagnostic screening labels, not calibrated probabilities, and the high-risk count reflects conservative screening sensitivity rather than poor overall model skill.
+- Next phase: Phase 50 framework consolidation / paper-ready evidence synthesis or reviewed expansion-decision phase
+- Guardrails:
+  - no training
+  - no seed expansion
+  - no sweeps
+  - no `256 x 256`, tile, multiscale, or full-`500 x 500` expansion
+  - no new loss redesign
+  - no model/loss/config edits
+  - no SWE residual implementation
+  - no PINN implementation
+  - no strict conservation / full mass conservation / hydrodynamic closure claims
+  - no Level 5 support claim
+  - no calibrated probability claim
+- Model status: Phase 49 supports conservative case reporting and diagnostic screening only; it does not authorize uncontrolled training expansion, production readiness claims, SWE/PINN claims, or Level 5 support claims.
 
 ## Interpretation Order
 
@@ -908,11 +944,12 @@ For current repository interpretation, read the experiment trail in this order:
 41. `docs/phase46_dataloader_smoke_downsample_tiling_feasibility_findings.md`
 42. `docs/phase47_controlled_full_dataset_downsample_baseline_findings.md`
 43. `docs/phase48_full_dataset_reliability_physical_proxy_diagnostics_findings.md`
-44. `docs/project_status.md`
+44. `docs/phase49_full_dataset_warning_framework_extension_findings.md`
+45. `docs/project_status.md`
 
 ## Next Stage
 
-The next stage should build on the Phase 12 to Phase 48 reliability/applicability, screening, warning-rule, synthesis, manuscript-writing, manuscript-consolidation, manuscript-draft, evidence-alignment, full-draft expansion, warning case-study prototype, physical-consistency diagnostic, target-wet recall refinement, strong-physics feasibility audit, mixed conservative volume-response pilot, volume-response failure diagnosis, mixed tolerance-band pilot, strong-physics boundary synthesis, physics input recovery readiness, domain-/boundary-aware design guardrail, seed42 pilot-readiness, pilot-threshold formalization, manhole false-dry guardrail pilot-planning, code/smoke-test implementation, seed42 training authorization review, rejected Phase 38 seed42 pilot, Phase 39 failed-pilot diagnosis, Phase 40 next-constraint decision, Phase 41 SWE data readiness audit, Phase 42 hydrodynamic export requirement specification, Phase 43 UrbanFlood24 full dataset inspection, Phase 44 UrbanFlood24 full Level 4+ replanning, Phase 45 full dataset indexing, Phase 46 dataloader smoke/downsample/tiling feasibility, Phase 47 controlled full-dataset `128 x 128` baseline materials, and Phase 48 full-dataset reliability and physical proxy diagnostics rather than reopening Phase 10 tuning, expanding seeds, starting a sweep, further proxy-loss redesign, implementing SWE residuals, implementing PINN components, or rescuing the rejected pilot post hoc.
+The next stage should build on the Phase 12 to Phase 49 reliability/applicability, screening, warning-rule, synthesis, manuscript-writing, manuscript-consolidation, manuscript-draft, evidence-alignment, full-draft expansion, warning case-study prototype, physical-consistency diagnostic, target-wet recall refinement, strong-physics feasibility audit, mixed conservative volume-response pilot, volume-response failure diagnosis, mixed tolerance-band pilot, strong-physics boundary synthesis, physics input recovery readiness, domain-/boundary-aware design guardrail, seed42 pilot-readiness, pilot-threshold formalization, manhole false-dry guardrail pilot-planning, code/smoke-test implementation, seed42 training authorization review, rejected Phase 38 seed42 pilot, Phase 39 failed-pilot diagnosis, Phase 40 next-constraint decision, Phase 41 SWE data readiness audit, Phase 42 hydrodynamic export requirement specification, Phase 43 UrbanFlood24 full dataset inspection, Phase 44 UrbanFlood24 full Level 4+ replanning, Phase 45 full dataset indexing, Phase 46 dataloader smoke/downsample/tiling feasibility, Phase 47 controlled full-dataset `128 x 128` baseline materials, Phase 48 full-dataset reliability and physical proxy diagnostics, and Phase 49 warning framework extension rather than reopening Phase 10 tuning, expanding seeds, starting a sweep, further proxy-loss redesign, implementing SWE residuals, implementing PINN components, or rescuing the rejected pilot post hoc.
 
 Recommended next work:
 
@@ -960,9 +997,11 @@ Recommended next work:
 - treat Phase 48 as completed no-training full-dataset reliability and physical proxy diagnostics, with decision `phase48_diagnostics_ready_for_warning_framework_extension`
 - use Phase 48 metrics conservatively: `evaluated_scenarios = 48`, `evaluated_windows = 384`, `mean_rmse = 0.012037189189155709`, `mean_mae = 0.005252910632811514`, `mean_wet_dry_iou = 0.863043953275997`, `mean_false_dry_rate = 0.0911363765964386`, `mean_false_wet_rate = 0.003937674554837349`, and `mean_absolute_relative_volume_bias_proxy = 0.021456503649973275`
 - treat Phase 48 warning labels as conservative diagnostic screening labels, not calibrated probabilities; the reliable 1, caution 12, high-risk 35 split is not proof of poor overall model skill
-- do not claim SWE/PINN support, strict conservation, full mass conservation, or hydrodynamic closure from Phase 47 or Phase 48
-- do not expand to `seed123` / `seed202`, `256 x 256`, tile, multiscale, full `500 x 500`, sweeps, or new loss redesign without diagnostics or reviewed expansion planning
-- make the next step Phase 49 full-dataset warning-framework extension, not immediate training expansion
+- treat Phase 49 as completed no-training full-dataset warning framework extension, with decision `phase49_warning_framework_completed_with_conservative_labels`, `scenario_count = 48`, `warning_level_counts = reliable 1, caution 12, high-risk 35`, `high_risk_case_count = 35`, `no_training = true`, and `warning_labels_are_probabilities = false`
+- treat Phase 49 warning actions as conservative diagnostic screening actions, not calibrated probabilities; use `reliable -> normal_use_with_standard_monitoring`, `caution -> use_with_caution_and_review_diagnostics`, and `high-risk -> high_risk_requires_review_or_supplemental_evidence`
+- do not claim SWE/PINN support, strict conservation, full mass conservation, or hydrodynamic closure from Phase 47, Phase 48, or Phase 49
+- do not expand to `seed123` / `seed202`, `256 x 256`, tile, multiscale, full `500 x 500`, sweeps, or new loss redesign without diagnostics and a reviewed expansion-decision phase
+- make the next step Phase 50 framework consolidation / paper-ready evidence synthesis or a reviewed expansion-decision phase, not immediate training expansion
 - do not run Phase 29 `seed123` / `seed202` confirmation or a tolerance/weight sweep
 - do not run Phase 27 or Phase 29 `seed123` / `seed202` confirmation
 - do not run Phase 38 `seed123` / `seed202` expansion, any sweep, Phase 29 continuation, or post-hoc loss/config rescue
