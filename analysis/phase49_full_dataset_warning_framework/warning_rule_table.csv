@@ -1,0 +1,10 @@
+warning_level,warning_action,intended_use,interpretation,required_review,not_a_probability
+reliable,normal_use_with_standard_monitoring,normal diagnostic reporting with standard monitoring,Phase 48 diagnostics did not identify major reliability or physical proxy concerns for the evaluated scenario.,standard_monitoring,true
+caution,use_with_caution_and_review_diagnostics,use only with diagnostic context and targeted review,One or more diagnostics suggests degraded reliability or a possible warning failure mode.,review_failure_drivers_before_unqualified_use,true
+high-risk,high_risk_requires_review_or_supplemental_evidence,screening category requiring case review or supplemental evidence,Conservative diagnostics indicate elevated warning failure risk or physical proxy concern.,mandatory_case_review_or_supplemental_evidence,true
+failure_driver::high RMSE,diagnostic_explanation_only,Phase 48 summary threshold,rmse >= 0.011004068821235263,review_when_driver_is_listed,true
+failure_driver::low wet/dry IoU,diagnostic_explanation_only,Phase 48 summary threshold,wet_dry_iou <= 0.8860657485849278,review_when_driver_is_listed,true
+failure_driver::elevated false-dry rate,diagnostic_explanation_only,Phase 48 summary threshold,false_dry_rate >= 0.10486495261130992,review_when_driver_is_listed,true
+failure_driver::elevated false-wet rate,diagnostic_explanation_only,Phase 48 summary threshold,false_wet_rate >= 0.00442259846859298,review_when_driver_is_listed,true
+failure_driver::elevated volume-bias proxy,diagnostic_explanation_only,Phase 48 summary threshold,absolute_relative_volume_bias_proxy >= 0.025945133712967482,review_when_driver_is_listed,true
+failure_driver::peak-depth underprediction proxy,diagnostic_explanation_only,Phase 49 transparent post-processing of Phase 48 metric,peak_depth_underprediction_proxy > 0,review_when_driver_is_listed,true
