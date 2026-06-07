@@ -902,8 +902,10 @@
 
 - Plan: `docs/phase50_framework_consolidation_paper_ready_evidence_synthesis_plan.md`
 - Script: `scripts/synthesize_phase50_full_dataset_evidence.py`
+- Figure-support script: `scripts/plot_phase50_framework_summary_figures.py`
 - Findings: `docs/phase50_framework_consolidation_paper_ready_evidence_synthesis_findings.md`
 - Outputs: `analysis/phase50_framework_consolidation/`
+- Figures directory: `analysis/phase50_framework_consolidation/figures/`
 - Key output files:
   - `phase50_evidence_chain_table.csv`
   - `phase50_key_metrics_summary.csv`
@@ -912,6 +914,13 @@
   - `phase50_framework_synthesis.json`
   - `phase50_framework_synthesis.md`
   - `phase50_paper_ready_contribution_outline.md`
+- Key figure files:
+  - `phase50_evidence_chain_overview.png`
+  - `phase50_key_metrics_summary.png`
+  - `phase50_warning_level_counts.png`
+  - `phase50_claim_boundary_matrix.png`
+  - `phase50_reviewed_next_steps_matrix.png`
+  - `phase50_figure_summary.md`
 - Status: no-training framework consolidation and paper-ready full-dataset evidence synthesis complete
 - Decision: `phase50_framework_synthesis_ready_for_paper_outline`
 - Summary: `phases_synthesized = 43-49`; `level4_plus_route_supported = true`; `level5_supported = false`; `no_training = true`; `no_swe_pinn = true`; `warning_labels_are_probabilities = false`

@@ -248,6 +248,20 @@ Phase 49 completed the no-training full-dataset warning framework extension by c
 
 Phase 50 completed no-training framework consolidation and paper-ready full-dataset evidence synthesis across Phases 43-49. See [Phase 50 findings](docs/phase50_framework_consolidation_paper_ready_evidence_synthesis_findings.md), [framework synthesis](analysis/phase50_framework_consolidation/phase50_framework_synthesis.md), [paper-ready contribution outline](analysis/phase50_framework_consolidation/phase50_paper_ready_contribution_outline.md), [evidence chain table](analysis/phase50_framework_consolidation/phase50_evidence_chain_table.csv), [key metrics summary](analysis/phase50_framework_consolidation/phase50_key_metrics_summary.csv), [claim boundary table](analysis/phase50_framework_consolidation/phase50_claim_boundary_table.csv), and [recommended next steps](analysis/phase50_framework_consolidation/phase50_recommended_next_steps.csv). The decision is `selected_decision = phase50_framework_synthesis_ready_for_paper_outline`; `phases_synthesized = 43-49`; `level4_plus_route_supported = true`; `level5_supported = false`; `no_training = true`; `no_swe_pinn = true`; and `warning_labels_are_probabilities = false`. The project now has a paper-ready Level 4+ evidence chain: dataset inspection -> full dataset indexing -> dataloader feasibility -> controlled `128 x 128` baseline -> reliability diagnostics -> warning framework -> evidence synthesis. Phase 50 does not claim Level 5, SWE/PINN, strict conservation, full mass conservation, hydrodynamic closure, calibrated probabilities, final production readiness, or uncontrolled training expansion. The next work is Phase 51 reviewed expansion decision, not immediate uncontrolled training.
 
+### Representative Phase 50 figures
+
+These README-facing figures provide visualization support for the Phase 43-50 evidence chain. This is visualization support only: no training, no new experiments, and no model, loss, or configuration changes were performed.
+
+![Phase 50 evidence chain overview](analysis/phase50_framework_consolidation/figures/phase50_evidence_chain_overview.png)
+
+![Phase 50 key metrics summary](analysis/phase50_framework_consolidation/figures/phase50_key_metrics_summary.png)
+
+![Phase 50 warning level counts](analysis/phase50_framework_consolidation/figures/phase50_warning_level_counts.png)
+
+![Phase 50 claim boundary matrix](analysis/phase50_framework_consolidation/figures/phase50_claim_boundary_matrix.png)
+
+![Phase 50 reviewed next steps matrix](analysis/phase50_framework_consolidation/figures/phase50_reviewed_next_steps_matrix.png)
+
 Representative Phase 24 figures:
 
 ![Phase 24 volume bias by warning level](analysis/phase24_physical_consistency/figures/volume_bias_by_warning_level.png)
