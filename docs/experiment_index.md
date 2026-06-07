@@ -903,9 +903,11 @@
 - Plan: `docs/phase50_framework_consolidation_paper_ready_evidence_synthesis_plan.md`
 - Script: `scripts/synthesize_phase50_full_dataset_evidence.py`
 - Figure-support script: `scripts/plot_phase50_framework_summary_figures.py`
+- Research figure-support script: `scripts/plot_phase50_research_grade_diagnostic_figures.py`
 - Findings: `docs/phase50_framework_consolidation_paper_ready_evidence_synthesis_findings.md`
 - Outputs: `analysis/phase50_framework_consolidation/`
 - Figures directory: `analysis/phase50_framework_consolidation/figures/`
+- Research figures directory: `analysis/phase50_framework_consolidation/research_figures/`
 - Key output files:
   - `phase50_evidence_chain_table.csv`
   - `phase50_key_metrics_summary.csv`
@@ -914,13 +916,21 @@
   - `phase50_framework_synthesis.json`
   - `phase50_framework_synthesis.md`
   - `phase50_paper_ready_contribution_outline.md`
-- Key figure files:
+- Framework overview figure files:
   - `phase50_evidence_chain_overview.png`
   - `phase50_key_metrics_summary.png`
   - `phase50_warning_level_counts.png`
   - `phase50_claim_boundary_matrix.png`
   - `phase50_reviewed_next_steps_matrix.png`
   - `phase50_figure_summary.md`
+- Research-grade diagnostic figure files:
+  - `phase50_reliability_metric_boxplots_by_warning_level.png`
+  - `phase50_false_dry_vs_volume_bias_scatter.png`
+  - `phase50_location_type_warning_stacked_counts.png`
+  - `phase50_high_risk_failure_driver_heatmap.png`
+  - `phase50_top_high_risk_case_priority.png`
+  - `phase50_research_figure_summary.md`
+- Figure provenance: the research-grade diagnostic figures use Phase 48/49 scenario-level diagnostic CSV outputs and provide visualization support only.
 - Status: no-training framework consolidation and paper-ready full-dataset evidence synthesis complete
 - Decision: `phase50_framework_synthesis_ready_for_paper_outline`
 - Summary: `phases_synthesized = 43-49`; `level4_plus_route_supported = true`; `level5_supported = false`; `no_training = true`; `no_swe_pinn = true`; `warning_labels_are_probabilities = false`
@@ -929,6 +939,7 @@
 - Next phase: Phase 51 reviewed expansion decision
 - Guardrails:
   - no training
+  - no new experiments
   - no new seeds
   - no sweeps
   - no `256 x 256`, tile, multiscale, or full-`500 x 500` expansion
