@@ -1,0 +1,8 @@
+risk_item,affected_options,risk_level,mitigation,decision_impact
+longer_run_overfit_or_plateau,A,moderate,Fix the epoch cap at 40; retain best and final checkpoints; compare training curves and best/final metrics directly with Phase 47.,Manageable in Phase 52 and does not justify changing seed or resolution first.
+aggregate_metrics_hide_warning_failure_modes,A;B;C,high,Repeat Phase 48 reliability/physical proxy diagnostics and Phase 49 warning review before considering further expansion.,Makes diagnostic reassessment mandatory for Phase 52.
+seed_replication_before_protocol_review,B,moderate,"Review the seed42 longer-run protocol first, then predefine replication seeds, stopping rules, and comparisons in a later phase.",Defers seed123 and seed202.
+resolution_change_confounds_horizon_effect,C,high,Hold resolution at 128x128 until longer-run stability is reviewed; require a separate resource and protocol authorization for 256x256.,Defers the 256x256 pilot.
+case_reporting_does_not_add_training_evidence,D,low,Retain case reporting as a parallel manuscript path while Phase 52 addresses the controlled training-horizon question.,Keeps D useful but not the next training step.
+claim_escalation_from_improved_metrics,A;B;C;D,high,"Preserve Level 4+ wording; prohibit Level 5, SWE/PINN, strict/full mass conservation, hydrodynamic closure, calibrated warning probability, and production-readiness claims.",Applies non-negotiable claim guardrails.
+uncontrolled_scope_or_artifact_overwrite,A;B;C,high,"Use a separate Phase 52 config, script, output directory, checkpoint policy, resource limit, stop criteria, and direct Phase 47 comparison.",Authorizes only a separately reviewed bounded Phase 52 implementation.

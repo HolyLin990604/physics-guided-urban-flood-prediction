@@ -1,0 +1,55 @@
+{
+  "authorized_next_phase": "phase52_controlled_128x128_seed42_longer_run_baseline",
+  "authorized_training_scope": {
+    "future_phase_only": true,
+    "model_loss_config_architecture_unchanged": true,
+    "phase47_comparison_required": true,
+    "phase48_phase49_diagnostic_review_required": true,
+    "phase51_training_authorized": false,
+    "reference_epochs": 10,
+    "resolution": 128,
+    "seed": 42,
+    "separate_non_overwriting_output_required": true,
+    "target_epochs": 40,
+    "train_test_split_unchanged": true
+  },
+  "claim_guardrails": {
+    "full_mass_conservation_supported": false,
+    "hydrodynamic_closure_supported": false,
+    "production_readiness_supported": false,
+    "strict_conservation_supported": false,
+    "warning_labels_are_probabilities": false
+  },
+  "created_utc": "2026-06-08T02:23:14.697725+00:00",
+  "deferred_options": [
+    "phase51_authorize_128x128_seed_replication",
+    "phase51_authorize_256x256_pilot",
+    "phase51_defer_training_for_case_reporting_as_next_training_step",
+    "tile_training",
+    "multiscale_training",
+    "full_500x500_training",
+    "hyperparameter_or_architecture_sweeps",
+    "new_loss_design",
+    "swe_residual_implementation",
+    "pinn_implementation"
+  ],
+  "evidence_inconsistencies": [],
+  "evidence_review_passed": true,
+  "input_sources": {
+    "phase47_training_summary": "analysis/phase47_controlled_downsample_baseline/phase47_training_summary.json",
+    "phase48_reliability_summary": "analysis/phase48_full_dataset_reliability_physical_proxy/phase48_reliability_summary.json",
+    "phase49_warning_summary": "analysis/phase49_full_dataset_warning_framework/warning_framework_summary.json",
+    "phase50_next_steps": "analysis/phase50_framework_consolidation/phase50_recommended_next_steps.csv",
+    "phase50_synthesis": "analysis/phase50_framework_consolidation/phase50_framework_synthesis.json",
+    "phase51_plan": "docs/phase51_reviewed_expansion_decision_plan.md"
+  },
+  "level4_plus_route_supported": true,
+  "level5_supported": false,
+  "next_recommended_action": "Create Phase 52 as a controlled 128x128 seed42 40-epoch longer-run baseline with unchanged model/loss/config architecture, non-overwriting outputs, direct Phase 47 comparison, and Phase 48/49 diagnostic review.",
+  "no_swe_pinn": true,
+  "no_training_in_phase51": true,
+  "no_uncontrolled_expansion": true,
+  "phase": 51,
+  "script": "scripts/decide_phase51_reviewed_expansion.py",
+  "selected_decision": "phase51_authorize_128x128_seed42_longer_run"
+}
