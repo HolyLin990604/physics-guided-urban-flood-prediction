@@ -1,0 +1,106 @@
+{
+  "best_epoch": 40,
+  "best_epoch_metrics": {
+    "epoch": 40.0,
+    "learning_rate": 4.623999400308053e-07,
+    "test_data_loss": 0.0002713639403471764,
+    "test_loss": 0.0002713639403471764,
+    "test_mae": 0.002410597107882495,
+    "test_rmse": 0.005160715272116552,
+    "test_rollout_stability": 0.9992842044060429,
+    "test_step_rmse_std": 0.0007178322914948391,
+    "test_wet_dry_iou": 0.9130120601863988,
+    "train_data_loss": 0.0002409127782205663,
+    "train_loss": 0.0002409127782205663,
+    "train_mae": 0.002403456182219088,
+    "train_rmse": 0.004913051471036548,
+    "train_rollout_stability": 0.9994763471186161,
+    "train_step_rmse_std": 0.0005246193318403888,
+    "train_wet_dry_iou": 0.9389325274775425
+  },
+  "created_utc": "2026-06-09T08:34:18.096164+00:00",
+  "epochs_completed": 40,
+  "epochs_configured": 40,
+  "final_epoch_metrics": {
+    "epoch": 40.0,
+    "learning_rate": 4.623999400308053e-07,
+    "test_data_loss": 0.0002713639403471764,
+    "test_loss": 0.0002713639403471764,
+    "test_mae": 0.002410597107882495,
+    "test_rmse": 0.005160715272116552,
+    "test_rollout_stability": 0.9992842044060429,
+    "test_step_rmse_std": 0.0007178322914948391,
+    "test_wet_dry_iou": 0.9130120601863988,
+    "train_data_loss": 0.0002409127782205663,
+    "train_loss": 0.0002409127782205663,
+    "train_mae": 0.002403456182219088,
+    "train_rmse": 0.004913051471036548,
+    "train_rollout_stability": 0.9994763471186161,
+    "train_step_rmse_std": 0.0005246193318403888,
+    "train_wet_dry_iou": 0.9389325274775425
+  },
+  "level5_supported": false,
+  "no_swe_pinn": true,
+  "phase": 52,
+  "phase47_comparison": {
+    "test_loss": {
+      "best_minus_phase47": -0.0008302680913819436,
+      "final_minus_phase47": -0.0008302680913819436,
+      "phase47_reference": 0.00110163203172912,
+      "phase52_best_epoch_value": 0.0002713639403471764,
+      "phase52_final_epoch_value": 0.0002713639403471764
+    },
+    "test_mae": {
+      "best_minus_phase47": -0.002842313714912355,
+      "final_minus_phase47": -0.002842313714912355,
+      "phase47_reference": 0.00525291082279485,
+      "phase52_best_epoch_value": 0.002410597107882495,
+      "phase52_final_epoch_value": 0.002410597107882495
+    },
+    "test_rmse": {
+      "best_minus_phase47": -0.005931415148855497,
+      "final_minus_phase47": -0.005931415148855497,
+      "phase47_reference": 0.01109213042097205,
+      "phase52_best_epoch_value": 0.005160715272116552,
+      "phase52_final_epoch_value": 0.005160715272116552
+    },
+    "test_rollout_stability": {
+      "best_minus_phase47": 0.0005615968257188797,
+      "final_minus_phase47": 0.0005615968257188797,
+      "phase47_reference": 0.998722607580324,
+      "phase52_best_epoch_value": 0.9992842044060429,
+      "phase52_final_epoch_value": 0.9992842044060429
+    },
+    "test_step_rmse_std": {
+      "best_minus_phase47": -0.0005646282075038774,
+      "final_minus_phase47": -0.0005646282075038774,
+      "phase47_reference": 0.0012824604989987165,
+      "phase52_best_epoch_value": 0.0007178322914948391,
+      "phase52_final_epoch_value": 0.0007178322914948391
+    },
+    "test_wet_dry_iou": {
+      "best_minus_phase47": 0.08745963887486141,
+      "final_minus_phase47": 0.08745963887486141,
+      "phase47_reference": 0.8255524213115374,
+      "phase52_best_epoch_value": 0.9130120601863988,
+      "phase52_final_epoch_value": 0.9130120601863988
+    }
+  },
+  "phase47_reference_best_test_rmse": 0.01109213042097205,
+  "phase47_reference_test_mae": 0.00525291082279485,
+  "phase47_reference_test_rollout_stability": 0.998722607580324,
+  "phase47_reference_test_wet_dry_iou": 0.8255524213115374,
+  "resolution": 128,
+  "runtime_memory": {
+    "cuda_max_allocated_mb": 943.69091796875,
+    "cuda_max_reserved_mb": 1246.0,
+    "runtime_seconds": 6726.4763016,
+    "tracemalloc_current_mb": 5.592994689941406,
+    "tracemalloc_peak_mb": 51.54036235809326
+  },
+  "seed": 42,
+  "selected_decision": "phase52_controlled_128x128_seed42_longer_run_completed",
+  "test_samples": 384,
+  "train_samples": 960,
+  "training_command": "python scripts/train_phase52_controlled_longer_run.py --config configs/train_phase52_full_downsample128_seed42_40e.json"
+}
