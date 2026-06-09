@@ -46,6 +46,7 @@
 - Phase 49 Full-Dataset Warning Framework Extension: no-training warning framework extension complete with decision `phase49_warning_framework_completed_with_conservative_labels`, `scenario_count = 48`, warning counts of 1 reliable, 12 caution, and 35 high-risk, `high_risk_case_count = 35`, `no_training = true`, and `warning_labels_are_probabilities = false`
 - Phase 50 Framework Consolidation and Paper-Ready Evidence Synthesis: no-training synthesis complete with decision `phase50_framework_synthesis_ready_for_paper_outline`, `phases_synthesized = 43-49`, `level4_plus_route_supported = true`, `level5_supported = false`, `no_training = true`, `no_swe_pinn = true`, and `warning_labels_are_probabilities = false`
 - Phase 51 Reviewed Expansion Decision: decision-only review complete with decision `phase51_authorize_128x128_seed42_longer_run`, `authorized_next_phase = phase52_controlled_128x128_seed42_longer_run_baseline`, `no_training_in_phase51 = true`, `level4_plus_route_supported = true`, `level5_supported = false`, `no_swe_pinn = true`, and `no_uncontrolled_expansion = true`
+- Phase 52 Controlled 128x128 Seed42 Longer-Run Baseline: controlled 40e run complete with decision `phase52_controlled_128x128_seed42_longer_run_completed`, `best_epoch = 40`, `test_rmse = 0.005160715272116552`, `test_mae = 0.002410597107882495`, `test_wet_dry_iou = 0.9130120601863988`, `no_swe_pinn = true`, and `level5_supported = false`
 
 ## Phase 6
 
@@ -986,6 +987,34 @@
   - no uncontrolled training expansion
 - Model status: Phase 51 supports the existing Level 4+ route and only the bounded Phase 52 training-horizon comparison. It does not establish a new training result or authorize broader expansion.
 
+## Phase 52
+
+- Plan: `docs/phase52_controlled_128x128_seed42_longer_run_baseline_plan.md`
+- Config: `configs/train_phase52_full_downsample128_seed42_40e.json`
+- Script: `scripts/train_phase52_controlled_longer_run.py`
+- Analysis outputs: `analysis/phase52_controlled_128x128_seed42_longer_run/`
+- Findings: `docs/phase52_controlled_128x128_seed42_longer_run_findings.md`
+- Status: controlled `128 x 128` `seed42` 40e longer-run baseline complete
+- Decision: `phase52_controlled_128x128_seed42_longer_run_completed`
+- Key result: `best_epoch = 40`; `test_rmse = 0.005160715272116552`; `test_mae = 0.002410597107882495`; `test_wet_dry_iou = 0.9130120601863988`
+- Phase 47 comparison: RMSE `0.01109213042097205 -> 0.005160715272116552`; MAE `0.00525291082279485 -> 0.002410597107882495`; wet/dry IoU `0.8255524213115374 -> 0.9130120601863988`; rollout stability `0.998722607580324 -> 0.9992842044060429`; test step RMSE standard deviation `0.0012824604989987165 -> 0.0007178322914948391`
+- Interpretation: Phase 52 materially improves the controlled Phase 47 route for this single seed and resolution. `best_epoch = final_epoch = 40` supports continued improvement or a late plateau within the cap, not authorization beyond 40 epochs. Checkpoints are local run artifacts and are not committed.
+- Recommended next step: a separate Phase 53 diagnostic review of Phase 52 reliability, physical-proxy behavior, and warning-framework behavior before seed replication or `256 x 256` expansion
+- Guardrails:
+  - no seed replication yet
+  - no `256 x 256`, tile, multiscale, or full-`500 x 500` expansion yet
+  - no sweeps
+  - no new loss redesign
+  - no model/loss/config architecture changes
+  - no SWE residual implementation
+  - no PINN implementation
+  - no Level 5 support claim
+  - no strict conservation / full mass conservation / hydrodynamic closure claims
+  - no calibrated probability claim
+  - no production-readiness claim
+  - no uncontrolled training expansion
+- Model status: Phase 52 is Level 4+ proxy-modeling evidence for one controlled `128 x 128` `seed42` run. It does not establish seed robustness, higher-resolution feasibility, strong physics, calibrated probabilities, or production readiness.
+
 ## Interpretation Order
 
 For current repository interpretation, read the experiment trail in this order:
@@ -1036,11 +1065,12 @@ For current repository interpretation, read the experiment trail in this order:
 44. `docs/phase49_full_dataset_warning_framework_extension_findings.md`
 45. `docs/phase50_framework_consolidation_paper_ready_evidence_synthesis_findings.md`
 46. `docs/phase51_reviewed_expansion_decision_findings.md`
-47. `docs/project_status.md`
+47. `docs/phase52_controlled_128x128_seed42_longer_run_findings.md`
+48. `docs/project_status.md`
 
 ## Next Stage
 
-The next stage should build on the Phase 12 to Phase 51 reliability/applicability, screening, warning-rule, synthesis, manuscript-writing, manuscript-consolidation, manuscript-draft, evidence-alignment, full-draft expansion, warning case-study prototype, physical-consistency diagnostic, target-wet recall refinement, strong-physics feasibility audit, mixed conservative volume-response pilot, volume-response failure diagnosis, mixed tolerance-band pilot, strong-physics boundary synthesis, physics input recovery readiness, domain-/boundary-aware design guardrail, seed42 pilot-readiness, pilot-threshold formalization, manhole false-dry guardrail pilot-planning, code/smoke-test implementation, seed42 training authorization review, rejected Phase 38 seed42 pilot, Phase 39 failed-pilot diagnosis, Phase 40 next-constraint decision, Phase 41 SWE data readiness audit, Phase 42 hydrodynamic export requirement specification, Phase 43 UrbanFlood24 full dataset inspection, Phase 44 UrbanFlood24 full Level 4+ replanning, Phase 45 full dataset indexing, Phase 46 dataloader smoke/downsample/tiling feasibility, Phase 47 controlled full-dataset `128 x 128` baseline materials, Phase 48 full-dataset reliability and physical proxy diagnostics, Phase 49 warning framework extension, Phase 50 paper-ready evidence synthesis, and the Phase 51 reviewed expansion decision. The only authorized next training work is the separate Phase 52 controlled `128 x 128` `seed42` longer-run baseline.
+The next stage should build on the completed Phase 12 through Phase 52 evidence chain. The recommended next work is a separate Phase 53 diagnostic review of the Phase 52 checkpoint's reliability, physical-proxy behavior, and warning-framework behavior. This diagnostic review should precede any decision on seed replication or `256 x 256` expansion and should not authorize uncontrolled training expansion.
 
 Recommended next work:
 
@@ -1094,7 +1124,8 @@ Recommended next work:
 - treat the Phase 50 evidence chain as paper-ready Level 4+ support only: dataset inspection -> full dataset indexing -> dataloader feasibility -> controlled `128 x 128` baseline -> reliability diagnostics -> warning framework -> evidence synthesis
 - do not claim SWE/PINN support, strict conservation, full mass conservation, or hydrodynamic closure from Phase 47, Phase 48, Phase 49, or Phase 50
 - read Phase 51 as the completed decision-only review with `selected_decision = phase51_authorize_128x128_seed42_longer_run`, `authorized_next_phase = phase52_controlled_128x128_seed42_longer_run_baseline`, and `no_training_in_phase51 = true`
-- make Phase 52 the only authorized next training phase, with `128 x 128`, `seed42`, a recommended 40-epoch cap, and direct comparison against the Phase 47 10e baseline
+- read Phase 52 as the completed controlled `128 x 128` `seed42` 40e baseline with `selected_decision = phase52_controlled_128x128_seed42_longer_run_completed`, `best_epoch = final_epoch = 40`, and material improvement over Phase 47
+- make a separate Phase 53 reliability/physical-proxy/warning diagnostic review the recommended next step before seed replication or `256 x 256` expansion
 - keep `seed123` / `seed202`, seed replication, `256 x 256`, tile, multiscale, full `500 x 500`, sweeps, new loss redesign, and model/loss/config architecture changes deferred
 - do not run Phase 29 `seed123` / `seed202` confirmation or a tolerance/weight sweep
 - do not run Phase 27 or Phase 29 `seed123` / `seed202` confirmation

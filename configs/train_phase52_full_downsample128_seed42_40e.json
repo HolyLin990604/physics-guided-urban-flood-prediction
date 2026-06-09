@@ -1,0 +1,53 @@
+{
+  "phase": 52,
+  "seed": 42,
+  "resolution": 128,
+  "epochs": 40,
+  "dataset_root": "E:/BaiduNetdiskDownload/urbanflood24/urbanflood24",
+  "scenario_index_path": "analysis/phase45_full_dataset_indexing/scenario_index.csv",
+  "static_index_path": "analysis/phase45_full_dataset_indexing/static_geodata_index.csv",
+  "output_dir": "runs/phase52_full_downsample128_seed42_40e",
+  "analysis_dir": "analysis/phase52_controlled_128x128_seed42_longer_run",
+  "no_swe_pinn": true,
+  "level5_supported": false,
+  "training_scope": "controlled_128x128_seed42_longer_run",
+  "dataset": {
+    "input_steps": 12,
+    "pred_steps": 12,
+    "sampling_stride": 24,
+    "max_windows_per_scenario": 8,
+    "rainfall_alignment": "proportional_bin_mean_known_forcing",
+    "downsample_method": "torch.nn.functional.interpolate_bilinear",
+    "train_split": "train",
+    "test_split": "test"
+  },
+  "model": {
+    "flood_channels": 1,
+    "static_channels": 3,
+    "rainfall_channels": 1,
+    "out_channels": 1,
+    "base_channels": 16,
+    "encoder_levels": 3,
+    "temporal_hidden_channels": 128,
+    "temporal_layers": 4,
+    "temporal_kernel_size": 3,
+    "dropout": 0.1,
+    "skip_fusion_mode": "temporal_mean"
+  },
+  "optimization": {
+    "batch_size": 2,
+    "eval_batch_size": 2,
+    "lr": 0.0003,
+    "weight_decay": 0.0001,
+    "loss": "smooth_l1",
+    "grad_clip_norm": 1.0
+  },
+  "metrics": {
+    "wet_threshold": 0.05
+  },
+  "runtime": {
+    "device": "cuda",
+    "num_workers": 0,
+    "use_amp": true
+  }
+}
