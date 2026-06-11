@@ -276,6 +276,16 @@ Phase 51 completed a reviewed expansion decision after the Phase 50 synthesis an
 
 Phase 52 completed that controlled `128 x 128` `seed42` 40e longer-run baseline. See the [Phase 52 plan](docs/phase52_controlled_128x128_seed42_longer_run_baseline_plan.md), [Phase 52 findings](docs/phase52_controlled_128x128_seed42_longer_run_findings.md), [training summary](analysis/phase52_controlled_128x128_seed42_longer_run/phase52_training_summary.md), [training summary JSON](analysis/phase52_controlled_128x128_seed42_longer_run/phase52_training_summary.json), [config](configs/train_phase52_full_downsample128_seed42_40e.json), and [training script](scripts/train_phase52_controlled_longer_run.py). The decision is `selected_decision = phase52_controlled_128x128_seed42_longer_run_completed`; `best_epoch = final_epoch = 40`; `test_loss = 0.0002713639403471764`; and the direct Phase 47 10e -> Phase 52 40e comparison is RMSE `0.01109213042097205 -> 0.005160715272116552`, MAE `0.00525291082279485 -> 0.002410597107882495`, wet/dry IoU `0.8255524213115374 -> 0.9130120601863988`, rollout stability `0.998722607580324 -> 0.9992842044060429`, and test step RMSE standard deviation `0.0012824604989987165 -> 0.0007178322914948391`. The result supports continued improvement or a late plateau within the 40-epoch cap, not training beyond 40 epochs. Checkpoints are local run artifacts and are not committed. The recommended next step is a separate Phase 53 diagnostic review of Phase 52 reliability, physical-proxy behavior, and warning-framework behavior before seed replication or `256 x 256` expansion.
 
+README-facing Phase 52 visualization support has been added. See the [Phase 52 figure summary](analysis/phase52_controlled_128x128_seed42_longer_run/figures/phase52_figure_summary.md).
+
+![Phase 52 40-epoch metric trajectory](analysis/phase52_controlled_128x128_seed42_longer_run/figures/phase52_metric_trajectory_40e.png)
+
+![Phase 47 versus Phase 52 key metrics](analysis/phase52_controlled_128x128_seed42_longer_run/figures/phase52_vs_phase47_key_metrics.png)
+
+![Phase 52 improvement summary](analysis/phase52_controlled_128x128_seed42_longer_run/figures/phase52_improvement_summary.png)
+
+These figures are visualization support only. No new training was run, no checkpoints were committed, and no Phase 52 result values were modified.
+
 Representative Phase 24 figures:
 
 ![Phase 24 volume bias by warning level](analysis/phase24_physical_consistency/figures/volume_bias_by_warning_level.png)
