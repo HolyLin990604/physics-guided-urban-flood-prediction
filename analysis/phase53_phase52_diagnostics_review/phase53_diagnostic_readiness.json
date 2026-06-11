@@ -1,0 +1,41 @@
+{
+  "checkpoint_found": true,
+  "checkpoint_path": "runs/phase52_full_downsample128_seed42_40e/checkpoints/best.pt",
+  "created_utc": "2026-06-11T07:46:49.800599+00:00",
+  "diagnostics_executed": true,
+  "evaluated_split": "test",
+  "input_checks": {
+    "analysis/phase45_full_dataset_indexing/scenario_index.csv": true,
+    "analysis/phase45_full_dataset_indexing/static_geodata_index.csv": true,
+    "analysis/phase48_full_dataset_reliability_physical_proxy/peak_depth_timing_metrics.csv": true,
+    "analysis/phase48_full_dataset_reliability_physical_proxy/phase48_reliability_summary.json": true,
+    "analysis/phase48_full_dataset_reliability_physical_proxy/scenario_reliability_metrics.csv": true,
+    "analysis/phase48_full_dataset_reliability_physical_proxy/volume_response_proxy_metrics.csv": true,
+    "analysis/phase49_full_dataset_warning_framework/scenario_warning_framework.csv": true,
+    "analysis/phase49_full_dataset_warning_framework/warning_framework_summary.json": true,
+    "analysis/phase52_controlled_128x128_seed42_longer_run/phase52_training_summary.json": true,
+    "checkpoint_epoch_40": true,
+    "config_valid": true,
+    "configs/train_phase52_full_downsample128_seed42_40e.json": true,
+    "expected_test_scenarios": 48,
+    "expected_test_windows": 384,
+    "inference_only": true,
+    "phase48_thresholds_recovered": true,
+    "retained_metrics_consistent": true,
+    "runs/phase52_full_downsample128_seed42_40e/checkpoints/best.pt": true,
+    "runs/phase52_full_downsample128_seed42_40e/metrics.csv": true,
+    "runs/phase52_full_downsample128_seed42_40e/metrics.json": true
+  },
+  "level5_supported": false,
+  "no_swe_pinn": true,
+  "no_training": true,
+  "notes": [
+    "Phase 52 epoch-40 best checkpoint loaded successfully.",
+    "Phase 52 retained metrics are mutually consistent.",
+    "Phase 47/48 test basis and fixed Phase 48 warning thresholds were recovered.",
+    "No-gradient Phase 52 inference completed on 48 test scenarios and 384 windows."
+  ],
+  "phase": 53,
+  "selected_decision": "phase53_phase52_diagnostics_review_completed",
+  "warning_labels_are_probabilities": false
+}

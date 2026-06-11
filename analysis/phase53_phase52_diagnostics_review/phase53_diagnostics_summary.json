@@ -1,0 +1,196 @@
+{
+  "checkpoint_epoch": 40,
+  "checkpoint_found": true,
+  "checkpoint_path": "runs/phase52_full_downsample128_seed42_40e/checkpoints/best.pt",
+  "created_utc": "2026-06-11T07:47:54.429433+00:00",
+  "diagnostic_change_interpretation": "Phase 52 improves the matched aggregate reliability, wet/dry, peak/timing, and volume-response proxy diagnostics without increasing high-risk warning counts. This supports considering a later reviewed seed-replication decision, but Phase 53 does not authorize seed replication or 256x256 training.",
+  "diagnostics_executed": true,
+  "evaluated_scenarios": 48,
+  "evaluated_split": "test",
+  "evaluated_windows": 384,
+  "figures_generated": [
+    "phase53_warning_level_counts_comparison.png",
+    "phase53_false_dry_false_wet_comparison.png",
+    "phase53_volume_bias_proxy_comparison.png",
+    "phase53_key_diagnostic_metric_comparison.png",
+    "phase53_figure_summary.md"
+  ],
+  "full_mass_conservation_claimed": false,
+  "hydrodynamic_closure_claimed": false,
+  "inference_device": "cuda",
+  "level5_supported": false,
+  "matched_diagnostic_comparison": {
+    "absolute_peak_depth_error": {
+      "degraded_scenarios": 7,
+      "improved_scenarios": 41,
+      "mean_delta": -0.03078339993953705,
+      "phase48_mean": 0.050457713504632316,
+      "phase52_mean": 0.019674313565095265,
+      "unchanged_scenarios": 0
+    },
+    "absolute_peak_timing_error": {
+      "degraded_scenarios": 8,
+      "improved_scenarios": 25,
+      "mean_delta": -6.333333333333333,
+      "phase48_mean": 11.354166666666666,
+      "phase52_mean": 5.020833333333333,
+      "unchanged_scenarios": 15
+    },
+    "absolute_relative_volume_bias_proxy": {
+      "degraded_scenarios": 12,
+      "improved_scenarios": 36,
+      "mean_delta": -0.0061053652008812775,
+      "phase48_mean": 0.021456503649973275,
+      "phase52_mean": 0.015351138449091995,
+      "unchanged_scenarios": 0
+    },
+    "false_dry_rate": {
+      "degraded_scenarios": 0,
+      "improved_scenarios": 48,
+      "mean_delta": -0.05278780056848816,
+      "phase48_mean": 0.0911363765964386,
+      "phase52_mean": 0.03834857602795045,
+      "unchanged_scenarios": 0
+    },
+    "false_wet_rate": {
+      "degraded_scenarios": 0,
+      "improved_scenarios": 48,
+      "mean_delta": -0.00211107289073586,
+      "phase48_mean": 0.003937674554837349,
+      "phase52_mean": 0.0018266016641014888,
+      "unchanged_scenarios": 0
+    },
+    "mae": {
+      "degraded_scenarios": 0,
+      "improved_scenarios": 48,
+      "mean_delta": -0.002842313582328239,
+      "phase48_mean": 0.005252910632811514,
+      "phase52_mean": 0.002410597050483274,
+      "unchanged_scenarios": 0
+    },
+    "matched_scenarios": 48,
+    "rmse": {
+      "degraded_scenarios": 0,
+      "improved_scenarios": 48,
+      "mean_delta": -0.006366932053709404,
+      "phase48_mean": 0.012037189189155709,
+      "phase52_mean": 0.0056702571354463075,
+      "unchanged_scenarios": 0
+    },
+    "unmatched_scenarios": 0,
+    "warning_transitions": {
+      "improved": 39,
+      "unchanged": 9
+    },
+    "wet_dry_iou": {
+      "degraded_scenarios": 0,
+      "improved_scenarios": 48,
+      "mean_delta": 0.0753592761183302,
+      "phase48_mean": 0.863043953275997,
+      "phase52_mean": 0.9384032293943271,
+      "unchanged_scenarios": 0
+    }
+  },
+  "no_swe_pinn": true,
+  "no_training": true,
+  "outputs": {
+    "location_type_summary.csv": "analysis/phase53_phase52_diagnostics_review/location_type_summary.csv",
+    "peak_depth_timing_metrics.csv": "analysis/phase53_phase52_diagnostics_review/peak_depth_timing_metrics.csv",
+    "phase52_vs_phase48_diagnostic_comparison.csv": "analysis/phase53_phase52_diagnostics_review/phase52_vs_phase48_diagnostic_comparison.csv",
+    "phase53_diagnostic_readiness.json": "analysis/phase53_phase52_diagnostics_review/phase53_diagnostic_readiness.json",
+    "phase53_diagnostics_summary.json": "analysis/phase53_phase52_diagnostics_review/phase53_diagnostics_summary.json",
+    "phase53_diagnostics_summary.md": "analysis/phase53_phase52_diagnostics_review/phase53_diagnostics_summary.md",
+    "reliability_warning_levels.csv": "analysis/phase53_phase52_diagnostics_review/reliability_warning_levels.csv",
+    "scenario_reliability_metrics.csv": "analysis/phase53_phase52_diagnostics_review/scenario_reliability_metrics.csv",
+    "step_reliability_metrics.csv": "analysis/phase53_phase52_diagnostics_review/step_reliability_metrics.csv",
+    "volume_response_proxy_metrics.csv": "analysis/phase53_phase52_diagnostics_review/volume_response_proxy_metrics.csv",
+    "wet_dry_error_metrics.csv": "analysis/phase53_phase52_diagnostics_review/wet_dry_error_metrics.csv"
+  },
+  "phase": 53,
+  "phase48_reference_warning_level_counts": {
+    "caution": 12,
+    "high-risk": 35,
+    "reliable": 1
+  },
+  "phase52_mean_absolute_relative_volume_bias_proxy": 0.015351138449091995,
+  "phase52_mean_false_dry_rate": 0.03834857602795045,
+  "phase52_mean_false_wet_rate": 0.0018266016641014888,
+  "phase52_mean_mae": 0.002410597050483274,
+  "phase52_mean_rmse": 0.0056702571354463075,
+  "phase52_mean_wet_dry_iou": 0.9384032293943271,
+  "phase52_median_false_dry_rate": 0.03398678898058141,
+  "phase52_median_false_wet_rate": 0.0016778410416855216,
+  "phase52_median_mae": 0.0025504722628587237,
+  "phase52_median_rmse": 0.0056898062401572,
+  "phase52_median_wet_dry_iou": 0.9449139130917092,
+  "phase52_warning_level_counts": {
+    "caution": 3,
+    "high-risk": 7,
+    "reliable": 38
+  },
+  "production_readiness_claimed": false,
+  "readiness": {
+    "checkpoint_found": true,
+    "checkpoint_path": "runs/phase52_full_downsample128_seed42_40e/checkpoints/best.pt",
+    "created_utc": "2026-06-11T07:46:49.800599+00:00",
+    "diagnostics_executed": true,
+    "evaluated_split": "test",
+    "input_checks": {
+      "analysis/phase45_full_dataset_indexing/scenario_index.csv": true,
+      "analysis/phase45_full_dataset_indexing/static_geodata_index.csv": true,
+      "analysis/phase48_full_dataset_reliability_physical_proxy/peak_depth_timing_metrics.csv": true,
+      "analysis/phase48_full_dataset_reliability_physical_proxy/phase48_reliability_summary.json": true,
+      "analysis/phase48_full_dataset_reliability_physical_proxy/scenario_reliability_metrics.csv": true,
+      "analysis/phase48_full_dataset_reliability_physical_proxy/volume_response_proxy_metrics.csv": true,
+      "analysis/phase49_full_dataset_warning_framework/scenario_warning_framework.csv": true,
+      "analysis/phase49_full_dataset_warning_framework/warning_framework_summary.json": true,
+      "analysis/phase52_controlled_128x128_seed42_longer_run/phase52_training_summary.json": true,
+      "checkpoint_epoch_40": true,
+      "config_valid": true,
+      "configs/train_phase52_full_downsample128_seed42_40e.json": true,
+      "expected_test_scenarios": 48,
+      "expected_test_windows": 384,
+      "inference_only": true,
+      "phase48_thresholds_recovered": true,
+      "retained_metrics_consistent": true,
+      "runs/phase52_full_downsample128_seed42_40e/checkpoints/best.pt": true,
+      "runs/phase52_full_downsample128_seed42_40e/metrics.csv": true,
+      "runs/phase52_full_downsample128_seed42_40e/metrics.json": true
+    },
+    "level5_supported": false,
+    "no_swe_pinn": true,
+    "no_training": true,
+    "notes": [
+      "Phase 52 epoch-40 best checkpoint loaded successfully.",
+      "Phase 52 retained metrics are mutually consistent.",
+      "Phase 47/48 test basis and fixed Phase 48 warning thresholds were recovered.",
+      "No-gradient Phase 52 inference completed on 48 test scenarios and 384 windows."
+    ],
+    "phase": 53,
+    "selected_decision": "phase53_phase52_diagnostics_review_completed",
+    "warning_labels_are_probabilities": false
+  },
+  "resolution_256_training_authorized": false,
+  "seed_replication_authorized": false,
+  "selected_decision": "phase53_phase52_diagnostics_review_completed",
+  "strict_conservation_claimed": false,
+  "volume_metrics_are_physical_proxies_only": true,
+  "warning_label_transition_counts": {
+    "improved": 39,
+    "unchanged": 9
+  },
+  "warning_labels_are_probabilities": false,
+  "warning_thresholds": {
+    "absolute_relative_volume_bias_high_risk_min": 0.03289761075806039,
+    "absolute_relative_volume_bias_reliable_max": 0.025945133712967482,
+    "false_dry_high_risk_min": 0.10899738867191781,
+    "false_dry_reliable_max": 0.10486495261130992,
+    "false_wet_high_risk_min": 0.004857974484292498,
+    "false_wet_reliable_max": 0.00442259846859298,
+    "rmse_high_risk_min": 0.013702530495076255,
+    "rmse_reliable_max": 0.011004068821235263,
+    "wet_dry_iou_high_risk_max": 0.8365939659875213,
+    "wet_dry_iou_reliable_min": 0.8860657485849278
+  },
+  "warning_thresholds_source": "analysis/phase48_full_dataset_reliability_physical_proxy/phase48_reliability_summary.json"
+}
