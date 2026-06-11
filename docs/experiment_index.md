@@ -992,9 +992,16 @@
 - Plan: `docs/phase52_controlled_128x128_seed42_longer_run_baseline_plan.md`
 - Config: `configs/train_phase52_full_downsample128_seed42_40e.json`
 - Script: `scripts/train_phase52_controlled_longer_run.py`
+- Figure-support script: `scripts/plot_phase52_controlled_longer_run_figures.py`
 - Analysis outputs: `analysis/phase52_controlled_128x128_seed42_longer_run/`
+- Figures: `analysis/phase52_controlled_128x128_seed42_longer_run/figures/`
+  - `phase52_metric_trajectory_40e.png`
+  - `phase52_vs_phase47_key_metrics.png`
+  - `phase52_improvement_summary.png`
+  - `phase52_figure_summary.md`
 - Findings: `docs/phase52_controlled_128x128_seed42_longer_run_findings.md`
 - Status: controlled `128 x 128` `seed42` 40e longer-run baseline complete
+- Figure-support status: visualization support only, not a new training phase; no new training was run, no checkpoints were committed, and no Phase 52 result values were modified
 - Decision: `phase52_controlled_128x128_seed42_longer_run_completed`
 - Key result: `best_epoch = 40`; `test_rmse = 0.005160715272116552`; `test_mae = 0.002410597107882495`; `test_wet_dry_iou = 0.9130120601863988`
 - Phase 47 comparison: RMSE `0.01109213042097205 -> 0.005160715272116552`; MAE `0.00525291082279485 -> 0.002410597107882495`; wet/dry IoU `0.8255524213115374 -> 0.9130120601863988`; rollout stability `0.998722607580324 -> 0.9992842044060429`; test step RMSE standard deviation `0.0012824604989987165 -> 0.0007178322914948391`
