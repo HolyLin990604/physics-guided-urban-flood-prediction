@@ -34,7 +34,7 @@ flowchart TB
     E["Physical Consistency Deepening<br/>Failure modes / target-wet recall<br/>Phases 24-25"]:::physics
     F["Strong Physics Feasibility<br/>Level 4 proxy supported<br/>Level 5 SWE/PINN not supported<br/>Phase 26"]:::physics
     G["Volume-Response Loss Redesign<br/>Phase 27 mixed pilot<br/>Phase 28 failure diagnosis<br/>Phase 29 tolerance-band mixed pilot"]:::physics
-    H["Current Status<br/>Phase 52 controlled 128x128 seed42 40e run complete<br/>Phase 53 diagnostic review recommended<br/>Level 4+ proxy evidence only<br/>Level 5 SWE/PINN frozen"]:::current
+    H["Current Status<br/>Phase 53 no-training diagnostics review complete<br/>reviewed seed-replication decision recommended next<br/>Level 4+ proxy evidence only<br/>Level 5 SWE/PINN frozen"]:::current
 
     A --> B --> C --> D --> E --> F --> G --> H
 
@@ -274,7 +274,7 @@ These supporting overview figures summarize the evidence chain, claim boundaries
 
 Phase 51 completed a reviewed expansion decision after the Phase 50 synthesis and figure support. See [Phase 51 findings](docs/phase51_reviewed_expansion_decision_findings.md), [selected decision](analysis/phase51_reviewed_expansion_decision/phase51_selected_decision.md), [selected decision JSON](analysis/phase51_reviewed_expansion_decision/phase51_selected_decision.json), [expansion option matrix](analysis/phase51_reviewed_expansion_decision/phase51_expansion_option_matrix.csv), and [risk assessment](analysis/phase51_reviewed_expansion_decision/phase51_risk_assessment.csv). The decision was `selected_decision = phase51_authorize_128x128_seed42_longer_run`; `authorized_next_phase = phase52_controlled_128x128_seed42_longer_run_baseline`; `no_training_in_phase51 = true`; `level4_plus_route_supported = true`; `level5_supported = false`; `no_swe_pinn = true`; and `no_uncontrolled_expansion = true`. Phase 51 itself did not run training. It authorized only the separate controlled Phase 52 `128 x 128` `seed42` longer-run baseline with a 40-epoch cap and direct comparison against the Phase 47 `128 x 128` `seed42` 10e baseline. Seed replication, `256 x 256`, tile, multiscale, full `500 x 500`, sweeps, new loss redesign, model/loss/config architecture changes, SWE/PINN, Level 5, strict conservation, full mass conservation, hydrodynamic closure, calibrated probabilities, production readiness, and uncontrolled training expansion were outside that authorization.
 
-Phase 52 completed that controlled `128 x 128` `seed42` 40e longer-run baseline. See the [Phase 52 plan](docs/phase52_controlled_128x128_seed42_longer_run_baseline_plan.md), [Phase 52 findings](docs/phase52_controlled_128x128_seed42_longer_run_findings.md), [training summary](analysis/phase52_controlled_128x128_seed42_longer_run/phase52_training_summary.md), [training summary JSON](analysis/phase52_controlled_128x128_seed42_longer_run/phase52_training_summary.json), [config](configs/train_phase52_full_downsample128_seed42_40e.json), and [training script](scripts/train_phase52_controlled_longer_run.py). The decision is `selected_decision = phase52_controlled_128x128_seed42_longer_run_completed`; `best_epoch = final_epoch = 40`; `test_loss = 0.0002713639403471764`; and the direct Phase 47 10e -> Phase 52 40e comparison is RMSE `0.01109213042097205 -> 0.005160715272116552`, MAE `0.00525291082279485 -> 0.002410597107882495`, wet/dry IoU `0.8255524213115374 -> 0.9130120601863988`, rollout stability `0.998722607580324 -> 0.9992842044060429`, and test step RMSE standard deviation `0.0012824604989987165 -> 0.0007178322914948391`. The result supports continued improvement or a late plateau within the 40-epoch cap, not training beyond 40 epochs. Checkpoints are local run artifacts and are not committed. The recommended next step is a separate Phase 53 diagnostic review of Phase 52 reliability, physical-proxy behavior, and warning-framework behavior before seed replication or `256 x 256` expansion.
+Phase 52 completed that controlled `128 x 128` `seed42` 40e longer-run baseline. See the [Phase 52 plan](docs/phase52_controlled_128x128_seed42_longer_run_baseline_plan.md), [Phase 52 findings](docs/phase52_controlled_128x128_seed42_longer_run_findings.md), [training summary](analysis/phase52_controlled_128x128_seed42_longer_run/phase52_training_summary.md), [training summary JSON](analysis/phase52_controlled_128x128_seed42_longer_run/phase52_training_summary.json), [config](configs/train_phase52_full_downsample128_seed42_40e.json), and [training script](scripts/train_phase52_controlled_longer_run.py). The decision is `selected_decision = phase52_controlled_128x128_seed42_longer_run_completed`; `best_epoch = final_epoch = 40`; `test_loss = 0.0002713639403471764`; and the direct Phase 47 10e -> Phase 52 40e comparison is RMSE `0.01109213042097205 -> 0.005160715272116552`, MAE `0.00525291082279485 -> 0.002410597107882495`, wet/dry IoU `0.8255524213115374 -> 0.9130120601863988`, rollout stability `0.998722607580324 -> 0.9992842044060429`, and test step RMSE standard deviation `0.0012824604989987165 -> 0.0007178322914948391`. The result supports continued improvement or a late plateau within the 40-epoch cap, not training beyond 40 epochs. Checkpoints are local run artifacts and are not committed. Phase 53 subsequently completed the recommended diagnostic review before any seed-replication decision.
 
 README-facing Phase 52 visualization support has been added. See the [Phase 52 figure summary](analysis/phase52_controlled_128x128_seed42_longer_run/figures/phase52_figure_summary.md).
 
@@ -285,6 +285,20 @@ README-facing Phase 52 visualization support has been added. See the [Phase 52 f
 ![Phase 52 improvement summary](analysis/phase52_controlled_128x128_seed42_longer_run/figures/phase52_improvement_summary.png)
 
 These figures are visualization support only. No new training was run, no checkpoints were committed, and no Phase 52 result values were modified.
+
+Phase 53 completed a no-training diagnostics review of the Phase 52 checkpoint. See the [Phase 53 plan](docs/phase53_phase52_diagnostics_review_plan.md), [Phase 53 findings](docs/phase53_phase52_diagnostics_review_findings.md), [diagnostics script](scripts/analyze_phase53_phase52_diagnostics.py), [diagnostics summary](analysis/phase53_phase52_diagnostics_review/phase53_diagnostics_summary.md), [diagnostics summary JSON](analysis/phase53_phase52_diagnostics_review/phase53_diagnostics_summary.json), [matched Phase 52 versus Phase 48 comparison](analysis/phase53_phase52_diagnostics_review/phase52_vs_phase48_diagnostic_comparison.csv), and [reliability warning levels](analysis/phase53_phase52_diagnostics_review/reliability_warning_levels.csv). The decision is `selected_decision = phase53_phase52_diagnostics_review_completed`; the checkpoint was found and diagnostics covered 48 scenarios, 384 windows, 4,608 window-step rows, and 48 matched comparison rows without training. Under the same conservative warning framework, the Phase 48/49 reference counts were reliable 1, caution 12, and high-risk 35, while the Phase 53 diagnostics of the Phase 52 checkpoint produced reliable 38, caution 3, and high-risk 7. This supports considering a later reviewed seed-replication decision; it does not authorize immediate `seed123` / `seed202` training or establish seed robustness.
+
+See the [Phase 53 figure summary](analysis/phase53_phase52_diagnostics_review/figures/phase53_figure_summary.md).
+
+![Phase 53 warning-level count comparison](analysis/phase53_phase52_diagnostics_review/figures/phase53_warning_level_counts_comparison.png)
+
+![Phase 53 key diagnostic metric comparison](analysis/phase53_phase52_diagnostics_review/figures/phase53_key_diagnostic_metric_comparison.png)
+
+![Phase 53 false-dry and false-wet comparison](analysis/phase53_phase52_diagnostics_review/figures/phase53_false_dry_false_wet_comparison.png)
+
+![Phase 53 volume-bias proxy comparison](analysis/phase53_phase52_diagnostics_review/figures/phase53_volume_bias_proxy_comparison.png)
+
+These figures summarize the no-training diagnostic comparison only. Phase 53 does not authorize seed replication, `256 x 256`, tile, multiscale, full `500 x 500`, sweeps, new loss redesign, SWE/PINN, Level 5, strict conservation, full mass conservation, hydrodynamic closure, calibrated probabilities, production readiness, or uncontrolled training expansion.
 
 Representative Phase 24 figures:
 
@@ -539,8 +553,8 @@ flowchart TD
     B["Physical Consistency Evidence<br/>Failure diagnosis<br/>target-wet recall<br/>physical proxy diagnostics<br/>Phases 24-25"]:::completed
     C["Strong Physics Boundary<br/>Level 4+ proxy diagnostics supported<br/>Level 5 SWE/PINN not supported<br/>Phases 26 + 30-50"]:::boundary
     D["Volume-Response Loss Lessons<br/>Phase 27 underresponse-only mixed<br/>Phase 28 failure diagnosis<br/>Phase 29 tolerance-band mixed<br/>volume-response partially repaired<br/>trade-off remains unacceptable"]:::diagnosis
-    E["Current Decision<br/>Phase 52 controlled longer run complete<br/>Phase 53 diagnostic review recommended<br/>no uncontrolled expansion"]:::current
-    F["Next Research Direction<br/>128x128 seed42 only<br/>recommended 40-epoch cap<br/>no uncontrolled expansion"]:::current
+    E["Current Decision<br/>Phase 53 diagnostics review complete<br/>reviewed seed-replication decision next<br/>no uncontrolled expansion"]:::current
+    F["Next Research Direction<br/>reviewed seed-replication decision phase<br/>no immediate seed123/seed202 training<br/>no uncontrolled expansion"]:::current
 
     A --> B --> C --> D --> E --> F
 
@@ -800,11 +814,13 @@ Generated figures and analysis outputs are organized under:
 - `analysis/phase51_reviewed_expansion_decision/` for the Phase 51 option matrix, risk assessment, and selected-decision outputs
 - `docs/phase52_controlled_128x128_seed42_longer_run_findings.md` for the completed Phase 52 controlled longer-run baseline
 - `analysis/phase52_controlled_128x128_seed42_longer_run/` for the Phase 52 committed summaries and comparison outputs; checkpoints remain local run artifacts and are not committed
+- `docs/phase53_phase52_diagnostics_review_findings.md` for the completed no-training Phase 52 diagnostics review
+- `analysis/phase53_phase52_diagnostics_review/` for the Phase 53 summaries, matched comparison, warning levels, and diagnostic figures
 
 
 ## Current Project Status
 
-The repository has completed the main Phase 2-3 architecture comparison cycle, the reliability and warning framework, the Level 4+ physical-proxy and manuscript synthesis work, the UrbanFlood24 full-dataset route through Phase 51, and the Phase 52 controlled full-dataset `128 x 128` `seed42` 40e longer-run baseline.
+The repository has completed the main Phase 2-3 architecture comparison cycle, the reliability and warning framework, the Level 4+ physical-proxy and manuscript synthesis work, the UrbanFlood24 full-dataset route through Phase 52, and the Phase 53 no-training diagnostics review of the Phase 52 checkpoint.
 
 Current project-level conclusions:
 
@@ -969,11 +985,13 @@ Current project-level conclusions:
 - **Current Phase 51 decision: `selected_decision = phase51_authorize_128x128_seed42_longer_run`; `authorized_next_phase = phase52_controlled_128x128_seed42_longer_run_baseline`; `no_training_in_phase51 = true`; `level4_plus_route_supported = true`; `level5_supported = false`; `no_swe_pinn = true`; `no_uncontrolled_expansion = true`**
 - **Phase 52 completed the controlled `128 x 128` `seed42` 40e longer-run baseline with `best_epoch = final_epoch = 40`**
 - **Phase 52 improved over Phase 47 across RMSE, MAE, wet/dry IoU, rollout stability, and test step RMSE variation; this is single-seed Level 4+ proxy-modeling evidence only**
-- **The recommended next step is a separate Phase 53 diagnostic review of Phase 52 reliability, physical-proxy behavior, and warning-framework behavior**
+- **Phase 53 completed the no-training diagnostics review of the Phase 52 checkpoint with `selected_decision = phase53_phase52_diagnostics_review_completed`**
+- **The conservative warning split improved from Phase 48/49 reliable/caution/high-risk = 1/12/35 to Phase 53 = 38/3/7**
+- **The recommended next step is a reviewed seed-replication decision phase, not immediate `seed123` / `seed202` training**
 - **Seed replication, `256 x 256`, tile/multiscale/full-`500 x 500`, sweeps, and new loss redesign remain deferred**
 - **No `seed123` / `seed202` expansion, no sweep, no Phase 29 continuation, no Phase 38 rescue, no post-hoc loss/config rescue, and no unsupported pilot success claim are allowed**
 
-At this stage, the project has a paper-ready UrbanFlood24 full Level 4+ evidence chain and a completed controlled Phase 52 longer-run result. Phase 52 materially improved the established `128 x 128` `seed42` route relative to Phase 47, but it remains single-seed Level 4+ proxy-modeling evidence. Seed robustness, `256 x 256` feasibility, tile/multiscale/full-`500 x 500` training, SWE/PINN, Level 5, strict conservation, full mass conservation, hydrodynamic closure, calibrated probabilities, production readiness, and uncontrolled expansion remain unsupported or deferred.
+At this stage, the project has a paper-ready UrbanFlood24 full Level 4+ evidence chain, a completed controlled Phase 52 longer-run result, and a completed Phase 53 no-training diagnostic review. Phase 53 shows improved conservative reliability/warning diagnostics for the Phase 52 checkpoint relative to the Phase 48/49 reference, but the evidence remains single-seed Level 4+ proxy-modeling evidence. Seed robustness, `256 x 256` feasibility, tile/multiscale/full-`500 x 500` training, SWE/PINN, Level 5, strict conservation, full mass conservation, hydrodynamic closure, calibrated probabilities, production readiness, and uncontrolled expansion remain unsupported or deferred.
 
 ## Representative Case Framing
 
@@ -1049,7 +1067,7 @@ Phase 25 keeps the Phase 10 boundary-band settings fixed and adds a targeted tar
 
 ## Future Work
 
-The next justified follow-up is a separate Phase 53 diagnostic review of the completed Phase 52 result, focused on reliability, physical-proxy behavior, and warning-framework behavior. It should precede any decision about seed replication or `256 x 256` expansion. Phase 52 does not authorize training beyond 40 epochs or any uncontrolled expansion. The current Phase 10 boundary-band setting remains `boundary_band_pixels = 1` and `boundary_weight = 2.0`.
+The next justified follow-up is a reviewed seed-replication decision phase based on the completed Phase 53 diagnostics, not immediate `seed123` / `seed202` training. Phase 53 supports considering that bounded decision only; it does not establish seed robustness or authorize `256 x 256`, tile, multiscale, full-`500 x 500`, sweeps, new loss redesign, or uncontrolled expansion. The current Phase 10 boundary-band setting remains `boundary_band_pixels = 1` and `boundary_weight = 2.0`.
 
 Recommended next work:
 
@@ -1108,9 +1126,10 @@ Recommended next work:
 - treat the Level 4+ full-dataset `128 x 128` route as viable, not as Level 5 support, SWE/PINN support, strict conservation, full mass conservation, or hydrodynamic closure
 - treat Phase 51 as a completed reviewed expansion decision with `selected_decision = phase51_authorize_128x128_seed42_longer_run`, `authorized_next_phase = phase52_controlled_128x128_seed42_longer_run_baseline`, `no_training_in_phase51 = true`, `level4_plus_route_supported = true`, `level5_supported = false`, `no_swe_pinn = true`, and `no_uncontrolled_expansion = true`
 - treat Phase 52 as completed controlled `128 x 128` `seed42` 40e training with `selected_decision = phase52_controlled_128x128_seed42_longer_run_completed`, `best_epoch = final_epoch = 40`, and material improvement over Phase 47
-- make a separate Phase 53 reliability/physical-proxy/warning diagnostic review the recommended next step before seed replication or `256 x 256` expansion
+- treat Phase 53 as the completed no-training review of the Phase 52 checkpoint with `selected_decision = phase53_phase52_diagnostics_review_completed`, `evaluated_scenarios = 48`, `evaluated_windows = 384`, and warning counts improved from reliable/caution/high-risk `1/12/35` to `38/3/7`
+- make a reviewed seed-replication decision phase the recommended next step, not immediate `seed123` / `seed202` training
 - keep `seed123` / `seed202`, seed replication, `256 x 256`, tile, multiscale, full `500 x 500`, sweeps, and new loss redesign deferred
-- follow the compact Phase 45-53 route: Phases 45-52 complete indexing, feasibility, baseline, diagnostic, warning, synthesis, review, and controlled longer-run training; Phase 53 should be diagnostic only
+- read the compact Phase 45-53 route as complete through no-training Phase 53 diagnostics; do not treat diagnostic improvement as authorization for uncontrolled training
 - do not run `seed123` / `seed202`, any sweep, Phase 29 continuation, or post-hoc loss/config rescue for the rejected Phase 38 pilot
 - do not recommend or implement a full SWE/PINN residual unless compatible velocity/flux fields, `dx/dy`, `dt`, boundary conditions, pump/gate operations, complete source/sink terms, and complete hydrodynamic state variables are recovered and aligned
 - consider calibrated uncertainty only if calibration data and evaluation design are added
