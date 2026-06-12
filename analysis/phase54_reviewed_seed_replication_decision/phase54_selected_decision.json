@@ -1,0 +1,110 @@
+{
+  "authorized_next_phase": "phase55_controlled_128x128_seed_replication",
+  "authorized_phase55_scope": {
+    "direct_three_seed_comparison_required": true,
+    "maximum_epochs_per_seed": 40,
+    "reference_seed": 42,
+    "reliability_physical_proxy_warning_diagnostics_required": true,
+    "resolution": 128,
+    "retain_best_and_final_checkpoints_locally": true,
+    "same_batch_size_basis": true,
+    "same_downsampling": true,
+    "same_loss": true,
+    "same_model_architecture": true,
+    "same_optimizer_and_scheduler_basis": true,
+    "same_phase52_scenario_split": true,
+    "same_rainfall_alignment": true,
+    "same_wet_threshold_and_metrics": true,
+    "seeds": [
+      123,
+      202
+    ],
+    "separate_config_per_seed": true,
+    "separate_run_directory_per_seed": true,
+    "suggested_analysis_directory": "analysis/phase55_controlled_128x128_seed_replication/",
+    "suggested_run_directories": [
+      "runs/phase55_full_downsample128_seed123_40e/",
+      "runs/phase55_full_downsample128_seed202_40e/"
+    ],
+    "test_samples": 384,
+    "train_samples": 960
+  },
+  "authorized_seeds": [
+    123,
+    202
+  ],
+  "claim_guardrails": {
+    "calibrated_probability_warning_supported": false,
+    "full_mass_conservation_supported": false,
+    "hydrodynamic_closure_supported": false,
+    "production_readiness_supported": false,
+    "strict_conservation_supported": false
+  },
+  "created_utc": "2026-06-12T01:38:08.237202+00:00",
+  "deferred_options": [
+    "phase54_authorize_single_seed123_pilot",
+    "phase54_defer_replication_for_256x256",
+    "phase54_defer_training_for_reporting",
+    "phase54_defer_expansion_insufficient_evidence",
+    "256x256_training",
+    "tile_training",
+    "multiscale_training",
+    "full_500x500_training",
+    "seed_sweep_beyond_seed123_and_seed202",
+    "hyperparameter_sweep",
+    "architecture_sweep",
+    "loss_redesign",
+    "training_beyond_40_epochs_per_seed",
+    "swe_residual_implementation",
+    "pinn_implementation"
+  ],
+  "evidence_inconsistencies": [],
+  "evidence_review_passed": true,
+  "evidence_summary": {
+    "phase48_phase49_warning_counts": {
+      "caution": 12,
+      "high-risk": 35,
+      "reliable": 1
+    },
+    "phase52_best_epoch": 40,
+    "phase52_seed": 42,
+    "phase52_test_rmse": 0.005160715272116552,
+    "phase53_diagnostic_rows": 4608,
+    "phase53_diagnostics_executed": true,
+    "phase53_evaluated_scenarios": 48,
+    "phase53_evaluated_windows": 384,
+    "phase53_matched_comparison_rows": 48,
+    "phase53_warning_counts": {
+      "caution": 3,
+      "high-risk": 7,
+      "reliable": 38
+    }
+  },
+  "input_sources": {
+    "phase52_findings": "docs/phase52_controlled_128x128_seed42_longer_run_findings.md",
+    "phase52_training_summary": "analysis/phase52_controlled_128x128_seed42_longer_run/phase52_training_summary.json",
+    "phase53_diagnostic_comparison": "analysis/phase53_phase52_diagnostics_review/phase52_vs_phase48_diagnostic_comparison.csv",
+    "phase53_diagnostics_summary": "analysis/phase53_phase52_diagnostics_review/phase53_diagnostics_summary.json",
+    "phase53_findings": "docs/phase53_phase52_diagnostics_review_findings.md",
+    "phase53_warning_levels": "analysis/phase53_phase52_diagnostics_review/reliability_warning_levels.csv",
+    "phase54_plan": "docs/phase54_reviewed_seed_replication_decision_plan.md"
+  },
+  "level4_plus_route_supported": true,
+  "level5_supported": false,
+  "maximum_epochs_per_seed": 40,
+  "next_recommended_action": "Implement Phase 55 as exactly two separate controlled 128x128 runs for seed123 and seed202, each capped at 40 epochs under the unchanged Phase 52 protocol, followed by direct three-seed reliability, physical-proxy, and warning-diagnostic comparison.",
+  "no_swe_pinn": true,
+  "no_training_in_phase54": true,
+  "no_uncontrolled_expansion": true,
+  "phase": 54,
+  "post_training_diagnostics_required": true,
+  "protocol_must_match_phase52": true,
+  "reference_seed": 42,
+  "required_test_samples": 384,
+  "required_train_samples": 960,
+  "resolution": 128,
+  "script": "scripts/decide_phase54_seed_replication.py",
+  "seed_robustness_demonstrated": false,
+  "selected_decision": "phase54_authorize_controlled_128x128_seed_replication",
+  "warning_labels_are_probabilities": false
+}

@@ -47,7 +47,8 @@
 - Phase 50 Framework Consolidation and Paper-Ready Evidence Synthesis: no-training synthesis complete with decision `phase50_framework_synthesis_ready_for_paper_outline`, `phases_synthesized = 43-49`, `level4_plus_route_supported = true`, `level5_supported = false`, `no_training = true`, `no_swe_pinn = true`, and `warning_labels_are_probabilities = false`
 - Phase 51 Reviewed Expansion Decision: decision-only review complete with decision `phase51_authorize_128x128_seed42_longer_run`, `authorized_next_phase = phase52_controlled_128x128_seed42_longer_run_baseline`, `no_training_in_phase51 = true`, `level4_plus_route_supported = true`, `level5_supported = false`, `no_swe_pinn = true`, and `no_uncontrolled_expansion = true`
 - Phase 52 Controlled 128x128 Seed42 Longer-Run Baseline: controlled 40e run complete with decision `phase52_controlled_128x128_seed42_longer_run_completed`, `best_epoch = 40`, `test_rmse = 0.005160715272116552`, `test_mae = 0.002410597107882495`, `test_wet_dry_iou = 0.9130120601863988`, `no_swe_pinn = true`, and `level5_supported = false`
-- Phase 53 Phase 52 Diagnostics Review: no-training diagnostics complete with decision `phase53_phase52_diagnostics_review_completed`, `checkpoint_found = true`, `evaluated_scenarios = 48`, `evaluated_windows = 384`, and warning counts improved from reliable/caution/high-risk `1/12/35` to `38/3/7`; this supports a later reviewed seed-replication decision, not immediate training
+- Phase 53 Phase 52 Diagnostics Review: no-training diagnostics complete with decision `phase53_phase52_diagnostics_review_completed`, `checkpoint_found = true`, `evaluated_scenarios = 48`, `evaluated_windows = 384`, and warning counts improved from reliable/caution/high-risk `1/12/35` to `38/3/7`; the subsequent reviewed seed-replication decision was completed in Phase 54
+- Phase 54 Reviewed Seed-Replication Decision: decision-only review complete with decision `phase54_authorize_controlled_128x128_seed_replication`, `authorized_next_phase = phase55_controlled_128x128_seed_replication`, authorized seeds 123 and 202, reference seed 42, resolution 128, maximum 40 epochs per seed, required post-training diagnostics, and `seed_robustness_demonstrated = false`
 
 ## Phase 6
 
@@ -1032,7 +1033,7 @@
 - Status: no-training Phase 52 diagnostics review complete
 - Decision: `phase53_phase52_diagnostics_review_completed`
 - Key result: warning counts improved from reliable/caution/high-risk = `1/12/35` in the Phase 48/49 reference to `38/3/7` in the Phase 53 diagnostics of the Phase 52 checkpoint
-- Next recommended step: reviewed seed-replication decision phase
+- Follow-up: the reviewed seed-replication decision was completed in Phase 54
 - Guardrails:
   - no training in Phase 53
   - no immediate `seed123` / `seed202` authorization
@@ -1048,6 +1049,40 @@
   - no production-readiness claim
   - no uncontrolled training expansion
 - Model status: Phase 53 strengthens the diagnostic evidence for the single Phase 52 `128 x 128` `seed42` checkpoint under the existing conservative warning framework. It does not establish cross-seed robustness or authorize training expansion.
+
+## Phase 54
+
+- Plan: `docs/phase54_reviewed_seed_replication_decision_plan.md`
+- Script: `scripts/decide_phase54_seed_replication.py`
+- Outputs: `analysis/phase54_reviewed_seed_replication_decision/`
+- Findings: `docs/phase54_reviewed_seed_replication_decision_findings.md`
+- Status: reviewed seed-replication decision complete
+- Decision: `phase54_authorize_controlled_128x128_seed_replication`
+- Next phase: `phase55_controlled_128x128_seed_replication`
+- Authorized seeds: 123 and 202
+- Reference seed: 42
+- Resolution: 128
+- Maximum epochs per seed: 40
+- Post-training diagnostics required: true
+- Seed robustness demonstrated: false
+- Interpretation: Phase 54 ran no training. It authorizes only the fixed two-seed Phase 55 replication under the unchanged Phase 52 protocol, followed by direct comparison with seed42 and required reliability, physical-proxy, and warning diagnostics.
+- Guardrails:
+  - no training in Phase 54
+  - no seed sweep beyond seed123 and seed202
+  - no training beyond 40 epochs per seed
+  - no retraining seed42 under this authorization
+  - no `256 x 256`
+  - no tile, multiscale, or full-`500 x 500` training
+  - no hyperparameter or architecture sweeps
+  - no loss redesign
+  - no SWE residual implementation
+  - no PINN implementation
+  - no Level 5 claim
+  - no strict conservation / full mass conservation / hydrodynamic closure claims
+  - no calibrated probability claim
+  - no production-readiness claim
+  - no uncontrolled expansion
+- Model status: Phase 54 authorizes a bounded reproducibility test only. It does not demonstrate seed robustness, report Phase 55 results, or authorize any broader training direction.
 
 ## Interpretation Order
 
@@ -1101,11 +1136,12 @@ For current repository interpretation, read the experiment trail in this order:
 46. `docs/phase51_reviewed_expansion_decision_findings.md`
 47. `docs/phase52_controlled_128x128_seed42_longer_run_findings.md`
 48. `docs/phase53_phase52_diagnostics_review_findings.md`
-49. `docs/project_status.md`
+49. `docs/phase54_reviewed_seed_replication_decision_findings.md`
+50. `docs/project_status.md`
 
 ## Next Stage
 
-The next stage should build on the completed Phase 12 through Phase 53 evidence chain. The recommended next work is a reviewed seed-replication decision phase based on the completed Phase 53 no-training diagnostics. This is not immediate authorization for `seed123` / `seed202` training and must not authorize uncontrolled training expansion.
+The next stage should build on the completed Phase 12 through Phase 54 evidence chain. The only authorized next training phase is Phase 55 controlled `128 x 128` seed replication for seed123 and seed202, each capped at 40 epochs under the unchanged Phase 52 protocol. Phase 55 has not yet occurred, seed42 remains the fixed reference, and seed robustness remains unproven until both runs and the required direct three-seed diagnostic comparison are complete and reviewed.
 
 Recommended next work:
 
@@ -1161,8 +1197,9 @@ Recommended next work:
 - read Phase 51 as the completed decision-only review with `selected_decision = phase51_authorize_128x128_seed42_longer_run`, `authorized_next_phase = phase52_controlled_128x128_seed42_longer_run_baseline`, and `no_training_in_phase51 = true`
 - read Phase 52 as the completed controlled `128 x 128` `seed42` 40e baseline with `selected_decision = phase52_controlled_128x128_seed42_longer_run_completed`, `best_epoch = final_epoch = 40`, and material improvement over Phase 47
 - read Phase 53 as the completed no-training diagnostics review with `selected_decision = phase53_phase52_diagnostics_review_completed`, `evaluated_scenarios = 48`, `evaluated_windows = 384`, and conservative warning counts improved from reliable/caution/high-risk `1/12/35` to `38/3/7`
-- make a reviewed seed-replication decision phase the recommended next step, not immediate `seed123` / `seed202` training
-- keep `seed123` / `seed202`, seed replication, `256 x 256`, tile, multiscale, full `500 x 500`, sweeps, new loss redesign, and model/loss/config architecture changes deferred
+- read Phase 54 as the completed decision-only review with `selected_decision = phase54_authorize_controlled_128x128_seed_replication`, `authorized_next_phase = phase55_controlled_128x128_seed_replication`, authorized seeds 123 and 202, reference seed42, resolution 128, maximum 40 epochs per seed, and `seed_robustness_demonstrated = false`
+- make Phase 55 controlled `128 x 128` seed replication the only authorized next training phase
+- keep `256 x 256`, tile, multiscale, full `500 x 500`, seed sweeps beyond seed123 and seed202, hyperparameter or architecture sweeps, new loss redesign, and model/loss/config architecture changes deferred
 - do not run Phase 29 `seed123` / `seed202` confirmation or a tolerance/weight sweep
 - do not run Phase 27 or Phase 29 `seed123` / `seed202` confirmation
 - do not run Phase 38 `seed123` / `seed202` expansion, any sweep, Phase 29 continuation, or post-hoc loss/config rescue
